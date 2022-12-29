@@ -1,0 +1,23 @@
+﻿{
+  "itemName" : "CyanL",
+  "level" : 1,
+  "price" : 475,
+  "rarity" : "rare",
+  "category" : "railPlatform",
+  "description" : "CyanL",
+  "shortdescription" : "CyanL",
+  "twoHanded" : true,
+  "maxStack" : 10,
+  "image" : "/items/active/unsorted/SubwayTrain/CyanLpreview.png",
+
+  "inventoryIcon" : "CyanLicon.png",
+
+  "scripts" : ["railplatform.lua"],
+  "animationScripts" : ["placementpreview.lua"],
+
+  "placementRange" : 15,
+  "placementBounds" : [-2.5, -0.25, 2.5, 0.75],
+  "placementPreviewImage" : "/items/active/unsorted/SubwayTrain/CyanLpreview.png",
+
+  "platformType" : "CyanL"
+}

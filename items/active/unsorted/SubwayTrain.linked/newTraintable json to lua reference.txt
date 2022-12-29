@@ -1,0 +1,121 @@
+-------------json----------------------------------
+[
+   {
+      "name" : "SubwayTram-linked",
+      "carNumber" : 1,
+      "color" : "Cyan",
+      "pantographVisibile" : true,
+      "doorLocked" : false,
+      "reversed" : false,
+      "carDistance": 22.75,
+      "decalNames" : ["L"],
+      "decals": {
+        "L" : 0
+      }
+   },
+   {
+      "name" : "SubwayTram-linked",
+      "carNumber" : 2,
+      "color" : "Cyan",
+      "pantographVisibile" : false,
+      "doorLocked" : false,
+      "reversed" : false,
+      "carDistance" : 22.75,
+      "decalNames" : ["L", "N"],
+      "decals": {
+        "L" : 0,
+        "N" : 1
+      }
+   }
+]
+
+------------------------
+as LUA:
+{
+   {
+      name= "SubwayTram-linked",
+      carNumber= 1,
+      color= "Cyan",
+      pantographVisibile= true,
+      doorLocked= false,
+      reversed= false,
+      carDistance= 22.75,
+      decalNames= {"L"},
+      decals= {
+       L= 0
+      }
+   },
+   {
+      name= "SubwayTram-linked",
+      carNumber= 2,
+      color= "Cyan",
+      pantographVisibile= false,
+      doorLocked= false,
+      reversed= false,
+      carDistance= 22.75,
+      decalNames= {"L"},
+      decals= {
+       L= 0
+      }
+   },
+   {
+      name= "SubwayTram-linked",
+      carNumber= 3,
+      color= "Cyan",
+      pantographVisibile= true,
+      doorLocked= false,
+      reversed= true,
+      carDistance= 22.75,
+      decalNames= {"L"},
+      decals= {
+       L= 0
+      }
+   }
+}
+
+--------------------------
+{ { name= "SubwayTram-linked", carNumber= 1, color= "cyan", cockpitColor= "red", pantographVisibile= true,  doorLocked= false, reversed= false, carDistance= 22.75, decalNames= {"A"}, decals= {A= 0} }, { name= "SubwayTram-linked", carNumber= 2, color= "cyan", cockpitColor= "red", pantographVisibile= false,  doorLocked= false, reversed= false, carDistance= 22.75, decalNames= {"A"}, decals= {A= 0} }, { name= "SubwayTram-linked", carNumber= 3, color= "cyan", cockpitColor= "red", pantographVisibile= true,  doorLocked= false, reversed= true, carDistance= 22.75, decalNames= {"A"}, decals= {A= 0} } }
+
+---------------------------------------------------------
+trainsetData= { {name= "SubwayTram-linked", carNumber=1, color="Cyan", pantographVisibile=true, doorLocked=false, reversed=false, carDistance=22.75, decalNames={"L","N"}, decals={L=0,N=1} }, {name= "c", color="d", carNumber=2}, {name= "e", color="f", carNumber=3} }
+
+-----for car 1=
+print(trainsetData[1].name) --name
+
+print(trainsetData[1].carNumber) --carnumber
+
+numdecals = #trainsetData[1].decals.names
+print("number of decals " .. numdecals)
+decalsnames = trainsetData[1].decals.names
+decalvalues = {}
+for i=1,numdecals do
+  decalvalues[i] = trainsetData[1].decals[decalsnames[i]]
+  print("decal " .. decalsnames[i] .. " is " .. decalvalues[i])
+end
+
+------------------------
+
+trainsetData[N].name --vehicle name car 1
+trainsetData[N].carNumber --car number car N
+numdecals = #trainsetData[N].decals.names --number of decals of car N without using the root.json
+decalsnames = trainsetData[N].decals.names --table with names of decals of car N
+
+for i=1,numdecals do
+  decalvalues[i] = trainsetData[N].decals[decalsnames[i]] --values of decals of car N as a table
+end
+
+trainsetData[N].decals[decalsnames[i]] --value of decal i of car N
+
+----OR
+for i=1,numdecals do
+  trainsetData[N].decalNames[i] --name of decal i of car N
+  trainsetData[1].decals[trainsetData[1].decalNames[i]] --value of decal i of car N
+end
+
+
+
+
+
+
+
+

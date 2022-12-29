@@ -1,0 +1,25 @@
+﻿{
+  "itemName" : "cyanSubwayTram5L1",
+  "level" : 1,
+  "price" : 475,
+  "rarity" : "rare",
+  "category" : "railPlatform",
+  "description" : "CyanL",
+  "shortdescription" : "CyanL5",
+  "twoHanded" : true,
+  "maxStack" : 10,
+  "image" : "5carsTooltip.png",
+
+  "inventoryIcon" : "cyanSubwayTramL1icon.png",
+
+  "scripts" : ["railplatform.lua"],
+  "animationScripts" : ["placementpreview.lua"],
+
+  "placementRange" : 15,
+  "placementBounds" : [-2.5, -0.25, 2.5, 0.75],
+  "placementPreviewImage" : "/items/active/unsorted/SubwayTrain.linked/cyanSubwayTramL1preview.png",
+
+  "numberOfCars" : 5,
+
+  "platformType" : "cyanSubwayTram5L1"
+}

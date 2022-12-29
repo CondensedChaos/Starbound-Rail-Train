@@ -1,0 +1,32 @@
+{
+  "animatedParts" : {
+    "stateTypes" : {
+      "default" : {
+        "default" : "default",
+        "states" : {
+          "default" : {}
+        }
+      }
+    },
+
+    "parts" : {
+      "girder" : {
+        "properties" : {
+          "centered" : false,
+          "offset" : [-3.0, 0.0],
+          "zLevel" : -1
+        },
+
+        "partStates" : {
+          "default" : {
+            "default" : {
+              "properties" : {
+                "image" : "<partImage>:default"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,99 @@
+﻿{
+  "animatedParts" : {
+    "stateTypes" : {
+      "rail" : {
+        "default" : "onRail",
+        "states" : {
+          "onRail" : {
+            "frames" : 2,
+            "cycle" : 0.25,
+            "mode" : "loop"
+          },
+		  "opening" : {
+            "frames" : 3,
+            "cycle" : 0.25,
+            "mode" : "transition",
+            "transition" : "opened"
+          },
+		  "opened" : {
+		  "frames" : 1
+          },
+		  "closing" : {
+            "frames" : 3,
+            "cycle" : 0.25,
+            "mode" : "transition",
+            "transition" : "closed"
+          },
+          "closed" : {
+		   "frames" : 1,
+           "mode" : "transition",
+           "transition" : "onRail"
+	      }
+       }
+     }
+    },
+
+    "parts" : {
+      "platform" : {
+        "properties" : {
+          "centered" : true,
+          "offset" : [0.0, 3.75],
+          "zLevel" : 0,
+		  "driverSeatPosition" : [0.0, 0.25],
+          "passengerSeatPosition1" : [-2.0, 0.25],
+          "passengerSeatPosition2" : [2.0, 0.25],
+		  "rotationGroup" : "platform",
+		  "transformationGroups" : ["flip", "rotation"]
+        },
+
+        "partStates" : {
+          "rail" : {
+            "onRail" : {
+              "properties" : {
+                "image" : "<partImage>:onRail.<frame>"
+              }
+            },
+			"opening" : {
+              "properties" : {
+                "image" : "<partImage>:opening.<frame>"
+              }
+            },
+			"opened" : {
+              "properties" : {
+                "image" : "<partImage>:opened"
+              }
+            },
+			"closing" : {
+              "properties" : {
+                "image" : "<partImage>:closing.<frame>"
+              }
+            },
+			"closed" : {
+              "properties" : {
+                "image" : "<partImage>:closed"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  
+  "rotationGroups" : {
+    "platform" : {
+      "rotationCenter" : [0, 0],
+      "angularVelocity" : 7.5
+    }
+  },
+  
+  "transformationGroups" : {
+    "rotation" : {
+      "interpolated" : true
+    },
+    "flip" : {}
+  },
+  
+  "sounds" : {
+    "grind" : [ "/sfx/rails/rail_grind_loop.ogg" ]
+  }
+}

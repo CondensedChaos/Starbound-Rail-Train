@@ -1,0 +1,78 @@
+﻿{
+  "itemName" : "SubwayTram-linked",
+  "level" : 1,
+  "price" : 475,
+  "rarity" : "rare",
+  "category" : "railPlatform",
+  "linkedRailTrain" : true,
+  "description" : "SubwayTram-linked",
+  "shortdescription" : "SubwayTram-linked",
+  "twoHanded" : true,
+  "maxStack" : 999,
+  "image" : "/items/active/unsorted/SubwayTrain.linked/5carsTooltip.png",
+
+
+  "inventoryIcon" : "cyanSubwayTramL1icon.png",
+
+  "scripts" : ["railplatform.lua"],
+  "animationScripts" : ["placementpreview.lua"],
+
+  "placementRange" : 15,
+  "placementBounds" : [-2.5, -0.25, 2.5, 0.75],
+  "placementPreviewImage" : "/items/active/unsorted/SubwayTrain.linked/cyanSubwayTramL1preview.png",
+
+ "imgPath" : "/interface/linkedTrain/trainConfigurator/",
+ 
+ "DefaultTrainset" : [
+   {
+      "name" : "SubwayTram-linked",
+      "carNumber" : 1,
+      "color" : "cyan",
+      "cockpitColor" : "red",
+      "pantographVisibile" : true,
+      "doorLocked" : false,
+      "reversed" : false,
+      "carDistance": 22.75,
+      "decalNames" : ["A", "B"],
+      "decals": {
+        "A" : 0,
+        "B" : 1
+      }
+   },
+   {
+      "name" : "SubwayTram-linked",
+      "carNumber" : 2,
+      "color" : "cyan",
+      "cockpitColor" : "red",
+      "pantographVisibile" : false,
+      "doorLocked" : false,
+      "reversed" : false,
+      "carDistance" : 22.75,
+      "decalNames" : ["A", "B"],
+      "decals": {
+        "A" : 1,
+        "B" : 0
+      }
+   },
+   {
+      "name" : "SubwayTram-linked",
+      "carNumber" : 3,
+      "color" : "cyan",
+      "cockpitColor" : "red",
+      "pantographVisibile" : true,
+      "doorLocked" : false,
+      "reversed" : true,
+      "carDistance" : 22.75,
+      "decalNames" : ["A", "B"],
+      "decals": {
+        "A" : 0,
+        "B" : 0
+      }
+   }
+  ],
+
+ "trainsetData" : null,
+ "numberOfCars" : null
+
+  //"platformType" : "SubwayTram-linked"
+}

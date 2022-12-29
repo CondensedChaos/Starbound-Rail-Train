@@ -1,0 +1,83 @@
+{
+  "SubwayTram-linked" : {//vehicle name
+    //keep the description field short will appear in the train builder when choosing the car type
+    "description" : "subway train car", 
+    //longDescription will appear under the preview
+    
+    "LongDescription" : "Small light rail car for passengers transportation, suitable for tracks with several slopes\npassengers capacity: 5",
+    "imgPath" : "/vehicles/subwayTrain.linked/",
+    "colors": ["blue", "red", "cyan", "white"],
+    "cockpitColors" : ["red", "blue", "white"],
+    "carLenghtPixels" : 83,
+    "hasPantograph" : true, //if it has a pantograph sprite
+    "hasDecals" : true,
+    "specular" : true,
+    "decalNames" : ["A", "B", "C"],//optional, decals
+    "decals" : { // [[<decal1NameString> , <decal0> , ..<decalN], [<decal2NameString> , <decal0> , ..<decalN>]]
+      "A" : [0, 1, 2, 3], //<decal1String><decal0> is the sprite of decal1 with no decal
+      "B" : [0, 1, 2],
+      "C" : [0, 1]
+    },
+    "DisplayNames" : {
+      "color" : "Bottom",
+      "cockpit" : "Top",
+      "decals" : {
+        "A" : "Roof",
+        "B" : "Side",
+        "C" : "Graffiti"
+      }
+    },
+    "decalsFlippable" : {
+      "A" : [false, true, true,true],
+      "B" : [false, true, true],
+      "C" : [false, false]
+    }
+  },   
+  "XXLSubwayTram-linked" : {
+    "description" : "Long subway train car", 
+    "LongDescription" : "Light rail car for passengers transportation like the ones found in subways, suitable for straight line tracks\npassengers capacity: 12",
+    "imgPath" : "/vehicles/XXLsubwayTrain.linked/",
+    "colors": ["blue", "red", "cyan", "white", "yellow"],
+    "cockpitColors" : ["red", "blue", "white", "yellow"],
+    "carLenghtPixels" : 145,
+    "hasPantograph" : true, 
+    "hasDecals" : true,
+    "specular" : true,
+    "decalNames" : ["A", "B", "C", "D"],
+    "decals" : {
+      "A" : [0, 1, 2, 3], 
+      "B" : [0, 1, 2, 3],
+      "C" : [0, 1, 2, 3]
+      "D" : [0, 1]
+    },
+    "DisplayNames" : {
+      "color" : "Bottom",
+      "cockpit" : "Top",
+      "decals" : {
+        "A" : "Roof",
+        "B" : "LwrSide",
+        "C" : "UpprSide",
+        "C" : "Graffiti"
+      }
+    },
+    "decalsFlippable" : {
+      "A" : [false, true, true,true],
+      "B" : [false, true, true],
+      "C" : [false, false]
+    }
+  } 
+
+}
+
+//in interface/trainConfigurator/linkedTrain/<vehiclename> put images previews for train builder
+//130x80 px with all the color combinations+decals
+//format filename as <vehiclename><color><decalString><decalN>preview
+//and
+// <vehiclename><color><decalString><decalN>Ppreview for sprites with pantogtaph
+//where<decalString><0> is the sprite with no decal
+//
+//in /items/active/unsorted/SubwayTrain.linked/placementPreview
+//put the same files but with their actual size
+//no spaces, all is case sensitive
+//
+//please patch this file do not overwrite it

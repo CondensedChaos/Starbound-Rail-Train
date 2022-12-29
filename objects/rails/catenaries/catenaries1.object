@@ -1,0 +1,41 @@
+{
+  "objectName" : "catenaries1",
+  "colonyTags" : ["rails"],
+  "rarity" : "Common",
+
+  "category" : "railPoint",
+  "price" : 400,
+  "description" : "---------",
+  "shortdescription" : "----------",
+  "race" : "generic",
+  //"zlevel" : -16,
+
+  "inventoryIcon" : "railboostericon.png",
+  "orientations" : [
+    {
+      "image" : "girder.png:default",
+      "imagePosition" : [-24, 0],
+
+      "materialSpaces" : [
+        [[0, 0], "metamaterial:railbooster"]
+      ],
+
+      //"fgAnchors" : [[-1, 0], [-1, -1], [0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1]],
+      //"bgAnchors" : [[-8, -8]],
+      //"anchorAny" : true,
+      "anchors" : [ ],
+      "renderLayer" : "platform",
+
+      "direction" : "right"
+    }
+  ],
+  
+  "scripts" : [ "/objects/rails/catenaries/catenaries.lua" ],
+  "scriptDelta" : 120,
+
+  "animation" : "catenaries1.animation",
+  "animationParts" : {
+    "girder" : "girder.png"
+  },
+  "animationPosition" : [-2, -2]
+}

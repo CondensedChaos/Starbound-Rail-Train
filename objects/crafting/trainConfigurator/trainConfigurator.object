@@ -1,0 +1,50 @@
+{
+  "objectName" : "trainConfigurator",
+  "objectType" : "container",
+  "price" : 100,
+  //"maxStack" : 100,
+  "rarity" : "Rare",
+  "category" : "crafting",
+  "description" : "Configure a train set with this",
+  "shortdescription" : "Trainset configurator",
+  "race" : "generic",
+
+  "inventoryIcon" : "portable3dprinter.png",
+  
+  "orientations" : [
+    {
+      "imageLayers" : [ { "image" : "railcraftingtable.png:<color>.<frame>", "fullbright" : true }, { "image" : "railcraftingtablelit.png:<color>.<frame>" } ],
+      "imagePosition" : [-16, 0],
+
+      "direction" : "left",
+      "flipImages" : true,
+
+      "frames" : 22,
+      "animationCycle" : 1.8,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    },
+
+    {
+      "imageLayers" : [ { "image" : "railcraftingtable.png:<color>.<frame>", "fullbright" : true }, { "image" : "railcraftingtablelit.png:<color>.<frame>" } ],
+      "imagePosition" : [-16, 0],
+
+      "direction" : "right",
+
+      "frames" : 22,
+      "animationCycle" : 1.8,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    }
+  ],
+  
+  "slotCount" : 1,
+
+  "containerCallback": "containerCallback",
+  "uiConfig" : "/objects/crafting/trainConfigurator/trainConfiguratorGui.config",
+  "frameCooldown" : 5,
+  "autoCloseCooldown" : 36000
+
+}

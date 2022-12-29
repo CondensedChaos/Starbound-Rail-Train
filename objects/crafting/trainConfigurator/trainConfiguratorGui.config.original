@@ -1,0 +1,163 @@
+{
+  "gui" : {
+    "background" : {
+      "type" : "background",
+      "fileHeader" : "/objects/crafting/trainConfigurator/header.png",
+      "fileBody" : "/objects/crafting/trainConfigurator/window.png"
+    },
+    "windowtitle" : {
+      "type" : "title",
+      "title" : " Train set configurator",
+      "subtitle" : " Build your own train set item spawner!",
+      "icon" : {
+        "type" : "image",
+        "file" : "/interface/crafting/craftingicon.png"
+      },
+      "zlevel" : -1
+    },
+    "imgShine" : {
+      "type" : "image",
+      "file" : "/objects/crafting/trainConfigurator/shine.png",
+      "zlevel" : 1,
+      "position" : [0, 0],
+      "mouseTransparent" : true
+    },
+	"close" : {
+      "zlevel" : 3,
+      "type" : "button",
+      "base" : "/interface/x.png",
+      "hover" : "/interface/xhover.png",
+      "pressed" : "/interface/xpress.png",
+      "pressedOffset" : [0, 0],
+      "position" : [379, 324]
+    },
+	"scroller": {
+	  "type" : "scrollArea",
+	  "position" : [6, 27],
+	  "size" : [147, 265],
+	  "children": {
+	    "itemList" : {
+          "type" : "list",
+		  "fillDown" : false,
+		  "callback" : "itemListSelectedChange",
+          "schema" : {
+            "selectedBG" : "/interface/crafting/craftableselected2.png",
+            "unselectedBG" : "/interface/crafting/craftablebackground.png",
+            "spacing" : [0, 1],
+            "memberSize" : [131, 81],
+			"listTemplate" : {
+			  "background" : {
+			  "type" : "image",
+			  "file" : "/interface/crafting/craftablebackground.png",
+			  "position" : [12, 0],
+			  "zlevel" : -1
+			  },
+			  "carNumber" : {
+                "type" : "label",
+                "position" : [1, 40],
+                "hAnchor" : "left",
+                "value" : "1"
+              },
+              "carImage" : {
+                "type" : "image",
+                "position" : [12, 0],
+				"zlevel" : 1,
+				"file" : "/interface/linkedTrain/trainConfigurator/subwayTrain.linked/SubwayTram-linkedCyanL0Ppreview.png"
+              }
+			}
+		  }
+		}
+	  }	
+	},
+	"labelnumberOfCars" : {
+      "type" : "label",
+      "position" : [12, 306],
+      "hAnchor" : "left",
+	  "value" : "Number of cars:"
+    },
+	"valuenumberOfCars" : {
+      "type" : "label",
+      "position" : [25, 296],
+      "hAnchor" : "left",
+	  "value" : "1"
+    },
+    "carNumberSpinner" : {
+      "type" : "spinner",
+      "position" : [12, 296],
+	  "upOffset" : 36,
+      "zlevel" : 1
+    },
+	"debugButton" : {
+      "type" : "button",
+	  "visible" : true,
+      "disabled" : false,
+      "base" : "/interface/buttonred.png",
+      "hover" : "/interface/buttonredhover.png",
+      "pressed" : "/interface/buttonactive.png",
+      "caption" : "Debug",
+      "position" : [10, 5],
+      "zlevel" : 2,
+      "callback" : "debugButton"
+    },
+    "Edit1Label" : {
+      "type" : "label",
+      "position" : [285, 300],
+      "hAnchor" : "left",
+      "value" : "^green;Use this slot to edit^reset;"
+    },
+	"Edit2Label" : {
+      "type" : "label",
+      "position" : [275, 290],
+      "hAnchor" : "left",
+      "value" : "^green;a previously made train set^reset;"
+    },
+	"loadTrainsetButton" : {
+      "type" : "button",
+	  "visible" : false,
+      "disabled" : false,
+      "base" : "/interface/button.png",
+      "hover" : "/interface/buttonactivehover.png",
+      "pressed" : "/interface/buttonactive.png",
+      "caption" : "Load",
+      "position" : [275, 250],
+      "zlevel" : 2,
+      "callback" : "loadTrainsetButtonPressed"
+    },
+    "itemGrid" : {
+      "type" : "itemgrid",
+      "position" : [320, 270],
+      "dimensions" : [1, 1],
+      "spacing" : [19, 19],
+      "backingImage" : "/interface/inventory/empty.png"
+    },
+	"saveTrainsetButton" : {
+      "type" : "button",
+	  "visible" : false,
+      "disabled" : false,
+      "base" : "/interface/buttonred.png",
+      "hover" : "/interface/buttonredhover.png",
+      "pressed" : "/interface/buttonactive.png",
+      "caption" : "Save",
+      "position" : [335, 250],
+      "zlevel" : 2,
+      "callback" : "saveTrainsetButtonPressed"
+    },
+	"ErrorLabel1" : {
+      "type" : "label",
+	  "visible" : false,
+      "position" : [295, 250],
+      "hAnchor" : "left",
+      "value" : "^red;wrong item type!^reset;"
+    }
+  },
+  "scriptWidgetCallbacks" : [
+    "loadTrainsetButtonPressed",
+	"saveTrainsetButtonPressed",
+	"itemListSelectedChange",
+	"carNumberSpinner.up",
+	"carNumberSpinner.down",
+	"debugButton"
+  ],
+  "scripts" : ["/objects/crafting/trainConfigurator/trainConfiguratorGui.lua"],
+  "scriptDelta" : 5
+}

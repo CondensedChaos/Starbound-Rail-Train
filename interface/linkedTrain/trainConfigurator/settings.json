@@ -1,0 +1,51 @@
+{
+"paneImgPath" : "/interface/linkedTrain/trainConfigurator/",
+"vehiclesList" : ["SubwayTram-linked", "XXLSubwayTram-linked"],
+"DefaultTrainset" : [
+   {
+      "name" : "SubwayTram-linked",
+      "carNumber" : 1,
+      "color" : "blue",
+      "cockpitColor" : "red",
+      "pantographVisibile" : true,
+      "doorLocked" : false,
+      "reversed" : false,
+      "decalNames" : ["A", "B", "C"],
+      "decals": {
+        "A" : 0,
+        "B" : 0,
+        "C" : 1
+      }
+   },
+   {
+      "name" : "SubwayTram-linked",
+      "carNumber" : 2,
+      "color" : "blue",
+      "cockpitColor" : "red",
+      "pantographVisibile" : false,
+      "doorLocked" : false,
+      "reversed" : false,
+      "decalNames" : ["A", "B", "C"],
+      "decals": {
+        "A" : 0,
+        "B" : 0,
+        "C" : 0
+      }
+   },
+   {
+      "name" : "SubwayTram-linked",
+      "carNumber" : 3,
+      "color" : "blue",
+      "cockpitColor" : "red",
+      "pantographVisibile" : true,
+      "doorLocked" : false,
+      "reversed" : true,
+      "decalNames" : ["A", "B", "C"],
+      "decals": {
+        "A" : 0,
+        "B" : 0,
+        "C" : 0
+      }
+   }
+  ]
+ }
