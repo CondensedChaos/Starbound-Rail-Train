@@ -1,0 +1,120 @@
+{
+  "name" : "SubwayTram-linked",
+  "boundBox" : [-5.125, -4, 5.125, 5.0],
+  "slaveControlTimeout" : 2.0,
+  "slaveControlHeartbeat" : 1.0,
+  "canBeHit" : false,
+
+  "persistent" : true,
+
+  "script" : "/vehicles/subwayTrain.linked/subwayTram.lua",
+  "animation" : "/vehicles/subwayTrain.linked/subwayTrain.animation",
+
+  "animationPartTags" : {
+    "cockpit" : {
+      "partImage" : "/vehicles/subwayTrain.linked/cockpitred.png"
+    },
+    "bodyColor" : {
+      "partImage" : "/vehicles/subwayTrain.linked/blue.png"
+    },
+    "decalA" : {
+      "partImage" : "/vehicles/subwayTrain.linked/decalPlaceholder.png"
+    },
+    "decalB" : {
+      "partImage" : "/vehicles/subwayTrain.linked/decalPlaceholder.png"
+    },
+    "decalC" : {
+      "partImage" : "/vehicles/subwayTrain.linked/decalPlaceholder.png"
+    },
+    "decalD" : {
+      "partImage" : "/vehicles/subwayTrain.linked/decalPlaceholder.png"
+    },
+    "decalE" : {
+      "partImage" : "/vehicles/subwayTrain.linked/decalPlaceholder.png"
+    },
+    "decalF" : {
+      "partImage" : "/vehicles/subwayTrain.linked/decalPlaceholder.png"
+    },
+    "decalG" : {
+      "partImage" : "/vehicles/subwayTrain.linked/decalPlaceholder.png"
+    },
+    "decalH" : {
+      "partImage" : "/vehicles/subwayTrain.linked/decalPlaceholder.png"
+    },
+    "decalI" : {
+      "partImage" : "/vehicles/subwayTrain.linked/decalPlaceholder.png"
+    },
+    "decalJ" : {
+      "partImage" : "/vehicles/subwayTrain.linked/decalPlaceholder.png"
+    },
+    "pantograph" : {
+      "partImage" : "/vehicles/subwayTrain.linked/pantograph.png"
+    }
+  },
+
+  "movementSettings" : {
+    "collisionPoly" : [ [-5.125, 0.375], [5.125, 0.375], [5.125, 7.5], [-5.125, 7.5] ],
+    "mass" : 2.0,
+    "ignorePlatformCollision" : true,
+    "physicsEffectCategories" : []
+  },
+
+  "loungePositions" : {
+    "drivingSeat" : {
+      "part" : "cockpit",
+      "partAnchor" : "driverSeatPosition",
+      "orientation" : "stand",
+      "statusEffects" : ["highprotection"]
+    },
+    "passengerSeat1" : {
+      "part" : "cockpit",
+      "partAnchor" : "passengerSeatPosition1",
+      "orientation" : "stand",
+      "statusEffects" : ["highprotection"]
+    },
+    "passengerSeat2" : {
+      "part" : "cockpit",
+      "partAnchor" : "passengerSeatPosition2",
+      "orientation" : "stand",
+      "statusEffects" : ["highprotection"]
+    },
+    "passengerSeat3" : {
+      "part" : "cockpit",
+      "partAnchor" : "passengerSeatPosition3",
+      "orientation" : "stand",
+      "statusEffects" : ["highprotection"]
+    },
+    "passengerSeat4" : {
+      "part" : "cockpit",
+      "partAnchor" : "passengerSeatPosition4",
+      "orientation" : "stand",
+      "statusEffects" : ["highprotection"]
+    }
+  },
+
+  "physicsCollisions" : {
+    "cockpit" : {
+      "collision" : [ [-2.0, -2.375], [2.0, -2.4375] ],
+	  "collisionKind" : "platform",
+      "attachToPart" : "cockpit"
+    },
+    "roof" : {
+      "collision" : [ [-5.125, 3.75], [5.125, 3.6875] ],
+	  "collisionKind" : "platform",
+      "attachToPart" : "cockpit"
+    }
+  },
+
+  "railConfig" : {
+    "speed" : 10,
+	"useGravity" : true,
+    "gravityMultiplier" : 0.8
+  },
+  
+  "imgPath" : "/vehicles/subwayTrain.linked/",
+  "firstCar" : true,
+  "lastCar" : false,
+  "spawnedCarOffsetY" : 0.50,
+
+  "popItem" : "SubwayTram-linked"
+}

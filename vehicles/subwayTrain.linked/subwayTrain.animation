@@ -1,0 +1,510 @@
+{
+  "animatedParts" : {
+    "stateTypes" : {
+      "rail" : {
+        "default" : "onRail",
+        "states" : {
+          "onRail" : {
+            "frames" : 2,
+            "cycle" : 0.25,
+            "mode" : "loop"
+          },
+		  "opening" : {
+            "frames" : 3,
+            "cycle" : 0.25,
+            "mode" : "transition",
+            "transition" : "opened"
+          },
+		  "opened" : {
+		  "frames" : 1
+          },
+		  "closing" : {
+            "frames" : 3,
+            "cycle" : 0.25,
+            "mode" : "transition",
+            "transition" : "onRail"
+          }
+       }
+     },
+	  "pantograph" : {
+        "default" : "hidden",
+        "states" : {
+          "hidden" : {
+		    "frames" : 1
+          },
+		  "visible" : {
+		    "frames" : 1
+          }
+        }
+      }
+    },
+
+    "parts" : {
+      "cockpit" : {
+        "properties" : {
+          "centered" : true,
+          "offset" : [0.0, 3.75],
+          "zLevel" : 0,
+		  "driverSeatPosition" : [0.0, 0.25],
+          "passengerSeatPosition1" : [-1.0, 0.25],
+          "passengerSeatPosition2" : [1.0, 0.25],
+          "passengerSeatPosition3" : [-3.375, 0.25],
+          "passengerSeatPosition4" : [3.375, 0.25],
+		  "rotationGroup" : "cockpit",
+		  "transformationGroups" : ["flip", "rotation"]
+        },
+
+        "partStates" : {
+          "rail" : {
+            "onRail" : {
+              "properties" : {
+                "image" : "<partImage>:onRail.<frame>"
+              }
+            },
+			"opening" : {
+              "properties" : {
+                "image" : "<partImage>:opening.<frame>"
+              }
+            },
+			"opened" : {
+              "properties" : {
+                "image" : "<partImage>:open"
+              }
+            },
+			"closing" : {
+              "properties" : {
+                "image" : "<partImage>:closing.<frame>"
+              }
+            }
+          }
+        }
+      },
+	  "bodyColor" : {
+        "properties" : {
+          "centered" : true,
+          "offset" : [0.0, 3.75],
+          "zLevel" : 1,
+		  "rotationGroup" : "cockpit",
+		  "transformationGroups" : ["flip", "rotation"]
+        },
+
+        "partStates" : {
+          "rail" : {
+            "onRail" : {
+              "properties" : {
+                "image" : "<partImage>:onRail.<frame>"
+              }
+            },
+			"opening" : {
+              "properties" : {
+                "image" : "<partImage>:opening.<frame>"
+              }
+            },
+			"opened" : {
+              "properties" : {
+                "image" : "<partImage>:open"
+              }
+            },
+			"closing" : {
+              "properties" : {
+                "image" : "<partImage>:closing.<frame>"
+              }
+            }
+          }
+        }
+      },
+	  "decalA" : {
+        "properties" : {
+          "centered" : true,
+          "offset" : [0.0, 3.75],
+          "zLevel" : 2,
+		  "rotationGroup" : "cockpit",
+		  "transformationGroups" : ["decalA", "rotation"]
+        },
+
+        "partStates" : {
+          "rail" : {
+            "onRail" : {
+              "properties" : {
+                "image" : "<partImage>:onRail.<frame>"
+              }
+            },
+			"opening" : {
+              "properties" : {
+                "image" : "<partImage>:opening.<frame>"
+              }
+            },
+			"opened" : {
+              "properties" : {
+                "image" : "<partImage>:open"
+              }
+            },
+			"closing" : {
+              "properties" : {
+                "image" : "<partImage>:closing.<frame>"
+              }
+            }
+          }
+        }
+      },
+	  "decalB" : {
+        "properties" : {
+          "centered" : true,
+          "offset" : [0.0, 3.75],
+          "zLevel" : 3,
+		  "rotationGroup" : "cockpit",
+		  "transformationGroups" : ["decalB", "rotation"]
+        },
+
+        "partStates" : {
+          "rail" : {
+            "onRail" : {
+              "properties" : {
+                "image" : "<partImage>:onRail.<frame>"
+              }
+            },
+			"opening" : {
+              "properties" : {
+                "image" : "<partImage>:opening.<frame>"
+              }
+            },
+			"opened" : {
+              "properties" : {
+                "image" : "<partImage>:open"
+              }
+            },
+			"closing" : {
+              "properties" : {
+                "image" : "<partImage>:closing.<frame>"
+              }
+            }
+          }
+        }
+      },
+	  "decalC" : {
+        "properties" : {
+          "centered" : true,
+          "offset" : [0.0, 3.75],
+          "zLevel" : 4,
+		  "rotationGroup" : "cockpit",
+		  "transformationGroups" : ["decalC", "rotation"]
+        },
+
+        "partStates" : {
+          "rail" : {
+            "onRail" : {
+              "properties" : {
+                "image" : "<partImage>:onRail.<frame>"
+              }
+            },
+			"opening" : {
+              "properties" : {
+                "image" : "<partImage>:opening.<frame>"
+              }
+            },
+			"opened" : {
+              "properties" : {
+                "image" : "<partImage>:open"
+              }
+            },
+			"closing" : {
+              "properties" : {
+                "image" : "<partImage>:closing.<frame>"
+              }
+            }
+          }
+        }
+      },
+	  "decalD" : {
+        "properties" : {
+          "centered" : true,
+          "offset" : [0.0, 3.75],
+          "zLevel" : 5,
+		  "rotationGroup" : "cockpit",
+		  "transformationGroups" : ["decalD", "rotation"]
+        },
+
+        "partStates" : {
+          "rail" : {
+            "onRail" : {
+              "properties" : {
+                "image" : "<partImage>:onRail.<frame>"
+              }
+            },
+			"opening" : {
+              "properties" : {
+                "image" : "<partImage>:opening.<frame>"
+              }
+            },
+			"opened" : {
+              "properties" : {
+                "image" : "<partImage>:open"
+              }
+            },
+			"closing" : {
+              "properties" : {
+                "image" : "<partImage>:closing.<frame>"
+              }
+            }
+          }
+        }
+      },
+	  "decalE" : {
+        "properties" : {
+          "centered" : true,
+          "offset" : [0.0, 3.75],
+          "zLevel" : 6,
+		  "rotationGroup" : "cockpit",
+		  "transformationGroups" : ["decalE", "rotation"]
+        },
+
+        "partStates" : {
+          "rail" : {
+            "onRail" : {
+              "properties" : {
+                "image" : "<partImage>:onRail.<frame>"
+              }
+            },
+			"opening" : {
+              "properties" : {
+                "image" : "<partImage>:opening.<frame>"
+              }
+            },
+			"opened" : {
+              "properties" : {
+                "image" : "<partImage>:open"
+              }
+            },
+			"closing" : {
+              "properties" : {
+                "image" : "<partImage>:closing.<frame>"
+              }
+            }
+          }
+        }
+      },
+	  "decalF" : {
+        "properties" : {
+          "centered" : true,
+          "offset" : [0.0, 3.75],
+          "zLevel" : 7,
+		  "rotationGroup" : "cockpit",
+		  "transformationGroups" : ["decalF", "rotation"]
+        },
+
+        "partStates" : {
+          "rail" : {
+            "onRail" : {
+              "properties" : {
+                "image" : "<partImage>:onRail.<frame>"
+              }
+            },
+			"opening" : {
+              "properties" : {
+                "image" : "<partImage>:opening.<frame>"
+              }
+            },
+			"opened" : {
+              "properties" : {
+                "image" : "<partImage>:open"
+              }
+            },
+			"closing" : {
+              "properties" : {
+                "image" : "<partImage>:closing.<frame>"
+              }
+            }
+          }
+        }
+      },
+	  "decalG" : {
+        "properties" : {
+          "centered" : true,
+          "offset" : [0.0, 3.75],
+          "zLevel" : 8,
+		  "rotationGroup" : "cockpit",
+		  "transformationGroups" : ["decalG", "rotation"]
+        },
+
+        "partStates" : {
+          "rail" : {
+            "onRail" : {
+              "properties" : {
+                "image" : "<partImage>:onRail.<frame>"
+              }
+            },
+			"opening" : {
+              "properties" : {
+                "image" : "<partImage>:opening.<frame>"
+              }
+            },
+			"opened" : {
+              "properties" : {
+                "image" : "<partImage>:open"
+              }
+            },
+			"closing" : {
+              "properties" : {
+                "image" : "<partImage>:closing.<frame>"
+              }
+            }
+          }
+        }
+      },
+	  "decalH" : {
+        "properties" : {
+          "centered" : true,
+          "offset" : [0.0, 3.75],
+          "zLevel" : 9,
+		  "rotationGroup" : "cockpit",
+		  "transformationGroups" : ["decalH", "rotation"]
+        },
+
+        "partStates" : {
+          "rail" : {
+            "onRail" : {
+              "properties" : {
+                "image" : "<partImage>:onRail.<frame>"
+              }
+            },
+			"opening" : {
+              "properties" : {
+                "image" : "<partImage>:opening.<frame>"
+              }
+            },
+			"opened" : {
+              "properties" : {
+                "image" : "<partImage>:open"
+              }
+            },
+			"closing" : {
+              "properties" : {
+                "image" : "<partImage>:closing.<frame>"
+              }
+            }
+          }
+        }
+      },
+	  "decalI" : {
+        "properties" : {
+          "centered" : true,
+          "offset" : [0.0, 3.75],
+          "zLevel" : 10,
+		  "rotationGroup" : "cockpit",
+		  "transformationGroups" : ["decalI", "rotation"]
+        },
+
+        "partStates" : {
+          "rail" : {
+            "onRail" : {
+              "properties" : {
+                "image" : "<partImage>:onRail.<frame>"
+              }
+            },
+			"opening" : {
+              "properties" : {
+                "image" : "<partImage>:opening.<frame>"
+              }
+            },
+			"opened" : {
+              "properties" : {
+                "image" : "<partImage>:open"
+              }
+            },
+			"closing" : {
+              "properties" : {
+                "image" : "<partImage>:closing.<frame>"
+              }
+            }
+          }
+        }
+      },
+	  "decalJ" : {
+        "properties" : {
+          "centered" : true,
+          "offset" : [0.0, 3.75],
+          "zLevel" : 11,
+		  "rotationGroup" : "cockpit",
+		  "transformationGroups" : ["decalJ", "rotation"]
+        },
+
+        "partStates" : {
+          "rail" : {
+            "onRail" : {
+              "properties" : {
+                "image" : "<partImage>:onRail.<frame>"
+              }
+            },
+			"opening" : {
+              "properties" : {
+                "image" : "<partImage>:opening.<frame>"
+              }
+            },
+			"opened" : {
+              "properties" : {
+                "image" : "<partImage>:open"
+              }
+            },
+			"closing" : {
+              "properties" : {
+                "image" : "<partImage>:closing.<frame>"
+              }
+            }
+          }
+        }
+      },
+	  "pantograph" : {
+        "properties" : {
+          "centered" : true,
+          "offset" : [0.0, 8.625],
+          "zLevel" : 1,
+		  "rotationGroup" : "cockpit",
+		  "transformationGroups" : ["flip", "rotation"]
+        },
+
+        "partStates" : {
+          "pantograph" : {
+            "hidden" : {
+              "properties" : {
+                "image" : "<partImage>:hidden"
+              }
+            },
+			"visible" : {
+              "properties" : {
+                "image" : "<partImage>:visible"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  
+  "rotationGroups" : {
+    "cockpit" : {
+      "rotationCenter" : [0, 0],
+      "angularVelocity" : 7.5
+    }
+  },
+  
+  "transformationGroups" : {
+    "rotation" : {
+      "interpolated" : true
+    },
+    "flip" : {},
+    "decalA" : {},
+    "decalB" : {},
+    "decalC" : {},
+    "decalD" : {},
+    "decalE" : {},
+    "decalF" : {},
+    "decalG" : {},
+    "decalH" : {},
+    "decalI" : {},
+    "decalJ" : {}
+  },
+  
+  "sounds" : {
+    "grind" : [ "/sfx/rails/rail_grind_loop.ogg" ]
+  }
+}

@@ -1,0 +1,167 @@
+{
+  "name" : "XXLSubwayTram-linked",
+  "boundBox" : [-9.125, -4, 9.125, 5.0],
+  "slaveControlTimeout" : 2.0,
+  "slaveControlHeartbeat" : 1.0,
+  "canBeHit" : false,
+
+  "persistent" : true,
+
+  "script" : "/vehicles/subwayTrain.linked/subwayTram.lua",
+  "animation" : "/vehicles/XXLsubwayTrain.linked/XXLSubwayTram.animation",
+
+  "animationPartTags" : {
+    "cockpit" : {
+      "partImage" : "/vehicles/XXLsubwayTrain.linked/cockpitred.png"
+    },
+    "bodyColor" : {
+      "partImage" : "/vehicles/XXLsubwayTrain.linked/blue.png"
+    },
+    "decalA" : {
+      "partImage" : "/vehicles/XXLsubwayTrain.linked/decalPlaceholder.png"
+    },
+    "decalB" : {
+      "partImage" : "/vehicles/XXLsubwayTrain.linked/decalPlaceholder.png"
+    },
+    "decalC" : {
+      "partImage" : "/vehicles/XXLsubwayTrain.linked/decalPlaceholder.png"
+    },
+    "decalD" : {
+      "partImage" : "/vehicles/XXLsubwayTrain.linked/decalPlaceholder.png"
+    },
+    "decalE" : {
+      "partImage" : "/vehicles/XXLsubwayTrain.linked/decalPlaceholder.png"
+    },
+    "decalF" : {
+      "partImage" : "/vehicles/XXLsubwayTrain.linked/decalPlaceholder.png"
+    },
+    "decalG" : {
+      "partImage" : "/vehicles/XXLsubwayTrain.linked/decalPlaceholder.png"
+    },
+    "decalH" : {
+      "partImage" : "/vehicles/XXLsubwayTrain.linked/decalPlaceholder.png"
+    },
+    "decalI" : {
+      "partImage" : "/vehicles/XXLsubwayTrain.linked/decalPlaceholder.png"
+    },
+    "decalJ" : {
+      "partImage" : "/vehicles/XXLsubwayTrain.linked/decalPlaceholder.png"
+    },
+    "pantograph" : {
+      "partImage" : "/vehicles/XXLsubwayTrain.linked/pantograph.png"
+    }
+  },
+
+  "movementSettings" : {
+    "collisionPoly" : [ [-9.125, 0.375], [9.125, 0.375], [9.125, 7.5], [-9.125, 7.5] ],
+    "mass" : 2.0,
+    "ignorePlatformCollision" : true,
+    "physicsEffectCategories" : []
+  },
+
+  "loungePositions" : {
+    "drivingSeat" : {
+      "part" : "cockpit",
+      "partAnchor" : "driverSeatPosition",
+      "orientation" : "stand",
+      "statusEffects" : ["highprotection", "breathprotectionvehicle", "biomecold"]
+    },
+    "passengerSeat1" : {
+      "part" : "cockpit",
+      "partAnchor" : "passengerSeatPosition1",
+      "orientation" : "stand",
+      "statusEffects" : ["highprotection", "breathprotectionvehicle", "biomecold"]
+    },
+    "passengerSeat2" : {
+      "part" : "cockpit",
+      "partAnchor" : "passengerSeatPosition2",
+      "orientation" : "stand",
+      "statusEffects" : ["highprotection", "breathprotectionvehicle", "biomecold"]
+    },
+    "passengerSeat3" : {
+      "part" : "cockpit",
+      "partAnchor" : "passengerSeatPosition3",
+      "orientation" : "stand",
+      "statusEffects" : ["highprotection", "breathprotectionvehicle", "biomecold"]
+    },
+    "passengerSeat4" : {
+      "part" : "cockpit",
+      "partAnchor" : "passengerSeatPosition4",
+      "orientation" : "stand",
+      "statusEffects" : ["highprotection", "breathprotectionvehicle", "biomecold"]
+    },
+    "passengerSeat5" : {
+      "part" : "cockpit",
+      "partAnchor" : "passengerSeatPosition5",
+      "orientation" : "stand",
+      "statusEffects" : ["highprotection", "breathprotectionvehicle", "biomecold"]
+    },
+    "passengerSeat6" : {
+      "part" : "cockpit",
+      "partAnchor" : "passengerSeatPosition6",
+      "orientation" : "stand",
+      "statusEffects" : ["highprotection", "breathprotectionvehicle", "biomecold"]
+    },
+    "passengerSeat7" : {
+      "part" : "cockpit",
+      "partAnchor" : "passengerSeatPosition7",
+      "orientation" : "stand",
+      "statusEffects" : ["highprotection", "breathprotectionvehicle", "biomecold"]
+    },
+    "passengerSeat8" : {
+      "part" : "cockpit",
+      "partAnchor" : "passengerSeatPosition8",
+      "orientation" : "stand",
+      "statusEffects" : ["highprotection", "breathprotectionvehicle", "biomecold"]
+    },
+    "passengerSeat9" : {
+      "part" : "cockpit",
+      "partAnchor" : "passengerSeatPosition9",
+      "orientation" : "stand",
+      "statusEffects" : ["highprotection", "breathprotectionvehicle", "biomecold"]
+    },
+    "passengerSeat10" : {
+      "part" : "cockpit",
+      "partAnchor" : "passengerSeatPosition10",
+      "orientation" : "stand",
+      "statusEffects" : ["highprotection", "breathprotectionvehicle", "biomecold"]
+    },
+    "passengerSeat11" : {
+      "part" : "cockpit",
+      "partAnchor" : "passengerSeatPosition11",
+      "orientation" : "stand",
+      "statusEffects" : ["highprotection", "breathprotectionvehicle", "biomecold"]
+    }
+  },
+
+  "physicsCollisions" : {
+    "doorsRight": {
+      "collision" : [ [4.0, -2.375], [7.5, -2.4375] ],
+	  "collisionKind" : "platform",
+      "attachToPart" : "cockpit"
+    },
+    "doorsLeft": {
+      "collision" : [ [-4.0, -2.375], [-7.5, -2.4375] ],
+	  "collisionKind" : "platform",
+      "attachToPart" : "cockpit"
+    },
+    "roof" : {
+      "collision" : [ [-9.125, 3.75], [9.125, 3.6875] ],
+	  "collisionKind" : "platform",
+      "attachToPart" : "cockpit"
+    }
+  },
+
+  "railConfig" : {
+    "speed" : 10,
+	"useGravity" : true,
+    "gravityMultiplier" : 0.8
+  },
+
+  "imgPath" : "/vehicles/XXLsubwayTrain.linked/",
+  "spawnedCarOffsetY" : 0.50,
+  "firstCar" : true,
+  "lastCar" : false,
+
+  "popItem" : "SubwayTram-linked"
+}
