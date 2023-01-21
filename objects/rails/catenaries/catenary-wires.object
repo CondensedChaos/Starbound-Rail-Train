@@ -1,0 +1,54 @@
+{
+  "objectName" : "catenary-wires",
+  "colonyTags" : ["rails"],
+  "rarity" : "Common",
+  "description" : "Catenary wires",
+  "shortdescription" : "Catenary wires",
+  "race" : "generic",
+  "category" : "decorative",
+  "printable" : false,
+  "price" : 1,
+
+  "apexDescription" : "Catenary wires",
+  "avianDescription" : "Catenary wires",
+  "floranDescription" : "Catenary wiresss",
+  "glitchDescription" : "Catenary wires",
+  "humanDescription" : "Catenary wires",
+  "hylotlDescription" : "Catenary wires",
+  "novakidDescription" : "Catenary wires",
+
+  "inventoryIcon" : "catenary-wires.png",
+  "orientations" : [
+    {
+      "image" : "catenary-wires.png:<color>",
+      "direction" : "left",
+      "flipImages" : true,
+
+      "imagePosition" : [-2, -2],
+      "frames" : 1,
+      "animationCycle" : 1.0,
+
+      "spaceScan" : 0.8,
+      "anchors" : [ "background" ]
+
+    },
+    {
+      "image" : "catenary-wires.png:<color>",
+      "direction" : "right",
+
+      "imagePosition" : [-2, -2],
+      "frames" : 1,
+      "animationCycle" : 1.0,
+
+      "spaceScan" : 0.8,
+      "anchors" : [ "background" ]
+
+    }
+  ],
+  "animation" : "catenary-wires.animation",
+  "animationParts" : {
+    "default" : "catenary-wires.png"
+  }
+  //"animationPosition" : [-2, -2]
+  
+}

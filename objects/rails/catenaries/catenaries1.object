@@ -8,34 +8,62 @@
   "description" : "---------",
   "shortdescription" : "----------",
   "race" : "generic",
-  //"zlevel" : -16,
 
-  "inventoryIcon" : "railboostericon.png",
+  "inventoryIcon" : "catenariesicon.png",
   "orientations" : [
     {
-      "image" : "girder.png:default",
-      "imagePosition" : [-24, 0],
+      "image" : "preview.png:default",
+      "direction" : "right",
+      
+      //"imagePosition" : [-329, -17],
+      "imagePosition" : [-186, -18],
 
       "materialSpaces" : [
-        [[0, 0], "metamaterial:railbooster"]
+        [[0, 0], "metamaterial:rail"]
       ],
 
-      //"fgAnchors" : [[-1, 0], [-1, -1], [0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1]],
-      //"bgAnchors" : [[-8, -8]],
-      //"anchorAny" : true,
-      "anchors" : [ ],
-      "renderLayer" : "platform",
+      "fgAnchors" : [[-1, 0], [-1, -1], [0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1]],
+      "bgAnchors" : [[0, 0]],
+      "anchorAny" : true,
+      
+      "renderLayer" : "Object+1"
 
-      "direction" : "right"
+    },
+    {
+      "image" : "preview.png:default",
+      "direction" : "left",
+      "flipImages" : true,
+      
+      //"imagePosition" : [-329, -17],
+      "imagePosition" : [-191, -18],
+
+      "materialSpaces" : [
+        [[0, 0], "metamaterial:rail"]
+      ],
+
+      "fgAnchors" : [[-1, 0], [-1, -1], [0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1]],
+      "bgAnchors" : [[0, 0]],
+      "anchorAny" : true,
+      
+      "renderLayer" : "Object+1",
+      "animationPosition" : [-104, -2]
+      
     }
   ],
   
-  "scripts" : [ "/objects/rails/catenaries/catenaries.lua" ],
-  "scriptDelta" : 120,
-
   "animation" : "catenaries1.animation",
   "animationParts" : {
-    "girder" : "girder.png"
+    "girder" : "girder.png",
+    "stop" : "railChunkLoader.png",
+    "stopfullbright" : "railChunkLoaderfullbright.png"
   },
-  "animationPosition" : [-2, -2]
+  "animationPosition" : [-2, -2],
+  
+  "scripts" : [ "/objects/rails/catenaries/catenaries.lua" ],
+  "scriptDelta" : 30,
+  
+  "inputNodes" : [ [0, 0] ],
+
+  "resumeSpeed" : 10
+  
 }

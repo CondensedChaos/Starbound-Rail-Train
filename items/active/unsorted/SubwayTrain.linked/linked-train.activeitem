@@ -1,0 +1,25 @@
+﻿{
+  "itemName" : "linked-train",
+  "level" : 1,
+  "price" : 475,
+  "rarity" : "rare",
+  "category" : "railPlatform",
+  "linkedRailTrain" : true,
+  "description" : "linked train",
+  "shortdescription" : "linked train",
+  "twoHanded" : true,
+  "maxStack" : 999,
+
+
+  "inventoryIcon" : "linked-train-icon.png",
+
+  "scripts" : ["railplatform.lua"],
+  "animationScripts" : ["placementpreview.lua"],
+
+  "placementRange" : 15,
+  "placementBounds" : [-2.5, -0.25, 2.5, 0.75],
+  "placementPreviewImage" : "/items/active/unsorted/SubwayTrain.linked/cyanSubwayTramL1preview.png",
+
+ "imgPath" : "/interface/linkedTrain/trainConfigurator/"
+
+}

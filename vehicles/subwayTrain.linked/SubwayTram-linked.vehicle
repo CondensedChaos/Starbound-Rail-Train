@@ -7,7 +7,7 @@
 
   "persistent" : true,
 
-  "script" : "/vehicles/subwayTrain.linked/subwayTram.lua",
+  "script" : "/scripts/linkedTrain.lua",
   "animation" : "/vehicles/subwayTrain.linked/subwayTrain.animation",
 
   "animationPartTags" : {
@@ -114,7 +114,5 @@
   "imgPath" : "/vehicles/subwayTrain.linked/",
   "firstCar" : true,
   "lastCar" : false,
-  "spawnedCarOffsetY" : 0.50,
-
-  "popItem" : "SubwayTram-linked"
+  "spawnedCarOffsetY" : 0.50
 }

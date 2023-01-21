@@ -2,6 +2,7 @@ require "/scripts/rect.lua"
 
 function init()
   self.listOfCars = root.assetJson("/objects/crafting/trainConfigurator/listOfCars.json")
+  self.settingsConfig = root.assetJson("/interface/linkedTrain/trainConfigurator/settings.json")
   
   self.placementRange = config.getParameter("placementRange")
   self.placementBounds = config.getParameter("placementBounds")
@@ -9,7 +10,8 @@ function init()
   self.imgPath = config.getParameter("imgPath")
   --self.trainsetData = { { name= "SubwayTram-linked", carNumber= 1, color= "cyan", cockpitColor= "red", pantographVisibile= true,  doorLocked= false, reversed= false, carDistance= 22.75, decalNames= {"A"}, decals= {A= 0} }, { name= "SubwayTram-linked", carNumber= 2, color= "cyan", cockpitColor= "red", pantographVisibile= false,  doorLocked= false, reversed= false, carDistance= 22.75, decalNames= {"A"}, decals= {A= 0} }, { name= "SubwayTram-linked", carNumber= 3, color= "cyan", cockpitColor= "red", pantographVisibile= true,  doorLocked= false, reversed= true, carDistance= 22.75, decalNames= {"A"}, decals= {A= 0} } }
   
-  self.defaultTrainset = config.getParameter("DefaultTrainset")
+  self.defaultTrainset = self.settingsConfig.defaultTrainset
+  self.itemName = self.settingsConfig.itemName
   self.numberOfCars = config.getParameter("numberOfCars")
   
   self.trainsetData = config.getParameter("trainsetData")
@@ -28,7 +30,7 @@ function init()
 	self.trainsetData[i].carNumber = i
   end
   
-  tprint(self.trainsetData)
+  --tprint(self.trainsetData)
   
   --self.previewImgsArray{ body,cockpit,pantograph,decal1, .. decalN}, {body,cockpit,pantograph,decal1, .. decalN} } ={ {car1data}, {car2data} }
   
@@ -73,7 +75,11 @@ function init()
 	  for j=1,numberOfDecals do
 		currentDecal = decalnames[j]
 		currentDecalSprite = decalsTable[currentDecal]
-		self.previewImgsArray[i][3+j] = tostring(self.imgPath) .. tostring(vehicleName) .. "/decal" .. tostring(currentDecal) .. "/" .. tostring(currentDecalSprite) .. ".png"
+		if currentDecalSprite == "0" then
+		  self.previewImgsArray[i][3+j] = tostring(self.imgPath) .. "empty.png"
+		else
+		  self.previewImgsArray[i][3+j] = tostring(self.imgPath) .. tostring(vehicleName) .. "/decal" .. tostring(currentDecal) .. "/" .. tostring(currentDecalSprite) .. ".png"
+		end
 		--sb.logInfo(self.previewImgsArray[i][3+j])
 		flipTable[i][3+j] = decalsFlippableTable[currentDecal][indexOf(decalsIndexes[currentDecal], currentDecalSprite)]
 	  end
@@ -141,40 +147,38 @@ end
 
 function activate(fireMode, shiftHeld)
   local placePos = activeItem.ownerAimPosition()
-  local carParams = {}
+  local parameters = {}
   local vehicleName = self.trainsetData[1].name
   
-  carParams.cockpitColor =  self.trainsetData[1].cockpitColor
+  parameters.cockpitColor =  self.trainsetData[1].cockpitColor
   
-  carParams.initialFacing = mcontroller.facingDirection()
-  --carParams.parentCarEid = nil
-  carParams.numberOfCars = self.numberOfCars
+  parameters.initialFacing = mcontroller.facingDirection()
 
-  --carParams.carDistance = storage.childCarDistance
-  --carParams.carDistance = self.trainsetData[1].carDistance
-  --carParams.spawnedCarOffsetX = storage.spawnedCarOffsetX
-  --carParams.spawnedCarOffsetY = storage.spawnedCarOffsetY
-  carParams.color = self.trainsetData[1].color
-  carParams.decalNames = self.trainsetData[1].decalNames
-  carParams.decals = self.trainsetData[1].decals
-  carParams.pantographVisible = self.trainsetData[1].pantographVisibile
-  carParams.doorLocked = self.trainsetData[1].doorLocked
-  carParams.trainsetData = self.trainsetData
-  carParams.specular = self.listOfCars[vehicleName].specular
-  carParams.reversed = self.trainsetData[1].reversed
+  parameters.numberOfCars = self.numberOfCars
+  parameters.popItem = self.itemName
+
+  parameters.color = self.trainsetData[1].color
+  parameters.decalNames = self.trainsetData[1].decalNames
+  parameters.decals = self.trainsetData[1].decals
+  parameters.pantographVisible = self.trainsetData[1].pantographVisibile
+  parameters.doorLocked = self.trainsetData[1].doorLocked
+  parameters.trainsetData = self.trainsetData
+  parameters.specular = self.listOfCars[vehicleName].specular
+  parameters.reversed = self.trainsetData[1].reversed
   
-  carParams.firstCar = true
-  carParams.lastcar = false
-  carParams.carNumber = 1
+  parameters.firstCar = true
+  parameters.lastcar = false
+  parameters.carNumber = 1
   
   if placementValid(placePos) then
-    world.spawnVehicle(vehicleName, placePos, carParams)
+    world.spawnVehicle(vehicleName, placePos, parameters)
     item.consume(1)
   end
 end
 
 function update(dt, fireMode, shiftHeld)
   local placePos = activeItem.ownerAimPosition()
+  placePos[2] = placePos[2] + (self.listOfCars[self.trainsetData[1].name].carHeightPixels / 16 )
   activeItem.setScriptedAnimationParameter("previewPosition", placePos)
   activeItem.setScriptedAnimationParameter("previewValid", placementValid(placePos))
   activeItem.setScriptedAnimationParameter("numberOfCars", self.numberOfCars)
