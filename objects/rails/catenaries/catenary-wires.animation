@@ -1,0 +1,31 @@
+{
+  "animatedParts" : {
+    "stateTypes" : {
+      "default" : {
+        "default" : "default",
+        "states" : {
+          "default" : {}
+        }
+      }
+    },
+
+    "parts" : {
+      "default" : {
+        "properties" : {
+          "centered" : false,
+          "offset" : [-0.250, -0.125]
+        },
+
+        "partStates" : {
+          "default" : {
+            "default" : {
+              "properties" : {
+                "image" : "<partImage>:default"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

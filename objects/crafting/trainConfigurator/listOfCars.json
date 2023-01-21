@@ -4,18 +4,20 @@
     "description" : "subway train car", 
     //longDescription will appear under the preview
     
-    "LongDescription" : "Small light rail car for passengers transportation, suitable for tracks with several slopes\npassengers capacity: 5",
+    "LongDescription" : "Small light rail car for passengers transportation, suitable for rail tracks with several slopes\npassengers capacity: 5",
+    "price" : 1000,
     "imgPath" : "/vehicles/subwayTrain.linked/",
-    "colors": ["blue", "red", "cyan", "white"],
-    "cockpitColors" : ["red", "blue", "white"],
+    "colors": ["blue", "red", "cyan", "white", "yellow"],
+    "cockpitColors" : ["red", "blue", "white", "yellow"],
     "carLenghtPixels" : 83,
+    "carHeightPixels" : 79, //including pantograph minus 1 pixel
     "hasPantograph" : true, //if it has a pantograph sprite
     "hasDecals" : true,
     "specular" : true,
     "decalNames" : ["A", "B", "C"],//optional, decals
     "decals" : { // [[<decal1NameString> , <decal0> , ..<decalN], [<decal2NameString> , <decal0> , ..<decalN>]]
-      "A" : [0, 1, 2, 3], //<decal1String><decal0> is the sprite of decal1 with no decal
-      "B" : [0, 1, 2],
+      "A" : [0, 1, 2, 3, 4], //<decal1String><decal0> is the sprite of decal1 with no decal
+      "B" : [0, 1, 2, 3, 4],
       "C" : [0, 1]
     },
     "DisplayNames" : {
@@ -23,7 +25,7 @@
       "cockpit" : "Top",
       "decals" : {
         "A" : "Roof",
-        "B" : "Side",
+        "B" : "Center",
         "C" : "Graffiti"
       }
     },
@@ -35,28 +37,28 @@
   },   
   "XXLSubwayTram-linked" : {
     "description" : "Long subway train car", 
-    "LongDescription" : "Light rail car for passengers transportation like the ones found in subways, suitable for straight line tracks\npassengers capacity: 12",
+    "LongDescription" : "Light rail car for passengers transportation like the ones found in subways, suitable for straight line rail tracks\npassengers capacity: 12",
+    "price" : 1500,
     "imgPath" : "/vehicles/XXLsubwayTrain.linked/",
     "colors": ["blue", "red", "cyan", "white", "yellow"],
     "cockpitColors" : ["red", "blue", "white", "yellow"],
     "carLenghtPixels" : 145,
+    "carHeightPixels" : 79,
     "hasPantograph" : true, 
     "hasDecals" : true,
     "specular" : true,
-    "decalNames" : ["A", "B", "C", "D"],
+    "decalNames" : ["A", "B", "C"],
     "decals" : {
-      "A" : [0, 1, 2, 3], 
-      "B" : [0, 1, 2, 3],
-      "C" : [0, 1, 2, 3]
-      "D" : [0, 1]
+      "A" : [0, 1, 2, 3, 4], 
+      "B" : [0, 1, 2, 3, 4],
+      "C" : [0, 1]
     },
     "DisplayNames" : {
       "color" : "Bottom",
       "cockpit" : "Top",
       "decals" : {
         "A" : "Roof",
-        "B" : "LwrSide",
-        "C" : "UpprSide",
+        "B" : "Center",
         "C" : "Graffiti"
       }
     },

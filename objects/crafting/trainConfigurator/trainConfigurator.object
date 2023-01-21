@@ -39,11 +39,12 @@
       "anchors" : [ "bottom" ]
     }
   ],
+ 
   
   "slotCount" : 1,
 
   "containerCallback": "containerCallback",
-  "uiConfig" : "/objects/crafting/trainConfigurator/trainConfiguratorGui.config",
+  "uiConfig" : "/interface/linkedTrain/trainConfigurator/trainConfiguratorGui.config",
   "frameCooldown" : 5,
   "autoCloseCooldown" : 36000
 

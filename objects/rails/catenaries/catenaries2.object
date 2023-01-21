@@ -1,0 +1,68 @@
+{
+  "objectName" : "catenaries2",
+  "colonyTags" : ["rails"],
+  "rarity" : "Common",
+
+  "category" : "railPoint",
+  "price" : 400,
+  "description" : "---------",
+  "shortdescription" : "----------",
+  "race" : "generic",
+
+  "inventoryIcon" : "catenariesicon.png",
+  "orientations" : [
+    {
+      "image" : "preview2.png:default",
+      "direction" : "right",
+      
+      "imagePosition" : [-162, -18],
+
+      "materialSpaces" : [
+        [[0, 0], "metamaterial:rail"]
+      ],
+
+      "fgAnchors" : [[-1, 0], [-1, -1], [0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1]],
+      "bgAnchors" : [[0, 0]],
+      "anchorAny" : true,
+      
+      "renderLayer" : "Object+1"
+ 
+    },
+    {
+      "image" : "preview2.png:default",
+      "direction" : "left",
+      "flipImages" : true,
+      
+      "imagePosition" : [-159, -18],
+
+      "materialSpaces" : [
+        [[0, 0], "metamaterial:rail"]
+      ],
+
+      "fgAnchors" : [[-1, 0], [-1, -1], [0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1]],
+      "bgAnchors" : [[0, 0]],
+      "anchorAny" : true,
+      
+      "renderLayer" : "Object+1",
+      
+      "animationPosition" : [-7, -2]
+      
+    }
+  ],
+  
+  "animation" : "catenaries1.animation",
+  "animationParts" : {
+    "girder" : "girder2.png",
+    "stop" : "railChunkLoader.png",
+    "stopfullbright" : "railChunkLoaderfullbright.png"
+  },
+  "animationPosition" : [-2, -2],
+  
+  "scripts" : [ "/objects/rails/catenaries/catenaries.lua" ],
+  "scriptDelta" : 30,
+  
+  "inputNodes" : [ [0, 0] ],
+
+  "resumeSpeed" : 10
+  
+}

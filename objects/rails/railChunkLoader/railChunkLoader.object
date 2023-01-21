@@ -1,0 +1,45 @@
+{
+  "objectName" : "railchunkloader",
+  "rarity" : "Common",
+
+  "category" : "railPoint",
+  "price" : 50,
+  "description" : "---",
+  "shortdescription" : "Rail Chunk Loader",
+  "race" : "generic",
+
+  "inventoryIcon" : "railChunkLoadericon.png",
+  "orientations" : [
+    {
+      "image" : "preview.png:preview",
+      "imagePosition" : [-305, -2],
+
+      "materialSpaces" : [
+        [[0, 0], "metamaterial:rail"]
+      ],
+
+      "fgAnchors" : [[-1, 0], [-1, -1], [0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1]],
+      "bgAnchors" : [[0, 0]],
+      "anchorAny" : true,
+
+      "direction" : "right"
+    }
+  ],
+
+  "animation" : "railChunkLoader.animation",
+  "animationParts" : {
+    "stop" : "railChunkLoader.png",
+    "stopfullbright" : "railChunkLoaderfullbright.png"
+  },
+  "animationPosition" : [-2, -2],
+
+  "scripts" : [
+    "/objects/rails/railChunkLoader/railChunkLoader.lua"
+  ],
+  //"scriptDelta" : 5,
+  "scriptDelta" : 30,
+  
+  "inputNodes" : [ [0, 0] ],
+
+  "resumeSpeed" : 10
+}
