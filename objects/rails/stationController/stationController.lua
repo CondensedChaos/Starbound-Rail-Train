@@ -7,37 +7,26 @@ function init()
 
   self.countdown = 0
   
-  if storage.state == nil then
-	storage.state = false
-	object.setOutputNodeLevel(1, true)
-  else
-    object.setOutputNodeLevel(0, not storage.state)
-	self.t0 = world.time()
-	object.setOutputNodeLevel(1, true)
-  end
-  
-  
   --if self.uuidtimer0 == nil then
     --self.uuidtimer0 = world.time()
 	--self.uuidtimerBool = true
   --end
   
-  self.uuidInit = true
+  self.uuidInit = false
+  self.init = true
   
   message.setHandler("forceReloadData", forceReloadData)
-  
   message.setHandler("saveSlottedItems", saveSlottedItems)
-  
-  --message.setHandler("forceReloadData", function(_, _)
-    --storage.saveFile = world.getProperty("stationController_file")
-	--sb.logInfo("FORCING DATA RELOAD: ")
-	--sb.logInfo("SAVE FILE AS FOLLOWS: ")
-	--if storage.saveFile then tprint(storage.saveFile) end
-  --end)
+  message.setHandler("startTestRun", startTestRun) --message sent from GUI to station nr1 of group to initiate test run
+  message.setHandler("testRunMode", testRunMode) --message sent from station 1 to other stations of the group to wait for incoming car
+  message.setHandler("endTestRun", endTestRun) --message sent from last station of the group to station 1 to end the test run and calculate times from absolute times stored in save file
+  message.setHandler("testRunCarArrivedAt", testRunCarArrivedAt) --message sent from car when arriving at a station
+  message.setHandler("testRunGetlastCarID", testRunGetlastCarID) --message recieved from last Car with their ID (in case train set invert)
+  message.setHandler("testRunCarInverted", testRunCarInverted) --message received from test run trainset to inform train set has inverted direction (and cars order)
   
 end
 
-function forceReloadData(_,_)
+function forceReloadData(_,_, pane, dontLog)
   storage.saveFile = world.getProperty("stationController_file")
   sb.logInfo("FORCING DATA RELOAD: ")
   local oldnumber = self.stationNum
@@ -47,20 +36,314 @@ function forceReloadData(_,_)
   else
     sb.logInfo("STATION NUMBER " .. tostring(oldnumber) .. "IS NOW NUMBER " .. tostring(self.stationNum))
   end
-  sb.logInfo("SAVE FILE AS FOLLOWS: ")
+  
+  if not dontLog then
+    sb.logInfo("SAVE FILE AS FOLLOWS: ")  
+  end
   
   if storage.saveFile[storage.uuid].grouped then
     storage.group = storage.saveFile[storage.uuid].group
 	storage.grouped = true
 	storage.numInGroup = storage.saveFile[storage.group][storage.uuid].number
+	self.circularLine = storage.saveFile.global[storage.group].data.circular
   end
-  if storage.saveFile then tprint(storage.saveFile) end
+  
+  if storage.saveFile and not dontLog then
+    tprint(storage.saveFile)
+  end
+  
+  if pane then
+    for i=1,storage.saveFile.global.numOfStations do
+      if storage.saveFile[tostring(i)].uuid ~= storage.uuid then
+        local id = world.loadUniqueEntity(tostring(storage.saveFile[tostring(i)].uuid))
+	    if id then
+	      if world.entityExists(id) then
+	        world.sendEntityMessage(id, "forceReloadData", false)
+	      end
+	    end
+	  end
+    end
+  end
+  
 end
 
 function saveSlottedItems(_,_, slot, item)
   storage.slottedItem = item
   sb.logInfo("item saved ")
   if storage.slottedItem then tprint(storage.slottedItem) end
+end
+
+function getOrderedGroupList(groupName)
+
+  local members = {}
+	
+  for k,v in pairs(storage.saveFile[groupName]) do
+	--sb.logInfo("k " .. tostring(k) .. " v " .. tostring(v))
+	local number = storage.saveFile[groupName][k].number
+	--sb.logInfo("number " .. tostring(number))
+    members[number] = k
+	--sb.logInfo("members[number] " .. tostring(members[number]))
+  end
+
+  return members
+ 
+end
+
+function startTestRun(_,_)
+  sb.logInfo("====station nr " .. tostring(storage.numInGroup) .. " group " .. storage.group .. " TEST RUN INIT=====")
+  storage.saveFile = world.getProperty("stationController_file")
+  self.circularLine = storage.saveFile.global[storage.group].data.circular
+  sb.logInfo("CIRCULAR: " .. tostring(self.circularLine))
+  self.waitingToCloseLoop = false
+  self.testRunInit = true
+  self.stationsData = {}
+  local members = {}
+  local index = 0
+  self.nonReadyStations = 0
+  if not self.numOfStationsInGroup then self.numOfStationsInGroup = 0 end
+  
+  self.stationsData = {}
+  self.stationsData.nodePos = {}
+  self.stationsData.id = {}
+  self.stationsData.ready = {}
+  self.stationsData.ready[1] = true
+  self.stationsData.id[1] = entity.id()
+  self.stationsData.nodePos = storage.saveFile.global[storage.group].data.nodesPos
+  for i=2,self.numOfStationsInGroup do
+    self.stationsData.ready[i] = false
+  end
+  
+  for k,v in pairs(storage.saveFile[storage.group]) do
+    self.numOfStationsInGroup = self.numOfStationsInGroup + 1  
+    index = storage.saveFile[storage.group][k].number
+	members[index] = k
+	if k ~= storage.uuid then
+	  local id = world.loadUniqueEntity(k)
+	  if (id ~= nil) and (id ~= 0 ) then
+		self.stationsData.id[index] = id
+		self.stationsData.ready[index] = true
+	  end
+	end
+  end
+  
+  for i=2,self.numOfStationsInGroup do
+    if not self.stationsData.ready[i] then
+      self.nonReadyStations = self.nonReadyStations + 1
+	end
+  end
+  
+  if self.nonReadyStations > 0 then
+    self.testRunReady = false
+  else
+    self.testRunReady = true
+  end
+
+  sb.logInfo("Stations data printed from station ")
+  tprint(self.stationsData)
+  sb.logInfo("testRunReady " .. tostring(self.testRunReady))
+  sb.logInfo("nonReadyStations " .. tostring(self.nonReadyStations))
+  
+  sb.logInfo("NUM OF STATIONS IN GROUP " .. tostring(self.numOfStationsInGroup))
+  storage.saveFile.global[storage.group].data.numOfStations = self.numOfStationsInGroup
+  storage.saveFile.global[storage.group].data.times = {}
+  storage.saveFile.global[storage.group].data.times[1] = 0
+  storage.saveFile.global[storage.group].data.uuids = members
+  
+  world.setProperty("stationController_file", storage.saveFile)
+  
+  if self.testRunReady then
+    testRunInit()
+  end
+  
+end
+
+function getStopPos()
+  local stopPos = {}
+  local stopID = 0
+  if object.isOutputNodeConnected(0) then
+    local stopNodeIDs = object.getOutputNodeIds(0)
+    for k,v in pairs(stopNodeIDs) do
+	    stopID = k
+    end
+    stopPos = world.entityPosition(stopID)
+  end
+  
+  return stopPos
+end
+
+function testRunInit()
+  
+  storage.saveFile = world.getProperty("stationController_file")
+  
+  sb.logInfo("====station nr " .. tostring(storage.numInGroup) .. " group " .. storage.group .. " TEST RUN STARTED=====")
+  
+  self.testRunMode = true
+  sb.logInfo("CIRCULAR: " .. tostring(self.circularLine))
+  
+  --send message to all stations to enter test run mode
+  local vehicleName = storage.slottedItem.parameters.trainsetData[1].name
+  local vehicleParameters = {}
+  local listOfCars = root.assetJson("/objects/crafting/trainConfigurator/listOfCars.json")
+  vehicleParameters.cockpitColor =  storage.slottedItem.parameters.trainsetData[1].cockpitColor
+  vehicleParameters.initialFacing = 1 --account for left or right facing direction
+  vehicleParameters.numberOfCars = 2 --tonumber(storage.slottedItem.parameters.trainsetData.numberOfCars)
+  --vehicleParameters.popItem = self.itemName --account for testrun mode in rail cars and a custom message to destroy chain without popitem
+  vehicleParameters.color = storage.slottedItem.parameters.trainsetData[1].color
+  vehicleParameters.decalNames = storage.slottedItem.parameters.trainsetData[1].decalNames
+  vehicleParameters.decals = storage.slottedItem.parameters.trainsetData[1].decals
+  vehicleParameters.pantographVisible = storage.slottedItem.parameters.trainsetData[1].pantographVisibile
+  vehicleParameters.doorLocked = storage.slottedItem.parameters.trainsetData[1].doorLocked
+  vehicleParameters.trainsetData = storage.slottedItem.parameters.trainsetData
+  vehicleParameters.specular = listOfCars[vehicleName].specular
+  vehicleParameters.reversed = storage.slottedItem.parameters.trainsetData[1].reversed
+  vehicleParameters.firstCar = true
+  vehicleParameters.lastcar = false
+  vehicleParameters.carNumber = 1
+	
+  local stopPos = getStopPos()
+  
+  sb.logInfo("station nr " .. tostring(storage.numInGroup) .. " pos of connected nodes ")
+  --stopPos = world.entityPosition(stopID)
+  sb.logInfo("pos " .. tostring(stopPos))
+  tprint(stopPos)
+
+    --handle error of stop node not connected
+  
+  --SPANW CAR:
+  local spawnoffset = {}
+  spawnoffset[1] = stopPos[1]
+  spawnoffset[2] = stopPos[2] + 1
+  self.testRunCarID0 = world.spawnVehicle(vehicleName, spawnoffset, vehicleParameters)
+  if not self.testRunCarID0 then
+    --handle car not spawn error
+	self.testRunReady = false
+    return
+  end
+  
+  self.testrunT0 = world.time()
+  
+  local numStations = self.numOfStationsInGroup
+  
+  if self.circularLine then
+	self.stationsData.nodePos[self.numOfStationsInGroup+1] = self.stationsData.nodePos[1]
+	self.stationsData.id[self.numOfStationsInGroup+1] = self.stationsData.id[1]
+	numStations = numStations +1
+  end
+  
+  world.sendEntityMessage(self.testRunCarID0, "testRunModeEnabled", self.stationsData, numStations)
+  
+  sb.logInfo("station " .. tostring(storage.numInGroup) .. " T0 " .. tostring(self.testrunT0) )
+  storage.saveFile.global[storage.group].data.timesABS = {}
+  storage.saveFile.global[storage.group].data.timesABS[1] = self.testrunT0
+  world.setProperty("stationController_file", storage.saveFile)
+  for i=1,storage.saveFile.global.numOfStations do
+    if storage.saveFile[tostring(i)].uuid ~= storage.uuid then
+      local id = world.loadUniqueEntity(tostring(storage.saveFile[tostring(i)].uuid))
+	  if id then
+	    if world.entityExists(id) then
+	      world.sendEntityMessage(id, "forceReloadData", false, true)
+	    end
+	  end
+	end
+  end
+
+  local testCar = self.testRunCarID0
+
+  for i=2,self.numOfStationsInGroup do
+    local id = self.stationsData.id[i]
+    world.sendEntityMessage(id, "testRunMode", testCar, numStations)
+  end
+
+  self.testRunInit = false
+  
+end
+
+function testRunMode(_,_, carID, numOfStations)
+  self.testRunMode = true
+  self.testRunCarID0 = carID
+  self.numOfStationsInGroup = numOfStations
+  storage.saveFile = world.getProperty("stationController_file")
+end
+
+function endTestRun(_,_)
+  
+  sb.logInfo("station " .. tostring(storage.numInGroup) .. " received message test run ended ")
+  
+  storage.saveFile = world.getProperty("stationController_file")
+  if storage.numInGroup == 1 then
+    if self.testRunMode and self.circularLine then
+	  self.waitingToCloseLoop = true
+	elseif self.testRunMode and not self.circularLine then
+      self.testRunMode = false
+	  --calculate times not circular line
+	  --for i=2,self.numOfStationsInGroup do
+	    --local t1 = storage.saveFile.global[storage.group].data.times[i] - storage.saveFile.global[storage.group].data.times[i-1]
+		--storage.saveFile.global[storage.group].data.times[i] = t1
+	  --end
+	  --storage.saveFile.global[storage.group].data.times[1] = 0
+	  --world.setProperty("stationController_file", storage.saveFile)
+	  
+	  --for i=1,storage.saveFile.global.numOfStations do
+        --if storage.saveFile[tostring(i)].uuid ~= storage.uuid then
+          --local id = world.loadUniqueEntity(tostring(storage.saveFile[tostring(i)].uuid))
+	      --if id then
+	        --if world.entityExists(id) then
+	          --world.sendEntityMessage(id, "forceReloadData", false)
+	        --end
+	      --end
+	    --end
+      --end
+	  
+    end
+  end
+  
+end  
+
+function testRunCarArrivedAt(_,_, numStation, absoluteTime)
+
+  sb.logInfo("station " .. tostring(storage.numInGroup) .. " test car arrived at " .. tostring(numStation) .. " T1 " .. tostring(absoluteTime) )
+
+  storage.saveFile = world.getProperty("stationController_file")
+  self.testRunMode = false
+  --storage.saveFile.global[storage.group].data.times[numStation] = absoluteTime
+  storage.saveFile.global[storage.group].data.timesABS[numStation] = absoluteTime
+  storage.saveFile.global[storage.group].data.times[numStation] = absoluteTime - storage.saveFile.global[storage.group].data.timesABS[numStation - 1]
+  world.setProperty("stationController_file", storage.saveFile)
+  local dontlog = true
+  if numStation == self.numOfStationsInGroup then
+    world.sendEntityMessage(storage.saveFile.global[storage.group].data.uuids[1], "endTestRun") --last station to receive the message notifies station 1 test Run is over
+	dontlog = false
+  elseif numStation == self.numOfStationsInGroup + 1 then
+    self.waitingToCloseLoop = false
+    --calculate times --loop closed
+	
+	--for i=2,self.numOfStationsInGroup + 1 do
+	  --local t1 = storage.saveFile.global[storage.group].data.times[i] - storage.saveFile.global[storage.group].data.times[i-1]
+	  --storage.saveFile.global[storage.group].data.times[i] = t1
+	--end
+	--storage.saveFile.global[storage.group].data.times[1] = t1
+	
+	storage.saveFile.global[storage.group].data.timesABS[numStation] = absoluteTime
+    storage.saveFile.global[storage.group].data.times[numStation] = absoluteTime - storage.saveFile.global[storage.group].data.timesABS[numStation - 1]
+	world.setProperty("stationController_file", storage.saveFile)
+	dontlog = false
+  end
+  
+  for i=1,storage.saveFile.global.numOfStations do
+    if storage.saveFile[tostring(i)].uuid ~= storage.uuid then
+      local id = world.loadUniqueEntity(tostring(storage.saveFile[tostring(i)].uuid))
+	  if id then
+	    if world.entityExists(id) then
+	      world.sendEntityMessage(id, "forceReloadData", false, dontlog)
+	    end
+	  end
+	end
+  end
+  
+end
+
+function testRunGetlastCarID(_,_, lastCarID) --shouldn't be necessary(see below)
+  
 end
 
 function onInteraction(args)
@@ -75,6 +358,9 @@ function onNodeConnectionChange(args)
   --sb.logInfo("STATION NUMBER " .. tostring(self.stationNum) .. " node connected")
   --local data = object.getInputNodeIds(1)
   --tprint(data)
+  
+  initNodePos()
+  
 end
 
 
@@ -115,13 +401,97 @@ end
 
 function update(dt)
 
-   if self.uuidInit then
+  if (storage.numInGroup == 1) and self.testRunInit and (not self.testRunReady) then
+
+    for i=2,self.numOfStationsInGroup do
+      if not self.stationsData.ready[i] then
+	    local id = world.loadUniqueEntity(storage.saveFile.global[storage.group].data.uuids[i])
+	    if (id ~= nil) and (id ~= 0 ) then
+		  self.stationsData.id[i] = id
+		  self.stationsData.ready[i] = true
+	    end
+   	  end
+    end
+	
+	world.setProperty("stationController_file", storage.saveFile)
+	
+	for i=2,self.numOfStationsInGroup do
+      if not self.stationsData.ready[index] then
+        self.nonReadyStations = self.nonReadyStations + 1
+	  end
+    end
+  
+    if self.nonReadyStations > 0 then
+      self.testRunReady = false
+    else
+	  for i=1,storage.saveFile.global.numOfStations do
+        if storage.saveFile[tostring(i)].uuid ~= storage.uuid then
+          local id = world.loadUniqueEntity(tostring(storage.saveFile[tostring(i)].uuid))
+	      if id then
+	        if world.entityExists(id) then
+	          world.sendEntityMessage(id, "forceReloadData", false)
+	        end
+	      end
+	    end
+      end
+      self.testRunReady = true
+	  self.testRunInit = false
+	  testRunInit()
+    end
+	
+	sb.logInfo("Stations data printed from station = FURTHER ITERATION")
+    tprint(self.stationsData)
+    sb.logInfo("testRunReady " .. tostring(self.testRunReady))
+    sb.logInfo("nonReadyStations " .. tostring(self.nonReadyStations))
+  end
+  
+  if self.testRunMode then
+    if storage.numInGroup > 1 then
+      if not self.testrunInit then
+	    self.testrunInit = true
+	    storage.saveFile = world.getProperty("stationController_file")
+	    if storage.numInGroup == 2 then
+		  self.testrunT0 = storage.saveFile.global[storage.group].data.times[1]
+		end
+		sb.logInfo("Station nr " .. tostring(storage.numInGroup) .. " TEST RUN ON, num of stations " .. tostring(storage.numInGroup) )
+		if storage.numInGroup == self.numOfStationsInGroup then
+		  sb.logInfo("==================Last station received the TEST RUN MSG==============================")
+	    end
+      end
+    end
+  end
+
+   if self.init then
+     if storage.state == nil then
+	   storage.state = false
+       object.setOutputNodeLevel(1, true)
+     else
+       object.setOutputNodeLevel(0, not storage.state)
+	   if storage.state then
+	     self.t0 = world.time()
+	   end
+	   object.setOutputNodeLevel(1, true)
+     end
      if storage.uuid == nil then
-	   storage.uuid = sb.makeUuid()
-	   world.setUniqueId(entity.id(), storage.uuid)
+       storage.uuid = sb.makeUuid()
+     end
+	 if storage.state == nil then
+	   storage.state = false
+       object.setOutputNodeLevel(1, true)
+	   object.setOutputNodeLevel(0, not storage.state)
+     else
+       object.setOutputNodeLevel(0, not storage.state)
+	   self.t0 = world.time()
+	   object.setOutputNodeLevel(1, true)
+     end
+     world.setUniqueId(entity.id(), storage.uuid)
+	 local idfromuuid = world.loadUniqueEntity(storage.uuid)
+	 sb.logInfo("ATTEMPTING TO GET ENTITY ID FROM UUID : " .. tostring(idfromuuid) .. " it should be " .. tostring(entity.id()) )
+	 if idfromuuid then
+	   self.uuidInit = false
+	 else
+	   self.uuidInit = true
 	 end
-     sb.logInfo("UUID OF STATION (entity ID " .. tostring(entity.id()) .. ") " .. tostring(world.entityUniqueId(entity.id())))
-	 sb.logInfo("ATTEMPTING TO GET ENTITY ID FROM UUID : " .. tostring(world.loadUniqueEntity(storage.uuid)))
 	 storage.saveFile = world.getProperty("stationController_file")
 	 if storage.saveFile == nil then
 	   sb.logInfo("INITIALIZING SAVE FILE")
@@ -166,15 +536,15 @@ function update(dt)
 		 world.setProperty("stationController_file", storage.saveFile)
 	     if storage.saveFile.global.numOfStations > 1 then
            for i=1,storage.saveFile.global.numOfStations do
-             local id = world.loadUniqueEntity(tostring(storage.saveFile[tostring(i)].uuid))
-			 --sb.logInfo("ENTITY ID OF " .. tostring(i) .. " IS " .. tostring(id) .. " UUID IS " .. tostring(storage.saveFile[tostring(i)].uuid))
-	         if id then
-	           if world.entityExists(id) then
-	             world.sendEntityMessage(id, "forceReloadData")
-		         --world.callScriptedEntity(id, "forceReloadData")
-	           end
-	         end
-           end
+              if storage.saveFile[tostring(i)].uuid ~= storage.uuid then
+                local id = world.loadUniqueEntity(tostring(storage.saveFile[tostring(i)].uuid))
+	            if id then
+	              if world.entityExists(id) then
+	                world.sendEntityMessage(id, "forceReloadData", false)
+	              end
+	            end
+	          end
+            end
          end
 	   else
 	     self.stationNum = storage.saveFile[storage.uuid].number
@@ -184,19 +554,27 @@ function update(dt)
 	   end
 	   if storage.saveFile then tprint(storage.saveFile) end
 	 end
-	 self.uuidInit = false
+	 
+	 initNodePos()
+	 
+	 self.init = false
+   end
+   
+   if self.noteposInit then
+     initNodePos()
+   end
+   
+   if self.uuidInit then
+     world.setUniqueId(entity.id(), storage.uuid)
+	 local idfromuuid = world.loadUniqueEntity(storage.uuid)
+	 sb.logInfo("ATTEMPTING TO GET ENTITY ID FROM UUID : " .. tostring(idfromuuid) .. " it should be " .. tostring(entity.id()) )
+	 if idfromuuid then
+	   self.uuidInit = false
+	 else
+	   self.uuidInit = true
+	 end
    end
 
-  --if self.uuidtimerBool then
-    --self.uuidtimer = world.time() - self.uuidtimer0
-  --end
-  
-  --if (self.uuidtimer >= 10) and self.uuidtimerBool then
-    --storage.uuid = sb.makeUuid()
-    --world.setUniqueId(entity.id(), storage.uuid)
-	--sb.logInfo("UUID OF  STATION" .. tostring(world.entityUniqueId(entity.id())))
-	--self.uuidtimerBool = false
-  --end
 
   if storage.state then
     
@@ -216,6 +594,40 @@ function update(dt)
     animator.playSound("off");
     --object.setAllOutputNodes(false)
   end
+end
+
+function initNodePos()
+     if storage.saveFile[storage.uuid].grouped then
+       if not storage.group then
+	     storage.group = storage.saveFile[storage.uuid].group
+	   end
+	   if not storage.numInGroup then
+	     storage.numInGroup = storage.saveFile[storage.group][storage.uuid].number
+	   end
+	   if object.isOutputNodeConnected(0) then
+	     if not storage.saveFile.global[storage.group].data.nodesPos then
+	       storage.saveFile.global[storage.group].data.nodesPos = {}
+	     end
+		 local nodepos = getStopPos()
+		 if nodepos then
+		   storage.saveFile.global[storage.group].data.nodesPos[storage.numInGroup] = nodepos
+	       world.setProperty("stationController_file", storage.saveFile)
+		   self.noteposInit = false
+	       for i=1,storage.saveFile.global.numOfStations do
+             if storage.saveFile[tostring(i)].uuid ~= storage.uuid then
+               local id = world.loadUniqueEntity(tostring(storage.saveFile[tostring(i)].uuid))
+	           if id then
+	             if world.entityExists(id) then
+	               world.sendEntityMessage(id, "forceReloadData", false)
+	             end
+	           end
+	         end
+           end
+		 else
+		   self.noteposInit = true
+		 end
+	   end
+     end
 end
 
 function die(smash)

@@ -12,11 +12,7 @@ function init()
   self.widgetListName = "addStationOverlay.stationsScrollArea.stationsList"
   
   widget.setVisible("mainOverlay", true)
-  
-  widget.setVisible("mainOverlay.itemslot1", true)
-  widget.setVisible("mainOverlay.Edit1Label", true)
-  widget.setVisible("mainOverlay.Edit2Label", true)
-  
+
   local displayName = self.saveFile[self.uuid].name
   local idNumber = self.saveFile[self.uuid].number
   widget.setVisible("mainOverlay.displayNameLabel", true)
@@ -38,14 +34,6 @@ function init()
 	widget.setVisible("mainOverlay.numInGroupLabel", true)
 	widget.setVisible("mainOverlay.numInGroupValue", true)
 	widget.setText("mainOverlay.numInGroupValue", "^green;" .. tostring(numInGroup) .. "^reset;")
-	
-	if self.slottedItem then
-	  widget.setVisible("mainOverlay.unlinkButton", true)
-	  widget.setVisible("mainOverlay.linkButton", false)
-	  widget.setVisible("mainOverlay.Edit1Label", false)
-	  widget.setVisible("mainOverlay.Edit2Label", false)
-	  widget.setVisible("mainOverlay.itemslot1", false)
-	end
   end
   
   sb.logInfo("GUI INTERFACE OPENED")
@@ -62,27 +50,50 @@ end
 
 function update(dt)
 
+  if self.testRunInProgress then
+    --account for left or right start facing direction
+  end
+
   if not self.slottedItem then
-    local slottedItem = widget.itemSlotItem("mainOverlay.itemslot1")
+    local slottedItem = widget.itemSlotItem("groupsOverlay.itemslot1")
     if slottedItem then
       local itemConfig = root.itemConfig(slottedItem)
 	  if (itemConfig.config.category == "railPlatform") and (itemConfig.config.linkedRailTrain == true) then
-	    widget.setVisible("mainOverlay.linkButton", true)
-	    widget.setVisible("mainOverlay.Edit1Label", true)
-	    widget.setVisible("mainOverlay.Edit2Label", true)
+	    widget.setVisible("groupsOverlay.linkButton", true)
+	    widget.setVisible("groupsOverlay.Edit1Label", true)
+	    widget.setVisible("groupsOverlay.Edit2Label", true)
+		widget.setVisible("groupsOverlay.TestRunButton", false)
 	  else
-	    widget.setVisible("mainOverlay.linkButton", false)
-	    widget.setVisible("mainOverlay.ErrorLabel1", true)
-	    widget.setVisible("mainOverlay.Edit1Label", false)
-	    widget.setVisible("mainOverlay.Edit2Label", false)
+	    widget.setVisible("groupsOverlay.linkButton", false)
+	    widget.setVisible("groupsOverlay.ErrorLabel1", true)
+	    widget.setVisible("groupsOverlay.Edit1Label", false)
+	    widget.setVisible("groupsOverlay.Edit2Label", false)
+		widget.setVisible("groupsOverlay.TestRunButton", false)
 	  end
     else
-	  widget.setVisible("mainOverlay.linkButton", false)
-	  widget.setVisible("mainOverlay.ErrorLabel1", false)
-	  widget.setVisible("mainOverlay.Edit1Label", true)
-	  widget.setVisible("mainOverlay.Edit2Label", true)
+	  widget.setVisible("groupsOverlay.linkButton", false)
+	  widget.setVisible("groupsOverlay.ErrorLabel1", false)
+	  widget.setVisible("groupsOverlay.Edit1Label", true)
+	  widget.setVisible("groupsOverlay.Edit2Label", true)
+	  widget.setVisible("groupsOverlay.TestRunButton", false)
    end
+ else
+   widget.setVisible("groupsOverlay.unlinkButton", true)
+   widget.setVisible("groupsOverlay.linkButton", false)
+   widget.setVisible("groupsOverlay.Edit1Label", false)
+   widget.setVisible("groupsOverlay.Edit2Label", false)
+   widget.setVisible("groupsOverlay.itemslot1", false)
+   widget.setVisible("groupsOverlay.TestRunButton", true)
  end
+ 
+ --if self.saveFile[self.uuid].grouped then
+   --widget.setVisible("groupsOverlay.circularCheckBox", true)
+   --widget.setVisible("groupsOverlay.circularLabel", true)
+  -- widget.setChecked("groupsOverlay.circularCheckBox", self.saveFile.global[self.saveFile[self.uuid].group].data.circular)
+ --else
+   --widget.setVisible("groupsOverlay.circularCheckBox", false)
+   --widget.setVisible("groupsOverlay.circularLabel", false)
+ --end
   
 end
 
@@ -106,6 +117,8 @@ function groupStationsButtonPressed(widgetName, widgetData)
   if not self.saveFile[self.uuid].grouped then
     widget.setVisible("groupsOverlay.NoGroupLabel", true)
 	widget.setVisible("groupsOverlay.createGroupButton", true)
+	widget.setVisible("groupsOverlay.circularCheckBox", false)
+	widget.setVisible("groupsOverlay.circularLabel", false)
 	
 	if self.saveFile.global.numOfGroups > 0 then
 	  widget.setVisible("groupsOverlay.addToExistingGroupButton", true)
@@ -116,6 +129,20 @@ function groupStationsButtonPressed(widgetName, widgetData)
     local groupName = self.saveFile[self.uuid].group
 	local numInGroup = self.saveFile[groupName][self.uuid].number
 	
+	if self.slottedItem then
+	  widget.setVisible("groupsOverlay.unlinkButton", true)
+	  widget.setVisible("groupsOverlay.linkButton", false)
+	  widget.setVisible("groupsOverlay.Edit1Label", false)
+	  widget.setVisible("groupsOverlay.Edit2Label", false)
+	  widget.setVisible("groupsOverlay.itemslot1", false)
+	  widget.setVisible("groupsOverlay.TestRunButton", true)
+	else
+	  widget.setVisible("groupsOverlay.itemslot1", true)
+      widget.setVisible("groupsOverlay.Edit1Label", true)
+      widget.setVisible("groupsOverlay.Edit2Label", true)
+	  widget.setVisible("groupsOverlay.TestRunButton", false)
+	end
+	
 	self.groupEditing = groupName
 	
 	widget.setVisible("groupsOverlay.changeNumInGroupButton", true)
@@ -123,6 +150,10 @@ function groupStationsButtonPressed(widgetName, widgetData)
 	widget.setVisible("groupsOverlay.membersInGroupLabel", true)
 	widget.setVisible("groupsOverlay.membersInGroupValue", true)
 	widget.setText("groupsOverlay.membersInGroupLabel", "Members of group " .. "^green;" .. groupName .. "^reset; (in order):")
+	
+	widget.setVisible("groupsOverlay.circularCheckBox", true)
+	widget.setChecked("groupsOverlay.circularCheckBox", self.saveFile.global[self.groupEditing].data.circular)
+	widget.setVisible("groupsOverlay.circularLabel", true)
 	
 	local members = {}
 	local membersString = ""
@@ -201,8 +232,14 @@ function nameGroupButtonPressed(widgetName, widgetData)
   self.saveFile[groupName] = {}
   self.saveFile[groupName][self.uuid] = {}
   self.saveFile[groupName][self.uuid].number = 1
+  self.saveFile.global[groupName] = {}
+  self.saveFile.global[groupName].data = {}
+  self.saveFile.global[groupName].data.slottedItem = false
+  self.saveFile.global[groupName].data.circular = false
   world.setProperty("stationController_file", self.saveFile)
-  world.sendEntityMessage(pane.sourceEntity(), "forceReloadData")
+  
+  world.sendEntityMessage(pane.sourceEntity(), "forceReloadData", true)
+  
   widget.setVisible("groupsOverlay.groupNameTextBox", false)
   widget.setVisible("groupsOverlay.nameGroupButton", false)
   widget.setVisible("groupsOverlay.groupNameLabel", true)
@@ -305,6 +342,8 @@ function addToGroup(group)
   world.setProperty("stationController_file", self.saveFile)
   self.saveFile = world.getProperty("stationController_file")
   
+  world.sendEntityMessage(pane.sourceEntity(), "forceReloadData", true)
+  
   widget.setVisible("addStationOverlay", false)
   widget.setVisible("groupsOverlay", true)
   
@@ -341,7 +380,7 @@ end
 
 function linkButtonPressed(widgetName, widgetData)
 
-  slot_widget = "mainOverlay.itemslot1"
+  slot_widget = "groupsOverlay.itemslot1"
   
   local slottedItem = widget.itemSlotItem(slot_widget)
   self.saveFile = world.getProperty("stationController_file")
@@ -352,6 +391,12 @@ function linkButtonPressed(widgetName, widgetData)
   world.sendEntityMessage(pane.sourceEntity(), "saveSlottedItems", slotNumber, slottedItem)
   self.slottedItem = slottedItem
   widget.setItemSlotItem(slot_widget, nil)
+  self.saveFile.global[self.groupEditing].data.slottedItem = true
+  --self.saveFile.global[self.groupEditing].data.item = {}
+  --self.saveFile.global[self.groupEditing].data.item = slottedItem
+  world.setProperty("stationController_file", self.saveFile)
+  
+  world.sendEntityMessage(pane.sourceEntity(), "forceReloadData", true)
   
 end
 
@@ -361,9 +406,54 @@ function unlinkButtonPressed(widgetName, widgetData)
   self.slottedItem.parameters.stationuuid = nil
   sb.logInfo("SLOTTED ITEM ")
   tprint(self.slottedItem)
-  player.setSwapSlotItem(self.slottedItem)
+  player.giveItem(self.slottedItem)
   self.slottedItem = nil
   world.sendEntityMessage(pane.sourceEntity(), "saveSlottedItems", 1, nil)
+  self.saveFile.global[self.groupEditing].data.slottedItem = false
+  self.saveFile.global[self.groupEditing].data.item = nil
+  world.setProperty("stationController_file", self.saveFile)
+  
+  world.sendEntityMessage(pane.sourceEntity(), "forceReloadData", true)
+  
+end
+
+function circularCheckBox(widgetName, widgetData)
+  self.saveFile = world.getProperty("stationController_file")
+  self.saveFile.global[self.groupEditing].data.circular = not self.saveFile.global[self.groupEditing].data.circular
+  world.setProperty("stationController_file", self.saveFile)
+  
+  world.sendEntityMessage(pane.sourceEntity(), "forceReloadData", true)
+  
+end
+
+function testRunButtonPressed(widgetName, widgetData)
+  widget.setVisible("groupsOverlay", false)
+  widget.setVisible("testRunOverlay", true)
+  widget.setVisible("testRunOverlay.backToMainButton", true)
+end
+
+function startTestRunButtonPressed(widgetName, widgetData)
+  widget.setVisible("testRunOverlay.testRunInProgressLabel", true)
+  world.sendEntityMessage(pane.sourceEntity(), "startTestRun")
+  --self.testRunInProgress = true
+end
+
+function clearTestRunDataButtonPressed(widgetName, widgetData)
+  self.saveFile.global[self.groupEditing].data.times = nil
+  self.saveFile.global[self.groupEditing].data.timesABS = nil
+  self.saveFile.global[self.groupEditing].data.uuids = nil
+  self.saveFile.global[self.groupEditing].data.nodesPos = nil
+  world.setProperty("stationController_file", self.saveFile)
+  
+  world.sendEntityMessage(pane.sourceEntity(), "forceReloadData", true)
+end
+
+function groupNameError(kind)
+  
+end
+
+function backToMainFromTestRunButtonPressed(widgetName, widgetData)
+  
 end
 
 function changeNumInGroupButton(widgetName, widgetData)
@@ -402,10 +492,6 @@ function ExitGroupButtonPressed(widgetName, widgetData)
   
 end
 
-function groupNameError(kind)
-  
-end
-
 function uninit()
     --When the panel closes we want to give the player back any items they left in the slot(s)
     --For each slot we have configured
@@ -427,7 +513,7 @@ end
 --https://community.playstarbound.com/threads/how-to-stack-items-in-an-itemslot.156207/
 function slotleftclick(slot_widget)
 
-   slot_widget = "mainOverlay" .. "." .. slot_widget
+   slot_widget = "groupsOverlay" .. "." .. slot_widget
     
 	sb.logInfo("slot_widget " .. tostring(slot_widget))
 
@@ -522,7 +608,7 @@ end
 --https://community.playstarbound.com/threads/how-to-stack-items-in-an-itemslot.156207/
 function slotrightclick(slot_widget)
 
-    slot_widget = "mainOverlay" .. "." .. slot_widget
+    slot_widget = "groupsOverlay" .. "." .. slot_widget
   
     --Get (a copy of) the item descriptor the player was holding
     local heldItem = player.swapSlotItem()

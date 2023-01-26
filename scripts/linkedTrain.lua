@@ -202,6 +202,9 @@ function init()
   message.setHandler("childCarDeleted", handleChildCarDeleted)
   message.setHandler("invert", handleInvert)
   message.setHandler("getLastCarID", handleGetLastCarID)
+  
+  message.setHandler("testRunModeEnabled", testRunModeEnabled)
+  
   sb.logInfo("\nInit() of car " .. tostring(storage.carNumber) .. " ended")
   
   script.setUpdateDelta(5)
@@ -235,6 +238,30 @@ function update(dt)
 	--end
 	  
   --end
+  
+  if self.testRunMode and storage.firstCar then 
+  
+      self.debugTimerTestRun = world.time() - self.debugTimerTestRunT0
+      if self.debugTimerTestRun > 0.5 then
+		sb.logInfo("Test car POS (mcontroller): ")
+		tprint(mcontroller.position())
+		sb.logInfo("Test car distance to next station (" .. tostring(self.currentStation + 1) .. ") " .. tostring(world.magnitude(mcontroller.position(), self.testRunStationsPos[self.currentStation+1])) )
+	  end
+      
+	  if world.magnitude(mcontroller.position(), self.testRunStationsPos[self.currentStation + 1]) < 1 then
+
+		world.sendEntityMessage(self.stationsData.id[self.currentStation+1], "testRunCarArrivedAt", (self.currentStation + 1), world.time())
+		self.currentStation = self.currentStation + 1
+		sb.logInfo("next station " .. tostring(self.currentStation))
+		if self.currentStation == self.numStations then
+		  
+		  sb.logInfo("Trainset TEST MODE DISABLED, attempting to self destruct")
+		  self.testRunMode = false
+		  destroyVehicle(true)
+		end
+	  end
+	  
+	end
   
   if storage.oldTrainSet and (not storage.oneCarSet) then
     if self.t0 == nil then self.t0 = world.time() end
@@ -288,7 +315,7 @@ function update(dt)
       --self.reSpawnTimer = 0
 	  --self.t0 = nil
     end
-		
+	
     if self.railRider:onRail() then
 	  checkrotation()
 	  sfxVolumeAdjust(dt)
@@ -325,6 +352,16 @@ function update(dt)
 	operateDoors()
   end
 	
+end
+
+function isRailTramAt(nodePos, id)
+  if nodePos and vec2.eq(nodePos, self.railRider:position()) then
+    if id == nil then
+      return true
+    elseif id == entity.id() then
+      return true
+    end
+  end
 end
 
 function checkDistanceToParentCar()
@@ -547,6 +584,37 @@ function setChildCarSpeed(speed)
   self.speedWasSet = true
   self.railRider.useGravity = false
 end
+
+function testRunModeEnabled(_, _, stationsData, numStations)
+  sb.logInfo("Trainset got message TEST RUN MODE ENABLED, num stations " .. tostring(numStations))
+  sb.logInfo("Stationsdata as follows ")
+  tprint(stationsData)
+  self.testRunMode = true
+  self.stationsData = stationsData
+  if self.currentStation == nil then self.currentStation = 1 end
+  sb.logInfo("current station " .. tostring(self.currentStation))
+  self.numStations = numStations
+  sb.logInfo("TRAINSET numstations " .. tostring(self.numStations))
+  
+  self.testRunStationsPos={}
+  for i=1,self.numStations do
+    self.testRunStationsPos[i] = {}
+	for k,v in pairs(self.stationsData.nodePos) do
+      if k == tostring(i) then
+	    self.testRunStationsPos[i][1] = self.stationsData.nodePos[k][1]
+		self.testRunStationsPos[i][2] = self.stationsData.nodePos[k][2]
+	  end
+    end
+  end
+  
+  sb.logInfo("TRAINSET node stations POS refurbished as follows: ")
+  tprint(self.testRunStationsPos)
+  
+  
+  self.debugTimerTestRun = 0
+  self.debugTimerTestRunT0 = world.time()
+  
+end  
 
 function uninit()
   animator.stopAllSounds("grind")
