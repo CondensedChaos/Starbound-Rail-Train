@@ -26,7 +26,13 @@ function init()
   
 end
 
-function forceReloadData(_,_, pane, dontLog)
+function forceReloadData(_,_, pane, dontLog, nodepos)
+
+  if nodepos then
+  storage.groupNodePos = world.getProperty("stationController_" .. storage.group .. "_nodesPos")
+  --sb.logInfo("=====================================FORCING =NODEPOS= DATA RELOAD: ")
+  --tprint(storage.groupNodePos)
+  else
   storage.saveFile = world.getProperty("stationController_file")
   sb.logInfo("FORCING DATA RELOAD: ")
   local oldnumber = self.stationNum
@@ -46,6 +52,7 @@ function forceReloadData(_,_, pane, dontLog)
 	storage.grouped = true
 	storage.numInGroup = storage.saveFile[storage.group][storage.uuid].number
 	self.circularLine = storage.saveFile.global[storage.group].data.circular
+	self.numOfStationsInGroup = storage.saveFile.global[storage.group].data.numOfStationsInGroup
   end
   
   if storage.saveFile and not dontLog then
@@ -64,7 +71,7 @@ function forceReloadData(_,_, pane, dontLog)
 	  end
     end
   end
-  
+  end
 end
 
 function saveSlottedItems(_,_, slot, item)
@@ -99,8 +106,10 @@ function startTestRun(_,_)
   self.stationsData = {}
   local members = {}
   local index = 0
-  self.nonReadyStations = 0
-  if not self.numOfStationsInGroup then self.numOfStationsInGroup = 0 end
+  --self.nonReadyStations = 0
+  if not self.numOfStationsInGroup then
+    self.numOfStationsInGroup = storage.saveFile.global[storage.group].data.numOfStationsInGroup
+  end
   
   self.stationsData = {}
   self.stationsData.nodePos = {}
@@ -113,10 +122,12 @@ function startTestRun(_,_)
     self.stationsData.ready[i] = false
   end
   
+  sb.logInfo("ITERATION ==========================================")
   for k,v in pairs(storage.saveFile[storage.group]) do
-    self.numOfStationsInGroup = self.numOfStationsInGroup + 1  
+    --self.numOfStationsInGroup = self.numOfStationsInGroup + 1  
     index = storage.saveFile[storage.group][k].number
 	members[index] = k
+	sb.logInfo("k " .. tostring(k) .. " index " .. tostring(index))
 	if k ~= storage.uuid then
 	  local id = world.loadUniqueEntity(k)
 	  if (id ~= nil) and (id ~= 0 ) then
@@ -125,29 +136,35 @@ function startTestRun(_,_)
 	  end
 	end
   end
-  
+  sb.logInfo("MEMBERS ==========================================")
+  tprint(members)
+  self.testRunReady = true
   for i=2,self.numOfStationsInGroup do
     if not self.stationsData.ready[i] then
-      self.nonReadyStations = self.nonReadyStations + 1
+      --self.nonReadyStations = self.nonReadyStations + 1
+	  self.testRunReady = false
+	  break
 	end
   end
   
-  if self.nonReadyStations > 0 then
-    self.testRunReady = false
-  else
-    self.testRunReady = true
-  end
+  --if self.nonReadyStations > 0 then
+    --self.testRunReady = false
+  --else
+    --self.testRunReady = true
+  --end
 
   sb.logInfo("Stations data printed from station ")
   tprint(self.stationsData)
   sb.logInfo("testRunReady " .. tostring(self.testRunReady))
-  sb.logInfo("nonReadyStations " .. tostring(self.nonReadyStations))
+  --sb.logInfo("nonReadyStations " .. tostring(self.nonReadyStations))
   
   sb.logInfo("NUM OF STATIONS IN GROUP " .. tostring(self.numOfStationsInGroup))
-  storage.saveFile.global[storage.group].data.numOfStations = self.numOfStationsInGroup
+  --storage.saveFile.global[storage.group].data.numOfStations = self.numOfStationsInGroup
   storage.saveFile.global[storage.group].data.times = {}
   storage.saveFile.global[storage.group].data.times[1] = 0
-  storage.saveFile.global[storage.group].data.uuids = members
+  --storage.saveFile.global[storage.group].data.uuids = {}
+  --storage.saveFile.global[storage.group].data.uuids = deepcopy(members)
+  
   
   world.setProperty("stationController_file", storage.saveFile)
   
@@ -224,13 +241,7 @@ function testRunInit()
   
   local numStations = self.numOfStationsInGroup
   
-  if self.circularLine then
-	self.stationsData.nodePos[self.numOfStationsInGroup+1] = self.stationsData.nodePos[1]
-	self.stationsData.id[self.numOfStationsInGroup+1] = self.stationsData.id[1]
-	numStations = numStations +1
-  end
-  
-  world.sendEntityMessage(self.testRunCarID0, "testRunModeEnabled", self.stationsData, numStations)
+  world.sendEntityMessage(self.testRunCarID0, "testRunModeEnabled", numStations, self.stationsData, storage.groupNodePos, self.circularLine )
   
   sb.logInfo("station " .. tostring(storage.numInGroup) .. " T0 " .. tostring(self.testrunT0) )
   storage.saveFile.global[storage.group].data.timesABS = {}
@@ -359,7 +370,8 @@ function onNodeConnectionChange(args)
   --local data = object.getInputNodeIds(1)
   --tprint(data)
   
-  initNodePos()
+  --initNodePos()
+  initNodePos2()
   
 end
 
@@ -402,10 +414,9 @@ end
 function update(dt)
 
   if (storage.numInGroup == 1) and self.testRunInit and (not self.testRunReady) then
-
     for i=2,self.numOfStationsInGroup do
       if not self.stationsData.ready[i] then
-	    local id = world.loadUniqueEntity(storage.saveFile.global[storage.group].data.uuids[i])
+	    local id = world.loadUniqueEntity(tostring(storage.saveFile.global[storage.group].data.uuids[i]))
 	    if (id ~= nil) and (id ~= 0 ) then
 		  self.stationsData.id[i] = id
 		  self.stationsData.ready[i] = true
@@ -414,19 +425,22 @@ function update(dt)
     end
 	
 	world.setProperty("stationController_file", storage.saveFile)
-	
+	self.testRunReady = true
 	for i=2,self.numOfStationsInGroup do
       if not self.stationsData.ready[index] then
-        self.nonReadyStations = self.nonReadyStations + 1
+        --self.nonReadyStations = self.nonReadyStations + 1
+		self.testRunReady = false
+		break
 	  end
     end
-  
-    if self.nonReadyStations > 0 then
-      self.testRunReady = false
+    
+	if self.testRunReady then
+    --if self.nonReadyStations > 0 then
+      --self.testRunReady = false
     else
 	  for i=1,storage.saveFile.global.numOfStations do
         if storage.saveFile[tostring(i)].uuid ~= storage.uuid then
-          local id = world.loadUniqueEntity(tostring(storage.saveFile[tostring(i)].uuid))
+          local id = world.loadUniqueEntity(tostring(storage.saveFile.global[storage.group].data.uuids[i]))
 	      if id then
 	        if world.entityExists(id) then
 	          world.sendEntityMessage(id, "forceReloadData", false)
@@ -555,13 +569,17 @@ function update(dt)
 	   if storage.saveFile then tprint(storage.saveFile) end
 	 end
 	 
-	 initNodePos()
+	 --initNodePos()
+	 initNodePos2()
 	 
 	 self.init = false
    end
    
    if self.noteposInit then
-     initNodePos()
+     --initNodePos()
+   end
+   if self.noteposInit2 then
+     initNodePos2()
    end
    
    if self.uuidInit then
@@ -594,6 +612,57 @@ function update(dt)
     animator.playSound("off");
     --object.setAllOutputNodes(false)
   end
+end
+
+function initNodePos2()
+  storage.saveFile = world.getProperty("stationController_file")
+  if storage.saveFile[storage.uuid].grouped then
+    if not storage.group then
+	  storage.group = storage.saveFile[storage.uuid].group
+	end
+	if not storage.numInGroup then
+	  storage.numInGroup = storage.saveFile[storage.group][storage.uuid].number
+	end
+	if self.numOfStationsInGroup == nil then
+	  self.numOfStationsInGroup = storage.saveFile.global[storage.group].data.numOfStationsInGroup
+	end
+	
+	if object.isOutputNodeConnected(0) then
+	  --storage.groupNodePos = world.getProperty("stationController_" .. storage.group .. "_nodesPos")
+	  storage.groupNodePos = storage.saveFile.global[storage.group].data.nodesPos
+	  if not storage.groupNodePos then
+	    storage.groupNodePos = {}
+		storage.saveFile.global[storage.group].data.nodesPos = {}
+		for i=1,self.numOfStationsInGroup do
+		  storage.groupNodePos[i] = {}
+		  storage.saveFile.global[storage.group].data.nodesPos[i] = {}
+		end
+	  end
+	  local nodepos = getStopPos()
+	  if nodepos then
+	    storage.groupNodePos[storage.numInGroup] = nodepos
+		storage.saveFile.global[storage.group].data.nodesPos[storage.numInGroup] = nodepos
+	   --world.setProperty("stationController_" .. storage.group .. "_nodesPos", storage.groupNodePos)
+	   world.setProperty("stationController_file", storage.saveFile)
+	   self.noteposInit2 = false
+	   for i=1,storage.saveFile.global.numOfStations do
+         if storage.saveFile[tostring(i)].uuid ~= storage.uuid then
+           local id = world.loadUniqueEntity(tostring(storage.saveFile[tostring(i)].uuid))
+	       if id then
+	         if world.entityExists(id) then
+	           world.sendEntityMessage(id, "forceReloadData", false, false, true)
+	         end
+	       end
+	     end
+       end
+	  else
+	    self.noteposInit2 = true
+      end	  
+	end
+	
+  end
+  
+  
 end
 
 function initNodePos()
@@ -676,4 +745,28 @@ function tprint(tbl, indent)
       sb.logInfo(tostring(formatting) .. tostring(v))
     end
   end
+end
+
+-- Save copied tables in "copies", indexed by original table.
+-- It is important that only one argument is supplied to this version of the deepcopy function. Otherwise, it will attempt to use the second argument as a table, which can have unintended consequences. 
+-- taken from http://lua-users.org/wiki/CopyTable
+function deepcopy(orig, copies)
+    copies = copies or {}
+    local orig_type = type(orig)
+    local copy
+    if orig_type == 'table' then
+        if copies[orig] then
+            copy = copies[orig]
+        else
+            copy = {}
+            copies[orig] = copy
+            for orig_key, orig_value in next, orig, nil do
+                copy[deepcopy(orig_key, copies)] = deepcopy(orig_value, copies)
+            end
+            setmetatable(copy, deepcopy(getmetatable(orig), copies))
+        end
+    else -- number, string, boolean, etc
+        copy = orig
+    end
+    return copy
 end
