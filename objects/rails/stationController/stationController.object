@@ -41,6 +41,6 @@
   "inputNodes" : [ [-1, 0], [0, 0] ],
   "outputNodes" : [ [-1, -1], [0, -1] ],
   
-  "stopLenght" : 7
+  "stopLenght" : 6
   
 }

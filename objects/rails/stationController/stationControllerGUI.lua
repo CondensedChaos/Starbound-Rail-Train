@@ -1,4 +1,15 @@
 local_storage = {}
+stopLenSpinner = {}
+
+--callback function when right button is pressed
+function stopLenSpinner.up()
+  
+end
+
+--callback function when left button is pressed
+function stopLenSpinner.down()
+  
+end
 
 function init()
 
@@ -8,6 +19,8 @@ function init()
   self.saveFile = world.getProperty("stationController_file")
   self.uuid = config.getParameter("uuid")
   self.slottedItem = config.getParameter("slottedItem")
+  
+  self.defaultStopLen = config.getParameter("defaultStopLen")
   
   self.widgetListName = "addStationOverlay.stationsScrollArea.stationsList"
   
@@ -143,6 +156,10 @@ function groupStationsButtonPressed(widgetName, widgetData)
 	  widget.setVisible("groupsOverlay.TestRunButton", false)
 	end
 	
+	if self.saveFile.global[groupName].data.testRunCompleted then
+	  widget.setVisible("groupsOverlay.setTimetableButton", true)
+	end
+	
 	self.groupEditing = groupName
 	
 	widget.setVisible("groupsOverlay.changeNumInGroupButton", true)
@@ -178,6 +195,11 @@ function groupStationsButtonPressed(widgetName, widgetData)
       end
 	end
 	
+	if not self.saveFile.global[groupName].data.numOfStationsInGroup then
+	  self.saveFile.global[groupName].data.numOfStationsInGroup = #members
+	  world.sendEntityMessage(pane.sourceEntity(), "forceReloadData", true)
+	end
+	
 	widget.setText("groupsOverlay.membersInGroupValue", "^green;" .. membersString.. "^reset;")
 	
 	if self.saveFile.global.numOfGroups > 1 then
@@ -197,6 +219,408 @@ function groupStationsButtonPressed(widgetName, widgetData)
     widget.setVisible("groupsOverlay.removeStationfromGroupButton", true)
 	widget.setVisible("groupsOverlay.renameGroupButton", true)
 	widget.setVisible("groupsOverlay.manageOtherGroupsButton", true)
+  end
+end
+
+function debug1ButtonPressed()
+  self.saveFile.global[self.groupEditing].data.toBeInit = true
+  self.saveFile.global[self.groupEditing].data.trainsEast = nil
+  self.saveFile.global[self.groupEditing].data.trainsWest = nil
+  self.saveFile.global[self.groupEditing].data.timesTidy = nil
+  self.saveFile.global[self.groupEditing].data.numberOfTrainsE = nil
+  self.saveFile.global[self.groupEditing].data.numberOfTrainsW = nil
+  self.saveFile.global[self.groupEditing].data.timesABS[6] = self.saveFile.global[self.groupEditing].data.timesABS[5] + 10.887
+  self.saveFile.global[self.groupEditing].data.times[6] = 10.887
+  self.saveFile.global[self.groupEditing].data.testRunCompleted = true
+  world.setProperty("stationController_file", self.saveFile)
+end
+
+function loadBackupFileButtonPressed()
+  self.saveFile = world.getProperty("stationController_file_backup")
+  world.setProperty("stationController_file", self.saveFile)
+end
+function saveBackupFileButtonPressed()
+  world.setProperty("stationController_file_backup", self.saveFile)
+end
+
+
+function setTimetableButtonPressed(widgetName, widgetData)
+  --world.setProperty("stationController_file_backup", self.saveFile)
+  
+  widget.setVisible("testRunOverlay", false)
+  widget.setVisible("groupsOverlay", false)
+  widget.setVisible("timetableOverlay", true)
+  
+  if self.saveFile.global[self.groupEditing].data.toBeInit then
+    self.saveFile.global[self.groupEditing].data.trainsEast = {}
+    self.saveFile.global[self.groupEditing].data.trainsWest = {}
+	
+	self.saveFile.global[self.groupEditing].data.trainsEast[1] = {}
+	self.saveFile.global[self.groupEditing].data.trainsWest[1] = {}
+	self.saveFile.global[self.groupEditing].data.numberOfTrainsE = 1
+	self.saveFile.global[self.groupEditing].data.numberOfTrainsW = 1
+	
+	self.saveFile.global[self.groupEditing].data.trainsEast.vehicles = {}
+	self.saveFile.global[self.groupEditing].data.trainsWest.vehicles = {}
+	
+	self.saveFile.global[self.groupEditing].data.trainsEast.startStations = {}
+	self.saveFile.global[self.groupEditing].data.trainsEast.startTimes = {}
+	self.saveFile.global[self.groupEditing].data.trainsEast.startStations[1] = 1
+	self.saveFile.global[self.groupEditing].data.trainsEast.startTimes[1] = 0
+	
+	self.saveFile.global[self.groupEditing].data.trainsWest.startStations = {}
+	self.saveFile.global[self.groupEditing].data.trainsWest.startTimes = {}
+	self.saveFile.global[self.groupEditing].data.trainsWest.startStations[1] = 1
+	self.saveFile.global[self.groupEditing].data.trainsWest.startTimes[1] = 0
+	
+	self.saveFile.global[self.groupEditing].data.trainsEast.speeds = {}
+	self.saveFile.global[self.groupEditing].data.trainsWest.speeds = {}
+	self.saveFile.global[self.groupEditing].data.trainsEast.speeds[1] = {}
+	self.saveFile.global[self.groupEditing].data.trainsWest.speeds[1] = {}
+	self.saveFile.global[self.groupEditing].data.trainsEast.speeds[1][1] = 0
+	self.saveFile.global[self.groupEditing].data.trainsWest.speeds[1][1] = 0
+	
+	self.saveFile.global[self.groupEditing].data.trainsEast.stopsLen = {}
+	self.saveFile.global[self.groupEditing].data.trainsWest.stopsLen = {}
+	self.saveFile.global[self.groupEditing].data.trainsEast.stopsLen[1] = {}
+	self.saveFile.global[self.groupEditing].data.trainsWest.stopsLen[1] = {}
+	self.saveFile.global[self.groupEditing].data.trainsEast.stopsLen[1][1] = 0
+	self.saveFile.global[self.groupEditing].data.trainsWest.stopsLen[1][1] = 0
+	
+	for i=2,#self.saveFile.global[self.groupEditing].data.timesTidy do
+	  self.saveFile.global[self.groupEditing].data.trainsEast.speeds[1][i] = 100
+	  self.saveFile.global[self.groupEditing].data.trainsWest.speeds[1][i] = 100
+	  self.saveFile.global[self.groupEditing].data.trainsEast.stopsLen[1][i] = self.defaultStopLen
+	  self.saveFile.global[self.groupEditing].data.trainsWest.stopsLen[1][i] = self.defaultStopLen
+	end
+	
+	self.saveFile.global[self.groupEditing].data.toBeInit = false
+	self.saveFile.global[self.groupEditing].data.readyToStart = false
+	
+	world.setProperty("stationController_file", self.saveFile)
+  end
+  
+  local timesArray = self.saveFile.global[self.groupEditing].data.timesTidy
+  local numOfTrainsE = self.saveFile.global[self.groupEditing].data.numberOfTrainsE
+  local numOfTrainsW = self.saveFile.global[self.groupEditing].data.numberOfTrainsW
+  
+  --displayTrainData(1,"E",self.saveFile.global[self.groupEditing].data.trainsEast.speeds[1],self.saveFile.global[self.groupEditing].data.trainsEast.stopsLen[1])
+  
+  widget.setVisible("timetableOverlay.trainsEastScrollArea", true)
+  widget.setVisible("timetableOverlay.trainsWestScrollArea", true)
+  widget.setVisible("timetableOverlay.trainsELabel", true)
+  widget.setVisible("timetableOverlay.trainsWLabel", true)
+  
+  widget.setVisible("timetableOverlay.addTrainButton", true)
+  
+  self.trainsEastListName = "timetableOverlay.trainsEastScrollArea.trainsEastList"
+  self.trainsWestListName = "timetableOverlay.trainsWestScrollArea.trainsWestList"
+  
+  self.trainsDataListNameE = "timetableOverlay.trainsEastDataScrollArea.trainsEastDataList"
+  self.trainsDataListNameW = "timetableOverlay.trainsWestDataScrollArea.trainsWestDataList"
+ 
+  widget.clearListItems(self.trainsEastListName)
+  widget.clearListItems(self.trainsWestListName)
+  
+  --for i=1,numOfTrainsE do
+    --local listItem = string.format("%s.%s",self.trainsEastListName, widget.addListItem(self.trainsEastListName))
+	--widget.setText(listItem .. ".trainLabel", "Train " .. tostring(i) .. "-E")
+	--data format for widget array : {trainNum,direction}
+	--widget.setData(listItem, {i,"E"})
+  --end
+  --for i=1,numOfTrainsW do
+    --local listItem = string.format("%s.%s",self.trainsWestListName, widget.addListItem(self.trainsWestListName))
+	--widget.setText(listItem .. ".trainLabel", "Train " .. tostring(i) .. "-W")
+	----data format for widget array : {trainNum,direction}
+	--widget.setData(listItem, {i,"W"})
+  --end
+  
+  makeTrainList("E")
+  makeTrainList("W")
+  
+end
+
+function makeTrainList(direction)
+  if direction == "E" then
+    local numOfTrainsE = self.saveFile.global[self.groupEditing].data.numberOfTrainsE
+    for i=1,numOfTrainsE do
+      local listItem = string.format("%s.%s",self.trainsEastListName, widget.addListItem(self.trainsEastListName))
+	  widget.setText(listItem .. ".trainLabel", "Train " .. tostring(i) .. "-E")
+	  --data format for widget array : {trainNum,direction}
+	  widget.setData(listItem, {i,"E"})
+    end
+  else
+    local numOfTrainsW = self.saveFile.global[self.groupEditing].data.numberOfTrainsW
+	for i=1,numOfTrainsW do
+      local listItem = string.format("%s.%s",self.trainsWestListName, widget.addListItem(self.trainsWestListName))
+	  widget.setText(listItem .. ".trainLabel", "Train " .. tostring(i) .. "-W")
+	  --data format for widget array : {trainNum,direction}
+	  widget.setData(listItem, {i,"W"})
+    end
+  end
+end
+
+function trainsListSelected(widgetName, widgetData)
+  local parentElement
+  
+  sb.logInfo("widgetName " .. widgetName)
+  
+  if widgetName == "trainsWestList" then
+    parentElement = "timetableOverlay.trainsWestScrollArea"
+  else
+    parentElement = "timetableOverlay.trainsEastScrollArea"
+  end
+  
+  local listName = parentElement .. "." .. widgetName
+  sb.logInfo("listName " .. listName)
+  
+  local listItem = widget.getListSelected(listName)
+  local itemData
+  if listItem then
+    sb.logInfo("listitem " .. tostring(listItem))
+    itemData = widget.getData(string.format("%s.%s", listName, listItem))
+	sb.logInfo("widget.getData " .. tostring(itemData))
+	tprint(itemData)
+	
+	self.editingTrain = itemData
+	--data format for widget array : {trainNum,direction}
+	
+	local trainNum = itemData[1]
+	local direction = itemData[2]
+	local speedsArray
+	local stopsLenArray
+    if widgetName == "trainsWestList" then
+	  speedsArray = self.saveFile.global[self.groupEditing].data.trainsWest.speeds[trainNum]
+	  stopsLenArray = self.saveFile.global[self.groupEditing].data.trainsWest.stopsLen[trainNum]
+	  widget.setVisible("timetableOverlay.trainsEastDataScrollArea", false)
+	  widget.setVisible("timetableOverlay.trainsWestDataScrollArea", true)
+	  widget.setVisible("timetableOverlay.trainSettingsWestOverlay", false)
+	  widget.setVisible("timetableOverlay.trainSettingsEastOverlay", false)
+	  --widget.setVisible("timetableOverlay.trainSettingsWestOverlay.selectedTrainLabel", true)
+	  widget.setText("timetableOverlay.trainSettingsWestOverlay.selectedTrainLabel","^red;Train " .. itemData[1] .. "-" .. itemData[2] .. ":^reset;")
+	  widget.setText("timetableOverlay.trainSettingsWestOverlay.startStationLabel", "Start station: " .. self.saveFile.global[self.groupEditing].data.trainsWest.startStations[trainNum])
+	  widget.setText("timetableOverlay.trainSettingsWestOverlay.startTimeLabel", "Start time: " .. self.saveFile.global[self.groupEditing].data.trainsWest.startTimes[trainNum])
+	  widget.clearListItems(self.trainsDataListNameW)
+	  widget.clearListItems(self.trainsEastListName)
+	  makeTrainList("E")
+	else
+	  speedsArray = self.saveFile.global[self.groupEditing].data.trainsEast.speeds[trainNum]
+	  stopsLenArray = self.saveFile.global[self.groupEditing].data.trainsEast.stopsLen[trainNum]
+	  widget.setVisible("timetableOverlay.trainsWestDataScrollArea", false)
+	  widget.setVisible("timetableOverlay.trainsEastDataScrollArea", true)
+
+      widget.setVisible("timetableOverlay.trainSettingsWestOverlay", false)
+	  widget.setVisible("timetableOverlay.trainSettingsEastOverlay", false)
+	  --widget.setVisible("timetableOverlay.trainSettingsEastOverlay.selectedTrainLabel", true)
+	  widget.setText("timetableOverlay.trainSettingsEastOverlay.selectedTrainLabel", "^red;Train " .. itemData[1] .. "-" .. itemData[2] .. ":^reset;")
+	  widget.setText("timetableOverlay.trainSettingsEastOverlay.startStationLabel", "Start station: " ..  tostring(self.saveFile.global[self.groupEditing].data.trainsEast.startStations[trainNum]))
+	  widget.setText("timetableOverlay.trainSettingsEastOverlay.startTimeLabel", "Start time: " .. tostring(self.saveFile.global[self.groupEditing].data.trainsEast.startTimes[trainNum]))
+	  
+	  widget.clearListItems(self.trainsDataListNameE)
+	  widget.clearListItems(self.trainsWestListName)
+      makeTrainList("W")
+	end
+	displayTrainData(trainNum,direction,speedsArray,stopsLenArray)
+  end
+  
+end
+
+function trainsDataListSelected(widgetName, widgetData)
+
+  if widgetName == "trainsWestDataList" then
+    parentElement = "timetableOverlay.trainsWestDataScrollArea"
+	widget.setVisible("timetableOverlay.trainSettingsWestOverlay",true)
+	widget.setVisible("timetableOverlay.trainSettingsEastOverlay",false)
+	widget.setVisible("timetableOverlay.trainSettingsWestOverlay.selectedTrainLabel", true)
+  else
+    parentElement = "timetableOverlay.trainsEastDataScrollArea"
+	widget.setVisible("timetableOverlay.trainSettingsEastOverlay",true)
+	widget.setVisible("timetableOverlay.trainSettingsWestOverlay",false)
+	widget.setVisible("timetableOverlay.trainSettingsEastOverlay.selectedTrainLabel", true)
+  end
+  local listName = parentElement .. "." .. widgetName
+  local listItem = widget.getListSelected(listName)
+  local itemData
+  local trainNum
+  local direction
+  local station
+  local speed
+  local stopLen
+  if listItem then
+    itemData = widget.getData(string.format("%s.%s", listName, listItem))
+	--data format for widget array: {trainNum,direction,station}
+	
+	trainNum = itemData[1]
+	direction = itemData[2]
+	station = itemData[3]
+	
+	local overlayName
+	if direction == "E" then
+	  speed = self.saveFile.global[self.groupEditing].data.trainsEast.speeds[trainNum][station]
+	  stopLen = self.saveFile.global[self.groupEditing].data.trainsEast.stopsLen[trainNum][station]
+	  overlayName = "trainSettingsEastOverlay"
+	else
+	  speed = self.saveFile.global[self.groupEditing].data.trainsWest.speeds[trainNum][station]
+	  stopLen = self.saveFile.global[self.groupEditing].data.trainsWest.stopsLen[trainNum][station]
+	  overlayName = "trainSettingsWestOverlay"
+	end
+	
+	sb.logInfo("speed " .. tostring(speed) .. " stopLen " .. tostring(stopLen) .. " station " .. tostring(station) .. " direction " .. tostring(direction))
+	
+    --variable to tell to other functions what stations are we editing and the original data
+	--format: self.timetableEditing = {trainNum,direction,station,numOfStations,circular,Originalspeed,OriginalstopLen,newSpeed,newStopLen}
+	local numOfStations = #self.saveFile.global[self.groupEditing].data.timesTidy
+	local circular = self.saveFile.global[self.groupEditing].data.circular
+	self.timetableEditing = {trainNum,direction,station,numOfStations,circular,speed,stopLen,speed,stopLen}
+	
+	speed = self.saveFile.global[self.groupEditing].data.trainsEast.speeds[trainNum][station]
+	stopLen = self.saveFile.global[self.groupEditing].data.trainsEast.stopsLen[trainNum][station]
+	widget.setSliderValue("timetableOverlay." .. overlayName ..".speedSlider",100)
+	widget.setVisible("timetableOverlay." .. overlayName ..".stationLabel",true)
+	widget.setVisible("timetableOverlay." .. overlayName ..".speedLabel",true)
+	widget.setVisible("timetableOverlay." .. overlayName ..".speedSlider",true)
+	widget.setVisible("timetableOverlay." .. overlayName ..".stopLenLabel",true)
+	widget.setVisible("timetableOverlay." .. overlayName ..".stopLenValue",true)
+	widget.setVisible("timetableOverlay." .. overlayName ..".stopLenSpinner",true)
+	widget.setVisible("timetableOverlay." .. overlayName ..".saveButton",true)
+	if circular and (station == numOfStations) then
+	  widget.setText("timetableOverlay." .. overlayName ..".stationLabel", "^green;Station " .. tostring(station-1) .. " back to 1:^reset;")
+	else
+	  widget.setText("timetableOverlay." .. overlayName ..".stationLabel", "^green;Station " .. tostring(station-1) .. " to " .. tostring(station) ..":^reset;")
+	end
+	widget.setText("timetableOverlay." .. overlayName ..".speedLabel", "Speed: " .. tostring(speed) .. "%")
+	widget.setText("timetableOverlay." .. overlayName ..".stopLenValue", tostring(stopLen))
+    	
+	
+  end
+end
+
+function speedSlider(widgetName, widgetData)
+
+  local direction = self.timetableEditing[2]
+  local station = self.timetableEditing[3]
+  local timesArray = self.saveFile.global[self.groupEditing].data.timesTidy
+  if direction == "E" then
+    overlayName = "trainSettingsEastOverlay"
+  else
+    overlayName = "trainSettingsWestOverlay"
+  end
+  
+  local newSpeed = widget.getSliderValue("timetableOverlay." .. overlayName ..".speedSlider")
+  self.timetableEditing[8] = newSpeed
+  widget.setText("timetableOverlay." .. overlayName ..".speedLabel", "Speed: " .. tostring(newSpeed) .. "%")
+
+  local listName 
+  
+  if direction == "E" then
+    listName = self.trainsDataListNameE
+  else
+    listName = self.trainsDataListNameW
+  end
+  
+  --math.floor((newSpeed * 10) + 0.5)/10
+  
+  local newTime = timesArray[station] * (100/newSpeed)
+  newTime = math.floor((newTime * 10) + 0.5)/10
+  
+  local listItem = widget.getListSelected(listName)
+  sb.logInfo("speedSlider list item name = " .. tostring(listName))
+  if listItem then
+    widget.setText(listName .. "." .. listItem .. ".timeLabel", tostring(newTime) .. " s")
+	widget.setText(listName .. "." .. listItem .. ".speedsLabel", "Speed: " .. tostring(newSpeed) .. "%")
+	--sb.logInfo("newTime float = " .. tostring(newTime))
+	--sb.logInfo("newTime round1=" .. tostring(math.floor((newTime * 10) + 0.5)/10))
+  end
+  
+end
+
+function timetableStationSaveButtonPressed(widgetName, widgetData)
+  --variable to tell to other functions what stations are we editing and the original data
+  --format: self.timetableEditing = {trainNum,direction,station,numOfStations,circular,Originalspeed,OriginalstopLen,newSpeed,newStopLen}
+  local trainNum = self.timetableEditing[1]
+  local direction = self.timetableEditing[2]
+  local station = self.timetableEditing[3]
+  --local numstation = self.timetableEditing[4]
+  --local circular = self.timetableEditing[5]
+  local newSpeed = self.timetableEditing[8]
+  local oldSpeed = self.timetableEditing[6]
+  local newStopLen = self.timetableEditing[9]
+  local oldStopLen = self.timetableEditing[7]
+  
+  if direction == "E" then
+    if not (newSpeed == oldSpeed) then
+	  self.saveFile.global[self.groupEditing].data.trainsEast.speeds[trainNum][station] = newSpeed
+	end
+	if not (newStopLen == oldStopLen) then
+	  self.saveFile.global[self.groupEditing].data.trainsEast.stopsLen[trainNum][station] = newStopLen
+	end
+  else
+    if not (newSpeed == oldSpeed) then
+      self.saveFile.global[self.groupEditing].data.trainsWest.speeds[trainNum][station] = newSpeed
+	end
+	if not (newStopLen == oldStopLen) then
+	  self.saveFile.global[self.groupEditing].data.trainsWest.stopsLen[trainNum][station] = newStopLen
+	end
+  end
+  
+  world.setProperty("stationController_file", self.saveFile)
+  
+    if direction == "E" then
+      widget.clearListItems(self.trainsDataListNameE)
+      widget.clearListItems(self.trainsEastListName)
+      widget.setVisible("timetableOverlay.trainSettingsEastOverlay",false)
+      widget.setVisible("timetableOverlay.trainsEastDataScrollArea", false)
+	  makeTrainList("E")
+    else
+      widget.clearListItems(self.trainsWestListName)
+      widget.clearListItems(self.trainsDataListNameW)
+      widget.setVisible("timetableOverlay.trainSettingsWestOverlay",false)
+      widget.setVisible("timetableOverlay.trainsWestDataScrollArea", false)
+	  makeTrainList("W")
+    end
+end
+
+function displayTrainData(trainNum,direction,speedsArray,stopsLenArray)
+  
+  local timesArray = self.saveFile.global[self.groupEditing].data.timesTidy
+  
+  widget.setVisible("timetableOverlay.selectedTrainDataLabel", true)
+  widget.setText("timetableOverlay.selectedTrainDataLabel","Train " .. trainNum .. "-" .. direction .. " settings:" )
+  
+  --if direction == "E" then
+    --widget.setVisible("timetableOverlay.trainsEastDataScrollArea", true)
+	--widget.setVisible("timetableOverlay.trainsWestDataScrollArea", false)
+
+  --elseif direction == "W" then
+    --widget.setVisible("timetableOverlay.trainsWestDataScrollArea", true)
+    --widget.setVisible("timetableOverlay.trainsEastDataScrollArea", false)
+  --end
+  
+  --widget.clearListItems(self.trainsDataListNameE)
+  --widget.clearListItems(self.trainsDataListNameW)
+  
+  for i=2,#timesArray do
+    local listItem
+	if direction == "E" then
+	  listItem = string.format("%s.%s",self.trainsDataListNameE, widget.addListItem(self.trainsDataListNameE))
+	elseif direction == "W" then
+	  listItem = string.format("%s.%s",self.trainsDataListNameW, widget.addListItem(self.trainsDataListNameW))
+	end
+	local stationDisplayName
+	if self.saveFile.global[self.groupEditing].data.circular and (i == #timesArray) then
+	  stationDisplayName = tostring(i-1) .. " back to 1:"
+    else
+	  stationDisplayName = tostring(i-1) .. " to " .. tostring(i) .. ":"
+	end
+	widget.setText(listItem .. ".stationLabel", stationDisplayName)
+	if self.saveFile.global[self.groupEditing].data.circular and (i == #timesArray) then
+	  widget.setPosition(listItem .. ".stationLabel", {65, 20})
+    end
+	widget.setText(listItem .. ".timeLabel", tostring(timesArray[i] * (100/speedsArray[i]) ) .. " s")
+	widget.setText(listItem .. ".speedsLabel", "Speed:" .. tostring(speedsArray[i]) .. "%")
+	widget.setText(listItem .. ".stopLenghtLabel", tostring(stopsLenArray[i]) .. " seconds stop")
+	--data format for widget array: {trainNum,direction,station}
+	widget.setData(listItem, {trainNum,direction,i})
   end
 end
 
@@ -236,6 +660,10 @@ function nameGroupButtonPressed(widgetName, widgetData)
   self.saveFile.global[groupName].data = {}
   self.saveFile.global[groupName].data.slottedItem = false
   self.saveFile.global[groupName].data.circular = false
+  self.saveFile.global[groupName].data.numOfStationsInGroup = 1
+  self.saveFile.global[groupName].data.uuids = {}
+  self.saveFile.global[groupName].data.uuids[1] = self.uuid
+  
   world.setProperty("stationController_file", self.saveFile)
   
   world.sendEntityMessage(pane.sourceEntity(), "forceReloadData", true)
@@ -336,6 +764,8 @@ function addToGroup(group)
   self.saveFile[self.addStationToGroup].grouped = true
   self.saveFile[self.addStationToGroup].group = group
   self.saveFile[self.addStationToGroup].numInGroup = numInGroup
+  self.saveFile.global[group].data.numOfStationsInGroup = self.saveFile.global[group].data.numOfStationsInGroup + 1
+  self.saveFile.global[group].data.uuids[numInGroup] = self.addStationToGroup
   
   tprint(self.saveFile)
   
@@ -430,6 +860,63 @@ function testRunButtonPressed(widgetName, widgetData)
   widget.setVisible("groupsOverlay", false)
   widget.setVisible("testRunOverlay", true)
   widget.setVisible("testRunOverlay.backToMainButton", true)
+  if self.saveFile.global[self.groupEditing].data.testRunCompleted then
+    widget.setVisible("testRunOverlay.testRunDataScrollArea", true)
+	
+	local stationTimesRaw = self.saveFile.global[self.groupEditing].data.times
+	local timesArray = {}
+	timesArray[1] = 0
+	timesArray[2] = math.floor((stationTimesRaw[2] * 10) + 0.5)/10
+	
+    --self.defaultStopLen
+
+    for i=3,#self.saveFile.global[self.groupEditing].data.times do
+	  timesArray[i] = (math.floor((stationTimesRaw[i] * 10) + 0.5)/10) - self.defaultStopLen
+    end
+	tprint(timesArray)
+	
+	self.testRunDataListName = "testRunOverlay.testRunDataScrollArea.testRunDataList"
+	
+	--local listItem = string.format("%s.%s",self.widgetListName, widget.addListItem(self.widgetListName))
+	--sb.logInfo("listItem " .. tostring(i) .. " " .. listItem .. " ==> " .. listItem .. ".member")
+	--sb.logInfo("stationDisplayName " .. stationDisplayName)
+	--widget.setText(listItem .. ".member", stationDisplayName)
+	--widget.setData(listItem, stationsList[i])
+	
+	for i=2,#timesArray do
+	  local listItem = string.format("%s.%s",self.testRunDataListName, widget.addListItem(self.testRunDataListName))
+	  local stationDisplayName
+	  if self.saveFile.global[self.groupEditing].data.circular and (i == #timesArray) then
+	    stationDisplayName = tostring(i-1) .. " back to 1:"
+      else
+	    stationDisplayName = tostring(i-1) .. " to " .. tostring(i) .. ":"
+	  end
+	  sb.logInfo("listItem " .. tostring(i) .. " " .. listItem .. " ==> " .. listItem .. ".stationLabel")
+	  sb.logInfo("stationDisplayName " .. stationDisplayName)
+      widget.setText(listItem .. ".stationLabel", stationDisplayName)
+	  
+	  if self.saveFile.global[self.groupEditing].data.circular and (i == #timesArray) then
+	    widget.setPosition(listItem .. ".stationLabel", {75, 10})
+	  end
+	  
+	  sb.logInfo("listItem " .. tostring(i) .. " " .. listItem .. " ==> " .. listItem .. ".timeLabel")
+	  widget.setText(listItem .. ".timeLabel", tostring(timesArray[i]) .. " s")
+	  sb.logInfo("listItem " .. tostring(i) .. " " .. listItem .. " ==> " .. listItem .. ".stopLenghtLabel")
+	  widget.setText(listItem .. ".stopLenghtLabel", tostring(self.defaultStopLen) .. " seconds stop")
+	end
+	
+	self.saveFile.global[self.groupEditing].data.timesTidy = {}
+	self.saveFile.global[self.groupEditing].data.timesTidy = timesArray
+	
+	if self.saveFile.global[self.groupEditing].data.toBeInit == nil then
+	  self.saveFile.global[self.groupEditing].data.toBeInit = true
+	end
+	
+	world.setProperty("stationController_file", self.saveFile)
+	
+	widget.setVisible("testRunOverlay.instructionsLabel", true)
+	widget.setVisible("testRunOverlay.setTimetableButton", true)
+  end
 end
 
 function startTestRunButtonPressed(widgetName, widgetData)
@@ -438,11 +925,17 @@ function startTestRunButtonPressed(widgetName, widgetData)
   --self.testRunInProgress = true
 end
 
+function testRunDataListSelected(widgetName, widgetData)
+  
+end
+
 function clearTestRunDataButtonPressed(widgetName, widgetData)
   self.saveFile.global[self.groupEditing].data.times = nil
   self.saveFile.global[self.groupEditing].data.timesABS = nil
   self.saveFile.global[self.groupEditing].data.uuids = nil
   self.saveFile.global[self.groupEditing].data.nodesPos = nil
+  self.saveFile.global[self.groupEditing].data.testRunCompleted = false
+  self.saveFile.global[self.groupEditing].data.toBeInit = false
   world.setProperty("stationController_file", self.saveFile)
   
   world.sendEntityMessage(pane.sourceEntity(), "forceReloadData", true)
@@ -477,6 +970,9 @@ function removeStationFromGroupButtonPressed(widgetName, widgetData)
 end
 
 function renameGroupButtonPressed(widgetName, widgetData)
+sb.logInfo("=NODEPOS= SAVE FILE: ")
+self.groupNodePos = world.getProperty("stationController_" .. storage.group .. "_nodesPos")
+tprint(self.groupNodePos)
   
 end
 

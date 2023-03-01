@@ -1,0 +1,43 @@
+{
+  "objectName" : "customrailstop",
+  "colonyTags" : ["rails"],
+  "rarity" : "Common",
+
+  "category" : "railPoint",
+  "price" : 400,
+  "description" : "Used to mark a station for driverless rail systems",
+  "shortdescription" : "Rail station marker",
+  "race" : "generic",
+
+  "inventoryIcon" : "customrailstopicon.png",
+  "orientations" : [
+    {
+      "image" : "customrailstop.png:default.on",
+      "imagePosition" : [-2, -2],
+
+      "materialSpaces" : [
+        [[0, 0], "metamaterial:railsafe"]
+      ],
+
+      "fgAnchors" : [[-1, 0], [-1, -1], [0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1]],
+      "bgAnchors" : [[0, 0]],
+      "anchorAny" : true,
+
+      "direction" : "right"
+    }
+  ],
+
+  "animation" : "customrailstop.animation",
+  "animationParts" : {
+    "stop" : "customrailstop.png",
+    "stopfullbright" : "customrailstopfullbright.png"
+  },
+  "animationPosition" : [-2, -2],
+
+  "scripts" : [
+    "/objects/rails/customRailStop/customrailstop.lua"
+  ],
+  "scriptDelta" : 5,
+
+  "inputNodes" : [ [0, 0], [0, -1] ]
+}

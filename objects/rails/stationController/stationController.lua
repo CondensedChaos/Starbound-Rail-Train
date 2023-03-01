@@ -1,8 +1,10 @@
+require "/scripts/util.lua"
+
 function init()
 
   object.setInteractive(true)
   
-  storage.stopLenght = (config.getParameter("stopLenght", 7))
+  storage.stopLenght = (config.getParameter("stopLenght", 6))
 
 
   self.countdown = 0
@@ -29,9 +31,9 @@ end
 function forceReloadData(_,_, pane, dontLog, nodepos)
 
   if nodepos then
-  storage.groupNodePos = world.getProperty("stationController_" .. storage.group .. "_nodesPos")
+  self.groupNodePos = world.getProperty("stationController_" .. storage.group .. "_nodesPos")
   --sb.logInfo("=====================================FORCING =NODEPOS= DATA RELOAD: ")
-  --tprint(storage.groupNodePos)
+  --tprint(self.groupNodePos)
   else
   storage.saveFile = world.getProperty("stationController_file")
   sb.logInfo("FORCING DATA RELOAD: ")
@@ -225,10 +227,10 @@ function testRunInit()
   tprint(stopPos)
 
     --handle error of stop node not connected
-  
+
   --SPANW CAR:
   local spawnoffset = {}
-  spawnoffset[1] = stopPos[1]
+  spawnoffset[1] = stopPos[1] + 1
   spawnoffset[2] = stopPos[2] + 1
   self.testRunCarID0 = world.spawnVehicle(vehicleName, spawnoffset, vehicleParameters)
   if not self.testRunCarID0 then
@@ -241,7 +243,7 @@ function testRunInit()
   
   local numStations = self.numOfStationsInGroup
   
-  world.sendEntityMessage(self.testRunCarID0, "testRunModeEnabled", numStations, self.stationsData, storage.groupNodePos, self.circularLine )
+  world.sendEntityMessage(self.testRunCarID0, "testRunModeEnabled", numStations, self.stationsData, self.stationsData.nodePos, self.circularLine )
   
   sb.logInfo("station " .. tostring(storage.numInGroup) .. " T0 " .. tostring(self.testrunT0) )
   storage.saveFile.global[storage.group].data.timesABS = {}
@@ -286,6 +288,9 @@ function endTestRun(_,_)
 	  self.waitingToCloseLoop = true
 	elseif self.testRunMode and not self.circularLine then
       self.testRunMode = false
+	  storage.saveFile.global[storage.group].data.testRunCompleted = true
+      storage.saveFile.global[storage.group].data.operational = false
+	  world.setProperty("stationController_file", storage.saveFile)
 	  --calculate times not circular line
 	  --for i=2,self.numOfStationsInGroup do
 	    --local t1 = storage.saveFile.global[storage.group].data.times[i] - storage.saveFile.global[storage.group].data.times[i-1]
@@ -333,7 +338,8 @@ function testRunCarArrivedAt(_,_, numStation, absoluteTime)
 	  --storage.saveFile.global[storage.group].data.times[i] = t1
 	--end
 	--storage.saveFile.global[storage.group].data.times[1] = t1
-	
+	storage.saveFile.global[storage.group].data.testRunCompleted = true
+    storage.saveFile.global[storage.group].data.operational = false
 	storage.saveFile.global[storage.group].data.timesABS[numStation] = absoluteTime
     storage.saveFile.global[storage.group].data.times[numStation] = absoluteTime - storage.saveFile.global[storage.group].data.timesABS[numStation - 1]
 	world.setProperty("stationController_file", storage.saveFile)
@@ -362,6 +368,7 @@ function onInteraction(args)
   local interactData = root.assetJson(config.getParameter("interactData"))
   interactData.uuid = storage.uuid
   interactData.slottedItem = storage.slottedItem
+  interactData.defaultStopLen = storage.stopLenght
   return {config.getParameter("interactAction"), interactData}
 end
 
@@ -628,21 +635,21 @@ function initNodePos2()
 	end
 	
 	if object.isOutputNodeConnected(0) then
-	  --storage.groupNodePos = world.getProperty("stationController_" .. storage.group .. "_nodesPos")
-	  storage.groupNodePos = storage.saveFile.global[storage.group].data.nodesPos
-	  if not storage.groupNodePos then
-	    storage.groupNodePos = {}
+	  --self.groupNodePos = world.getProperty("stationController_" .. storage.group .. "_nodesPos")
+	  self.groupNodePos = storage.saveFile.global[storage.group].data.nodesPos
+	  if not self.groupNodePos then
+	    self.groupNodePos = {}
 		storage.saveFile.global[storage.group].data.nodesPos = {}
 		for i=1,self.numOfStationsInGroup do
-		  storage.groupNodePos[i] = {}
+		  self.groupNodePos[i] = {}
 		  storage.saveFile.global[storage.group].data.nodesPos[i] = {}
 		end
 	  end
 	  local nodepos = getStopPos()
 	  if nodepos then
-	    storage.groupNodePos[storage.numInGroup] = nodepos
+	    self.groupNodePos[storage.numInGroup] = nodepos
 		storage.saveFile.global[storage.group].data.nodesPos[storage.numInGroup] = nodepos
-	   --world.setProperty("stationController_" .. storage.group .. "_nodesPos", storage.groupNodePos)
+	   --world.setProperty("stationController_" .. storage.group .. "_nodesPos", self.groupNodePos)
 	   world.setProperty("stationController_file", storage.saveFile)
 	   self.noteposInit2 = false
 	   for i=1,storage.saveFile.global.numOfStations do

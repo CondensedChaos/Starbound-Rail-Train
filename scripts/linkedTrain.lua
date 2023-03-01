@@ -1,4 +1,4 @@
-require "/scripts/rails.lua"
+require "/scripts/rails4linked.lua"
 require "/scripts/util.lua"
 
 function init()
@@ -18,14 +18,16 @@ function init()
   
   self.reSpawnTimer = 0
   self.reSpawnTime = 2
-
-  self.speedWasSet = false
   
   self.playingSound = false
   --self.t1 = world.time()
   self.sfxRampUpTimer = 0.1
   
+  self.stopTimer = 0
+  self.stopLenght = 6
+
   self.listOfCars = root.assetJson("/objects/crafting/trainConfigurator/listOfCars.json")
+  self.railTypes = root.assetJson("/rails.config")
   
   storage.numberOfCars = config.getParameter("numberOfCars")
   self.parentCarId = config.getParameter("parentCarId")
@@ -47,11 +49,13 @@ function init()
   if storage.OnRailStopAndInverted == nil then storage.OnRailStopAndInverted = false end
   if storage.uninitOnRailStop == nil then storage.uninitOnRailStop = false end
   
-  
   self.trainsetInverted = {}
   for i=1,storage.numberOfCars do
 	self.trainsetInverted[i] = self.trainsetOriginal[storage.numberOfCars-(i-1)]
   end
+  
+  --storage.trainsetLen = getTrainsetLenght(self.trainsetOriginal)
+  --storage.trainsetLenInverted = getTrainsetLenght(self.trainsetInverted)
   
   if storage.inverted ~= nil then
     if storage.inverted then
@@ -110,7 +114,15 @@ function init()
   end
   
   if not storage.firstCar then
-    calculateTargetDistanceFromParent()
+    calculateTargetDistanceFromParent(self.trainsetData, storage.carNumber)
+  else
+	calculateTargetDistanceFromParent(self.trainsetData, storage.numberOfCars)
+  end
+  
+  if storage.firstCar or storage.lastCar then
+    storage.trainsetLen = getTrainsetLenght(self.trainsetOriginal)
+    storage.trainsetLenInverted = getTrainsetLenght(self.trainsetInverted)
+	sb.logInfo("================TRAINSET LENGHT==== " .. tostring(storage.trainsetLen) .. " inverted len " .. tostring(storage.trainsetLenInverted))
   end
   
   animator.setPartTag("bodyColor", "partImage", tostring(self.imgPath) .. tostring(storage.color) .. ".png")
@@ -133,10 +145,10 @@ function init()
 	  
 	  self.flipTable[3+i] = decalsFlippableTable[currentDecal][indexOf(decalsIndexes[currentDecal], currentDecalSprite)]
 	  
-	  if currentDecalSprite ~= "0" then
-	    animator.setPartTag(currentDecalBaseString, "partImage", self.imgPath .. currentDecalBaseString .. currentDecalSprite .. ".png")
-	  else
+	  if (currentDecalSprite == 0) or (currentDecalSprite == "0") then
 	    animator.setPartTag(currentDecalBaseString, "partImage", self.imgPath .. "decalPlaceholder.png")
+	  else
+	    animator.setPartTag(currentDecalBaseString, "partImage", self.imgPath .. currentDecalBaseString .. currentDecalSprite .. ".png")
 	  end
 	end
 	for i=numberOfDecals+1,10 do
@@ -213,7 +225,6 @@ function init()
   
 end
 
-
 function update(dt)
 
   --if storage.firstCar and self.railRider.moving then
@@ -225,11 +236,39 @@ function update(dt)
 	--end
   --end
   
+  --self.railRider.onRailType
+  
+  if storage.firstCar then
+    --if self.railRider:onRail() then
+	  railStopsRoutine(dt)
+	--end
+    if self.testRunMode then
+	  if self.testModeCanStart then
+	    testRunModeRoutine()
+	  else
+	    self.testModeStartTimer = world.time() - self.testModeStartTimerT0
+		sb.logInfo("=========test mode start timer " .. tostring(self.testModeStartTimer))
+		if self.testModeStartTimer >= 4 then
+		  self.testModeCanStart = true
+		end
+      end
+	end
+  end
+  
+  
+  
   --if storage.firstCar then
     --if self.debugtimer == nil then self.debugtimer = 0 end
     --self.debugtimer = self.debugtimer + dt
 	--if self.debugtimer >= 4 then
 	  --local pos = entity.position()
+	  --local mpos = mcontroller.position()
+	  --sb.logInfo("MCONTROLLER POS")
+	  --tprint(mpos)
+	  --sb.logInfo("MAGNITUDE to 1 " .. tostring(world.magnitude(mpos, {4914.0, 957.0})))
+	  --tprint(world.distance(mpos, {4914.0, 957.0}))
+	  --sb.logInfo("MAGNITUDEto 4 " .. tostring(world.magnitude(mpos, {1333.0, 957.0})))
+	  --tprint(world.distance(mpos, {1333.0, 957.0}))
       --local playersNearby = world.entityQuery({pos[1] - 47, pos[2] - 47}, {pos[1] + 47, pos[2] + 47}, { includedTypes = { "player" }, boundMode = "metaboundbox" })
 
 	  --sb.logInfo("\nentity query nearby ")
@@ -238,30 +277,6 @@ function update(dt)
 	--end
 	  
   --end
-  
-  if self.testRunMode and storage.firstCar then 
-  
-      self.debugTimerTestRun = world.time() - self.debugTimerTestRunT0
-      if self.debugTimerTestRun > 0.5 then
-		sb.logInfo("Test car POS (mcontroller): ")
-		tprint(mcontroller.position())
-		sb.logInfo("Test car distance to next station (" .. tostring(self.currentStation + 1) .. ") " .. tostring(world.magnitude(mcontroller.position(), self.testRunStationsPos[self.currentStation+1])) )
-	  end
-      
-	  if world.magnitude(mcontroller.position(), self.testRunStationsPos[self.currentStation + 1]) < 1 then
-
-		world.sendEntityMessage(self.stationsData.id[self.currentStation+1], "testRunCarArrivedAt", (self.currentStation + 1), world.time())
-		self.currentStation = self.currentStation + 1
-		sb.logInfo("next station " .. tostring(self.currentStation))
-		if self.currentStation == self.numStations then
-		  
-		  sb.logInfo("Trainset TEST MODE DISABLED, attempting to self destruct")
-		  self.testRunMode = false
-		  destroyVehicle(true)
-		end
-	  end
-	  
-	end
   
   if storage.oldTrainSet and (not storage.oneCarSet) then
     if self.t0 == nil then self.t0 = world.time() end
@@ -278,7 +293,7 @@ function update(dt)
 	destroyVehicle(true)
   else --begin  NOT COLLIDING SECTION
     if self.railRider:onRail() then
-      checkbooster()
+	  handleUseGravity()
 	  if not storage.firstCar then
 	    if self.checkDistance then
 		  checkDistanceToParentCar()
@@ -288,6 +303,8 @@ function update(dt)
 		    self.checkDistance = true
 		  end
 		end
+      else
+	    regulateSpeedFirstCar(dt)
 	  end
     end
   
@@ -342,42 +359,349 @@ function update(dt)
 	  --checkrotation()
 	--end
     
-  if self.speedWasSet then
-    self.speedWasSet = false
-  else
-	self.railRider.useGravity = true
-  end	
 
   if storage.firstCar then 
-	operateDoors()
+	--operateDoors()
+	--operateDoors(false, false, true, self.railRider:checkTile(mcontroller.position()) )
+	operateDoors((self.railRider:checkTile(mcontroller.position()) == "metamaterial:railstop") or self.atRailStop)
   end
 	
 end
 
-function isRailTramAt(nodePos, id)
-  if nodePos and vec2.eq(nodePos, self.railRider:position()) then
-    if id == nil then
-      return true
-    elseif id == entity.id() then
-      return true
+function railStopsRoutine(dt)
+  local distanceToStop
+  if self.stoppingFriction == nil then
+    self.stoppingFriction = 50
+	self.stoppingSpeedLimit = 30
+	self.approachingFriction = 60
+	self.approachingSpeedLimit = 20
+	self.departingAcceleration = 1
+	self.departingSpeedLimit = 30
+	self.departingSpeed = 4
+	self.departingAccelerationWaitTime = 2
+  end
+  
+  if self.railRider.moving and not self.stopping and not self.atRailStop and not self.departingFromStation then
+    local pos = entity.position()
+	local stopsNearby
+	if storage.inverted then
+	  --storage.trainsetLenInverted
+	  if self.railRider.facing > 0 then
+	    --stopsNearby = world.objectQuery({pos[1], pos[2] - 2.5}, {pos[1] + storage.trainsetLenInverted, pos[2] + 2.5}, { name = "customrailstop", boundMode = "position", order = "nearest" })
+		stopsNearby = world.objectQuery({pos[1], pos[2] - 2.5}, {pos[1] + 35, pos[2] + 2.5}, { name = "customrailstop", boundMode = "position", order = "nearest" })
+	  else
+	    --stopsNearby = world.objectQuery({pos[1] - storage.trainsetLenInverted, pos[2] - 2.5}, {pos[1], pos[2] + 2.5}, { name = "customrailstop", boundMode = "position", order = "nearest" })
+		stopsNearby = world.objectQuery({pos[1] - 35, pos[2] - 2.5}, {pos[1], pos[2] + 2.5}, { name = "customrailstop", boundMode = "position", order = "nearest" })
+	  end
+	else
+	  --storage.trainsetLen
+	  if self.railRider.facing > 0 then
+	    --stopsNearby = world.objectQuery({pos[1], pos[2] - 2.5}, {pos[1] + storage.trainsetLen, pos[2] + 2.5}, { name = "customrailstop", boundMode = "position", order = "nearest" })
+		stopsNearby = world.objectQuery({pos[1], pos[2] - 2.5}, {pos[1] + 35, pos[2] + 2.5}, { name = "customrailstop", boundMode = "position", order = "nearest" })
+	  else
+	    --stopsNearby = world.objectQuery({pos[1] - storage.trainsetLen, pos[2] - 2.5}, {pos[1], pos[2] + 2.5}, { name = "customrailstop", boundMode = "position", order = "nearest" })
+		stopsNearby = world.objectQuery({pos[1] - 35, pos[2] - 2.5}, {pos[1], pos[2] + 2.5}, { name = "customrailstop", boundMode = "position", order = "nearest" })
+	  end
+	end
+	if #stopsNearby > 0 then
+	  sb.logInfo("\nINCOMING RAIL STOP DETECTED :")
+	  tprint(stopsNearby)
+	  self.stopping = true
+	  self.approachingStation = false
+	  --if self.railRider.speed > 30 then
+	    --self.railRider.speed = 30
+      --end
+	  --if self.railRider.speed > 60 then
+	    self.railRider.speed = 30
+	  --end
+	  self.stopPosId = stopsNearby[1]
+	  sb.logInfo("\nSTOP ENTITY ID : " .. tostring(self.stopPosId) .. " POS ")
+	  self.railStopPos = util.tileCenter(world.entityPosition(self.stopPosId))
+	  self.railStopPosReal = world.entityPosition(self.stopPosId)
+	  tprint(self.railStopPos)
+	  sb.logInfo("\nCAR 1 POS ")
+	  tprint(util.tileCenter(mcontroller.position()))
+	  sb.logInfo("\nCAR 1 SPEED " .. tostring(self.railRider.speed))
+	end
+  end
+  
+  ---------------------------
+  if self.stopping then
+    local currentRailMaterial = self.railRider.onRailType
+	if self.formerRailMaterial == nil then
+	  self.formerRailMaterial = currentRailMaterial
+	  if currentRailMaterial == nil then return end
+	end
+	  if self.formerRailMaterial ~= currentRailMaterial then
+        currentRailMaterial = self.railRider.onRailType
+	    self.formerRailMaterial = currentRailMaterial
+	    self.speedLimit = self.railTypes[currentRailMaterial].speedLimit
+	    self.currentFriction = self.railTypes[currentRailMaterial].friction
     end
+    if not self.approachingStation then
+      --sb.logInfo("\nself.stopping " .. tostring(self.stopping))
+	  --sb.logInfo("\nCAR 1 POS ")
+	  tprint(mcontroller.position())
+	  --sb.logInfo("\nCAR 1 SPEED " .. tostring(self.railRider.speed))
+	  distanceToStop = world.magnitude(world.xwrap(mcontroller.position()), self.railStopPos)
+	  --sb.logInfo("\ndistance to stop " .. tostring(distanceToStop))
+	  
+	  self.frictionEffect = (self.stoppingFriction + self.currentFriction) * dt
+	  self.railRider.speed = self.railRider.speed - self.frictionEffect
+	  local stoppingLimit = self.speedLimit
+	  if self.speedLimit > self.stoppingSpeedLimit then
+	    stoppingLimit = self.stoppingSpeedLimit
+	  end
+	  self.railRider.speed = util.clamp(self.railRider.speed, 20, stoppingLimit)
+	  
+	  if distanceToStop <= 17 then
+	    self.railRider.speed = 20
+	    self.approachingStation = true
+		sb.logInfo("\nApproaching station " .. tostring(distanceToStop))
+	  end
+	else
+	  --sb.logInfo("\nself.stopping " .. tostring(self.stopping) .. " self.approaching " .. tostring(self.approaching))
+	  
+	  --distanceToStop = world.magnitude(world.xwrap(mcontroller.position()), self.railStopPos)
+	  distanceToStop = world.magnitude(world.xwrap(mcontroller.position()), self.railStopPos)
+	  
+	  --sb.logInfo("\nCAR 1 POS ")
+	  --tprint(mcontroller.position())
+	  --sb.logInfo("\nCAR 1 SPEED " .. tostring(self.railRider.speed))
+	  --sb.logInfo("\ndistance to stop " .. tostring(distanceToStop))
+	  self.frictionEffect = (self.approachingFriction + self.currentFriction) * dt
+	  self.railRider.speed = self.railRider.speed - self.frictionEffect
+	  self.railRider.speed = util.clamp(self.railRider.speed, 15, self.approachingSpeedLimit)
+	  if distanceToStop <= 0.6 then
+	    self.atRailStop = true
+        self.stopping = false
+	    self.stopTimerT0 = world.time()
+	    self.stopTimer = 0
+	    mcontroller.setVelocity({0, 0})
+	    self.railRider.moving = false
+	    if self.childCarID and (not storage.lastCar) then
+	      if world.entityExists(self.childCarID) then
+		    world.callScriptedEntity(self.childCarID, "stop")
+		  end
+        end
+	    --sb.logInfo("\nSTOP TIMER T0 " .. tostring(self.stopTimerT0))
+	  end
+	end
+	
+  end
+  ----------------------------
+  
+  if self.atRailStop then
+    --sb.logInfo("\nself.atRailStop " .. tostring(self.atRailStop))
+    self.stopTimer = world.time() - self.stopTimerT0
+	--sb.logInfo("\nSTOP TIMER " .. tostring(self.stopTimer))
+	--OpenDoors()
+	--operateDoors(true, self.atRailStop)
+	if self.stopTimer >= self.stopLenght then
+	  self.atRailStop = false
+	  --CloseDoors()
+	  --operateDoors(true, self.atRailStop)
+	  self.departingFromStation = true
+	  --self.railRider.moving = true
+	  self.railRider:railResume(mcontroller.position())
+	  self.railRider:findNextNode()
+	  self.railRider.speed = self.departingSpeed
+	  self.departingAccelerating = false
+	  self.stopTimerT0 = world.time()
+	  self.stopTimer = 0
+	  if self.childCarID and (not storage.lastCar) then
+	    if world.entityExists(self.childCarID) then
+		  world.callScriptedEntity(self.childCarID, "start", self.railRider.speed)
+		end
+      end
+	  --sb.logInfo("\nCAR 1 SPEED " .. tostring(self.railRider.speed))
+    end
+  end
+  
+  if self.departingFromStation then
+    local railMaterial = self.railRider:checkTile(mcontroller.position())
+	if (util.tileCenter(mcontroller.position()) ~= self.railStopPos) then
+	  --local frictionEffect = self.stoppingFriction * self.departingFriction
+	  --self.railRider.speed = self.railRider.speed + frictionEffect
+	  if self.departingAccelerating then
+	    local currentRailMaterial = self.railRider.onRailType
+	    if self.formerRailMaterial ~= currentRailMaterial then
+          currentRailMaterial = self.railRider.onRailType
+	      self.formerRailMaterial = currentRailMaterial
+	      self.speedLimit = self.railTypes[currentRailMaterial].speedLimit
+	      self.currentFriction = self.railTypes[currentRailMaterial].friction
+        end
+		local acceleration = self.currentFriction + self.departingAcceleration
+		self.frictionEffect = self.currentFriction * dt
+	    self.railRider.speed = (self.railRider.speed + acceleration) - self.frictionEffect
+	    self.railRider.speed = util.clamp(self.railRider.speed, self.departingSpeed, self.departingSpeedLimit)
+		--sb.logInfo("\nCAR 1 SPEED " .. tostring(self.railRider.speed))
+		if self.railRider.speed >= self.departingSpeedLimit then
+		  self.departingAccelerating = false
+		  self.departingFromStation = false
+		end
+	  else
+	    self.stopTimer = world.time() - self.stopTimerT0
+        if self.stopTimer >= self.departingAccelerationWaitTime then
+		  self.departingAccelerating = true
+		end
+	  end
+	end
+  end
+  
+end
+
+function testRunModeRoutine()
+
+	--if world.magnitude(mcontroller.position(), stationPos) <= 1 then
+	if self.atRailStop then
+	  
+	  local posTarget = util.tileCenter(self.nodePos[self.nextStation])
+	  local currentStopPos = util.tileCenter(self.railStopPosReal)
+	  
+	  sb.logInfo("=============TEST MODE DETECTED RAIL STOP AT: =========== " .. tostring(currentStopPos[1]) .. "," .. tostring(currentStopPos[2]))
+	  sb.logInfo("=============TARGET RAIL STOP (" .. tostring(self.nextStation) .. ") pos:"  .. tostring(posTarget[1]) .. "," .. tostring(posTarget[2]))
+	  sb.logInfo("POS[1][1] == POS[2][1]: " .. tostring((currentStopPos[1] == posTarget[1])))
+	  sb.logInfo("POS[1][2] == POS[2][2]: " .. tostring((currentStopPos[2] == posTarget[2])))
+	  
+	  if (currentStopPos[1] == posTarget[1]) and (currentStopPos[2] == posTarget[2]) then
+	    local arrivedAtStation = self.nextStation
+	    local stationEntityId = self.stationsData.id[self.nextStation]
+	    world.sendEntityMessage(stationEntityId, "testRunCarArrivedAt", arrivedAtStation, world.time())
+	    self.currentStation = self.currentStation + 1
+	    sb.logInfo("current station " .. tostring(self.currentStation))
+	    if self.currentStation == self.numStations then
+		  sb.logInfo("Trainset TEST MODE DISABLED, attempting to self destruct")
+		  self.testRunMode = false
+		  destroyVehicle(true)
+	    else
+		  self.nextStation = self.nextStation + 1
+		  sb.logInfo(" Next station " .. tostring(self.nextStation))
+	    end
+	  end
+	end
+	  
+end
+
+function stop()
+  mcontroller.setVelocity({0, 0})
+  self.railRider.moving = false
+  if self.childCarID and (not storage.lastCar) then
+	if world.entityExists(self.childCarID) then world.callScriptedEntity(self.childCarID, "stop") end
+  end
+end
+function start(resumeSpeed)
+  self.railRider:railResume(mcontroller.position())
+  self.railRider:findNextNode()
+  self.railRider.speed = resumeSpeed
+  if self.childCarID and (not storage.lastCar) then
+	if world.entityExists(self.childCarID) then world.callScriptedEntity(self.childCarID, "start", resumeSpeed) end
+  end
+end
+
+function regulateSpeedFirstCar(dt , speedPercent)
+
+    if speedPercent == nil then
+	  speedPercent = 100
+	end
+	
+	speedMultiplier = 100 / speedPercent
+	
+    if self.railRider.moving and not (self.stopping and self.approachingStation and self.atRailStop and self.departingFromStation) then
+	  local currentRailMaterial = self.railRider.onRailType
+	  if self.formerRailMaterial == nil then
+	    self.formerRailMaterial = currentRailMaterial
+		self.speedLimit = self.railTypes[currentRailMaterial].speedLimit / speedMultiplier
+	    self.currentFriction = self.railTypes[currentRailMaterial].friction
+	  end
+	  if self.formerRailMaterial ~= currentRailMaterial then
+        currentRailMaterial = self.railRider.onRailType
+	    self.formerRailMaterial = currentRailMaterial
+	    self.speedLimit = self.railTypes[currentRailMaterial].speedLimit / speedMultiplier
+	    self.currentFriction = self.railTypes[currentRailMaterial].friction
+      end
+      if self.railRider.speed < self.speedLimit  then
+	    self.frictionEffect = self.currentFriction * dt 
+	    if self.railRider.speed < 20 then
+		  --self.railRider.speed = self.railRider.speed + 0.5 
+		--elseif self.railRider.speed < 65 then
+		  self.railRider.speed = (self.railRider.speed + (self.railRider.speed / 15)) - self.frictionEffect
+		else
+		  self.railRider.speed = (self.railRider.speed + (self.railRider.speed / 13)) - self.frictionEffect
+          --self.frictionEffect = self.currentFriction * dt 
+          --self.railRider.speed = (self.railRider.speed + 0.5 ) - self.frictionEffect
+		--elseif (self.railRider.speed > 20) and (self.railRider.speed < 50) then
+		  --self.frictionEffect = self.currentFriction * dt 
+          --self.railRider.speed = (self.railRider.speed + 1.5 ) - self.frictionEffect
+		--elseif (self.railRider.speed > 50) then
+		  --self.frictionEffect = self.currentFriction * dt 
+          --self.railRider.speed = (self.railRider.speed + 3 ) - self.frictionEffect
+		--elseif (self.railRider.speed > 60) then
+		  --self.frictionEffect = self.currentFriction * dt 
+          --self.railRider.speed = (self.railRider.speed + 4 ) - self.frictionEffect
+		--elseif (self.railRider.speed > 70) then
+		  --self.frictionEffect = self.currentFriction * dt 
+          --self.railRider.speed = (self.railRider.speed + 7 ) - self.frictionEffect
+        end
+        --sb.logInfo("Accelerating, speed: " .. tostring(self.railRider.speed))		
+      elseif self.railRider.speed > self.speedLimit then
+        --self.frictionEffect = self.currentFriction * dt 
+        self.railRider.speed = (self.railRider.speed - 4 ) - self.frictionEffect
+	    --sb.logInfo("decelerating, speed: " .. tostring(self.railRider.speed))
+      end
+	end
+  
+end
+
+function handleUseGravity()
+  local dirVector = self.railRider:dirVector()
+  if dirVector[2] >= 0 and self.railRider.useGravity and self.railRider.moving and self.railRider.speed < 3 then
+    self.railRider.speed = 5
+	self.railRider.useGravity = false
+  else
+    self.railRider.useGravity = true
+  end
+end
+
+function isRailTramAt(nodePos)
+  if nodePos and vec2.eq(nodePos, self.railRider:position()) then
+    return true
   end
 end
 
 function checkDistanceToParentCar()
   local distanceToChildParent = world.magnitude(mcontroller.position(), world.entityPosition(self.parentCarId))
-  if self.targetDistanceFromParent == nil then calculateTargetDistanceFromParent() end
+  if self.targetDistanceFromParent == nil then
+	calculateTargetDistanceFromParent(self.trainsetData, storage.carNumber)
+  end
   if distanceToChildParent > (self.targetDistanceFromParent + 5) then
     destroyVehicle(true)
   end
 end
 
-function calculateTargetDistanceFromParent()
-  local thisVehicle = self.trainsetData[storage.carNumber].name
-  local parentVehicle = self.trainsetData[storage.carNumber - 1].name
+function calculateTargetDistanceFromParent(trainsetData, carNumber)
+  local thisVehicle = trainsetData[carNumber].name
+  local parentVehicle = trainsetData[carNumber - 1].name
   local thisVehiclePxLen = tonumber(self.listOfCars[thisVehicle].carLenghtPixels)
   local ParentVehiclePxLen = tonumber(self.listOfCars[parentVehicle].carLenghtPixels)
   self.targetDistanceFromParent = ( ((thisVehiclePxLen/2) + (ParentVehiclePxLen / 2)) / 8) + 1.75
+end
+
+function getTrainsetLenght(trainset)
+  local firstVehicle = trainset[1].name
+  local firstVehicleLenght = (tonumber(self.listOfCars[firstVehicle].carLenghtPixels) / 2) / 8
+  local totalLenght = firstVehicleLenght
+  for i=2,storage.numberOfCars do
+    local vehicleName = trainset[i].name
+    local vehicleLenght = tonumber(self.listOfCars[vehicleName].carLenghtPixels) / 8
+	totalLenght = totalLenght + vehicleLenght + 1.75
+  end
+  
+  if math.floor(totalLenght) - totalLenght < 0 then
+    totalLenght = math.floor(totalLenght) + 1
+  end
+  
+  return totalLenght
 end
 
 function flip(flipTable)
@@ -416,16 +740,21 @@ function flip(flipTable)
   end
 end
 
-function operateDoors()
-  if self.railRider:checkTile(mcontroller.position()) == "metamaterial:railstop" and not self.doorOperating then
-       --self.doorOperating = true
-       OpenDoors()
-  elseif self.railRider:checkTile(mcontroller.position()) ~= "metamaterial:railstop" and self.doorOperating then
-       --self.doorOperating = false
+function operateDoors(atRailStop)
+
+  if self.doorOperating then
+    if not atRailStop then
+	  --self.doorOperating = false
       CloseDoors()
+	end
+  else
+    if atRailStop then
+	  --self.doorOperating = true
+       OpenDoors()
+	end
   end
   
-  if storage.firstCar and self.railRider:checkTile(mcontroller.position()) == "metamaterial:railstop" and self.childCarID and self.onRailStopNoChildCar then
+  if storage.firstCar and atRailStop and self.childCarID and self.onRailStopNoChildCar then
     if world.entityExists(self.childCarID) then
 	  world.callScriptedEntity(self.childCarID, "OpenDoors")
 	  self.onRailStopNoChildCar = false
@@ -433,7 +762,7 @@ function operateDoors()
   end
   
 end
-
+  
 function OpenDoors()
   if (not self.doorOperating) then
     if not storage.doorLocked then animator.setAnimationState("rail", "opening") end
@@ -551,21 +880,6 @@ function sfxVolumeAdjust(dt)
   end
   
 end
-  
-function checkbooster()
-
-  local dirVector = self.railRider:dirVector()
-  
-  if self.railRider.speed < 2 and dirVector[2] >= 0 and self.railRider.useGravity and self.railRider:checkTile(mcontroller.position()) ~= "metamaterial:railbooster" then
-    self.railRider.speed = 3
-	self.railRider.useGravity = false
-  end
-
-  if self.railRider.useGravity == false and (dirVector[2] < 0 or self.railRider:checkTile(mcontroller.position()) == "metamaterial:railbooster") then
-	self.railRider.useGravity = true
-  end
-  
-end
 
 function regulateSpeedOfChildcar(childCarEid)
 
@@ -580,36 +894,58 @@ function regulateSpeedOfChildcar(childCarEid)
 end
 
 function setChildCarSpeed(speed)
-  self.railRider.speed = speed
-  self.speedWasSet = true
-  self.railRider.useGravity = false
+  self.railRider.speed = speed 
 end
 
-function testRunModeEnabled(_, _, stationsData, numStations)
+function testRunModeEnabled(_, _, numStations, stationsData, nodepos, circular )
   sb.logInfo("Trainset got message TEST RUN MODE ENABLED, num stations " .. tostring(numStations))
   sb.logInfo("Stationsdata as follows ")
   tprint(stationsData)
   self.testRunMode = true
   self.stationsData = stationsData
-  if self.currentStation == nil then self.currentStation = 1 end
-  sb.logInfo("current station " .. tostring(self.currentStation))
+  --self.nodePos = stationsData.nodePos
+  self.currentStation = 1
+  self.nextStation = 2
+  sb.logInfo("current station " .. tostring(self.currentStation) .. " Next station " .. tostring(self.nextStation))
   self.numStations = numStations
+  self.testRunCircular = circular
   sb.logInfo("TRAINSET numstations " .. tostring(self.numStations))
   
-  self.testRunStationsPos={}
-  for i=1,self.numStations do
-    self.testRunStationsPos[i] = {}
-	for k,v in pairs(self.stationsData.nodePos) do
-      if k == tostring(i) then
-	    self.testRunStationsPos[i][1] = self.stationsData.nodePos[k][1]
-		self.testRunStationsPos[i][2] = self.stationsData.nodePos[k][2]
-	  end
-    end
+  self.testModeStartTimer = 0
+  self.testModeStartTimerT0 = world.time()
+  self.testModeCanStart = false
+  
+  --self.testRunStationsPos={}
+  --for i=1,self.numStations do
+    --self.testRunStationsPos[i] = {}
+	--for k,v in pairs(self.stationsData.nodePos) do
+	  --sb.logInfo(tostring(k))
+	  --sb.logInfo(tostring(v))
+      --if k == tostring(i) then
+	    --self.testRunStationsPos[i][1] = self.stationsData.nodePos[k][1]
+		--self.testRunStationsPos[i][2] = self.stationsData.nodePos[k][2]
+	  --end
+    --end
+  --end
+  
+  --sb.logInfo("TRAINSET node stations POS refurbished as follows: ")
+  --tprint(self.testRunStationsPos)
+  
+  self.nodePos = nodepos
+  sb.logInfo("TRAINSET node stations POS as follows: ")
+  tprint(self.nodePos)
+  
+  if self.testRunCircular then
+    self.numStations = self.numStations + 1
+	self.nodePos[self.numStations] = {}
+	self.nodePos[self.numStations][1] = self.nodePos[1][1]
+	self.nodePos[self.numStations][2] = self.nodePos[1][2]
+	self.stationsData.id[self.numStations] = self.stationsData.id[1]
+	sb.logInfo(" TRAINSET circular TESTRUN " .. tostring(self.testRunCircular) .. " num stations " .. tostring(self.numStations) .. " Trainsed node stations POS as follows")
+	tprint(self.nodePos)
+	sb.logInfo(" TRAINSET stations ids as follows ")
+	tprint(self.stationsData.id)
   end
-  
-  sb.logInfo("TRAINSET node stations POS refurbished as follows: ")
-  tprint(self.testRunStationsPos)
-  
   
   self.debugTimerTestRun = 0
   self.debugTimerTestRunT0 = world.time()
@@ -780,6 +1116,9 @@ function invert()
     storage.firstCar = false
 	storage.lastCar = true
 	storage.carNumber = storage.numberOfCars
+	self.checkDistance = false
+    self.checkDistanceTimer = 0
+	self.CheckDistanceTimerT0 = world.time() - 3
 	if storage.inverted then
 	  self.trainsetData = self.trainsetOriginal
 	else

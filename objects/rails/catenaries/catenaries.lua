@@ -13,10 +13,9 @@ function init()
   
   local override = object.getInputNodeLevel(0)
   if override == true then
-    object.setMaterialSpaces({{{0, 0}, "metamaterial:rail"}})
     animator.setAnimationState("stopState", "off")
   else
-    object.setMaterialSpaces({{{0, 0}, "metamaterial:railbooster"}})
+    --object.setMaterialSpaces({{{0, 0}, "metamaterial:rail"}})
     animator.setAnimationState("stopState", "on")
   end
 end
@@ -36,10 +35,9 @@ function onInputNodeChange()
   local override = object.getInputNodeLevel(0)
   
   if override == true then
-    object.setMaterialSpaces({{{0, 0}, "metamaterial:rail"}})
+    --object.setMaterialSpaces({{{0, 0}, "metamaterial:rail"}})
     animator.setAnimationState("stopState", "off")
   else
-    object.setMaterialSpaces({{{0, 0}, "metamaterial:railbooster"}})
     animator.setAnimationState("stopState", "on")
   end
 end
