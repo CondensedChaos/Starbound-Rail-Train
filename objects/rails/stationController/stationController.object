@@ -3,7 +3,7 @@
   "colonyTags" : ["electronic", "wired"],
   "printable" : false,
   "rarity" : "Common",
-  "description" : "Station Controller",
+  "description" : "Starts and stops trains at a station and cofigures the network, wire this to a marker",
   "shortdescription" : "Station Controller",
   "race" : "generic",
 
