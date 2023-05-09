@@ -16,7 +16,6 @@ function init()
     object.setMaterialSpaces({{{0, 0}, "metamaterial:rail"}})
     animator.setAnimationState("stopState", "off")
   else
-    object.setMaterialSpaces({{{0, 0}, "metamaterial:railbooster"}})
     animator.setAnimationState("stopState", "on")
   end
 end
@@ -39,7 +38,6 @@ function onInputNodeChange()
     object.setMaterialSpaces({{{0, 0}, "metamaterial:rail"}})
     animator.setAnimationState("stopState", "off")
   else
-    object.setMaterialSpaces({{{0, 0}, "metamaterial:railbooster"}})
     animator.setAnimationState("stopState", "on")
   end
 end

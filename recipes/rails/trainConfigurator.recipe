@@ -1,0 +1,10 @@
+{
+  "input" : [
+    { "item" : "wire", "count" : 6 },
+    { "item" : "siliconboard", "count" : 3 },
+    { "item" : "smallbattery", "count" : 1 },
+    { "item" : "durasteelbar", "count" : 5 }
+  ],
+  "output" : { "item" : "trainConfigurator", "count" : 1 },
+  "groups" : [ "rail" ]
+}

@@ -4,7 +4,7 @@
 
   "category" : "railPoint",
   "price" : 50,
-  "description" : "---",
+  "description" : "An alternative to catenary wires, place this at least every 20 tiles, the next girder/chunk loader has to be inside the green area",
   "shortdescription" : "Rail Chunk Loader",
   "race" : "generic",
 

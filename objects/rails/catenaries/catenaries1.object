@@ -5,8 +5,8 @@
 
   "category" : "railPoint",
   "price" : 400,
-  "description" : "---------",
-  "shortdescription" : "----------",
+  "description" : "Used to power trains, place this every 20 tiles, the next girder has to be inside the green area to work",
+  "shortdescription" : "Catenary girder with wires",
   "race" : "generic",
 
   "inventoryIcon" : "catenariesicon.png",

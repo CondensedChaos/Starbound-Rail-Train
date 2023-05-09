@@ -5,8 +5,8 @@
 
   "category" : "railPoint",
   "price" : 400,
-  "description" : "---------",
-  "shortdescription" : "----------",
+  "description" : "Use this coupled with catenary wires if your network is uneven, the next girder has to be inside the green area to work",
+  "shortdescription" : "Catenary girder, no wires",
   "race" : "generic",
 
   "inventoryIcon" : "catenariesicon.png",

@@ -1,0 +1,8 @@
+{
+  "input" : [
+    { "item" : "wire", "count" : 1 },
+    { "item" : "siliconboard", "count" : 1 }
+  ],
+  "output" : { "item" : "customrailstop", "count" : 1 },
+  "groups" : [ "rail" ]
+}

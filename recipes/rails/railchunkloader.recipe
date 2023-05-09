@@ -1,0 +1,7 @@
+{
+  "input" : [
+    { "item" : "lightbulb", "count" : 1 }
+  ],
+  "output" : { "item" : "railchunkloader", "count" : 1 },
+  "groups" : [ "rail" ]
+}

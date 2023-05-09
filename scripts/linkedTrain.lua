@@ -23,8 +23,7 @@ function init()
   --self.t1 = world.time()
   self.sfxRampUpTimer = 0.1
   
-  self.stopTimer = 0
-  self.stopLenght = 6
+  self.defaultStopLenght = 6
 
   self.listOfCars = root.assetJson("/objects/crafting/trainConfigurator/listOfCars.json")
   self.railTypes = root.assetJson("/rails.config")
@@ -72,6 +71,7 @@ function init()
 	storage.carNumber = config.getParameter("carNumber")
 	storage.lastCar = config.getParameter("lastCar")
     storage.firstCar = config.getParameter("firstCar")
+    storage.stationControlled = config.getParameter("stationControlled")
 	if storage.firstCar then
 	  storage.inverted = false
 	else
@@ -106,8 +106,67 @@ function init()
 	  sb.logInfo("\ncar number " .. "One Car set " .. tostring(storage.oneCarSet))
     else
       storage.oneCarSet = false
-    end
+  end
 	
+  if (storage.firstCar or storage.lastCar) and storage.stationControlled then
+	if not storage.stationInit then
+      storage.timetable = config.getParameter("timetable")
+      
+	  ----timetable :
+	  ----.trainNum .direction .speeds .stopsLen .times .startTime .startStation
+	  storage.stationsTable = config.getParameter("stations")
+	  ----stationsTable :
+	  ----.circular .pos .uuids .groupName
+      storage.originalCar = config.getParameter("originalCar")
+      sb.logInfo("==============STATION CONTROLLED TRAIN -------INIT--------- ============")
+      sb.logInfo("==============storage.timetable:============")
+      tprint(storage.timetable)
+      sb.logInfo("==============storage.stationsTable:============")
+      tprint(storage.stationsTable)
+	  storage.currentStation = storage.timetable.startStation
+	  storage.lastStation = #storage.timetable.speeds
+      sb.logInfo("========================storage.lastStation = " .. tostring(storage.lastStation))
+	  if storage.stationsTable.circular then
+	    storage.nextStation = storage.currentStation + 1
+	  else
+        if storage.timetable.direction == "W" then
+          if storage.currentStation == 1 then
+            storage.loopingbackstations = false
+            storage.nextStation = 2
+          else
+            storage.nextStation = storage.currentStation - 1
+            storage.loopingbackstations = true
+          end
+        else
+          if storage.currentStation == storage.lastStation then
+		   storage.nextStation = storage.currentStation - 1
+		   storage.loopingbackstations = true
+		  else
+		    storage.nextStation = storage.currentStation + 1
+		    storage.loopingbackstations = false
+		  end
+        end
+	  end
+      local speedPercent = storage.timetable.speeds[storage.nextStation]
+      storage.speedMultiplier = 100 / speedPercent
+      storage.StopLenght = storage.timetable.stopsLen[storage.nextStation]
+      storage.currentTime = storage.timetable.times[storage.nextStation]
+      self.scheduleTimerT0 = world.time()
+      storage.scheduleTimer = 0
+      sb.logInfo("Station " .. tostring(storage.currentStation) .. "-" .. tostring(storage.nextStation) .. " Speed: " .. tostring(storage.timetable.speeds[storage.nextStation]) .. "percent --> maxSpeed/" .. tostring(storage.speedMultiplier) .. " Station " .. tostring(storage.nextStation) .. " Stop Lenght: " .. tostring(storage.StopLenght) .. "s" .. " projected time = " .. tostring(storage.currentTime))
+      
+      self.saveFile = world.getProperty("stationController_file")
+      
+      storage.numberOfTrainsE = self.saveFile.global[storage.stationsTable.groupName].data.numberOfTrainsE
+      storage.numberOfTrainsW = self.saveFile.global[storage.stationsTable.groupName].data.numberOfTrainsW
+      
+      storage.stationControlledTrainUninit = false
+      storage.stationInit = true
+	end
+  elseif (storage.firstCar or storage.lastCar) and (not storage.stationControlled) then
+    storage.speedMultiplier = 1
+  end
+  
   
   if not storage.lastCar then 
     if not storage.oneCarSet then calculateTargetDistanceToChild() end
@@ -217,6 +276,13 @@ function init()
   
   message.setHandler("testRunModeEnabled", testRunModeEnabled)
   
+  message.setHandler("stopGroup", handleStopGroup)
+  
+  if storage.uninitWhileStopping then
+    mcontroller.setVelocity({0, 0})
+	self.railRider.moving = false
+  end
+  
   sb.logInfo("\nInit() of car " .. tostring(storage.carNumber) .. " ended")
   
   script.setUpdateDelta(5)
@@ -225,7 +291,30 @@ function init()
   
 end
 
+function lastCarCheck()
+  --storage.lastCarID
+  if self.lastCarCheckTimer == nil then
+    self.lastCarCheckTimer = 0
+    --if self.
+  end
+  
+end
+
 function update(dt)
+
+  if storage.uninitWhileStopping then
+    sb.logInfo("===================UNINIT WHILE STOPPING=====================")
+    sb.logInfo("storage.stopTimer = " .. tostring(storage.stopTimer) .. " world Time = " .. tostring(world.time()) .. " | world.time() - storage.stopTimer = " .. tostring(world.time() - storage.stopTimer))
+    storage.stopTimerT0 = world.time() - storage.stopTimer
+    storage.uninitWhileStopping = false
+    self.resumingStopFromUninit = true
+  end
+  if storage.uninitWhileTravelling then
+    sb.logInfo("===================UNINIT WHILE TRAVELLING=====================")
+    sb.logInfo("storage.scheduleTimer = " .. tostring(storage.scheduleTimer) .. " world Time = " .. tostring(world.time()) .. " | world.time() - storage.scheduleTimer = " .. tostring(world.time() - storage.scheduleTimer))
+    self.scheduleTimerT0 = world.time() - storage.scheduleTimer
+    storage.uninitWhileTravelling = false
+  end
 
   --if storage.firstCar and self.railRider.moving then
     --if self.displayspeedtimer == nil then self.displayspeedtimer = 0 end
@@ -238,9 +327,19 @@ function update(dt)
   
   --self.railRider.onRailType
   
+    --storage.stationControlled = config.getParameter("stationControlled")
+	--storage.timetable = config.getParameter("timetable")
+	----timetable :
+	----.trainNum .direction .speeds .stopsLen .times
+	--storage.stationsTable = config.getParameter("stations")
+	----stationsTable :
+	----.circular .pos .uuids .groupName
+	----storage.currentStation
+	----storage.nextStation
+  
   if storage.firstCar then
     --if self.railRider:onRail() then
-	  railStopsRoutine(dt)
+	  railStopsRoutine(dt,storage.stationControlled)
 	--end
     if self.testRunMode then
 	  if self.testModeCanStart then
@@ -248,7 +347,7 @@ function update(dt)
 	  else
 	    self.testModeStartTimer = world.time() - self.testModeStartTimerT0
 		sb.logInfo("=========test mode start timer " .. tostring(self.testModeStartTimer))
-		if self.testModeStartTimer >= 4 then
+		if self.testModeStartTimer >= 1 then
 		  self.testModeCanStart = true
 		end
       end
@@ -304,7 +403,14 @@ function update(dt)
 		  end
 		end
       else
-	    regulateSpeedFirstCar(dt)
+        regulateSpeedFirstCar(dt, storage.speedMultiplier)
+        if storage.invertAtNextCycle then
+          invert()
+          self.railRider.direction = (self.railRider.direction + 3) % 8 + 1
+	      self.railRider:findNextNode()
+          storage.invertAfterStop = false
+          storage.invertAtNextCycle = false
+        end
 	  end
     end
   
@@ -363,12 +469,162 @@ function update(dt)
   if storage.firstCar then 
 	--operateDoors()
 	--operateDoors(false, false, true, self.railRider:checkTile(mcontroller.position()) )
-	operateDoors((self.railRider:checkTile(mcontroller.position()) == "metamaterial:railstop") or self.atRailStop)
+	operateDoors((self.railRider:checkTile(mcontroller.position()) == "metamaterial:railstop") or storage.atRailStop)
+  end
+  
+  if storage.firstCar and storage.stationControlledTrainUninit then
+    updateID()
+  end
+  if storage.firstCar and self.waitingToLoadIDS then
+    updateIDs()
   end
 	
 end
 
-function railStopsRoutine(dt)
+function updateID()
+  --self.spawnedTrainsIDs.E[trainNum]
+  --self.spawnedTrainsIDs.W[trainNum]
+  --world.setProperty(storage.group .. "trainsidsE_file", self.spawnedTrainsIDs.E)
+  --world.setProperty(storage.group .. "trainsidsW_file", self.spawnedTrainsIDs.W)
+      
+  --storage.timetable.trainNum
+  --storage.timetable.direction
+  
+  --storage.stationControlledTrainUninit
+  
+  --storage.numberOfTrainsE
+  --storage.numberOfTrainsW
+  
+  if storage.numberOfTrainsE > 0 then
+    if not self.trainsUninitTimerE then
+      self.trainsUninitTimerE = 0
+      self.trainsUninitTimerET0 = world.time()
+      self.spawnedTrainsIDs = {}
+      self.spawnedTrainsIDs.E = {}
+      self.spawnedTrainsIDs.W = {}
+      if (storage.timetable.trainNum == 1) and (storage.timetable.direction == "E") then
+        self.trainsUninitTimerTargetE = 4
+      elseif (storage.timetable.direction == "E") then
+        self.trainsUninitTimerTargetE = 4 + 4*(storage.timetable.trainNum)
+      else
+        self.trainsUninitTimerTargetE = 6
+        if storage.numberOfTrainsE > 1 then
+          for t=2,storage.numberOfTrainsE do
+            self.trainsUninitTimerTargetE = 4 + 4*t
+          end
+        end
+      end
+    end
+    self.trainsUninitTimerE = world.time() - self.trainsUninitTimerET0 
+  else
+    self.stationControlledTrainUninitE = true
+  end
+  
+  if storage.numberOfTrainsW > 0 then
+    if not self.trainsUninitTimerW then
+      self.trainsUninitTimerW = 0
+      self.trainsUninitTimerWT0 = world.time()
+      if (storage.timetable.trainNum == 1) and (storage.timetable.direction == "W") then
+        self.trainsUninitTimerTargetW = 4
+      elseif (storage.timetable.direction == "W") then
+        self.trainsUninitTimerTargetW = 4 + 4*(storage.timetable.trainNum)
+      else
+        self.trainsUninitTimerTargetW = 6
+        if storage.numberOfTrainsW > 1 then
+          for t=2,storage.numberOfTrainsW do
+            self.trainsUninitTimerTargetW = 4 + 4*t
+          end
+        end
+      end
+    end
+    self.trainsUninitTimerW = world.time() - self.trainsUninitTimerWT0
+  else
+    self.stationControlledTrainUninitW = true
+  end
+  
+  
+  if self.trainsUninitTimerE >= self.trainsUninitTimerTargetE then
+    if storage.timetable.direction == "E" then
+      if storage.timetable.trainNum == 1 then
+        self.spawnedTrainsIDs.E[1] = entity.id()
+        world.setProperty(storage.stationsTable.groupName .. "trainsidsE_file", self.spawnedTrainsIDs.E)
+      else
+        self.spawnedTrainsIDs.E = world.getProperty(storage.stationsTable.groupName .. "trainsidsE_file")
+        self.spawnedTrainsIDs.E[storage.timetable.trainNum] = entity.id()
+        world.setProperty(storage.stationsTable.groupName .. "trainsidsE_file", self.spawnedTrainsIDs.E)
+      end
+      self.stationControlledTrainUninitE = true
+    else
+      self.spawnedTrainsIDs.E = world.getProperty(storage.stationsTable.groupName .. "trainsidsE_file")
+      self.stationControlledTrainUninitE = true
+    end
+  end
+  
+  if self.trainsUninitTimerW >= self.trainsUninitTimerTargetW then
+    if storage.timetable.direction == "W" then
+      if storage.timetable.trainNum == 1 then
+        self.spawnedTrainsIDs.W[1] = entity.id()
+        world.setProperty(storage.stationsTable.groupName .. "trainsidsW_file", self.spawnedTrainsIDs.W)
+      else
+        self.spawnedTrainsIDs.W = world.getProperty(storage.stationsTable.groupName .. "trainsidsW_file")
+        self.spawnedTrainsIDs.W[storage.timetable.trainNum] = entity.id()
+        world.setProperty(storage.stationsTable.groupName .. "trainsidsW_file", self.spawnedTrainsIDs.W)
+      end
+      self.stationControlledTrainUninitW = true
+    else
+      self.spawnedTrainsIDs.W = world.getProperty(storage.stationsTable.groupName .. "trainsidsW_file")
+      self.stationControlledTrainUninitW = true
+    end
+  end
+  
+  if self.stationControlledTrainUninitE and self.stationControlledTrainUninitW then
+    storage.stationControlledTrainUninit = false
+    self.waitingToLoadIDS = true
+    self.UninitTimer = 0
+    self.UninitTimerT0 = world.time()
+    self.trainsUninitTimerTarget = 0
+    
+    if storage.timetable.direction == "E" then
+      if storage.numberOfTrainsE > 1 then
+        for t=2,storage.numberOfTrainsE do
+          self.trainsUninitTimerTarget = 4 + 4*t
+        end
+      else
+        self.waitingToLoadIDS = false
+      end
+    else
+      if storage.numberOfTrainsW > 1 then
+        for t=2,storage.numberOfTrainsW do
+          self.trainsUninitTimerTarget = 4 + 4*t
+        end
+      else
+        self.waitingToLoadIDS = false
+      end
+    end
+    
+  end
+
+end
+
+function updateIDs()
+  --storage.numberOfTrainsE
+  --storage.numberOfTrainsW
+  
+  self.UninitTimer = world.time() - self.UninitTimerT0
+  
+  if self.UninitTimer >= self.trainsUninitTimerTarget then
+    if storage.numberOfTrainsE > 1 then
+      self.spawnedTrainsIDs.E = world.getProperty(storage.stationsTable.groupName .. "trainsidsE_file")
+    end
+    if storage.numberOfTrainsW > 1 then
+      self.spawnedTrainsIDs.W = world.getProperty(storage.stationsTable.groupName .. "trainsidsW_file")
+    end
+    self.waitingToLoadIDS = false
+  end
+
+end
+
+function railStopsRoutine(dt,stationControlled)
   local distanceToStop
   if self.stoppingFriction == nil then
     self.stoppingFriction = 50
@@ -379,57 +635,90 @@ function railStopsRoutine(dt)
 	self.departingSpeedLimit = 30
 	self.departingSpeed = 4
 	self.departingAccelerationWaitTime = 2
+    self.stationDetectionSpace = 35
   end
   
-  if self.railRider.moving and not self.stopping and not self.atRailStop and not self.departingFromStation then
+  if stationControlled and not storage.atRailStop then
+    --self.scheduleTimerT0
+    storage.scheduleTimer = world.time() - self.scheduleTimerT0
+  end    
+  
+  if self.railRider.moving and not storage.stopping and not storage.atRailStop and not storage.departingFromStation then
     local pos = entity.position()
 	local stopsNearby
 	if storage.inverted then
 	  --storage.trainsetLenInverted
 	  if self.railRider.facing > 0 then
 	    --stopsNearby = world.objectQuery({pos[1], pos[2] - 2.5}, {pos[1] + storage.trainsetLenInverted, pos[2] + 2.5}, { name = "customrailstop", boundMode = "position", order = "nearest" })
-		stopsNearby = world.objectQuery({pos[1], pos[2] - 2.5}, {pos[1] + 35, pos[2] + 2.5}, { name = "customrailstop", boundMode = "position", order = "nearest" })
+		stopsNearby = world.objectQuery({pos[1], pos[2] - 2.5}, {pos[1] + self.stationDetectionSpace, pos[2] + 2.5}, { name = "customrailstop", boundMode = "position", order = "nearest" })
 	  else
 	    --stopsNearby = world.objectQuery({pos[1] - storage.trainsetLenInverted, pos[2] - 2.5}, {pos[1], pos[2] + 2.5}, { name = "customrailstop", boundMode = "position", order = "nearest" })
-		stopsNearby = world.objectQuery({pos[1] - 35, pos[2] - 2.5}, {pos[1], pos[2] + 2.5}, { name = "customrailstop", boundMode = "position", order = "nearest" })
+		stopsNearby = world.objectQuery({pos[1] - self.stationDetectionSpace, pos[2] - 2.5}, {pos[1], pos[2] + 2.5}, { name = "customrailstop", boundMode = "position", order = "nearest" })
 	  end
 	else
 	  --storage.trainsetLen
 	  if self.railRider.facing > 0 then
 	    --stopsNearby = world.objectQuery({pos[1], pos[2] - 2.5}, {pos[1] + storage.trainsetLen, pos[2] + 2.5}, { name = "customrailstop", boundMode = "position", order = "nearest" })
-		stopsNearby = world.objectQuery({pos[1], pos[2] - 2.5}, {pos[1] + 35, pos[2] + 2.5}, { name = "customrailstop", boundMode = "position", order = "nearest" })
+		stopsNearby = world.objectQuery({pos[1], pos[2] - 2.5}, {pos[1] + self.stationDetectionSpace, pos[2] + 2.5}, { name = "customrailstop", boundMode = "position", order = "nearest" })
 	  else
 	    --stopsNearby = world.objectQuery({pos[1] - storage.trainsetLen, pos[2] - 2.5}, {pos[1], pos[2] + 2.5}, { name = "customrailstop", boundMode = "position", order = "nearest" })
-		stopsNearby = world.objectQuery({pos[1] - 35, pos[2] - 2.5}, {pos[1], pos[2] + 2.5}, { name = "customrailstop", boundMode = "position", order = "nearest" })
+		stopsNearby = world.objectQuery({pos[1] - self.stationDetectionSpace, pos[2] - 2.5}, {pos[1], pos[2] + 2.5}, { name = "customrailstop", boundMode = "position", order = "nearest" })
 	  end
 	end
 	if #stopsNearby > 0 then
 	  sb.logInfo("\nINCOMING RAIL STOP DETECTED :")
 	  tprint(stopsNearby)
-	  self.stopping = true
-	  self.approachingStation = false
+	  
 	  --if self.railRider.speed > 30 then
 	    --self.railRider.speed = 30
       --end
 	  --if self.railRider.speed > 60 then
-	    self.railRider.speed = 30
+	    
 	  --end
-	  self.stopPosId = stopsNearby[1]
-	  sb.logInfo("\nSTOP ENTITY ID : " .. tostring(self.stopPosId) .. " POS ")
-	  self.railStopPos = util.tileCenter(world.entityPosition(self.stopPosId))
-	  self.railStopPosReal = world.entityPosition(self.stopPosId)
-	  tprint(self.railStopPos)
+	  storage.stopPosId = stopsNearby[1]
+	  
+	  --storage.stationControlled = config.getParameter("stationControlled")
+	  --storage.timetable = config.getParameter("timetable")
+	  ----timetable :
+	  ----.trainNum .direction .speeds .stopsLen .times
+	  ----storage.stationsTable = config.getParameter("stations")
+	  ----stationsTable :
+	  ----.circular .pos .uuids .groupName
+	  ----storage.currentStation
+	  ----storage.nextStation
+	  
+	  --sb.logInfo("\nSTOP ENTITY ID : " .. tostring(storage.stopPosId) .. " POS ")
+	  storage.railStopPos = util.tileCenter(world.entityPosition(storage.stopPosId))
+	  storage.railStopPosReal = world.entityPosition(storage.stopPosId)
+	  
+	  if stationControlled then
+	    storage.nextStationPos = util.tileCenter(storage.stationsTable.pos[storage.nextStation])
+		if (storage.nextStationPos[1] == storage.railStopPos[1]) and (storage.nextStationPos[2] == storage.railStopPos[2]) then
+          sb.logInfo("Station controlled Train " .. tostring(storage.timetable.trainNum) .. "-" .. tostring(storage.timetable.direction) .. " stopping at station " .. tostring(storage.nextStation))
+		  storage.stopping = true
+	      self.approachingStation = false
+	      self.railRider.speed = 30
+		end
+	  else
+	    storage.stopping = true
+	    self.approachingStation = false
+	    self.railRider.speed = 30
+	  end
+	  sb.logInfo("\nRail Stop POS ")
+	  tprint(storage.railStopPos)
 	  sb.logInfo("\nCAR 1 POS ")
 	  tprint(util.tileCenter(mcontroller.position()))
-	  sb.logInfo("\nCAR 1 SPEED " .. tostring(self.railRider.speed))
+	  --sb.logInfo("\nCAR 1 SPEED " .. tostring(self.railRider.speed))
 	end
   end
   
   ---------------------------
-  if self.stopping then
+  if storage.stopping then
     local currentRailMaterial = self.railRider.onRailType
 	if self.formerRailMaterial == nil then
 	  self.formerRailMaterial = currentRailMaterial
+      self.speedLimit = self.railTypes[currentRailMaterial].speedLimit
+	  self.currentFriction = self.railTypes[currentRailMaterial].friction
 	  if currentRailMaterial == nil then return end
 	end
 	  if self.formerRailMaterial ~= currentRailMaterial then
@@ -439,12 +728,12 @@ function railStopsRoutine(dt)
 	    self.currentFriction = self.railTypes[currentRailMaterial].friction
     end
     if not self.approachingStation then
-      --sb.logInfo("\nself.stopping " .. tostring(self.stopping))
-	  --sb.logInfo("\nCAR 1 POS ")
-	  tprint(mcontroller.position())
-	  --sb.logInfo("\nCAR 1 SPEED " .. tostring(self.railRider.speed))
-	  distanceToStop = world.magnitude(world.xwrap(mcontroller.position()), self.railStopPos)
-	  --sb.logInfo("\ndistance to stop " .. tostring(distanceToStop))
+      ----sb.logInfo("\nstorage.stopping " .. tostring(storage.stopping))
+	  sb.logInfo("\nCAR 1 POS ")
+	  tprint(util.tileCenter(mcontroller.position()))
+	  ----sb.logInfo("\nCAR 1 SPEED " .. tostring(self.railRider.speed))
+	  distanceToStop = world.magnitude(world.xwrap(mcontroller.position()), storage.railStopPos)
+	  ----sb.logInfo("\ndistance to stop " .. tostring(distanceToStop))
 	  
 	  self.frictionEffect = (self.stoppingFriction + self.currentFriction) * dt
 	  self.railRider.speed = self.railRider.speed - self.frictionEffect
@@ -454,16 +743,17 @@ function railStopsRoutine(dt)
 	  end
 	  self.railRider.speed = util.clamp(self.railRider.speed, 20, stoppingLimit)
 	  
-	  if distanceToStop <= 17 then
+	  if distanceToStop <= 15 then
 	    self.railRider.speed = 20
 	    self.approachingStation = true
-		sb.logInfo("\nApproaching station " .. tostring(distanceToStop))
+		--sb.logInfo("\nApproaching station " .. tostring(distanceToStop))
 	  end
 	else
-	  --sb.logInfo("\nself.stopping " .. tostring(self.stopping) .. " self.approaching " .. tostring(self.approaching))
+	  ----sb.logInfo("\nstorage.stopping " .. tostring(storage.stopping) .. " self.approaching " .. tostring(self.approaching))
 	  
-	  --distanceToStop = world.magnitude(world.xwrap(mcontroller.position()), self.railStopPos)
-	  distanceToStop = world.magnitude(world.xwrap(mcontroller.position()), self.railStopPos)
+	  --distanceToStop = world.magnitude(world.xwrap(mcontroller.position()), storage.railStopPos)
+	  distanceToStop = world.magnitude(world.xwrap(mcontroller.position()), storage.railStopPos)
+      sb.logInfo("\nDistance to stop: " .. tostring(distanceToStop))
 	  
 	  --sb.logInfo("\nCAR 1 POS ")
 	  --tprint(mcontroller.position())
@@ -472,55 +762,170 @@ function railStopsRoutine(dt)
 	  self.frictionEffect = (self.approachingFriction + self.currentFriction) * dt
 	  self.railRider.speed = self.railRider.speed - self.frictionEffect
 	  self.railRider.speed = util.clamp(self.railRider.speed, 15, self.approachingSpeedLimit)
-	  if distanceToStop <= 0.6 then
-	    self.atRailStop = true
-        self.stopping = false
-	    self.stopTimerT0 = world.time()
-	    self.stopTimer = 0
+      
+      local trainPos = util.tileCenter(world.xwrap(mcontroller.position()))
+      
+	  if (trainPos[1] == storage.railStopPos[1]) and (trainPos[2] == storage.railStopPos[2]) or (distanceToStop <= 0.8) then
+	    storage.atRailStop = true
+        storage.stopping = false
+	    storage.stopTimerT0 = world.time()
+	    storage.stopTimer = 0
 	    mcontroller.setVelocity({0, 0})
 	    self.railRider.moving = false
+  
+        local speedPercent
+		if stationControlled then
+        
+          storage.scheduleTimeDiff = storage.currentTime - storage.scheduleTimer
+          local projectedTimeDebug = storage.currentTime
+          local currentStationDebug = storage.currentStation
+          local nextStationDebug = storage.nextStation
+		  
+		  if storage.stationsTable.circular then
+		    if storage.nextStation == storage.lastStation then
+              sb.logInfo("=====CIRCULAR====storage.currentStation == storage.lastStation===============")
+              sb.logInfo("currentStation was: " .. tostring(storage.currentStation) .. " nextStation was: " .. tostring(storage.nextStation))
+			  storage.currentStation = 1
+			  storage.nextStation = 2
+              sb.logInfo("currentStation is: " .. tostring(storage.currentStation) .. " nextStation is: " .. tostring(storage.nextStation))
+              speedPercent = storage.timetable.speeds[storage.nextStation]
+              storage.speedMultiplier = 100 / speedPercent
+              storage.StopLenght = storage.timetable.stopsLen[storage.currentStation]
+              storage.currentTime = storage.timetable.times[storage.nextStation]
+			else
+			  storage.currentStation = storage.nextStation
+	          storage.nextStation = storage.currentStation + 1
+              speedPercent = storage.timetable.speeds[storage.nextStation]
+              storage.speedMultiplier = 100 / speedPercent
+              storage.StopLenght = storage.timetable.stopsLen[storage.currentStation]
+              storage.currentTime = storage.timetable.times[storage.nextStation]
+			end
+		  else
+		    if storage.loopingbackstations then
+			  if storage.nextStation == 1 then
+                sb.logInfo("=======NOT circular===LOOPING BACK=====storage.nextStation == 1==============")
+                sb.logInfo("currentStation was: " .. tostring(storage.currentStation) .. " nextStation was: " .. tostring(storage.nextStation))
+			    storage.nextStation = 2
+                storage.currentStation = 1
+			    storage.loopingbackstations = false
+                storage.invertAfterStop = true
+                sb.logInfo("storage.loopingbackstations = false")
+                sb.logInfo("currentStation is: " .. tostring(storage.currentStation) .. " nextStation is: " .. tostring(storage.nextStation))
+                speedPercent = storage.timetable.speeds[storage.nextStation]
+                storage.speedMultiplier = 100 / speedPercent
+                storage.StopLenght = storage.timetable.stopsLen[storage.currentStation]
+                storage.currentTime = storage.timetable.times[storage.nextStation]
+			  else
+			    storage.currentStation = storage.nextStation
+				storage.nextStation = storage.currentStation - 1
+                speedPercent = storage.timetable.speeds[storage.currentStation]
+                storage.speedMultiplier = 100 / speedPercent
+                storage.StopLenght = storage.timetable.stopsLen[storage.currentStation]
+                storage.currentTime = storage.timetable.times[storage.currentStation]
+			  end
+			else
+			  if storage.nextStation == storage.lastStation then
+                sb.logInfo("=======NOT circular========storage.nextStation == storage.lastStation==============")
+                sb.logInfo("currentStation was: " .. tostring(storage.currentStation) .. " nextStation was: " .. tostring(storage.nextStation))
+			    storage.nextStation = storage.nextStation - 1
+                storage.currentStation = storage.lastStation
+				storage.loopingbackstations = true
+                storage.invertAfterStop = true
+                sb.logInfo("storage.loopingbackstations = true")
+                sb.logInfo("currentStation is: " .. tostring(storage.currentStation) .. " nextStation is: " .. tostring(storage.nextStation))
+                speedPercent = storage.timetable.speeds[storage.currentStation]
+                storage.speedMultiplier = 100 / speedPercent
+                storage.StopLenght = storage.timetable.stopsLen[storage.currentStation]
+                storage.currentTime = storage.timetable.times[storage.currentStation]
+			  else
+			    storage.currentStation = storage.nextStation
+				storage.nextStation = storage.currentStation + 1
+                speedPercent = storage.timetable.speeds[storage.nextStation]
+                storage.speedMultiplier = 100 / speedPercent
+                storage.StopLenght = storage.timetable.stopsLen[storage.currentStation]
+                storage.currentTime = storage.timetable.times[storage.nextStation]
+			  end
+			end
+		  end 
+          sb.logInfo("Station " .. tostring(storage.currentStation) .. " reached, Next Station:" .. tostring(storage.nextStation))
+          sb.logInfo("Station " .. tostring(storage.currentStation) .. " Stop Lenght " .. tostring(storage.StopLenght) .. "s" )
+          sb.logInfo("Station " .. tostring(storage.currentStation) .. "-" .. tostring(storage.nextStation) .. " Speed: " .. tostring(speedPercent) .. "percent --> maxSpeed/" .. tostring(storage.speedMultiplier))
+          
+          if storage.scheduleTimeDiff >= -0.5 then
+            storage.StopLenght = storage.StopLenght + storage.scheduleTimeDiff
+             sb.logInfo("==============".. tostring(currentStationDebug) .. "-" .. tostring(nextStationDebug) .." Projected time= " .. tostring(projectedTimeDebug) .. " Time elapsed= " .. tostring(storage.scheduleTimer) .. "=====================Train Arrived Early or on time==")
+             sb.logInfo("Time difference= " .. tostring(storage.scheduleTimeDiff) .. " Stopping train for  " .. tostring(storage.StopLenght) .. " s")
+          elseif (storage.StopLenght + storage.scheduleTimeDiff) > 2 then
+            storage.StopLenght = storage.StopLenght + storage.scheduleTimeDiff
+             sb.logInfo("====================TRAIN ARRIVED LATE================================")
+             sb.logInfo("==============".. tostring(currentStationDebug) .. "-" .. tostring(nextStationDebug) .." Projected time= " .. tostring(projectedTimeDebug) .. " Time elapsed= " .. tostring(storage.scheduleTimer) .. "=====================")
+             sb.logInfo("Time difference= " .. tostring(storage.scheduleTimeDiff) .. " Stopping train for  " .. tostring(storage.StopLenght) .. " s")
+          else
+            sb.logInfo("==========================TRAIN ARRIVED LATE more than stopLen================================")
+            sb.logInfo("==============".. tostring(currentStationDebug) .. "-" .. tostring(nextStationDebug) .." Projected time= " .. tostring(projectedTimeDebug) .. " Time elapsed= " .. tostring(storage.scheduleTimer) .. "=====================")
+            sb.logInfo("Time difference= " .. tostring(storage.scheduleTimeDiff) .. " Stopping train for  " .. tostring(storage.StopLenght) .. " s")
+            storage.StopLenght = 1.5
+          end
+          storage.scheduleTimer = 0
+          storage.scheduleTimeDiff = 0
+          
+		else
+		  storage.StopLenght = self.defaultStopLenght
+          storage.speedMultiplier = 1
+		end
+		
 	    if self.childCarID and (not storage.lastCar) then
 	      if world.entityExists(self.childCarID) then
 		    world.callScriptedEntity(self.childCarID, "stop")
 		  end
         end
-	    --sb.logInfo("\nSTOP TIMER T0 " .. tostring(self.stopTimerT0))
+	    ----sb.logInfo("\nSTOP TIMER T0 " .. tostring(storage.stopTimerT0))
 	  end
 	end
 	
   end
   ----------------------------
   
-  if self.atRailStop then
-    --sb.logInfo("\nself.atRailStop " .. tostring(self.atRailStop))
-    self.stopTimer = world.time() - self.stopTimerT0
-	--sb.logInfo("\nSTOP TIMER " .. tostring(self.stopTimer))
+  if storage.atRailStop then
+    
+    ----sb.logInfo("\nstorage.atRailStop " .. tostring(storage.atRailStop))
+    storage.stopTimer = world.time() - storage.stopTimerT0
+	----sb.logInfo("\nSTOP TIMER " .. tostring(storage.stopTimer))
 	--OpenDoors()
-	--operateDoors(true, self.atRailStop)
-	if self.stopTimer >= self.stopLenght then
-	  self.atRailStop = false
+	--operateDoors(true, storage.atRailStop)
+	if storage.stopTimer >= storage.StopLenght then
+	  storage.atRailStop = false
 	  --CloseDoors()
-	  --operateDoors(true, self.atRailStop)
-	  self.departingFromStation = true
+	  --operateDoors(true, storage.atRailStop)
+	  storage.departingFromStation = true
 	  --self.railRider.moving = true
 	  self.railRider:railResume(mcontroller.position())
 	  self.railRider:findNextNode()
 	  self.railRider.speed = self.departingSpeed
 	  self.departingAccelerating = false
-	  self.stopTimerT0 = world.time()
-	  self.stopTimer = 0
+	  storage.stopTimerT0 = world.time()
+	  storage.stopTimer = 0
+      if stationControlled then
+        self.scheduleTimerT0 = world.time()
+        if (not storage.stationsTable.circular) and storage.invertAfterStop then
+          --invert()
+          --storage.invertAfterStop = false
+          storage.invertAtNextCycle = true
+        end
+      end
 	  if self.childCarID and (not storage.lastCar) then
 	    if world.entityExists(self.childCarID) then
 		  world.callScriptedEntity(self.childCarID, "start", self.railRider.speed)
 		end
       end
-	  --sb.logInfo("\nCAR 1 SPEED " .. tostring(self.railRider.speed))
+      if self.resumingStopFromUninit then self.resumingStopFromUninit = false end
+	  ----sb.logInfo("\nCAR 1 SPEED " .. tostring(self.railRider.speed))
     end
   end
   
-  if self.departingFromStation then
+  if storage.departingFromStation then
     local railMaterial = self.railRider:checkTile(mcontroller.position())
-	if (util.tileCenter(mcontroller.position()) ~= self.railStopPos) then
+	if (util.tileCenter(mcontroller.position()) ~= storage.railStopPos) then
 	  --local frictionEffect = self.stoppingFriction * self.departingFriction
 	  --self.railRider.speed = self.railRider.speed + frictionEffect
 	  if self.departingAccelerating then
@@ -535,14 +940,14 @@ function railStopsRoutine(dt)
 		self.frictionEffect = self.currentFriction * dt
 	    self.railRider.speed = (self.railRider.speed + acceleration) - self.frictionEffect
 	    self.railRider.speed = util.clamp(self.railRider.speed, self.departingSpeed, self.departingSpeedLimit)
-		--sb.logInfo("\nCAR 1 SPEED " .. tostring(self.railRider.speed))
+		----sb.logInfo("\nCAR 1 SPEED " .. tostring(self.railRider.speed))
 		if self.railRider.speed >= self.departingSpeedLimit then
 		  self.departingAccelerating = false
-		  self.departingFromStation = false
+		  storage.departingFromStation = false
 		end
 	  else
-	    self.stopTimer = world.time() - self.stopTimerT0
-        if self.stopTimer >= self.departingAccelerationWaitTime then
+	    storage.stopTimer = world.time() - storage.stopTimerT0
+        if storage.stopTimer >= self.departingAccelerationWaitTime then
 		  self.departingAccelerating = true
 		end
 	  end
@@ -554,10 +959,10 @@ end
 function testRunModeRoutine()
 
 	--if world.magnitude(mcontroller.position(), stationPos) <= 1 then
-	if self.atRailStop then
+	if storage.atRailStop then
 	  
 	  local posTarget = util.tileCenter(self.nodePos[self.nextStation])
-	  local currentStopPos = util.tileCenter(self.railStopPosReal)
+	  local currentStopPos = util.tileCenter(storage.railStopPosReal)
 	  
 	  sb.logInfo("=============TEST MODE DETECTED RAIL STOP AT: =========== " .. tostring(currentStopPos[1]) .. "," .. tostring(currentStopPos[2]))
 	  sb.logInfo("=============TARGET RAIL STOP (" .. tostring(self.nextStation) .. ") pos:"  .. tostring(posTarget[1]) .. "," .. tostring(posTarget[2]))
@@ -599,26 +1004,22 @@ function start(resumeSpeed)
   end
 end
 
-function regulateSpeedFirstCar(dt , speedPercent)
-
-    if speedPercent == nil then
-	  speedPercent = 100
-	end
+function regulateSpeedFirstCar(dt, speedMultiplier)
 	
-	speedMultiplier = 100 / speedPercent
-	
-    if self.railRider.moving and not (self.stopping and self.approachingStation and self.atRailStop and self.departingFromStation) then
+    if self.railRider.moving and not (storage.stopping and self.approachingStation and storage.atRailStop and storage.departingFromStation) then
 	  local currentRailMaterial = self.railRider.onRailType
 	  if self.formerRailMaterial == nil then
 	    self.formerRailMaterial = currentRailMaterial
 		self.speedLimit = self.railTypes[currentRailMaterial].speedLimit / speedMultiplier
 	    self.currentFriction = self.railTypes[currentRailMaterial].friction
+        self.frictionEffect = self.currentFriction * dt
 	  end
 	  if self.formerRailMaterial ~= currentRailMaterial then
         currentRailMaterial = self.railRider.onRailType
 	    self.formerRailMaterial = currentRailMaterial
 	    self.speedLimit = self.railTypes[currentRailMaterial].speedLimit / speedMultiplier
 	    self.currentFriction = self.railTypes[currentRailMaterial].friction
+        self.frictionEffect = self.currentFriction * dt
       end
       if self.railRider.speed < self.speedLimit  then
 	    self.frictionEffect = self.currentFriction * dt 
@@ -643,7 +1044,7 @@ function regulateSpeedFirstCar(dt , speedPercent)
 		  --self.frictionEffect = self.currentFriction * dt 
           --self.railRider.speed = (self.railRider.speed + 7 ) - self.frictionEffect
         end
-        --sb.logInfo("Accelerating, speed: " .. tostring(self.railRider.speed))		
+        --sb.logInfo("Accelerating, speed: " .. tostring(self.railRider.speed))
       elseif self.railRider.speed > self.speedLimit then
         --self.frictionEffect = self.currentFriction * dt 
         self.railRider.speed = (self.railRider.speed - 4 ) - self.frictionEffect
@@ -957,6 +1358,18 @@ function uninit()
   storage.oldTrainSet = true
   sb.logInfo("\ncar number " .. tostring(storage.carNumber) .. " uninit() function called " .. "storage.oldTrainSet= " .. tostring(storage.oldTrainSet) )
   self.railRider:uninit()
+  if storage.atRailStop and storage.firstCar then
+    storage.uninitWhileStopping = true
+  elseif storage.stationControlled then
+    --self.scheduleTimerT0 = world.time()
+    --storage.scheduleTimer
+    storage.uninitWhileTravelling = true
+  end
+  
+  if storage.stationControlled and storage.firstCar then
+    storage.stationControlledTrainUninit = true
+  end
+  
 end
 
 function calculateTargetDistanceToChild()
@@ -1039,7 +1452,9 @@ function spawnCarNumber(spawnedcarNumber)
   parameters.specular = self.listOfCars[vehicleName].specular
   parameters.reversed = self.trainsetData[spawnedcarNumber].reversed
   parameters.inverted = storage.inverted
-  
+  parameters.timetable = config.getParameter("timetable")
+  parameters.stations = config.getParameter("stations")
+  parameters.stationControlled = config.getParameter("stationControlled")
   
   if storage.firstCar then
     parameters.firstCarID = entity.id()
@@ -1075,6 +1490,9 @@ function spawnCarNumber(spawnedcarNumber)
   if carEid then
 	sb.logInfo("\ncar number " .. tostring(spawnedcarNumber) .. " spawned by car number " .. tostring(storage.carNumber) )
 	sb.logInfo("\nEntity ID of car " .. tostring(spawnedcarNumber) .. " is " .. tostring(carEid) )
+    if storage.atRailStop or storage.uninitWhileStopping then
+      if world.entityExists(carEid) then world.callScriptedEntity(carEid, "stop") end
+    end
 	return carEid
   else
 	sb.logInfo("\nFAILED to spawn car number " .. tostring(spawnedcarNumber) .. " by car number " .. tostring(storage.carNumber) )
@@ -1119,8 +1537,19 @@ function invert()
 	self.checkDistance = false
     self.checkDistanceTimer = 0
 	self.CheckDistanceTimerT0 = world.time() - 3
-	if storage.inverted then
+	if storage.inverted and not (storage.stationControlledTrainUninit or self.waitingToLoadIDS) then
 	  self.trainsetData = self.trainsetOriginal
+      if not storage.originalCar then
+        if storage.timetable.direction == "E" then
+          self.spawnedTrainsIDs.E = world.getProperty(storage.stationsTable.groupName .. "trainsidsE_file")
+          self.spawnedTrainsIDs.E[storage.timetable.trainNum] = entity.id()
+          world.setProperty(storage.stationsTable.groupName .. "trainsidsE_file", self.spawnedTrainsIDs.E)
+        else
+          self.spawnedTrainsIDs.W = world.getProperty(storage.stationsTable.groupName .. "trainsidsW_file")
+          self.spawnedTrainsIDs.W[storage.timetable.trainNum] = entity.id()
+          world.setProperty(storage.stationsTable.groupName .. "trainsidsW_file", self.spawnedTrainsIDs.W)
+        end
+      end
 	else
       self.trainsetData = self.trainsetInverted
 	end
@@ -1131,7 +1560,11 @@ function invert()
 	if self.childCarID then
 	  if world.entityExists(self.childCarID) then
 	    --world.sendEntityMessage(self.childCarID, "invert", (storage.carNumber - 1), self.railRider.speed)
-		world.sendEntityMessage(self.childCarID, "invert", (storage.carNumber - 1))
+        if storage.stationControlled then
+          world.sendEntityMessage(self.childCarID, "invert", (storage.carNumber - 1), true, storage.currentStation, storage.nextStation, storage.loopingbackstations, storage.speedMultiplier, storage.StopLenght, storage.currentTime )
+        else
+          world.sendEntityMessage(self.childCarID, "invert", (storage.carNumber - 1), false)
+        end
 		self.parentCarId = self.childCarID
 		self.childCarID = nil
 	  end
@@ -1144,9 +1577,19 @@ function onRailStopAndInverted(state)
   sb.logInfo("\nCar number " .. tostring(storage.carNumber) .. "function onRailStopAndInverted(state) state=" .. tostring(storage.onRailStopAndInverted) )
 end
 
-function handleInvert(_, _, carNumber)
+function handleInvert(_, _, carNumber, stationControlled, currentStation, nextStation, loopingbackstations, speedMultiplier, StopLenght, currentTime)
 
    sb.logInfo("\nCar number" .. storage.carNumber .. " received message from parent car: CAR " .. tostring(carNumber) .. " INVERT")
+   
+   if stationControlled and storage.lastCar then
+     storage.currentStation = currentStation
+     storage.nextStation = nextStation
+     storage.loopingbackstations = loopingbackstations
+     storage.speedMultiplier = speedMultiplier
+     storage.StopLenght = StopLenght
+     storage.currentTime = currentTime
+   end
+   
   if storage.inverted then
 	self.trainsetData = self.trainsetOriginal
   else
@@ -1177,7 +1620,11 @@ function handleInvert(_, _, carNumber)
 	if self.childCarID then
 	  if world.entityExists(self.childCarID) then
 	    --world.sendEntityMessage(self.childCarID, "invert", (carNumber - 1), newSpeed)
-		world.sendEntityMessage(self.childCarID, "invert", (carNumber - 1))
+		if stationControlled then
+          world.sendEntityMessage(self.childCarID, "invert", (storage.carNumber - 1), true, currentStation, nextStation, loopingbackstations, speedMultiplier, StopLenght, currentTime )
+        else
+          world.sendEntityMessage(self.childCarID, "invert", (storage.carNumber - 1), false)
+        end
 		local oldChildCar = self.childCarID
 		local oldParentCar = self.parentCarId
 		self.childCarID = oldParentCar
@@ -1186,6 +1633,18 @@ function handleInvert(_, _, carNumber)
 	end
   end
   
+end
+
+function handleStopGroup(_, _)
+  if storage.firstCar then
+    sb.logInfo("Car n " .. tostring(storage.carNumber) .. " Received message STOPGROUP as FIRSTCAR")
+    destroyVehicle(true)
+  else
+    if self.parentCarId then
+      sb.logInfo("Car n " .. tostring(storage.carNumber) .. " Received message STOPGROUP")
+      if world.entityExists(self.parentCarId) then world.sendEntityMessage(self.parentCarId, "stopGroup") end
+    end
+  end
 end
 
 function destroyVehicle(destroyChilds)

@@ -5,41 +5,49 @@
   //"maxStack" : 100,
   "rarity" : "Rare",
   "category" : "crafting",
-  "description" : "Configure a train set with this",
+  "description" : "Craft and configure/reconfigure a train set with this",
   "shortdescription" : "Trainset configurator",
+  
+  "apexDescription" : "A table used by engineers to design real trains.",
+  "avianDescription" : "A table used by engineers to design real trains.",
+  "floranDescription" : "Floran ussse table. Makes metal sssnake. Floran ridesss snake.",
+  "glitchDescription" : "Inspired. Rail transport will make our kingdom more efficient.",
+  "humanDescription" : "A table used by engineers to design real trains.",
+  "hylotlDescription" : "A table used by engineers to design real trains.",
+  "novakidDescription" : "A table used by engineers to design real trains.",
+  
   "race" : "generic",
 
-  "inventoryIcon" : "portable3dprinter.png",
+  "inventoryIcon" : "trainconfiguratoricon.png",
+  "placementImage" : "trainconfigurator.png:default.default",
+  "placementImagePosition" : [-16, -1],   
   
   "orientations" : [
     {
-      "imageLayers" : [ { "image" : "railcraftingtable.png:<color>.<frame>", "fullbright" : true }, { "image" : "railcraftingtablelit.png:<color>.<frame>" } ],
-      "imagePosition" : [-16, 0],
-
-      "direction" : "left",
-      "flipImages" : true,
-
-      "frames" : 22,
-      "animationCycle" : 1.8,
-
-      "spaceScan" : 0.1,
+      "image" : "trainconfigurator.png:default.default",
+      "direction" : "right",
+      "imagePosition" : [-16, -1],
+      //"animationPosition" : [0, 20],
+      "spaces" : [ [-2,0], [-1,0], [0,0], [1,0], [-2,1], [-1,1], [0,1], [1,1], [-2,2], [-1,2], [0,2], [1,2], [-2,3], [-1,3], [0,3], [1,3], [-2,4], [-1,4], [0,4], [1,4] ],
       "anchors" : [ "bottom" ]
     },
-
     {
-      "imageLayers" : [ { "image" : "railcraftingtable.png:<color>.<frame>", "fullbright" : true }, { "image" : "railcraftingtablelit.png:<color>.<frame>" } ],
-      "imagePosition" : [-16, 0],
-
-      "direction" : "right",
-
-      "frames" : 22,
-      "animationCycle" : 1.8,
-
-      "spaceScan" : 0.1,
+      "image" : "trainconfigurator.png:default.default",
+      "direction" : "left",
+      "flipImages" : true,
+      "imagePosition" : [-16, -1],
+      //"animationPosition" : [0, 20],
+      "spaces" : [ [-2,0], [-1,0], [0,0], [1,0], [-2,1], [-1,1], [0,1], [1,1], [-2,2], [-1,2], [0,2], [1,2], [-2,3], [-1,3], [0,3], [1,3], [-2,4], [-1,4], [0,4], [1,4] ],
       "anchors" : [ "bottom" ]
     }
   ],
- 
+  
+  "animation" : "trainconfigurator.animation",
+  "animationParts" : {
+    "chassis" : "trainconfigurator.png",
+    "light" : "trainconfigurator.png"
+  },
+  "animationPosition" : [0, 20],
   
   "slotCount" : 1,
 

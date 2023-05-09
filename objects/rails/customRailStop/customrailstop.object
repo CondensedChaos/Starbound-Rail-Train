@@ -5,7 +5,7 @@
 
   "category" : "railPoint",
   "price" : 400,
-  "description" : "Used to mark a station for driverless rail systems",
+  "description" : "Used to mark a station for driverless rail systems, wire this with one or more station controller",
   "shortdescription" : "Rail station marker",
   "race" : "generic",
 
@@ -39,5 +39,7 @@
   ],
   "scriptDelta" : 5,
 
-  "inputNodes" : [ [0, 0], [0, -1] ]
+  "inputNodes" : [ [0, 0] ],
+  
+  "resumeSpeed" : 10
 }

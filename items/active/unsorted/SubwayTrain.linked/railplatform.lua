@@ -14,7 +14,7 @@ function init()
   self.itemName = self.settingsConfig.itemName
   self.numberOfCars = config.getParameter("numberOfCars")
   
-  self.trainsetData = config.getParameter("trainsetData")
+  self.trainsetData = config.getParameter("trainsetData", self.defaultTrainset)
   
   if not self.trainsetData then
     self.trainsetData = self.defaultTrainset
