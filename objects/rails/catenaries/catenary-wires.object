@@ -2,7 +2,7 @@
   "objectName" : "catenary-wires",
   "colonyTags" : ["rails"],
   "rarity" : "Common",
-  "description" : "Catenary wires",
+  "description" : "Catenary wires, couple this with girders without wires",
   "shortdescription" : "Catenary wires",
   "race" : "generic",
   "category" : "decorative",
