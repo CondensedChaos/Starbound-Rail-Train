@@ -1,3 +1,5 @@
+require "/scripts/util.lua"
+
 local_storage = {}
 stopLenSpinner = {}
 stopLenSpinner1 = {}
@@ -284,6 +286,17 @@ function update(dt)
 
   end
   
+  if self.reloadDataTimerSet then
+    self.reloadDataTimer = world.time() - self.reloadDataTimerT0
+    sb.logInfo("update dt timer=" .. tostring(self.reloadDataTimer))
+    if self.reloadDataTimer >= 4 then
+      self.reloadDataTimerSet = false
+      --sb.logInfo("RELOAD TIMER ENDED T=" .. tostring(world.time()))
+      widget.setVisible("timetableOverlay.loadingOverlay", false)
+      trainsListSelected(self.resumewidgedname)
+    end
+  end
+  
 end
 
 function clearSaveFileButtonPressed(widgetName, widgetData)
@@ -482,7 +495,7 @@ function addTrainButtonPressed(widgetName, widgetData)
   
   if not self.saveFile.global[self.groupEditing].data.circular then
     local lastStation = #self.saveFile.global[self.groupEditing].data.testRunsTimesMAX
-    self.trainToAdd[1] = lastStation
+    self.trainToAdd[2] = lastStation
 	widget.setText("timetableOverlay.addTrainOverlay.startStationLabel","Start Station : ^green;" .. tostring(lastStation).."^reset;")
   end
 
@@ -492,8 +505,8 @@ function addTrainButton2Pressed(widgetName, widgetData)
   local direction = self.trainToAdd[1]
   local startStation = self.trainToAdd[2]
   local startTime = self.trainToAdd[3]
-  local numOfTrainsE = self.saveFile.global[self.groupEditing].data.numberOfTrainsE
-  local numOfTrainsW = self.saveFile.global[self.groupEditing].data.numberOfTrainsW
+  local numOfTrainsE = tonumber(self.saveFile.global[self.groupEditing].data.numberOfTrainsE)
+  local numOfTrainsW = tonumber(self.saveFile.global[self.groupEditing].data.numberOfTrainsW)
   local trainNum
   local dataName
   
@@ -509,13 +522,13 @@ function addTrainButton2Pressed(widgetName, widgetData)
 	dataName = "trainsWest"
   end
   
-  self.saveFile.global[self.groupEditing].data[dataName].vehiclePresent[trainNum] = false
-  self.saveFile.global[self.groupEditing].data[dataName].startStations[trainNum] = startStation
-  self.saveFile.global[self.groupEditing].data[dataName].startTimes[trainNum] = startTime
-  self.saveFile.global[self.groupEditing].data[dataName].speeds[trainNum] = {}
-  self.saveFile.global[self.groupEditing].data[dataName].speeds[trainNum][1] = 0
-  self.saveFile.global[self.groupEditing].data[dataName].stopsLen[trainNum] = {}
-  self.saveFile.global[self.groupEditing].data[dataName].stopsLen[trainNum][1] = self.defaultStopLen
+  self.saveFile.global[self.groupEditing].data[dataName].vehiclePresent[tonumber(trainNum)] = false
+  self.saveFile.global[self.groupEditing].data[dataName].startStations[tonumber(trainNum)] = startStation
+  self.saveFile.global[self.groupEditing].data[dataName].startTimes[tonumber(trainNum)] = startTime
+  self.saveFile.global[self.groupEditing].data[dataName].speeds[tonumber(trainNum)] = {}
+  self.saveFile.global[self.groupEditing].data[dataName].speeds[tonumber(trainNum)][1] = 0
+  self.saveFile.global[self.groupEditing].data[dataName].stopsLen[tonumber(trainNum)] = {}
+  self.saveFile.global[self.groupEditing].data[dataName].stopsLen[tonumber(trainNum)][1] = self.defaultStopLen
   self.groupVehiclesFile[self.groupEditing][dataName][trainNum] = {}
   
   for i=2,#self.saveFile.global[self.groupEditing].data.testRunsTimesMAX do
@@ -556,7 +569,7 @@ function directionRadioGroupCallback(id)
     self.trainToAdd = {"E",1,0}
 	if not self.saveFile.global[self.groupEditing].data.circular then
       local lastStation = #self.saveFile.global[self.groupEditing].data.testRunsTimesMAX
-      self.trainToAdd[1] = lastStation
+      self.trainToAdd[2] = lastStation
 	  widget.setText("timetableOverlay.addTrainOverlay.startStationLabel","Start Station : ^green;" .. tostring(lastStation).."^reset;")
     end
   end
@@ -576,7 +589,7 @@ function timeEnterKey(widgetName, widgetData)
     self.trainToAdd = {"E",1,0}
 	if not self.saveFile.global[self.groupEditing].data.circular then
       local lastStation = #self.saveFile.global[self.groupEditing].data.testRunsTimesMAX
-      self.trainToAdd[1] = lastStation
+      self.trainToAdd[2] = lastStation
 	  widget.setText("timetableOverlay.addTrainOverlay.startStationLabel","Start Station : ^green;" .. tostring(lastStation).."^reset;")
     end
   end
@@ -593,7 +606,7 @@ function timecallback(widgetName, widgetData)
     self.trainToAdd = {"E",1,0}
 	if not self.saveFile.global[self.groupEditing].data.circular then
       local lastStation = #self.saveFile.global[self.groupEditing].data.testRunsTimesMAX
-      self.trainToAdd[1] = lastStation
+      self.trainToAdd[2] = lastStation
 	  widget.setText("timetableOverlay.addTrainOverlay.startStationLabel","Start Station : ^green;" .. tostring(lastStation).."^reset;")
     end
   end
@@ -757,6 +770,10 @@ function makeTrainList(direction)
 end
 
 function trainsListSelected(widgetName, widgetData)
+  
+  self.saveFile = nil
+  self.saveFile = world.getProperty("stationController_file")
+  
   local parentElement
   
   --sb.logInfo("widgetName " .. widgetName)
@@ -791,9 +808,35 @@ function trainsListSelected(widgetName, widgetData)
 	local direction = itemData[2]
 	local speedsArray
 	local stopsLenArray
+    sb.logInfo("widgetName")
+    sb.logInfo(tostring(widgetName))
+    
     if widgetName == "trainsWestList" then
 	  speedsArray = self.saveFile.global[self.groupEditing].data.trainsWest.speeds[trainNum]
 	  stopsLenArray = self.saveFile.global[self.groupEditing].data.trainsWest.stopsLen[trainNum]
+      if (not speedsArray) or (not stopsLenArray) then
+        --speedsArray = self.saveFile.global[self.groupEditing].data.trainsEast.speeds[tostring(trainNum)]
+        sb.logInfo("=========ARRAYS MALFORMED=======")
+        rebuildDataArrays("E")
+        self.resumewidgedname = widgetName
+        widget.setVisible("timetableOverlay.loadingOverlay", true)
+        widget.setVisible("timetableOverlay.trainsEastDataScrollArea", false)
+        widget.setVisible("timetableOverlay.trainsWestDataScrollArea", false)
+        widget.setVisible("timetableOverlay.trainSettingsEastOverlay", false)
+        widget.setVisible("timetableOverlay.trainSettingsWestOverlay", false)
+        widget.setVisible("timetableOverlay.selectedTrainDataLabel", false)
+        widget.setText("timetableOverlay.loadingOverlay.selectedTrainLabel","Train ^red;" .. itemData[1] .. "-" .. itemData[2] .. "^reset;:")
+        return
+      end
+      sb.logInfo("=======================----------W------===================")
+      sb.logInfo(tostring(speedsArray))
+      sb.logInfo(tostring(stopsLenArray))
+      sb.logInfo("self.groupEditing")
+      sb.logInfo(tostring(self.groupEditing))
+      sb.logInfo("trainNum")
+      sb.logInfo(tostring(trainNum))
+      tprint(self.saveFile.global[self.groupEditing].data.trainsWest.speeds[trainNum])
+      tprint(self.saveFile.global[self.groupEditing].data.trainsWest.speeds[tostring(trainNum)])
 	  widget.setVisible("timetableOverlay.trainsEastDataScrollArea", false)
 	  widget.setVisible("timetableOverlay.trainsWestDataScrollArea", true)
 	  widget.setVisible("timetableOverlay.trainSettingsWestOverlay", true)
@@ -807,7 +850,30 @@ function trainsListSelected(widgetName, widgetData)
 	  makeTrainList("E")
 	else
 	  speedsArray = self.saveFile.global[self.groupEditing].data.trainsEast.speeds[trainNum]
-	  stopsLenArray = self.saveFile.global[self.groupEditing].data.trainsEast.stopsLen[trainNum]
+      stopsLenArray = self.saveFile.global[self.groupEditing].data.trainsEast.stopsLen[trainNum]
+      if (not speedsArray) or (not stopsLenArray) then
+        --speedsArray = self.saveFile.global[self.groupEditing].data.trainsEast.speeds[tostring(trainNum)]
+        sb.logInfo("=========ARRAYS MALFORMED=======")
+        rebuildDataArrays("E")
+        self.resumewidgedname = widgetName
+        widget.setVisible("timetableOverlay.loadingOverlay", true)
+        widget.setVisible("timetableOverlay.trainsEastDataScrollArea", false)
+        widget.setVisible("timetableOverlay.trainsWestDataScrollArea", false)
+        widget.setVisible("timetableOverlay.trainSettingsEastOverlay", false)
+        widget.setVisible("timetableOverlay.trainSettingsWestOverlay", false)
+        widget.setVisible("timetableOverlay.selectedTrainDataLabel", false)
+        widget.setText("timetableOverlay.loadingOverlay.selectedTrainLabel","Train ^red;" .. itemData[1] .. "-" .. itemData[2] .. "^reset;:")
+        return
+      end
+      sb.logInfo("=======================-------E---------===================")
+      sb.logInfo(tostring(speedsArray))
+      sb.logInfo(tostring(stopsLenArray))
+      sb.logInfo("self.groupEditing")
+      sb.logInfo(tostring(self.groupEditing))
+      sb.logInfo("trainNum")
+      sb.logInfo(tostring(trainNum))
+      tprint(self.saveFile.global[self.groupEditing].data.trainsEast.speeds[trainNum])
+      tprint(self.saveFile.global[self.groupEditing].data.trainsEast.speeds[tostring(trainNum)])
 	  widget.setVisible("timetableOverlay.trainsWestDataScrollArea", false)
 	  widget.setVisible("timetableOverlay.trainsEastDataScrollArea", true)
 
@@ -822,11 +888,82 @@ function trainsListSelected(widgetName, widgetData)
 	  widget.clearListItems(self.trainsWestListName)
       makeTrainList("W")
 	end
+   
 	displayTrainData(trainNum,direction,speedsArray,stopsLenArray)
-	
-	
   end
   
+end
+
+function rebuildDataArrays(direction)
+  sb.logInfo("rebuildDataArrays called direction=",direction)
+  local dataname
+  local numtrains
+  local rebuildspeed
+  local rebuiltops
+  if direction =="E" then
+    dataname = "trainsEast"
+    numtrains = tonumber(self.saveFile.global[self.groupEditing].data.numberOfTrainsE)
+  else
+    dataname = "trainsWest"
+    numtrains = tonumber(self.saveFile.global[self.groupEditing].data.numberOfTrainsW)
+  end
+  
+  self.saveFile = world.getProperty("stationController_file")
+  
+  local speedsArray = self.saveFile.global[self.groupEditing].data[dataname].speeds
+  local stopsArray = self.saveFile.global[self.groupEditing].data[dataname].stopsLen
+  if numtrains>=1 then
+    if not speedsArray[1] then
+      rebuildspeed = true
+      sb.logInfo("rebuildspeeds")
+    end
+    if not stopsArray[1] then
+      rebuiltops = true
+      sb.logInfo("rebuildstops")
+    end
+  end
+  local newspeedsarray
+  local newstopsarray
+  for t=1,numtrains do
+    if rebuildspeed then
+      newspeedsarray = {}
+      newspeedsarray[t] = self.saveFile.global[self.groupEditing].data[dataname].speeds[tostring(t)]
+      tprint(newspeedsarray[t])
+    end
+    if rebuiltops then
+      newstopsarray = {}
+      newstopsarray[t] = self.saveFile.global[self.groupEditing].data[dataname].stopsLen[tostring(t)]
+      tprint(newstopsarray[t])
+    end
+  end
+  
+  self.saveFile.global[self.groupEditing].data[dataname].speeds = newspeedsarray
+  self.saveFile.global[self.groupEditing].data[dataname].stopsLen = newstopsarray
+  
+  world.setProperty("stationController_file", self.saveFile)
+  
+  self.reloadDataTimer = 0
+  self.reloadDataTimerT0 = world.time()
+  self.reloadDataTimerSet = true
+  sb.logInfo("RELOAD TIMER ENGAGED T0=" .. tostring(self.reloadDataTimerT0))
+  --while self.reloadDataTimer < 15 do
+    --self.reloadDataTimer = world.time() - self.reloadDataTimerT0
+    --sb.logInfo("RELOAD TIMER=".. tostring(self.reloadDataTimer) .. " world.time()=" .. tostring(world.time()))
+  --end
+  --self.waiting = coroutine.create(waiting)
+  --local s, result = coroutine.resume(self.waiting)
+  --if not s then
+    --error(result)
+  --end
+  --sb.logInfo("RELOAD TIMER ENDED T=" .. tostring(world.time()))
+  --self.reloadDataTimerSet = false
+end
+
+function waiting()
+  while true do
+    util.run(60,sb.logInfo("WAITING"))
+    coroutine.yield()
+  end
 end
 
 function deleteTrainStartButtonPressed(widgetName, widgetData)
@@ -2180,14 +2317,18 @@ end
 -- "indent" sets the initial level of indentation.
 function tprint(tbl, indent) --debug purposes
   if not indent then indent = 0 end
-  for k, v in pairs(tbl) do
-    formatting = string.rep("  ", indent) .. k .. ": "
-    if type(v) == "table" then
-      sb.logInfo(tostring(formatting))
-      tprint(v, indent+1)
-    else
-      sb.logInfo(tostring(formatting) .. tostring(v))
+  if type(tbl) == "table" then
+    for k, v in pairs(tbl) do
+      formatting = string.rep("  ", indent) .. k .. ": "
+      if type(v) == "table" then
+        sb.logInfo(tostring(formatting))
+        tprint(v, indent+1)
+      else
+        sb.logInfo(tostring(formatting) .. tostring(v))
+      end
     end
+  else
+    sb.logInfo("not a table:" .. tostring(tbl))
   end
 end
 

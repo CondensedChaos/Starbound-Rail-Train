@@ -1540,6 +1540,13 @@ function invert()
 	if storage.inverted and not (storage.stationControlledTrainUninit or self.waitingToLoadIDS) then
 	  self.trainsetData = self.trainsetOriginal
       if not storage.originalCar then
+        if self.spawnedTrainsIDs == nil then
+          self.spawnedTrainsIDs = {}
+          self.spawnedTrainsIDs.E = {}
+          self.spawnedTrainsIDs.W = {}
+          self.spawnedTrainsIDs.E = world.getProperty(storage.stationsTable.groupName .. "trainsidsE_file")
+          self.spawnedTrainsIDs.W = world.getProperty(storage.stationsTable.groupName .. "trainsidsW_file")
+        end
         if storage.timetable.direction == "E" then
           self.spawnedTrainsIDs.E = world.getProperty(storage.stationsTable.groupName .. "trainsidsE_file")
           self.spawnedTrainsIDs.E[storage.timetable.trainNum] = entity.id()
