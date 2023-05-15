@@ -64,31 +64,31 @@
       "part" : "cockpit",
       "partAnchor" : "driverSeatPosition",
       "orientation" : "stand",
-      "statusEffects" : ["highprotection"]
+      "statusEffects" : ["highprotection", "breathprotectionvehicle", "biomeheatImmunity", "biomecoldImmunity"]
     },
     "passengerSeat1" : {
       "part" : "cockpit",
       "partAnchor" : "passengerSeatPosition1",
       "orientation" : "stand",
-      "statusEffects" : ["highprotection"]
+      "statusEffects" : ["highprotection", "breathprotectionvehicle", "biomeheatImmunity", "biomecoldImmunity"]
     },
     "passengerSeat2" : {
       "part" : "cockpit",
       "partAnchor" : "passengerSeatPosition2",
       "orientation" : "stand",
-      "statusEffects" : ["highprotection"]
+      "statusEffects" : ["highprotection", "breathprotectionvehicle", "biomeheatImmunity", "biomecoldImmunity"]
     },
     "passengerSeat3" : {
       "part" : "cockpit",
       "partAnchor" : "passengerSeatPosition3",
       "orientation" : "stand",
-      "statusEffects" : ["highprotection"]
+      "statusEffects" : ["highprotection", "breathprotectionvehicle", "biomeheatImmunity", "biomecoldImmunity"]
     },
     "passengerSeat4" : {
       "part" : "cockpit",
       "partAnchor" : "passengerSeatPosition4",
       "orientation" : "stand",
-      "statusEffects" : ["highprotection"]
+      "statusEffects" : ["highprotection", "breathprotectionvehicle", "biomeheatImmunity", "biomecoldImmunity"]
     }
   },
 
