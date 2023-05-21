@@ -1,0 +1,84 @@
+{
+  "animatedParts" : {
+    "stateTypes" : {
+      "stopState" : {
+        "default" : "off",
+        "states" : {
+          "off" : {},
+          "on" : {}
+        }
+      },
+	  "girder" : {
+        "default" : "girder",
+        "states" : {
+          "girder" : {}
+        }
+      }
+    },
+
+    "parts" : {
+      "stopfullbright" : {
+        "properties" : {
+          "centered" : false,
+          "fullbright" : true,
+          "zLevel" : 3
+        },
+
+        "partStates" : {
+          "stopState" : {
+            "off" : {
+              "properties" : {
+                "image" : "<partImage>:<color>.off"
+              }
+            },
+
+            "on" : {
+              "properties" : {
+                "image" : "<partImage>:<color>.on"
+              }
+            }
+          }
+        }
+      },
+      "stop" : {
+        "properties" : {
+          "centered" : false,
+          "zLevel" : 2
+        },
+
+        "partStates" : {
+          "stopState" : {
+            "off" : {
+              "properties" : {
+                "image" : "<partImage>:<color>.off"
+              }
+            },
+
+            "on" : {
+              "properties" : {
+                "image" : "<partImage>:<color>.on"
+              }
+            }
+          }
+        }
+      },
+	  "girder" : {
+        "properties" : {
+          "centered" : false,
+          "offset" : [-3.0, -4.0],
+          "zLevel" : 1
+        },
+
+        "partStates" : {
+          "girder" : {
+            "girder" : {
+              "properties" : {
+                "image" : "<partImage>:girder"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

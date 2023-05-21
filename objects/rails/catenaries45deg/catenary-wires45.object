@@ -1,0 +1,54 @@
+{
+  "objectName" : "catenary-wires45",
+  "colonyTags" : ["rails"],
+  "rarity" : "Common",
+  "description" : "Catenary wires, couple this with girders without wires",
+  "shortdescription" : "Catenary wires",
+  "race" : "generic",
+  "category" : "decorative",
+  "printable" : false,
+  "price" : 1,
+
+  "apexDescription" : "Catenary wires",
+  "avianDescription" : "Catenary wires",
+  "floranDescription" : "Catenary wiresss",
+  "glitchDescription" : "Catenary wires",
+  "humanDescription" : "Catenary wires",
+  "hylotlDescription" : "Catenary wires",
+  "novakidDescription" : "Catenary wires",
+
+  "inventoryIcon" : "catenary-wires45.png",
+  "orientations" : [
+    {
+      "image" : "catenary-wires45.png:<color>",
+      "direction" : "left",
+      "flipImages" : true,
+
+      "imagePosition" : [-2, -2],
+      "frames" : 1,
+      "animationCycle" : 1.0,
+
+      "spaceScan" : 0.8,
+      "anchors" : [ "background" ]
+
+    },
+    {
+      "image" : "catenary-wires45.png:<color>",
+      "direction" : "right",
+
+      "imagePosition" : [-2, -2],
+      "frames" : 1,
+      "animationCycle" : 1.0,
+
+      "spaceScan" : 0.8,
+      "anchors" : [ "background" ]
+
+    }
+  ],
+  "animation" : "catenary-wires45.animation",
+  "animationParts" : {
+    "default" : "catenary-wires45.png"
+  }
+  //"animationPosition" : [-2, -2]
+  
+}

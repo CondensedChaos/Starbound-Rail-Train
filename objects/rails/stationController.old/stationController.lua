@@ -1014,8 +1014,45 @@ function onNodeConnectionChange(args)
   --local data = object.getInputNodeIds(1)
   --tprint(data)
   
-  initNodePos()
+  --initNodePos()
+  initNodePos2()
   
+end
+
+
+function onInputNodeChange(args)
+  --if args.level then
+    --output(args.node == 0)
+  --end
+  
+  if args.node == 0 then --and not storage.state then
+    if args.level then
+      storage.state = true
+      object.setOutputNodeLevel(0, false)
+      self.t0 = world.time()
+      self.countdown = 0
+      animator.setAnimationState("switchState", "on")
+      if not (config.getParameter("alwaysLit")) then object.setLightColor(config.getParameter("lightColor", {0, 0, 0, 0})) end
+      animator.playSound("on");
+      --object.setAllOutputNodes(true)
+      --sb.logInfo(self.countdown)
+    end
+  end
+  
+  --if storage.state and args.node == 1 then
+    --if args.level then
+      --self.countdown = self.countdown + 0.9
+      --if not self.trainInStation then
+        --self.trainInStation = true
+      --end
+    --else
+      --self.trainInStation = false
+    --end
+  --end
+  
+  sb.logInfo("=====")
+  tprint(args)
+  if self.t0 then sb.logInfo("=====T0= " .. self.t0) end
 end
 
 function uninit()
@@ -1076,8 +1113,27 @@ function update(dt)
   end
   
    if self.init then
+     if storage.state == nil then
+       storage.state = false
+       object.setOutputNodeLevel(1, true)
+     else
+       object.setOutputNodeLevel(0, not storage.state)
+       if storage.state then
+         self.t0 = world.time()
+       end
+       object.setOutputNodeLevel(1, true)
+     end
      if storage.uuid == nil then
        storage.uuid = sb.makeUuid()
+     end
+     if storage.state == nil then
+       storage.state = false
+       object.setOutputNodeLevel(1, true)
+       object.setOutputNodeLevel(0, not storage.state)
+     else
+       object.setOutputNodeLevel(0, not storage.state)
+       self.t0 = world.time()
+       object.setOutputNodeLevel(1, true)
      end
      world.setUniqueId(entity.id(), storage.uuid)
      local idfromuuid = world.loadUniqueEntity(storage.uuid)
@@ -1150,13 +1206,17 @@ function update(dt)
        if storage.saveFile then tprint(storage.saveFile) end
      end
      
-     initNodePos()
+     --initNodePos()
+     initNodePos2()
      
      self.init = false
    end
    
-   if self.noteposInit then
-     initNodePos()
+   --if self.noteposInit then
+     --initNodePos()
+   --end
+   if self.noteposInit2 then
+     initNodePos2()
    end
    
    if self.uuidInit then
@@ -1250,9 +1310,29 @@ function update(dt)
      end
      
    end
+
+
+  if storage.state then
+    
+    --self.countdown = self.countdown - dt
+    self.countdown = world.time() - self.t0
+    --sb.logInfo(tostring("time=" .. world.time()) .. " count=" .. tostring(self.countdown))
+  end
+  --if self.countdown <= 0 then
+  if self.countdown >= storage.stopLenght and storage.state then
+    --self.countdown = storage.stopLenght
+    storage.state = false
+    object.setOutputNodeLevel(0, true)
+    self.countdown = 0
+    sb.logInfo(tostring("time=" .. world.time()) .. " count=" .. tostring(self.countdown))
+    animator.setAnimationState("switchState", "off")
+    if not (config.getParameter("alwaysLit")) then object.setLightColor({0, 0, 0, 0}) end
+    animator.playSound("off");
+    --object.setAllOutputNodes(false)
+  end
 end
 
-function initNodePos()
+function initNodePos2()
   storage.saveFile = world.getProperty("stationController_file")
   if storage.saveFile[storage.uuid].grouped then
     if not storage.group then
@@ -1288,7 +1368,7 @@ function initNodePos()
         
        --world.setProperty("stationController_" .. storage.group .. "_nodesPos", self.groupNodePos)
        world.setProperty("stationController_file", storage.saveFile)
-       self.noteposInit = false
+       self.noteposInit2 = false
        for i=1,storage.saveFile.global.numOfStations do
          if storage.saveFile[tostring(i)].uuid ~= storage.uuid then
            local id = world.loadUniqueEntity(tostring(storage.saveFile[tostring(i)].uuid))
@@ -1300,13 +1380,47 @@ function initNodePos()
          end
        end
       else
-        self.noteposInit = true
+        self.noteposInit2 = true
       end     
     end
     
   end
   
   
+end
+
+function initNodePos()
+     if storage.saveFile[storage.uuid].grouped then
+       if not storage.group then
+         storage.group = storage.saveFile[storage.uuid].group
+       end
+       if not storage.numInGroup then
+         storage.numInGroup = storage.saveFile[storage.group][storage.uuid].number
+       end
+       if object.isOutputNodeConnected(0) then
+         if not storage.saveFile.global[storage.group].data.nodesPos then
+           storage.saveFile.global[storage.group].data.nodesPos = {}
+         end
+         local nodepos = getStopPos()
+         if nodepos then
+           storage.saveFile.global[storage.group].data.nodesPos[storage.numInGroup] = nodepos
+           world.setProperty("stationController_file", storage.saveFile)
+           self.noteposInit = false
+           for i=1,storage.saveFile.global.numOfStations do
+             if storage.saveFile[tostring(i)].uuid ~= storage.uuid then
+               local id = world.loadUniqueEntity(tostring(storage.saveFile[tostring(i)].uuid))
+               if id then
+                 if world.entityExists(id) then
+                   world.sendEntityMessage(id, "forceReloadData", false)
+                 end
+               end
+             end
+           end
+         else
+           self.noteposInit = true
+         end
+       end
+     end
 end
 
 function die(smash)

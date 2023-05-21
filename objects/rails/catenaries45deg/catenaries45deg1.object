@@ -1,0 +1,67 @@
+{
+  "objectName" : "catenaries45deg1",
+  "colonyTags" : ["rails"],
+  "rarity" : "Common",
+
+  "category" : "railPoint",
+  "price" : 400,
+  "description" : "Used to power trains, place this every 20 tiles, the next girder has to be inside the green area to work",
+  "shortdescription" : "Catenary girder with wires",
+  "race" : "generic",
+
+  "inventoryIcon" : "catenaries45icon.png",
+  "orientations" : [
+    {
+      "image" : "preview45deg1.png:default",
+      "direction" : "right",
+      
+      "imagePosition" : [-162, -162],
+
+      "materialSpaces" : [
+        [[0, 0], "metamaterial:rail"]
+      ],
+
+      "fgAnchors" : [[-1, 0], [-1, -1], [0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1]],
+      "bgAnchors" : [[0, 0]],
+      "anchorAny" : true,
+      
+      "renderLayer" : "Object+1"
+
+    },
+    {
+      "image" : "preview45deg1.png:default",
+      "direction" : "left",
+      "flipImages" : true,
+      
+      "imagePosition" : [-159, -162],
+
+      "materialSpaces" : [
+        [[0, 0], "metamaterial:rail"]
+      ],
+
+      "fgAnchors" : [[-1, 0], [-1, -1], [0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1]],
+      "bgAnchors" : [[0, 0]],
+      "anchorAny" : true,
+      
+      "renderLayer" : "Object+1",
+      "animationPosition" : [-7, -2]
+      
+    }
+  ],
+  
+  "animation" : "catenaries45deg1.animation",
+  "animationParts" : {
+    "girder" : "girder45deg.png",
+    "stop" : "railChunkLoader.png",
+    "stopfullbright" : "railChunkLoaderfullbright.png"
+  },
+  "animationPosition" : [-2, -2],
+  
+  "scripts" : [ "/objects/rails/catenaries45deg/catenaries45deg.lua" ],
+  "scriptDelta" : 30,
+  
+  "inputNodes" : [ [0, 0] ],
+
+  "resumeSpeed" : 10
+  
+}

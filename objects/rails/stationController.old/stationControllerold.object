@@ -1,5 +1,5 @@
 {
-  "objectName" : "stationController",
+  "objectName" : "stationControllerold",
   "colonyTags" : ["electronic", "wired"],
   "printable" : false,
   "rarity" : "Common",
@@ -15,13 +15,11 @@
   "inventoryIcon" : "stationControllericon.png",
   "orientations" : [
     {
-      "dualImage" : "stationController.png:<color>.<frame>",
-      "imagePosition" : [-8, 0],
-      "frames" : 3,
-      "animationCycle" : 0.8,
+      "image" : "stationController.png:<color>.off",
+      "imagePosition" : [-8, -8],
 
       "spaceScan" : 0.1,
-      "anchors" : [ "bottom" ]
+      "anchors" : [ "background" ]
     }
   ],
 
@@ -38,9 +36,10 @@
   "animationParts" : {
     "switch" : "stationController.png"
   },
-  "animationPosition" : [-8, 0],
+  "animationPosition" : [-8, -8],
   
-  "outputNodes" : [ [0, 0] ],
+  "inputNodes" : [ [-1, 0], [0, 0] ],
+  "outputNodes" : [ [-1, -1], [0, -1] ],
   
   "stopLenght" : 6
   

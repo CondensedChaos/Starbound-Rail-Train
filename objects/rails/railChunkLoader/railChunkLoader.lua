@@ -5,19 +5,19 @@ function init()
 	local pos = entity.position()
 	storage.chunk = {}
 	storage.chunk[1] = pos[1]-20
-	storage.chunk[2] = pos[2]-20
+	storage.chunk[2] = pos[2]-4
 	storage.chunk[3] = pos[1]+20
-	storage.chunk[4] = pos[2]+20
+	storage.chunk[4] = pos[2]+10
   end
   self.resumeSpeed = config.getParameter("resumeSpeed")
   
-  local override = object.getInputNodeLevel(0)
-  if override == true then
-    object.setMaterialSpaces({{{0, 0}, "metamaterial:rail"}})
-    animator.setAnimationState("stopState", "off")
-  else
+  --local override = object.getInputNodeLevel(0)
+  --if override == true then
+    --object.setMaterialSpaces({{{0, 0}, "metamaterial:rail"}})
+    --animator.setAnimationState("stopState", "off")
+  --else
     animator.setAnimationState("stopState", "on")
-  end
+  --end
 end
 
 function update(dt)
@@ -31,16 +31,16 @@ function nodePosition()
   return util.tileCenter(entity.position())
 end
 
-function onInputNodeChange()
-  local override = object.getInputNodeLevel(0)
+--function onInputNodeChange()
+  --local override = object.getInputNodeLevel(0)
   
-  if override == true then
-    object.setMaterialSpaces({{{0, 0}, "metamaterial:rail"}})
-    animator.setAnimationState("stopState", "off")
-  else
-    animator.setAnimationState("stopState", "on")
-  end
-end
+  --if override == true then
+    --object.setMaterialSpaces({{{0, 0}, "metamaterial:rail"}})
+    --animator.setAnimationState("stopState", "off")
+  --else
+    --animator.setAnimationState("stopState", "on")
+  --end
+--end
 
 function die()
   notifyStoppedEntities()

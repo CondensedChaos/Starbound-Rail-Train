@@ -38,8 +38,6 @@
   ],
   //"scriptDelta" : 5,
   "scriptDelta" : 30,
-  
-  "inputNodes" : [ [0, 0] ],
 
   "resumeSpeed" : 10
 }

@@ -1,0 +1,10 @@
+{
+  "frameGrid" : {
+    "size" : [184,296],
+    "dimensions" : [1, 1],
+
+    "names" : [
+      ["girder"]
+    ]
+  }
+}

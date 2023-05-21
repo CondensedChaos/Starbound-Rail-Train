@@ -172,10 +172,12 @@ function init()
     if not storage.oneCarSet then calculateTargetDistanceToChild() end
   end
   
-  if not storage.firstCar then
-    calculateTargetDistanceFromParent(self.trainsetData, storage.carNumber)
-  else
-	calculateTargetDistanceFromParent(self.trainsetData, storage.numberOfCars)
+  if not storage.oneCarSet then
+    if not storage.firstCar then
+      calculateTargetDistanceFromParent(self.trainsetData, storage.carNumber)
+    else
+	  calculateTargetDistanceFromParent(self.trainsetData, storage.numberOfCars)
+    end
   end
   
   if storage.firstCar or storage.lastCar then

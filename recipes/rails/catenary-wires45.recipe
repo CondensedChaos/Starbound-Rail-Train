@@ -1,0 +1,7 @@
+{
+  "input" : [
+    { "item" : "wire", "count" : 1 }
+  ],
+  "output" : { "item" : "catenary-wires45", "count" : 1 },
+  "groups" : [ "rail" ]
+}

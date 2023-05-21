@@ -2,15 +2,13 @@
   "animatedParts" : {
     "stateTypes" : {
       "switchState" : {
-        "default" : "on",
+        "default" : "off",
         "states" : {
           "off" : {
             "frames" : 1
           },
           "on" : {
-            "frames" : 3,
-            "cycle" : 0.5,
-            "mode" : "loop"
+            "frames" : 1
           }
         }
       }
@@ -32,7 +30,7 @@
 
             "on" : {
               "properties" : {
-                "image" : "<partImage>:<color>.<frame>"
+                "image" : "<partImage>:<color>.on"
               }
             }
           }

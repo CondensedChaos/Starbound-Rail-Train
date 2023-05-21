@@ -1,0 +1,34 @@
+{
+  "objectName" : "catenaries45degturn",
+  "rarity" : "Common",
+  "category" : "decorative",
+  "price" : 70,
+  "description" : "Catenary wires",
+  "shortdescription" : "Catenary wires",
+  "race" : "human",
+
+  "humanDescription" : "Catenary wires",
+
+
+  "inventoryIcon" : "catenaries45icon.png",
+  "orientations" : [
+    
+    {
+      "image" : "catenaries45degturn.png:default",
+      "direction" : "right",
+      "imagePosition" : [-3, -2],
+
+      "spaceScan" : 0.8,
+      "anchors" : [ "background" ]
+    },
+    {
+      "image" : "catenaries45degturn.png:default",
+      "direction" : "left",
+      "flipImages" : true,
+      "imagePosition" : [-3, -2],
+
+      "spaceScan" : 0.8,
+      "anchors" : [ "background" ]
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "input" : [
+    { "item" : "wire", "count" : 1 },
+    { "item" : "girdermaterial", "count" : 1 }
+  ],
+  "output" : { "item" : "catenaries45deg4", "count" : 1 },
+  "groups" : [ "rail" ]
+}
