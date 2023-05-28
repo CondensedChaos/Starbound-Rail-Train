@@ -39,35 +39,33 @@ end
 function forceReloadData(_,_, pane, dontLog, nodepos)
 
   if nodepos then
-  self.groupNodePos = world.getProperty("stationController_" .. storage.group .. "_nodesPos")
-  --sb.logInfo("=====================================FORCING =NODEPOS= DATA RELOAD: ")
-  --tprint(self.groupNodePos)
+    initNodePos()
   else
-  storage.saveFile = world.getProperty("stationController_file")
-  sb.logInfo("FORCING DATA RELOAD: ")
-  local oldnumber = self.stationNum
-  self.stationNum = storage.saveFile[storage.uuid].number
-  if self.stationNum == oldnumber then
-    sb.logInfo("STATION NUMBER " .. tostring(self.stationNum))
-  else
-    sb.logInfo("STATION NUMBER " .. tostring(oldnumber) .. "IS NOW NUMBER " .. tostring(self.stationNum))
-  end
+    storage.saveFile = world.getProperty("stationController_file")
+    sb.logInfo("FORCING DATA RELOAD: ")
+    local oldnumber = self.stationNum
+    self.stationNum = storage.saveFile[storage.uuid].number
+    if self.stationNum == oldnumber then
+      sb.logInfo("STATION NUMBER " .. tostring(self.stationNum))
+    else
+      sb.logInfo("STATION NUMBER " .. tostring(oldnumber) .. "IS NOW NUMBER " .. tostring(self.stationNum))
+    end
   
-  if not dontLog then
-    sb.logInfo("SAVE FILE AS FOLLOWS: ")  
-  end
+    if not dontLog then
+      sb.logInfo("SAVE FILE AS FOLLOWS: ")  
+    end
   
-  if storage.saveFile[storage.uuid].grouped then
-    storage.group = storage.saveFile[storage.uuid].group
-    storage.grouped = true
-    storage.numInGroup = storage.saveFile[storage.group][storage.uuid].number
-    self.circularLine = storage.saveFile.global[storage.group].data.circular
-    self.numOfStationsInGroup = storage.saveFile.global[storage.group].data.numOfStationsInGroup
-  end
+    if storage.saveFile[storage.uuid].grouped then
+      storage.group = storage.saveFile[storage.uuid].group
+      storage.grouped = true
+      storage.numInGroup = storage.saveFile[storage.group][storage.uuid].number
+      self.circularLine = storage.saveFile.global[storage.group].data.circular
+      self.numOfStationsInGroup = storage.saveFile.global[storage.group].data.numOfStationsInGroup
+    end
   
-  if storage.saveFile and not dontLog then
-    tprint(storage.saveFile)
-  end
+    if storage.saveFile and not dontLog then
+      tprint(storage.saveFile)
+    end
   
     if pane then
       for i=1,storage.saveFile.global.numOfStations do
@@ -81,6 +79,7 @@ function forceReloadData(_,_, pane, dontLog, nodepos)
         end
       end
     end
+    
   end
   
 end
@@ -1105,8 +1104,8 @@ function update(dt)
        storage.saveFile[storage.uuid] = {}
        storage.saveFile[storage.uuid].number = self.stationNum
        storage.saveFile[storage.uuid].name = tostring(self.stationNum)
-       storage.saveFile[storage.uuid].pos = storage.saveFile[tostring(self.stationNum)].pos
        storage.saveFile[storage.uuid].grouped = false
+       --storage.saveFile[storage.uuid].nodepos = {}
        world.setProperty("stationController_file", storage.saveFile)
        storage.saveFile = world.getProperty("stationController_file")
        sb.logInfo("SAVE FILE AS FOLLOWS: ")
@@ -1125,8 +1124,8 @@ function update(dt)
          storage.saveFile[storage.uuid] = {}
          storage.saveFile[storage.uuid].number = self.stationNum
          storage.saveFile[storage.uuid].name = tostring(self.stationNum)
-         storage.saveFile[storage.uuid].pos = storage.saveFile[tostring(self.stationNum)].pos
          storage.saveFile[storage.uuid].grouped = false
+         --storage.saveFile[storage.uuid].nodepos = {}
          storage.grouped = false
          world.setProperty("stationController_file", storage.saveFile)
          if storage.saveFile.global.numOfStations > 1 then
@@ -1152,11 +1151,18 @@ function update(dt)
      
      initNodePos()
      
+     if storage.saveFile[storage.uuid].grouped then
+       initGroupNodePos()    
+     end
+     
      self.init = false
    end
    
    if self.noteposInit then
      initNodePos()
+   end
+   if self.groupnoteposInit then
+     initGroupNodePos()  
    end
    
    if self.uuidInit then
@@ -1252,8 +1258,14 @@ function update(dt)
    end
 end
 
-function initNodePos()
-  storage.saveFile = world.getProperty("stationController_file")
+function onNodeConnectionChange(args)
+  initNodePos()
+  if storage.saveFile[storage.uuid].grouped then
+    initGroupNodePos()    
+  end
+end
+
+function initGroupNodePos()
   if storage.saveFile[storage.uuid].grouped then
     if not storage.group then
       storage.group = storage.saveFile[storage.uuid].group
@@ -1276,7 +1288,7 @@ function initNodePos()
           storage.saveFile.global[storage.group].data.nodesPos[i] = {}
         end
       end
-      local nodepos = getStopPos()
+      local nodepos = storage.saveFile[storage.uuid].nodepos --getStopPos()
       if nodepos then
         self.groupNodePos[storage.numInGroup] = nodepos
         storage.saveFile.global[storage.group].data.nodesPos[storage.numInGroup] = nodepos
@@ -1286,27 +1298,64 @@ function initNodePos()
           storage.saveFile.global[storage.group].data.uuids[self.numOfStationsInGroup + 1] = storage.saveFile.global[storage.group].data.uuids[1]
         end
         
-       --world.setProperty("stationController_" .. storage.group .. "_nodesPos", self.groupNodePos)
-       world.setProperty("stationController_file", storage.saveFile)
-       self.noteposInit = false
-       for i=1,storage.saveFile.global.numOfStations do
-         if storage.saveFile[tostring(i)].uuid ~= storage.uuid then
-           local id = world.loadUniqueEntity(tostring(storage.saveFile[tostring(i)].uuid))
-           if id then
-             if world.entityExists(id) then
+        --world.setProperty("stationController_" .. storage.group .. "_nodesPos", self.groupNodePos)
+        world.setProperty("stationController_file", storage.saveFile)
+        self.groupnoteposInit = false
+        for i=1,storage.saveFile.global.numOfStations do
+          if storage.saveFile[tostring(i)].uuid ~= storage.uuid then
+            local id = world.loadUniqueEntity(tostring(storage.saveFile[tostring(i)].uuid))
+            if id then
+              if world.entityExists(id) then
                world.sendEntityMessage(id, "forceReloadData", false, false, true)
-             end
-           end
-         end
-       end
+              end
+            end
+          end
+        end
       else
+        self.groupnoteposInit = true
         self.noteposInit = true
       end     
     end
-    
   end
   
+end
+
+function initNodePos()
+  storage.saveFile = world.getProperty("stationController_file")
   
+  if object.isOutputNodeConnected(0) then
+    local nodepos = storage.saveFile[storage.uuid].nodepos
+    if not nodepos then
+      nodepos = getStopPos()
+      if nodepos then
+        storage.saveFile[storage.uuid].nodepos = nodepos
+        world.setProperty("stationController_file", storage.saveFile)
+        self.noteposInit = false
+        standardReload()
+      else
+        self.noteposInit = true
+      end
+    else
+      local nodepos = getStopPos()
+      if nodepos then
+        if storage.saveFile[storage.uuid].nodepos == nodepos then
+          self.noteposInit = false
+        else
+          storage.saveFile[storage.uuid].nodepos = nodepos
+          world.setProperty("stationController_file", storage.saveFile)
+          self.noteposInit = false
+          standardReload()
+        end
+      else
+        self.noteposInit = true
+      end
+    end
+  else
+    storage.saveFile[storage.uuid].nodepos = nil
+    world.setProperty("stationController_file", storage.saveFile)
+    self.noteposInit = false
+    standardReload()
+  end
 end
 
 function die(smash)

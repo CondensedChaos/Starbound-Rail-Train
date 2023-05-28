@@ -1,0 +1,50 @@
+{
+  "objectName" : "girderextension",
+  "colonyTags" : ["rails"],
+  "rarity" : "Common",
+
+  "category" : "railPoint",
+  "price" : 400,
+  "description" : "Extends catenaries girder's lenght",
+  "shortdescription" : "Girder Extension",
+  "race" : "generic",
+
+  "inventoryIcon" : "girderextensionicon.png",
+  "orientations" : [
+    {
+      "image" : "girderextension.png:default",
+      "direction" : "right",
+      
+      "imagePosition" : [-2, -40],
+      
+      "fgAnchors" : [[-1, 0], [-1, -1], [0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1]],
+      "bgAnchors" : [[0, 0]],
+      "anchorAny" : true,
+      
+      "renderLayer" : "Object+1"
+
+    },
+    {
+      "image" : "girderextension.png:default",
+      "direction" : "left",
+      "flipImages" : true,
+      
+      "imagePosition" : [1, -40],
+
+      "fgAnchors" : [[-1, 0], [-1, -1], [0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1]],
+      "bgAnchors" : [[0, 0]],
+      "anchorAny" : true,
+      
+      "renderLayer" : "Object+1"
+      //"animationPosition" : [0, 0]
+      
+    }
+  ]
+  
+  //"animation" : "catenaries45deg1.animation",
+  //"animationParts" : {
+    //"girder" : "girder45deg.png",
+  //},
+  //"animationPosition" : [-2, -2],
+  
+}

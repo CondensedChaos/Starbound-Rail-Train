@@ -20,11 +20,10 @@
   "inventoryIcon" : "catenary-wires45.png",
   "orientations" : [
     {
-      "image" : "catenary-wires45.png:<color>",
+      "image" : "catenary-wires45-2.png:<color>",
       "direction" : "left",
-      "flipImages" : true,
 
-      "imagePosition" : [-2, -2],
+      "imagePosition" : [-2, 2],
       "frames" : 1,
       "animationCycle" : 1.0,
 
@@ -36,7 +35,7 @@
       "image" : "catenary-wires45.png:<color>",
       "direction" : "right",
 
-      "imagePosition" : [-2, -2],
+      "imagePosition" : [-2, -1],
       "frames" : 1,
       "animationCycle" : 1.0,
 
@@ -49,6 +48,5 @@
   "animationParts" : {
     "default" : "catenary-wires45.png"
   }
-  //"animationPosition" : [-2, -2]
   
 }
