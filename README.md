@@ -1,7 +1,7 @@
 Starbound Rail Train system
 ===========================
 
-### Overview
+# Overview
 
 This mod add a train system to be used with Startbound's rail tram system.
 It provides a framework that includes train crafting, personalization of trains, creation of lines and scheduling of trains.
