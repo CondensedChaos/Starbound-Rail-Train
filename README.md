@@ -1,3 +1,4 @@
-# Starbound-Rail-Train
+Starbound-Rail-Train
+=========
 
-WORK IN PROGRESS
+## WORK IN PROGRESS
