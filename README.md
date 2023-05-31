@@ -54,6 +54,29 @@ Catenaries and/or Chunk Loaders has to be used too in scheduled mode.
 
 ## Free Mode
 
+### Prepare your network
+
+### Place Rail Station Markers
+
+### Place Chunk Loaders/Catenaries
+
+### Craft trains
+
+### Place trains
+
 ## Scheduled mode
 
+### Prepare your network
+
+### Place Rail Station Markers
+
+### Place Station Controllers
+
+#### Name your stations
+
+### Place Chunk Loaders/Catenaries
+
+
 # Modding
+
+# License
