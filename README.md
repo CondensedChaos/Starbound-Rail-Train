@@ -35,6 +35,8 @@ Then you'll have to craft a train at the **Train Configurator** for each tran yo
 
 Catenaries and/or Chunk Loaders has to be used too in scheduled mode.
 
+---
+
 # Usage
 ..........................................................................
 
