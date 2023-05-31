@@ -34,6 +34,11 @@ Then go back to the station controller to create the schedule using the data fro
 Then you'll have to craft a train at the **Train Configurator** for each tran you schedule, and import the items in the Train Configurator (more in depth usage for Scheduled mode here)
 
 Catenaries and/or Chunk Loaders has to be used too in scheduled mode.
+---
+# Installation
+..........................................................................
+
+..........................................................................
 
 ---
 # Usage
