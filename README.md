@@ -226,6 +226,7 @@ Catenaries and/or Chunk Loaders has to be used too in scheduled mode.
 
 ### Place Station Controllers 
 And wire them to Rail Station Markers
+
 ![station controller craft](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/12554c65-a599-499a-9208-2e80d1d5b538)
 
 ![station marker 4](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/ca685ffa-c7a1-4195-8fd3-5e6cba19c9d8)
