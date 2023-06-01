@@ -302,15 +302,35 @@ Circular/non circular
 ### Craft Trains
 ..........................................................................
 
-#### Add train items in Station Controller
-..........................................................................
+### Create the schedule in-game
+![00](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/b6ff8dee-ac1f-49d7-947d-ef3fd387def4)
 
-..........................................................................
+![01](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/1e881b54-4a19-4c94-8571-da60fbea1286)
+
+![02](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/cd116b64-5573-463a-98a4-f99fd3619f49)
+
+![03](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/120935ab-ba21-42b3-a245-887db316a37e)
+
+![04](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/f2fd00ab-000e-43b4-abb0-a62e517656c1)
+
+![05](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/8c3881ad-8303-4d07-bfc6-c4cfdebfffb9)
+
+
+#### Add train items in Station Controller
+
+![06](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/cdd84aa3-6b44-42f4-b5ce-63dab4ae339c)
+
+![07](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/bc50e1b7-1ffa-485c-af39-ca853e61ec91)
+
 
 ### Start trains
 ..........................................................................
 
 ..........................................................................
+
+---
+
+# Scheduled mode with two or more lines
 
 ---
 # Trains schedule Web-App
