@@ -188,6 +188,9 @@ Catenaries and/or Chunk Loaders has to be used too in scheduled mode.
 
 ..........................................................................
 
+### Place the rails
+
+
 ### Craft trains
 ..........................................................................
 
@@ -247,6 +250,8 @@ And wire them to Rail Station Markers
 ..........................................................................
 
 ..........................................................................
+
+### Place the rails
 
 ### Create a Line
 Circular/non circular
