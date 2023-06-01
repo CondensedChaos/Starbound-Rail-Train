@@ -97,20 +97,6 @@ Catenaries and/or Chunk Loaders has to be used too in scheduled mode.
 ![station marker3a](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e79e89e4-5515-41da-afc6-312aa54be9d2)
 
 ---
-
-![station marker 4](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/ca685ffa-c7a1-4195-8fd3-5e6cba19c9d8)
-
-![station marker 5](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/c0e239b7-8445-4449-aee7-ec69d18e1300)
-
-![station marker 6](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e452b780-a7c4-42c5-a5fc-6a3d591bdd9e)
-
-![station marker 7](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/f9a0abbf-e1fa-45a8-b6a2-8e21bae34d37)
-
-![station marker 8](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/9d9db061-bab5-4694-8724-0cf7c205bde6)
-
-![station marker 9](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/b813102e-8ba4-47eb-9ebb-a8086280d532)
-
----
 ## Components
 ..........................................................................
 
@@ -224,21 +210,38 @@ Catenaries and/or Chunk Loaders has to be used too in scheduled mode.
 ..........................................................................
 
 ### Place Rail Station Markers
-..........................................................................
+![stationmarker1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/42809523-4da6-46e4-a657-ab4208f94a25)
 
-..........................................................................
+![railstationmarker craft](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/aff5d72e-b504-406a-9feb-3db1dbd540e7)
+
+![station marker2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e592b3ed-d081-4028-8cd9-0dc02735006f)
+
+![station marker3](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/a585ba44-b478-4eb6-96ba-0d622cb1f572)
+
+![station marker3a](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e79e89e4-5515-41da-afc6-312aa54be9d2)
+
 
 ### Place Station Controllers 
 And wire them to Rail Station Markers
+![station controller craft](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/12554c65-a599-499a-9208-2e80d1d5b538)
 
-..........................................................................
+![station marker 4](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/ca685ffa-c7a1-4195-8fd3-5e6cba19c9d8)
 
-..........................................................................
+![station marker 5](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/c0e239b7-8445-4449-aee7-ec69d18e1300)
+
+![station marker 6](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e452b780-a7c4-42c5-a5fc-6a3d591bdd9e)
+
+![station marker 7](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/f9a0abbf-e1fa-45a8-b6a2-8e21bae34d37)
+
+![station marker 8](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/9d9db061-bab5-4694-8724-0cf7c205bde6)
+
+![station marker 9](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/b813102e-8ba4-47eb-9ebb-a8086280d532)
 
 #### Name your stations
-..........................................................................
+![line creation1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/5d397e57-3b07-447a-90ef-8f042124fe0d)
 
-..........................................................................
+![line creation2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/4055304b-5f13-4027-96fd-ef9b22813bcc)
+
 
 ### Place Chunk Loaders/Catenaries
 ..........................................................................
@@ -247,14 +250,42 @@ And wire them to Rail Station Markers
 
 ### Create a Line
 Circular/non circular
+![line creation3](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/30fa0857-0674-45a4-9432-3c63516d3402)
 
-..........................................................................
+![line creation4](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/891cf0b0-95cd-4642-9979-6d5f14ff4dc0)
+
+![line creation5](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/0ced7315-3f90-4f2f-a992-b3a5745be4ad)
+
+![line creation6](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/057f2be1-91d0-448d-b489-e4f93cf3b8e4)
 
 #### Add Stations
-..........................................................................
+![line creation7](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/4807e3d4-1740-4270-a39b-80430bab4804)
+
+![line creation8](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/c9e0f280-9a6e-4e4d-ae67-b2c5082602d3)
+
+![line creation9](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/91d0b7fc-602e-4663-ae27-7d441c70b9a1)
+
+![linecreation10](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/5794114c-0576-49a6-a0da-6264bbdcd21e)
+
+![line creation11](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e36ec300-5825-4a6e-8d16-8d6453d1ac31)
+
+![line creation12](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/bfcb931d-9092-4c70-a581-708f192e8c59)
+---
+![line creation13](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/4b545a5e-3dd4-43fb-8274-0d45400f73ca)
+
+![line creation14](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/aa2ecef2-436a-4552-87c5-ca48201b246a)
+
+![line creation15](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/865da791-9aa4-4e35-a932-59fc598d69e4)
+
 
 ### Do test runs
-..........................................................................
+![line creation 16](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/60190db1-ae44-4da2-968d-8260575eec01)
+
+![line creation17](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/f2fd65f0-b1b1-455a-a4b1-d70b97edc4e2)
+
+![line creation18](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/fa5ccb43-c30d-4604-8dc6-d5f68833730f)
+
+![line creation19](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/55f471e5-6f91-45cc-8ac9-f9028007320b)
 
 ### Make schedules with web-app
 ..........................................................................
