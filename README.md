@@ -255,7 +255,7 @@ And wire them to Rail Station Markers
 ### Place the rails
 
 ### Create a Line
-Circular/non circular
+
 ![line creation3](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/30fa0857-0674-45a4-9432-3c63516d3402)
 
 ![line creation4](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/891cf0b0-95cd-4642-9979-6d5f14ff4dc0)
@@ -264,10 +264,13 @@ Circular/non circular
 
 ![line creation6](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/057f2be1-91d0-448d-b489-e4f93cf3b8e4)
 
-#### Add Stations
 ![line creation7](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/4807e3d4-1740-4270-a39b-80430bab4804)
 
 ![line creation8](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/c9e0f280-9a6e-4e4d-ae67-b2c5082602d3)
+
+Circular/non circular
+
+#### Add Stations
 
 ![line creation9](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/91d0b7fc-602e-4663-ae27-7d441c70b9a1)
 
