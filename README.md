@@ -70,19 +70,26 @@ Catenaries and/or Chunk Loaders has to be used too in scheduled mode.
 
 ![trainconfigurator2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/a7f00cb9-3d45-42a4-bcd7-312ed1f9d580)
 
-
 ![train configurator2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/2a5b0c99-69f2-4959-b604-62a647cd8bcd)
+
 ![train configurator3](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/9503fecd-7707-437c-b710-ab3d443df47f)
+
 ![train configurator4](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/00a4205f-d62b-443b-b1d1-e6327436a7b8)
+
 ![train configurator5](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/c3a4c92c-8921-4261-bb66-750dc985fc7e)
+
 ![train configurator6](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/9f57baa4-b9df-4cc5-9cf4-3d0de4bfccef)
+
 ![trainset configurator craft](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/6aaca641-38a7-4d1e-a7e2-45eb1631c96f)
 
 
 ### Catenaries/Chunk loaders
-..........................................................................
+![catenary](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/0565a745-601c-4993-8b67-e6cfde30afaa)
 
-..........................................................................
+![catenary1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e86de415-b396-49e5-89ca-e243a0949da9)
+![catenary2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/164c06c5-0704-465e-95a8-51f76031c954)
+![catenary3](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/a990e637-37ed-4550-b055-367d6235a13f)
+
 
 ### Station Controller
 ..........................................................................
