@@ -9,7 +9,7 @@ Any user with some experience in modding can add additional train cars to be use
 There are two operating modes, free and scheduled.
 
 ## Free Mode
-In free mode the trains are crafted using the **"Train Configurator"** (crafted at Rail Crafting Table) and just placed on the rails.
+In free mode the trains are crafted using the **"Trainset Configurator"** (crafted at Rail Crafting Table) and just placed on the rails.
 
 Once the train is placed it will continue to go over the rails and stops at stations, you can either make a circular rail line around the planet or use rail bumbers to revert its direction so it goes back and forth.
 
@@ -31,7 +31,7 @@ With the data from the test run you should then use the provided web app (more o
 
 Then go back to the station controller to create the schedule using the data from the web app, you can choose how many trains to have for each direction, choose their speed for each tract and stop times for each station, and when the trains should start.
 
-Then you'll have to craft a train at the **Train Configurator** for each tran you schedule, and import the items in the Train Configurator (more in depth usage for Scheduled mode here)
+Then you'll have to craft a train at the **Trainset Configurator** for each tran you schedule, and import the items in the Train Configurator (more in depth usage for Scheduled mode here)
 
 Catenaries and/or Chunk Loaders has to be used too in scheduled mode.
 ---
@@ -63,10 +63,17 @@ Catenaries and/or Chunk Loaders has to be used too in scheduled mode.
 
 ..........................................................................
 
-### Train Configurator
-..........................................................................
+### Trainset Configurator
+![trainconfigurator](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/22002a29-4499-46e7-9930-516bd98dbef5)
+![trainconfigurator2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/a7f00cb9-3d45-42a4-bcd7-312ed1f9d580)
+![train configurator1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/be8ed6f4-af5f-4307-9a90-d912de0555a4)
+![train configurator2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/2a5b0c99-69f2-4959-b604-62a647cd8bcd)
+![train configurator3](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/9503fecd-7707-437c-b710-ab3d443df47f)
+![train configurator4](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/00a4205f-d62b-443b-b1d1-e6327436a7b8)
+![train configurator5](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/c3a4c92c-8921-4261-bb66-750dc985fc7e)
+![train configurator6](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/9f57baa4-b9df-4cc5-9cf4-3d0de4bfccef)
+![trainset configurator craft](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/6aaca641-38a7-4d1e-a7e2-45eb1631c96f)
 
-..........................................................................
 
 ### Catenaries/Chunk loaders
 ..........................................................................
