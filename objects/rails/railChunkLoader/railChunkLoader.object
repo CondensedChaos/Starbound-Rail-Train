@@ -12,7 +12,7 @@
   "orientations" : [
     {
       "image" : "preview.png:preview",
-      "imagePosition" : [-305, -2],
+      "imagePosition" : [-162, -18],
 
       "materialSpaces" : [
         [[0, 0], "metamaterial:rail"]

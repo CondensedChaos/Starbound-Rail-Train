@@ -31,6 +31,7 @@ function init()
   message.setHandler("testRunCarInverted", testRunCarInverted) --message received from test run trainset to inform train set has inverted direction (and cars order)
   message.setHandler("startTrains", startTrains)
   message.setHandler("stopTrains", stopTrains)
+  message.setHandler("startMoreLines", startMoreLines)
   
   message.setHandler("receiveTime", receiveTime)
   
@@ -84,6 +85,70 @@ function forceReloadData(_,_, pane, dontLog, nodepos)
   
 end
 
+function startMoreLines(_,_,groupstostart)
+  self.spawningmorelinestable = {}
+  self.spawningmorelinesallready = true
+  self.spawningmorelinesfailednum = 0
+  for key, value in pairs(groupstostart) do
+    local groupname = key
+    local ready = value
+    if ready then
+      self.spawningmorelinestable[groupname] = {}
+      self.spawningmorelinestable[groupname].numberOfTrainsE = storage.saveFile.global[groupname].data.numberOfTrainsE
+      self.spawningmorelinestable[groupname].numberOfTrainsW = storage.saveFile.global[groupname].data.numberOfTrainsW
+      self.spawningmorelinestable[groupname].uuid = storage.saveFile.global[groupname].data.uuids[1]
+      if storage.group == nil then
+        storage.group = storage.saveFile[storage.uuid].group
+      end
+      if groupname == storage.group then
+        entityid = entity.id()
+        self.spawningmorelinestable[groupname].idvalid = true
+      else
+        local entityid = world.loadUniqueEntity(storage.saveFile.global[groupname].data.uuids[1])
+        self.spawningmorelinestable[groupname].id = entityid
+        if entityid then
+          if world.entityExists(entityid) then
+            self.spawningmorelinestable[groupname].idvalid = true
+          else
+            self.spawningmorelinestable[groupname].idvalid = false
+            self.spawningmorelinesallready = false
+            self.spawningmorelinesfailednum = self.spawningmorelinesfailednum + 1
+          end
+        else
+          self.spawningmorelinestable[groupname].idvalid = false
+          self.spawningmorelinesallready = false
+          self.spawningmorelinesfailednum = self.spawningmorelinesfailednum + 1
+        end
+      end
+    end
+    --world.sendEntityMessage(world.loadUniqueEntity(storage.saveFile.global[groupname].data.uuids[1]), "startTrains", groupname, numberOfTrainsE, numberOfTrainsW)
+  end
+  if self.spawningmorelinesallready then
+    for key, value in pairs(self.spawningmorelinestable) do
+      tprint(value)
+      local groupname = key
+      sb.logInfo("groupname=" .. tostring(groupname))
+      local numberOfTrainsE = value.numberOfTrainsE
+      local numberOfTrainsW = value.numberOfTrainsW
+      sb.logInfo("numberOfTrainsE=" .. tostring(numberOfTrainsE))
+      sb.logInfo("numberOfTrainsW=" .. tostring(numberOfTrainsW))
+      
+      if groupname == storage.group then
+        startTrains(_,_, groupname, numberOfTrainsE, numberOfTrainsW)
+      else
+        local entityid = value.id
+        
+        world.sendEntityMessage(entityid, "startTrains", groupname, numberOfTrainsE, numberOfTrainsW)
+      end
+    end
+  else
+    sb.logInfo("could not get all entity ids of all lines, trying again in 3 seconds")
+    self.spawningmorelinesfailed = true
+    self.spawningmorelinesfailedTimer = 0
+    self.spawningmorelinesfailedTimerT0 = world.time()
+  end
+end
+
 function stopTrains(_,_)
   self.spawnedTrainsIDs.E = world.getProperty(storage.group .. "trainsidsE_file")
   self.spawnedTrainsIDs.W = world.getProperty(storage.group .. "trainsidsW_file")
@@ -119,36 +184,56 @@ function startTrains(_,_, group,ntrainE,ntrainW)
   self.vehicleFile = world.getProperty("stationController_vehicles_file")
   ----tprint(self.vehicleFile)
   ----tprint(self.vehicleFile[group].trainsEast)
+  
+  sb.logInfo("==============STARTING TRAINS FOR GROUP=" .. tostring(group) .. " ntrainE=" .. tostring(ntrainE) .. " ntrainW=" .. tostring(ntrainW))
+  
   storage.saveFile = world.getProperty("stationController_file")
-  local starttimesE = storage.saveFile.global[group].data.trainsEast.startTimes
-  local starttimesW = storage.saveFile.global[group].data.trainsWest.startTimes
-  local startStationE = storage.saveFile.global[group].data.trainsEast.startStations
-  local startStationW = storage.saveFile.global[group].data.trainsWest.startStations
-  local timesMerged = {}
+  
   storage.numberOfTrainsE = ntrainE
   storage.numberOfTrainsW = ntrainW
   
-  for i, v in ipairs(starttimesE) do
-    local vehicleItem = self.vehicleFile[group].trainsEast[i]
-    if vehicleItem then tprint(vehicleItem) end
-    table.insert(timesMerged, {train=i,direction="E",startTime=v,startStation=startStationE[i],vehicle=vehicleItem})
+  local starttimesE
+  local starttimesW
+  local startStationE
+  local startStationW
+  local timesMerged = {}
+  local timesraw={}
+  
+  if ntrainE > 0 then
+    starttimesE = storage.saveFile.global[group].data.trainsEast.startTimes
+    startStationE = storage.saveFile.global[group].data.trainsEast.startStations
+    for i, v in ipairs(starttimesE) do
+      local vehicleItem = self.vehicleFile[group].trainsEast[i]
+      --if vehicleItem then tprint(vehicleItem) end
+        table.insert(timesMerged, {train=i,direction="E",startTime=tonumber(v),startStation=startStationE[i],vehicle=vehicleItem})
+    end
   end
-  for i, v in ipairs(starttimesW) do
-    local vehicleItem = self.vehicleFile[group].trainsWest[i]
-    table.insert(timesMerged, {train=i,direction="W",startTime=v,startStation=startStationW[i],vehicle=vehicleItem})
+  
+  if ntrainW > 0 then
+    starttimesW = storage.saveFile.global[group].data.trainsWest.startTimes
+    startStationW = storage.saveFile.global[group].data.trainsWest.startStations
+    for i, v in ipairs(starttimesW) do
+      local vehicleItem = self.vehicleFile[group].trainsWest[i]
+      table.insert(timesMerged, {train=i,direction="W",startTime=tonumber(v),startStation=startStationW[i],vehicle=vehicleItem})
+    end
   end
+
   --sb.logInfo("============timesMerged===============================")
   --tprint(timesMerged)
   --sb.logInfo("============")
   
-  timesraw={}
   
-  for _, v in ipairs(starttimesE) do
-    table.insert(timesraw, v)
+  if ntrainE > 0 then
+    for _, v in ipairs(starttimesE) do
+      table.insert(timesraw, tonumber(v))
+    end
   end
-  for _, v in ipairs(starttimesW) do
-    table.insert(timesraw, v)
+  if ntrainW > 0 then
+    for _, v in ipairs(starttimesW) do
+      table.insert(timesraw, tonumber(v))
+    end
   end
+
   table.sort(timesraw)
   
   self.numberOfSpawnTimes = 0
@@ -183,6 +268,7 @@ function startTrains(_,_, group,ntrainE,ntrainW)
     self.numOfTrainsToSpawn = self.numOfTrainsToSpawn + 1
     
   end
+  
   
   --tprint(timetabletemp)
   
@@ -1152,7 +1238,7 @@ function update(dt)
      initNodePos()
      
      if storage.saveFile[storage.uuid].grouped then
-       initGroupNodePos()    
+       initGroupNodePos()
      end
      
      self.init = false
@@ -1178,6 +1264,39 @@ function update(dt)
    
    if self.spawningTrains then
      spawnTrains(self.spawnTrainInGroup)
+   end
+   
+   if self.spawningmorelinesfailed then
+     self.spawningmorelinesfailedTimer = world.time() - self.spawningmorelinesfailedTimerT0
+     if (self.spawningmorelinesfailedTimer >= 3) then
+       for key, value in pairs(self.spawningmorelinestable) do
+         local groupname = key
+         local idvalid = value.idvalid
+         if not idvalid then
+           local entityid = world.loadUniqueEntity(storage.saveFile.global[groupname].data.uuids[1])
+           self.spawningmorelinestable[groupname].id = entityid
+           if entityid then
+             if world.entityExists(entityid) then
+               self.spawningmorelinestable[groupname].idvalid = true
+             else
+               self.spawningmorelinestable[groupname].idvalid = false
+             end
+           else
+             self.spawningmorelinestable[groupname].idvalid = false
+           end
+         end
+       end
+       self.spawningmorelinesallready = true
+       self.spawningmorelinesfailed = false
+       for key, value in pairs(self.spawningmorelinestable) do
+         local groupname = key
+         local idvalid = value.idvalid
+         if not idvalid then
+           self.spawningmorelinesallready = false
+           self.spawningmorelinesfailed = true
+         end
+       end
+     end
    end
    
    if storage.trainsUninit and storage.numInGroup == 1 and storage.groupOperational then

@@ -18,7 +18,7 @@
 
   "placementRange" : 15,
   "placementBounds" : [-2.5, -0.25, 2.5, 0.75],
-  "placementPreviewImage" : "/items/active/unsorted/SubwayTrain.linked/cyanSubwayTramL1preview.png",
+  "placementPreviewImage" : "",
 
  "imgPath" : "/interface/linkedTrain/trainConfigurator/"
 

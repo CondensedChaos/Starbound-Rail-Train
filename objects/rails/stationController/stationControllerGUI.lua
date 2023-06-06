@@ -227,6 +227,41 @@ function update(dt)
     --account for left or right start facing direction
   end
   
+  if self.backupGUIopen then
+     overlayname = "loadbackupOverlay"
+     slotWidget = overlayname .. ".itemslot1"
+     local slottedItem = widget.itemSlotItem(slotWidget)
+     if slottedItem then
+	   local itemConfig = root.itemConfig(slottedItem)
+       local itemname = itemConfig.config.itemName
+       local planetcoords = itemConfig.parameters.planetcoords
+       
+       if (itemname == "trainfloppydisk1") then
+         if planetcoords == tostring(player.worldId()) then
+           widget.setVisible(overlayname .. ".ErrorLabel1", false)
+           widget.setVisible(overlayname .. ".ErrorLabel2", false)
+           self.correctBackupItem = true
+           widget.setVisible(overlayname .. ".importButton", true)
+         else
+           widget.setVisible(overlayname .. ".ErrorLabel1", false)
+           widget.setVisible(overlayname .. ".ErrorLabel2", true)
+           widget.setVisible(overlayname .. ".importButton", false)
+           self.correctBackupItem = false
+         end
+       else
+         widget.setVisible(overlayname .. ".ErrorLabel1", true)
+         widget.setVisible(overlayname .. ".ErrorLabel2", false)
+         widget.setVisible(overlayname .. ".importButton", false)
+         self.correctBackupItem = false
+       end
+     else
+       widget.setVisible(overlayname .. ".ErrorLabel1", false)
+       widget.setVisible(overlayname .. ".ErrorLabel2", false)
+       widget.setVisible(overlayname .. ".importButton", false)
+       self.correctBackupItem = false
+     end
+  end
+  
   if self.viewingAtrain then
     --self.editingTrain = {trainNum,direction}
     local overlayname 
@@ -353,14 +388,16 @@ function groupStationsButtonPressed(widgetName, widgetData)
     if self.saveFile.global[self.groupEditing].data.testRunCompleted == nil then
       self.saveFile.global[self.groupEditing].data.testRunCompleted = false
       world.setProperty("stationController_file",self.saveFile)
-    end  
-
+    end
+    
     if not self.saveFile.global[self.groupEditing].data.testRunCompleted then
       widget.setVisible("groupsOverlay.setTimetableButton", false)
       widget.setVisible("groupsOverlay.addStationToGroupButton", true)
-      widget.setVisible("groupsOverlay.removeStationfromGroupButton", true)
+      if self.saveFile.global[self.groupEditing].data.numOfStationsInGroup > 1 then
+        widget.setVisible("groupsOverlay.removeStationfromGroupButton", true)
+        widget.setVisible("groupsOverlay.reorderGroupStationsButton", true)
+      end
 	  widget.setVisible("groupsOverlay.renameGroupButton", true)
-      widget.setVisible("groupsOverlay.reorderGroupStationsButton", true)
       widget.setVisible("groupsOverlay.startTrainsButton", false)
       widget.setVisible("groupsOverlay.stopTrainsButton", false)
 	else
@@ -383,7 +420,7 @@ function groupStationsButtonPressed(widgetName, widgetData)
 	
 	widget.setVisible("groupsOverlay.membersInGroupLabel", true)
 	widget.setVisible("groupsOverlay.membersInGroupValue", true)
-	widget.setText("groupsOverlay.membersInGroupLabel", "Members of group " .. "^green;" .. groupName .. "^reset; (in order):")
+	widget.setText("groupsOverlay.membersInGroupLabel", "Members of line " .. "^green;" .. groupName .. "^reset; (in order):")
 	
 	widget.setVisible("groupsOverlay.circularCheckBox", true)
 	widget.setChecked("groupsOverlay.circularCheckBox", self.saveFile.global[self.groupEditing].data.circular)
@@ -453,12 +490,7 @@ function groupStationsButtonPressed(widgetName, widgetData)
 	end
 	
 	widget.setText("groupsOverlay.membersInGroupValue", "^green;" .. membersString.. "^reset;")
-	
-	if (self.saveFile.global.numOfGroups > 1) and  (not self.saveFile.global[self.groupEditing].data.testRunCompleted) then
-	  widget.setVisible("groupsOverlay.addToExistingGroupButton", true)
-	else
-	  widget.setVisible("groupsOverlay.addToExistingGroupButton", false)
-	end
+	widget.setVisible("groupsOverlay.addToExistingGroupButton", false)
     widget.setVisible("groupsOverlay.NoGroupLabel", false)
 	widget.setVisible("groupsOverlay.createGroupButton", false)
 	widget.setVisible("groupsOverlay.groupNameLabel", true)
@@ -473,9 +505,122 @@ function groupStationsButtonPressed(widgetName, widgetData)
   end
 end
 
+function getPlanetName()
+  local worldID = player.worldId()
+  sb.logInfo(tostring(worldID))
+  
+  --local currsys = celestial.currentSystem()
+  --tprint(currsys)
+  
+  local worldIDTable = {}
+  worldID:gsub(".",function(c) table.insert(worldIDTable,c) end)
+  --tprint(worldIDTable)
+  
+  local planetname
+  
+  if worldID:sub(1,14) == "CelestialWorld" then
+    sb.logInfo("Is a celestial world")
+    local stopindex
+    local stopindex2
+    local stopindex3
+    local stopindex4
+    
+    local coord1
+    local coord2
+    local coord3
+  
+    for i=16,#worldIDTable do
+      if worldIDTable[i] == ":" then
+        stopindex = i
+        sb.logInfo("stopindex " .. tostring(stopindex))
+        coord1 = tonumber(worldID:sub(16, stopindex-1))
+        break
+      end
+    end
+    for i=stopindex+1,#worldIDTable do
+      if worldIDTable[i] == ":" then
+        stopindex2 = i
+        sb.logInfo("stopindex " .. tostring(stopindex2))
+        coord2 = tonumber(worldID:sub(stopindex+1, stopindex2-1))
+        break
+      end
+    end
+    for i=stopindex2+1,#worldIDTable do
+      if worldIDTable[i] == ":" then
+        stopindex3 = i
+        sb.logInfo("stopindex " .. tostring(stopindex3))
+        coord3 = tonumber(worldID:sub(stopindex2+1, stopindex3-1))
+        break
+      end
+    end
+  
+    local planetcoords
+    local satellitecoords = 0
+    local nomoon = true
+  
+    for i=stopindex3+1,#worldIDTable do
+      if worldIDTable[i] == ":" then
+        stopindex4 = i
+        planetcoords = tonumber(worldID:sub(stopindex3+1,stopindex4-1))
+        satellitecoords = tonumber(worldID:sub(stopindex4+1,#worldIDTable))
+        nomoon = false
+        break
+      end
+    end
+    if nomoon then
+      planetcoords = tonumber(worldID:sub(stopindex3+1,#worldIDTable))
+    end
+  
+    local celestialCoord = {satellite=satellitecoords, planet=planetcoords, location ={coord1,coord2,coord3}}
+    sb.logInfo("rebuilt coords:")
+    tprint(celestialCoord)
+  
+    planetname = celestial.planetName(celestialCoord)
+  
+    --sb.logInfo(tostring(planetname))
+    --sb.logInfo(celestial.planetName({satellite=0,planet=0,location={710353902,-13389189,9662998}}))
+    --sb.logInfo(celestial.planetName({satellite=0,planet=11,location={710353902,-13389189,9662998}}))
+  elseif worldID:sub(1,13) == "InstanceWorld" then
+    local donttruncate = true
+    local stopindex
+    
+    for i=16,#worldIDTable do
+      if worldIDTable[i] == ":" then
+        stopindex = i
+        donttruncate = false
+        break
+      end
+    end
+    
+    if donttruncate then
+      planetname = worldID
+    else
+      planetname = worldID:sub(1,stopindex-1)
+    end
+  elseif worldID:sub(1,15) == "ClientShipWorld" then
+    planetname = worldID
+  else
+    planetname = worldID
+  end
+  
+  return planetname
+  
+end
+
 function debug1ButtonPressed()
   
+  local planetName = getPlanetName()
   
+  sb.logInfo(tostring(planetName))
+  
+  --local uuid = ""
+  --sb.logInfo("player UUID: " .. uuid)
+  
+  --local playerid = world.loadUniqueEntity(tostring(uuid))
+  --sb.logInfo("player entityID:" .. tostring(playerid))
+  --local playername = world.entityName(playerid)
+  --sb.logInfo("player name: " .. tostring(playername))
+ 
   ----self.saveFile.global[self.groupEditing].data.testRunsTimes = nil
   ----self.saveFile.global[self.groupEditing].data.testRunsTimesAVG = nil
   ----self.saveFile.global[self.groupEditing].data.testRunsTimesMIN = nil
@@ -517,18 +662,67 @@ function debug1ButtonPressed()
   
   --sb.logInfo("world time = " .. tostring(world.time()) .. " world.time() -3 =" .. tostring(world.time() - 3))
 
-  world.setProperty("stationController_file", self.saveFile)
-  world.sendEntityMessage(pane.sourceEntity(), "forceReloadData", true)
+  --world.setProperty("stationController_file", self.saveFile)
+  --world.sendEntityMessage(pane.sourceEntity(), "forceReloadData", true)
 end
 
-function loadBackupFileButtonPressed()
-  self.saveFile = world.getProperty("stationController_file_backup")
-  world.setProperty("stationController_file", self.saveFile)
-  world.sendEntityMessage(pane.sourceEntity(), "forceReloadData", true)
+function importButtonPressed(widgetName, widgetData)
+
+  local slot_widget = "loadbackupOverlay.itemslot1"
+  local slottedItem = widget.itemSlotItem(slot_widget)
+  
+  if slottedItem and self.correctBackupItem then
+    if slottedItem.count > 1 then
+      local count = slottedItem.count - 1
+      local superfluosItems = slottedItem
+      superfluosItems.count = count
+	  player.giveItem(superfluosItems)
+	  slottedItem.count = 1
+    end
+    local newsavefile = slottedItem.parameters.savefile
+    local newvehiclefile = slottedItem.parameters.vehiclesfile
+    sb.logInfo("===================================================================================")
+    tprint(newsavefile)
+    player.giveItem(slottedItem)
+    widget.setItemSlotItem(slot_widget, nil)
+    self.saveFile = deepcopy(newsavefile)
+    self.groupVehiclesFile = deepcopy(newvehiclefile)
+    world.setProperty("stationController_file", newsavefile)
+    world.setProperty("stationController_vehicles_file", newvehiclefile)
+    world.sendEntityMessage(pane.sourceEntity(), "forceReloadData", true)
+  end
+    
 end
-function saveBackupFileButtonPressed()
-  world.setProperty("stationController_file_backup", self.saveFile)
-  world.sendEntityMessage(pane.sourceEntity(), "forceReloadData", true)
+
+function loadBackupFileButtonPressed(widgetName, widgetData)
+  --self.saveFile = world.getProperty("stationController_file_backup")
+  --world.setProperty("stationController_file", self.saveFile)
+  --world.sendEntityMessage(pane.sourceEntity(), "forceReloadData", true)
+  
+  widget.setVisible("loadbackupOverlay",true)
+  widget.setVisible("mainOverlay",false)
+  
+  self.backupGUIopen = true
+  
+end
+function saveBackupFileButtonPressed(widgetName, widgetData)
+  --world.setProperty("stationController_file_backup", self.saveFile)
+  --world.sendEntityMessage(pane.sourceEntity(), "forceReloadData", true)
+  
+  self.saveFile = world.getProperty("stationController_file")
+  self.groupVehiclesFile = world.getProperty("stationController_vehicles_file")
+  
+  local itemDescriptor = {}
+  itemDescriptor.name = "trainfloppydisk1"
+  itemDescriptor.count = 1
+  itemDescriptor.parameters = {}
+  itemDescriptor.parameters.planetcoords = tostring(player.worldId())
+  itemDescriptor.parameters.planetname = tostring(getPlanetName())
+  itemDescriptor.parameters.savefile = self.saveFile
+  itemDescriptor.parameters.vehiclesfile = self.groupVehiclesFile
+  itemDescriptor.parameters.description = "Contains trains systems data of Planet " .. itemDescriptor.parameters.planetname
+  tprint(itemDescriptor)
+  player.giveItem(itemDescriptor)
 end
 
 function addTrainButtonPressed(widgetName, widgetData)
@@ -1734,14 +1928,104 @@ function discardtartingParamsButtonPressed(widgetName, widgetData)
 end
 
 function startTrainsButtonPressed(widgetName, widgetData)
+  
+  --self.saveFile.global[groupName].data.readyToStart
+  
   self.saveFile = world.getProperty("stationController_file")
-  local numberOfTrainsE = self.saveFile.global[self.groupEditing].data.numberOfTrainsE
-  local numberOfTrainsW = self.saveFile.global[self.groupEditing].data.numberOfTrainsW
-  world.sendEntityMessage(pane.sourceEntity(), "startTrains", self.groupEditing, numberOfTrainsE, numberOfTrainsW)
+  
+  if self.saveFile.global.numOfGroups > 1 then    
+    self.groupsreadydata = {}
+    self.numGroupsReady = 0
+        
+    for g=1,self.saveFile.global.numOfGroups do
+      self.groupsreadydata[g] = {self.saveFile.global.groups[g], self.saveFile.global[self.saveFile.global.groups[g]].data.readyToStart}
+      if self.groupsreadydata[g][2] == true then
+        self.numGroupsReady = self.numGroupsReady + 1
+      end
+    end
+    
+    if self.numGroupsReady > 1 then
+      widget.setVisible("groupsOverlay", false)
+      widget.setVisible("startMoreGroupsOverlay", true)
+    
+      local lineslistname = "startMoreGroupsOverlay.LinesScrollArea.linesList"
+      widget.clearListItems(lineslistname)
+      
+      self.groupstostart = {}
+      
+      
+      for g=1,self.saveFile.global.numOfGroups do
+        local groupname = self.groupsreadydata[g][1]
+        local groupready = self.groupsreadydata[g][2]
+        
+        
+        if groupready then
+          local listItem = string.format("%s.%s",lineslistname, widget.addListItem(lineslistname))
+          widget.setText(listItem .. ".linename", groupname)
+          widget.setData(listItem, groupname)
+          if groupname == self.groupEditing then
+            self.groupstostart[groupname] = true
+            widget.setImage(listItem .. ".lineCheckBox", "/interface/title/checkboxcheck.png")
+          else
+            self.groupstostart[groupname] = false
+            widget.setImage(listItem .. ".lineCheckBox", "/interface/title/checkboxnocheck.png")
+          end
+        end
+      end
+      tprint(self.groupstostart)
+    else
+      local numberOfTrainsE = self.saveFile.global[self.groupEditing].data.numberOfTrainsE
+      local numberOfTrainsW = self.saveFile.global[self.groupEditing].data.numberOfTrainsW
+      world.sendEntityMessage(pane.sourceEntity(), "startTrains", self.groupEditing, numberOfTrainsE, numberOfTrainsW)
+    end
+  else
+    local numberOfTrainsE = self.saveFile.global[self.groupEditing].data.numberOfTrainsE
+    local numberOfTrainsW = self.saveFile.global[self.groupEditing].data.numberOfTrainsW
+    world.sendEntityMessage(pane.sourceEntity(), "startTrains", self.groupEditing, numberOfTrainsE, numberOfTrainsW)
+  end
+  
 end
 
-function stopTrainsButtonPressed(widgetName, widgetData)
-  world.sendEntityMessage(pane.sourceEntity(), "stopTrains")
+function startMoreLinesSelected(widgetName, widgetData)
+  local listName = "startMoreGroupsOverlay.LinesScrollArea.linesList"
+  local listItem = widget.getListSelected(listName)
+  if listItem then
+    local listitemname = string.format("%s.%s", listName, listItem)
+    local groupname = widget.getData(listitemname)
+    sb.logInfo("groupname =" .. groupname)
+    
+    if self.groupstostart[groupname] == true then
+      widget.setImage(listitemname .. ".lineCheckBox", "/interface/title/checkboxnocheck.png")
+      self.groupstostart[groupname] = false
+    elseif self.groupstostart[groupname] == false then
+       widget.setImage(listitemname .. ".lineCheckBox", "/interface/title/checkboxcheck.png")
+       self.groupstostart[groupname] = true
+    end
+    
+    widget.clearListItems(listName)
+    
+    for key, value in pairs(self.groupstostart) do
+      local groupname = key
+      local ready = value
+      local listItem = string.format("%s.%s",listName, widget.addListItem(listName))
+      widget.setText(listItem .. ".linename", groupname)
+      widget.setData(listItem, groupname)
+      if value == true then
+        self.groupstostart[groupname] = true
+        widget.setImage(listItem .. ".lineCheckBox", "/interface/title/checkboxcheck.png")
+      else
+        self.groupstostart[groupname] = false
+        widget.setImage(listItem .. ".lineCheckBox", "/interface/title/checkboxnocheck.png")
+      end
+    end
+    
+    tprint(self.groupstostart)
+    
+  end
+end
+
+function startSelectedTrainsButton(widgetName, widgetData)
+  world.sendEntityMessage(pane.sourceEntity(), "startMoreLines", self.groupstostart)
 end
 
 function removeSpawnerItemButtonPressed(widgetName, widgetData)
@@ -1901,6 +2185,7 @@ function addStationToGroupButtonPressed(widgetName, widgetData)
   self.saveFile = world.getProperty("stationController_file")
   widget.setVisible("groupsOverlay", false)
   widget.setVisible("addStationOverlay", true)
+  widget.setText("addStationOverlay.title", "Add stations to ^green;" .. self.groupEditing .. "^reset;")
   --from /interface/scripted/vehiclerepair/vehiclerepairgui.lua for reference
   --for i,item in pairs(self.vehicleItems) do
     --local listItem = string.format("%s.%s", "widgetname", widget.addListItem("widgetname"))
@@ -1993,17 +2278,6 @@ function stationsListSelected(widgetName, widgetData)
   
 end
 
-function backToMainFromGroupsButtonPressed(widgetName, widgetData)
-  widget.setVisible("groupsOverlay", false)
-  widget.setVisible("mainOverlay", true)
-end
-
-function backToMainFromAddStationButtonPressed(widgetName, widgetData)
-  widget.setVisible("addStationOverlay", false)
-  widget.setVisible("groupsOverlay", true)
-  widget.clearListItems(self.widgetListName)
-end
-
 function circularCheckBox(widgetName, widgetData)
   self.saveFile = world.getProperty("stationController_file")
   
@@ -2023,6 +2297,10 @@ function circularCheckBox(widgetName, widgetData)
 end
 
 function distanceMathMagick(x1, x2, y1, y2, planetsize)
+  
+  if (x1 == x2) and (y1 == y2) then
+    return 0
+  end
   
   local distance
   if y1==y2 then
@@ -2100,21 +2378,34 @@ function additionalDistancesButtonPressed(widgetName, widgetData)
   local groupname
   tprint(self.saveFile.global.groups)
   
+  self.additionalDistancesLine1ListItems = {}
+  
   for g=1,self.saveFile.global.numOfGroups do
     groupname = self.saveFile.global.groups[g]
     local listItem = string.format("%s.%s",line1listname, widget.addListItem(line1listname))
     widget.setText(listItem .. ".linename", groupname)
     widget.setData(listItem, groupname)
+    self.additionalDistancesLine1ListItems[g] = {}
+    self.additionalDistancesLine1ListItems[g][1] = listItem
+    self.additionalDistancesLine1ListItems[g][2] = groupname
   end
   
   local groupname
+  
+  self.additionalDistancesLine2ListItems = {}
   
   for g=1,self.saveFile.global.numOfGroups do
     groupname = self.saveFile.global.groups[g]
     local listItem = string.format("%s.%s",line2listname, widget.addListItem(line2listname))
     widget.setText(listItem .. ".linename", groupname)
     widget.setData(listItem, groupname)
+    self.additionalDistancesLine2ListItems[g] = {}
+    self.additionalDistancesLine2ListItems[g][1] = listItem
+    self.additionalDistancesLine2ListItems[g][2] = groupname
   end
+  
+  --tprint(self.additionalDistancesLine1ListItems)
+  --tprint(self.additionalDistancesLine2ListItems)
   
 end
 
@@ -2132,8 +2423,24 @@ function additionalDistancesLineSelected(numlist)
   local listName = "additionalDistancesOverlay.Lines" .. tostring(numlist) .. "ScrollArea.linesList"
   local listItem = widget.getListSelected(listName)
   if listItem then
-    --sb.logInfo("-----------------" .. listItem .. "-------------------")
+  
+    if numlist == 1 then
+      for l=1,#self.additionalDistancesLine1ListItems do
+        widget.setText(self.additionalDistancesLine1ListItems[l][1] .. ".linename", self.additionalDistancesLine1ListItems[l][2])
+        self.additionalDistancesStation1ListItems = {}
+      end
+    elseif numlist == 2 then
+      for l=1,#self.additionalDistancesLine2ListItems do
+        widget.setText(self.additionalDistancesLine2ListItems[l][1] .. ".linename", self.additionalDistancesLine2ListItems[l][2])
+        self.additionalDistancesStation2ListItems = {}
+      end
+    end
+    
     local groupname = widget.getData(string.format("%s.%s", listName, listItem))
+    --sb.logInfo("-----------------" .. listItem .. "-------------------" .. string.format("%s.%s", listName, listItem)) 
+    local txtwidget = string.format("%s.%s", listName, listItem) .. ".linename"
+    widget.setText(txtwidget, "^green;" .. groupname .. "^reset;")
+    
     if self.additionalDistanceData == nil then
       self.additionalDistanceData = {}
       self.additionalDistanceData[1] = {}
@@ -2151,6 +2458,15 @@ function additionalDistancesLineSelected(numlist)
       local listItem = string.format("%s.%s",stationslistname, widget.addListItem(stationslistname))
       widget.setText(listItem .. ".stationName", "Station " .. tostring(s))
       widget.setData(listItem, s)
+      if numlist == 1 then
+        self.additionalDistancesStation1ListItems[s] = {}
+        self.additionalDistancesStation1ListItems[s][1] = listItem
+        self.additionalDistancesStation1ListItems[s][2] = "Station " .. tostring(s)
+      elseif numlist == 2 then
+        self.additionalDistancesStation2ListItems[s] = {}
+        self.additionalDistancesStation2ListItems[s][1] = listItem
+        self.additionalDistancesStation2ListItems[s][2] = "Station " .. tostring(s)
+      end
     end
     
   end
@@ -2169,10 +2485,24 @@ function additionalDistancesStationSelected(numlist)
   local listName = "additionalDistancesOverlay.stations" .. tostring(numlist) .. "ScrollArea.stationsList"
   local listItem = widget.getListSelected(listName)
   if listItem then
+  
+    if numlist == 1 then
+      for l=1,#self.additionalDistancesStation1ListItems do
+        widget.setText(self.additionalDistancesStation1ListItems[l][1] .. ".stationName", self.additionalDistancesStation1ListItems[l][2])
+      end
+    elseif numlist == 2 then
+      for l=1,#self.additionalDistancesStation2ListItems do
+        widget.setText(self.additionalDistancesStation2ListItems[l][1] .. ".stationName", self.additionalDistancesStation2ListItems[l][2])
+      end
+    end
+    
     local numstation = widget.getData(string.format("%s.%s", listName, listItem))
     self.additionalDistanceData[2][numlist] = numstation
     sb.logInfo(" SELECTED:")
     tprint(self.additionalDistanceData)
+    
+    local txtwidget = string.format("%s.%s", listName, listItem) .. ".stationName"
+    widget.setText(txtwidget, "^green;" .. "Station " .. tostring(numstation) .. "^reset;")
     
     if self.additionalDistanceData[1][1] and self.additionalDistanceData[1][2] and self.additionalDistanceData[2][1] and self.additionalDistanceData[2][2] then
       sb.logInfo("show distance")
@@ -2467,6 +2797,7 @@ function reorderstationaddButtonPressed(widgetName, widgetData)
   
   for s=1,#uuids do
     self.saveFile[uuids[s]].numInGroup = s
+    self.saveFile[self.groupEditing][uuids[s]].number = s
   end
   
   world.setProperty("stationController_file", self.saveFile)
@@ -2594,35 +2925,66 @@ function testRunDataListSelected(widgetName, widgetData)
   
 end
 
-function backToMainFromStatisticsButtonPressed(widgetName, widgetData)
-  widget.setVisible("testRunOverlay", true)
-  widget.setVisible("statisticsOverlay", false)
-end
-
-function backToMainFromReorderStationButtonPressed(widgetName, widgetData)
-  widget.setVisible("reorderGroupStationsOverlay", false)
-  widget.setVisible("reorderGroupStationsOverlay.reorderStationname", false)
-  widget.setVisible("reorderGroupStationsOverlay.reorderstationsubstract", false)
-  widget.setVisible("reorderGroupStationsOverlay.stationNumvalue", false)
-  widget.setVisible("reorderGroupStationsOverlay.reorderstationadd", false)
-  widget.setVisible("groupsOverlay", true)
+function backbutton(widgetName, widgetData)
+  sb.logInfo("widgetName=" .. tostring(widgetName))
+  if widgetName == "backToMainFromStatisticsButton" then
+    widget.setVisible("testRunOverlay", true)
+    widget.setVisible("statisticsOverlay", false)
+  elseif widgetName == "backToMainFromReorderStationButton" then
+    widget.setVisible("reorderGroupStationsOverlay", false)
+    widget.setVisible("reorderGroupStationsOverlay.reorderStationname", false)
+    widget.setVisible("reorderGroupStationsOverlay.reorderstationsubstract", false)
+    widget.setVisible("reorderGroupStationsOverlay.stationNumvalue", false)
+    widget.setVisible("reorderGroupStationsOverlay.reorderstationadd", false)
+    widget.setVisible("groupsOverlay", true)
+  elseif widgetName == "backToMainFromTestRunButton" then
+    widget.setVisible("testRunOverlay", false)
+    widget.setVisible("groupsOverlay", true)
+  elseif widgetName == "backToMainFromTimeTableButton" then
+    widget.setVisible("timetableOverlay", false)
+    widget.setVisible("groupsOverlay", true)
+  elseif widgetName == "backToMainFromGroupsButton" then
+    widget.setVisible("groupsOverlay", false)
+    widget.setVisible("mainOverlay", true)
+  elseif widgetName == "backToMainFromAddStationButton" then
+    widget.setVisible("addStationOverlay", false)
+    widget.setVisible("groupsOverlay", true)
+    widget.clearListItems(self.widgetListName)
+  elseif widgetName == "backToTestrunFromAdditionalOverlayButton" then
+    widget.setVisible("testRunOverlay", true)
+    widget.setVisible("additionalDistancesOverlay", false)
+  elseif widgetName == "backToGroupsFromRemoveStationButton" then
+    widget.setVisible("groupsOverlay", true)
+    widget.setVisible("removeAstationFromGroupOverlay", false)
+  end
 end
 
 function clearTestRunDataButtonPressed(widgetName, widgetData)
-  
+  widget.setVisible("testRunOverlay", false)
+  widget.setVisible("cleartestRunDataOverlay", true)
+  widget.setText("cleartestRunDataOverlay.groupname", "^green;" .. self.groupEditing .."^reset;")
+end
+
+function yesdeletetestrundataButtonPressed(widgetName, widgetData)
   self.saveFile.global[self.groupEditing].data.testRunsTimes = nil
   self.saveFile.global[self.groupEditing].data.testRunsTimesAVG = nil
   self.saveFile.global[self.groupEditing].data.testRunsTimesMIN = nil
   self.saveFile.global[self.groupEditing].data.testRunsTimesMAX = nil
   self.saveFile.global[self.groupEditing].data.testRunsTimesMAXWest = nil
-  
-  --self.saveFile.global[self.groupEditing].data.uuids = nil
-  --self.saveFile.global[self.groupEditing].data.nodesPos = nil
   self.saveFile.global[self.groupEditing].data.testRunCompleted = false
   self.saveFile.global[self.groupEditing].data.toBeInit = nil
   world.setProperty("stationController_file", self.saveFile)
   
   world.sendEntityMessage(pane.sourceEntity(), "forceReloadData", true)
+  
+  testRunButtonPressed()
+  widget.setVisible("testRunOverlay", true)
+  widget.setVisible("cleartestRunDataOverlay", false)
+end
+
+function nodeletetestrundataButtonPressed(widgetName, widgetData)
+  widget.setVisible("testRunOverlay", true)
+  widget.setVisible("cleartestRunDataOverlay", false)
 end
 
 function seeStatisticsButtonPressed(widgetName, widgetData)
@@ -2669,7 +3031,6 @@ function seeStatisticsButtonPressed(widgetName, widgetData)
     widget.setText(avglistItem .. ".timeLabel", tostring(avgArray[i]) .. " s")
     widget.setText(maxlistItem .. ".timeLabel", tostring(maxArray[i]) .. " s")
   end
-  
 end
 
 function buildStatistics(number)
@@ -2706,17 +3067,6 @@ function stationNameError(kind)
   
 end
 
-function backToMainFromTestRunButtonPressed(widgetName, widgetData)
-  widget.setVisible("testRunOverlay", false)
-  widget.setVisible("groupsOverlay", true)
-end
-
-function backToMainFromTimeTableButtonPressed(widgetName, widgetData)
-  widget.setVisible("timetableOverlay", false)
-  widget.setVisible("groupsOverlay", true)
-end
-
-
 function groupNameEntered(widgetName, widgetData)
   
 end
@@ -2730,11 +3080,96 @@ function addToExistingGroupButtonPressed(widgetName, widgetData)
 end
 
 function removeStationFromGroupButtonPressed(widgetName, widgetData)
+  widget.setVisible("groupsOverlay", false)
+  widget.setVisible("removeAstationFromGroupOverlay", true)
+  
+  widget.setText("removeAstationFromGroupOverlay.title", "^red;Remove^reset; a station for ^green;" .. self.groupEditing .. "^reset;")
+  
+  local groupMembers = {}
+  local groupMembers = deepcopy(self.saveFile.global[self.groupEditing].data.uuids)
+  local stationsList = {}
+  
+  local circular = self.saveFile.global[self.groupEditing].data.circular
+  
+  if circular then
+    local arraylen = #groupMembers
+    groupMembers[arraylen] = nil
+  end
+  
+  local listName = "removeAstationFromGroupOverlay.stationsScrollArea.stationsList"
+  widget.clearListItems(listName)
+  
+  for s=1,#groupMembers do
+    stationsList[s] = {}
+    stationsList[s].number = s
+    stationsList[s].uuid = groupMembers[s]
+    stationsList[s].name = self.saveFile[stationsList[s].uuid].name    
+    local listItem = string.format("%s.%s",listName, widget.addListItem(listName))
+    widget.setText(listItem .. ".member", stationsList[s].name)
+	widget.setData(listItem, stationsList[s])
+  end
   
 end
 
+function removestationListSelected(widgetName, widgetData)
+  local listName = "removeAstationFromGroupOverlay.stationsScrollArea.stationsList"
+  local listItem = widget.getListSelected(listName)
+  if listItem then
+    local itemData = widget.getData(string.format("%s.%s", listName, listItem))
+    widget.setVisible("removeAstationFromGroupOverlay.removeStationname", true)
+    widget.setVisible("removeAstationFromGroupOverlay.removeStationYes", true)
+    widget.setVisible("removeAstationFromGroupOverlay.removeStationNo", true)
+    widget.setText("removeAstationFromGroupOverlay.removeStationname", "Remove ^red;" .. itemData.name .. "^reset;?")
+
+    local numStations = self.saveFile.global[self.groupEditing].data.numOfStationsInGroup
+    local circular = self.saveFile.global[self.groupEditing].data.circular
+
+    if itemData.number == 1 then
+      
+    elseif itemData.number == numStations then
+      
+    else
+      
+    end
+    self.removeStationData = itemData
+  end
+end
+
+function removeStationYesButtonPressed(widgetName, widgetData)
+  local number = tonumber(self.removeStationData.number)
+  local uuid = self.removeStationData.uuid
+  table.remove(self.saveFile.global[self.groupEditing].data.uuids, number)
+  table.remove(self.saveFile.global[self.groupEditing].data.nodesPos, number)
+  self.saveFile.global[self.groupEditing].data.numOfStationsInGroup = self.saveFile.global[self.groupEditing].data.numOfStationsInGroup - 1
+  self.saveFile[self.groupEditing][uuid] = nil
+  self.saveFile[uuid].grouped = false
+  self.saveFile[uuid].group = nil
+  self.saveFile[uuid].numInGroup = nil
+  
+  local uuids = deepcopy(self.saveFile.global[self.groupEditing].data.uuids)
+  if number < self.saveFile.global[self.groupEditing].data.numOfStationsInGroup then
+    for s=number,self.saveFile.global[self.groupEditing].data.numOfStationsInGroup do
+      self.saveFile[uuids[s]].numInGroup = self.saveFile[uuids[s]].numInGroup - 1
+      self.saveFile[self.groupEditing][uuids[s]].number = self.saveFile[self.groupEditing][uuids[s]].number - 1
+    end
+  end
+  
+  world.setProperty("stationController_file", self.saveFile)
+  world.sendEntityMessage(pane.sourceEntity(), "forceReloadData", true)
+  --widget.setVisible("groupsOverlay", true)
+  groupStationsButtonPressed()
+  widget.setVisible("removeAstationFromGroupOverlay", false)
+end
+
+function removeStationNoButtonPressed(widgetName, widgetData)
+  widget.setListSelected("removeAstationFromGroupOverlay.stationsScrollArea.stationsList", nil)
+  widget.setVisible("removeAstationFromGroupOverlay.reorderStationname", false)
+  widget.setVisible("removeAstationFromGroupOverlay.removeStationYes", false)
+  widget.setVisible("removeAstationFromGroupOverlay.removeStationNo", false)
+end
+
 function renameGroupButtonPressed(widgetName, widgetData)
-    
+  table.remove(tt,2)
 end
 
 function renameStationButtonPressed(widgetName, widgetData)
@@ -2805,7 +3240,7 @@ end
 function slotleftclick(slot_widget)
     
 	if slot_widget == "itemslot1" then
-      slot_widget = "groupsOverlay" .. "." .. slot_widget
+      slot_widget = "loadbackupOverlay" .. "." .. slot_widget
 	elseif slot_widget == "itemslot2" then
 	  slot_widget = "timetableOverlay.trainSettingsEastOverlay" .. "." .. slot_widget
 	elseif slot_widget == "itemslot3" then
@@ -2905,7 +3340,15 @@ end
 --https://community.playstarbound.com/threads/how-to-stack-items-in-an-itemslot.156207/
 function slotrightclick(slot_widget)
 
-    slot_widget = "groupsOverlay" .. "." .. slot_widget
+    if slot_widget == "itemslot1" then
+      slot_widget = "loadbackupOverlay" .. "." .. slot_widget
+	elseif slot_widget == "itemslot2" then
+	  slot_widget = "timetableOverlay.trainSettingsEastOverlay" .. "." .. slot_widget
+	elseif slot_widget == "itemslot3" then
+	  slot_widget = "timetableOverlay.trainSettingsWestOverlay" .. "." .. slot_widget
+    end
+	
+	sb.logInfo("slot_widget " .. tostring(slot_widget))
   
     --Get (a copy of) the item descriptor the player was holding
     local heldItem = player.swapSlotItem()

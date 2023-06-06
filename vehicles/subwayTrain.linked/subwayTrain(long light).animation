@@ -38,36 +38,12 @@
         }
       },
       
-      "headlight" : {
+      "headlights" : {
         "default" : "off",
         "states" : {
-          "off" : {"frames" : 1},
+          "off" : {},
 
-          "on" : {"frames" : 1}
-        }
-      },
-      "reverseheadlight" : {
-        "default" : "off",
-        "states" : {
-          "off" : {"frames" : 1},
-
-          "on" : {"frames" : 1}
-        }
-      },
-      "taillight" : {
-        "default" : "off",
-        "states" : {
-          "off" : {"frames" : 1},
-
-          "on" : {"frames" : 1}
-        }
-      },
-      "reversetaillight" : {
-        "default" : "off",
-        "states" : {
-          "off" : {"frames" : 1},
-
-          "on" : {"frames" : 1}
+          "on" : {}
         }
       }
       
@@ -512,101 +488,28 @@
         }
       },
       
-      "headlight" : {
+      "lights" : {
         "properties" : {
           "centered" : true,
-          "offset" : [5.125, 2.5],
-          "zLevel" : 12,
+          "zLevel" : 2,
+          "fullbright" : true,
           "rotationGroup" : "cockpit",
           "transformationGroups" : ["flip", "rotation"]
         },
 
         "partStates" : {
-          "headlight" : {
-            "on" : {
-              "properties" : {
-                "image" : "headlight.png:on",
-                "fullbright" : true
-              }
-            },
-			"off" : {
-              "properties" : {
-                "image" : "headlight.png:off",
-                "fullbright" : false
-              }
-            }
-          }
-        }
-      },
-      "reverseheadlight" : {
-        "properties" : {
-          "centered" : true,
-          "offset" : [-5.125, 2.5],
-          "zLevel" : 12,
-          "rotationGroup" : "cockpit",
-          "transformationGroups" : ["flip", "rotation"]
-        },
 
-        "partStates" : {
-          "reverseheadlight" : {
-            "on" : {
-              "properties" : {
-                "image" : "reverseheadlight.png:on",
-                "fullbright" : true
-              }
-            },
-			"off" : {
-              "properties" : {
-                "image" : "reverseheadlight.png:off",
-                "fullbright" : false
-              }
-            }
-          }
-        }
-      },
-      "taillight" : {
-        "properties" : {
-          "centered" : true,
-          "offset" : [-5.125, 1.625],
-          "zLevel" : -2,
-		  "rotationGroup" : "cockpit",
-		  "transformationGroups" : ["rotation"]
-        },
+          "headlights" : {
 
-        "partStates" : {
-          "taillight" : {
-            "on" : {
+            "off" : {
               "properties" : {
-                "image" : "taillight.png:on"
               }
             },
-			"off" : {
-              "properties" : {
-                "image" : "taillight.png:off"
-              }
-            }
-          }
-        }
-      },
-      "reversetaillight" : {
-        "properties" : {
-          "centered" : true,
-          "offset" : [5.125, 1.625],
-          "zLevel" : -2,
-		  "rotationGroup" : "cockpit",
-		  "transformationGroups" : ["rotation"]
-        },
 
-        "partStates" : {
-          "reversetaillight" : {
             "on" : {
               "properties" : {
-                "image" : "taillight.png:on"
-              }
-            },
-			"off" : {
-              "properties" : {
-                "image" : "taillight.png:off"
+                "image" : "headlightsOn.png:headlights",
+                "offset" : [0, 0]
               }
             }
           }
@@ -645,8 +548,7 @@
       "active" : false,
       "rotationGroup" : "cockpit",
       "transformationGroups" : ["flip", "rotation"],
-      //"position" : [4.9375, 2.5], //X position is vehicle boundary from the center -0.1875 (1.5 pixels)
-      "position" : [4.75, 2.5],
+      "position" : [4.9375, 2.5], //X position is vehicle boundary from the center -0.1875 (1.5 pixels)
       "color" : [250, 250, 200],
       //"flickerPeriod" : 5, //The base time required for flickering to go through an entire cycle. 
       //"flickerPeriodVariance " : 0.5 //The amount by which the flicker period can deviate from the base value in either direction. 
@@ -661,8 +563,7 @@
       "active" : false,
       "rotationGroup" : "cockpit",
       "transformationGroups" : ["flip", "rotation"],
-      //"position" : [-4.9375, 2.5], //X position is vehicle boundary from the center -0.1875 (1.5 pixels)
-      "position" : [-4.75, 2.5],
+      "position" : [-4.9375, 2.5], //X position is vehicle boundary from the center -0.1875 (1.5 pixels)
       "color" : [250, 250, 200],
       //"flickerPeriod" : 5, //The base time required for flickering to go through an entire cycle. 
       //"flickerPeriodVariance " : 0.5 // 	The amount by which the flicker period can deviate from the base value in either direction. 
@@ -673,43 +574,11 @@
       "pointAngle" : 180,
       "pointBeam" : 3 //Aperture of the light beam. The bigger the number, the narrower beam is. 
     },
-    "taillight" : {
-      "active" : false,
-      "rotationGroup" : "cockpit",
-      "transformationGroups" : ["rotation"],
-      "position" : [-5.125, 1.625], //X position is vehicle boundary from the center -0.1875 (1.5 pixels)
-      "color" : [220, 0, 0],
-      //"flickerPeriod" : 5, //The base time required for flickering to go through an entire cycle. 
-      //"flickerPeriodVariance " : 0.5 //The amount by which the flicker period can deviate from the base value in either direction. 
-      //"flickerMinIntensity" : 0.4, //Minimum flicker intensity 
-      //"flickerMaxIntensity" : 0.6, //Maximum flicker intensity 
-      //"flickerIntensityVariance" : 0.0, //flickerIntensityVariance 
-      "pointLight" : true,
-      "pointAngle" :  180,
-      "beamAmbience" : 0.3,
-      "pointBeam" : 0.6
-    },
-    "reversetaillight" : {
-      "active" : false,
-      "rotationGroup" : "cockpit",
-      "transformationGroups" : ["rotation"],
-      "position" : [5.125, 1.625], //X position is vehicle boundary from the center -0.1875 (1.5 pixels)
-      "color" : [220, 0, 0],
-      //"flickerPeriod" : 5, //The base time required for flickering to go through an entire cycle. 
-      //"flickerPeriodVariance " : 0.5 //The amount by which the flicker period can deviate from the base value in either direction. 
-      //"flickerMinIntensity" : 0.4, //Minimum flicker intensity 
-      //"flickerMaxIntensity" : 0.6, //Maximum flicker intensity 
-      //"flickerIntensityVariance" : 0.0, //flickerIntensityVariance 
-      "pointLight" : true,
-      "pointAngle" :  0,
-      "beamAmbience" : 0.3,
-      "pointBeam" : 0.6
-    },
-    "cockpitlightCenterLeft" : {
+    "cockpitlight" : {
       "active" : true,
       "rotationGroup" : "cockpit",
       "transformationGroups" : ["flip", "rotation"],
-      "position" : [-1, 6],
+      "position" : [0, 5.5],
       "color" : [150, 150, 100],
       "pointLight" : true,
       "flickerPeriod" : 0.075, //The base time required for flickering to go through an entire cycle. 
@@ -719,55 +588,7 @@
       "flickerIntensityVariance" : 0.025,
       "pointAngle" : 270,
       "beamAmbience" : 0,
-      "pointBeam" : 2.5
-    },
-    "cockpitlightCenterRight" : {
-      "active" : true,
-      "rotationGroup" : "cockpit",
-      "transformationGroups" : ["flip", "rotation"],
-      "position" : [1, 6],
-      "color" : [150, 150, 100],
-      "pointLight" : true,
-      "flickerPeriod" : 0.075, //The base time required for flickering to go through an entire cycle. 
-      "flickerPeriodVariance" : 0.05, //The amount by which the flicker period can deviate from the base value in either direction. 
-      "flickerMinIntensity" : 0.95, //Minimum flicker intensity 
-      "flickerMaxIntensity" : 0.975, //Maximum flicker intensity 
-      "flickerIntensityVariance" : 0.025,
-      "pointAngle" : 270,
-      "beamAmbience" : 0,
-      "pointBeam" : 2.5
-    },
-    "cockpitlightLeft" : {
-      "active" : true,
-      "rotationGroup" : "cockpit",
-      "transformationGroups" : ["flip", "rotation"],
-      "position" : [-3.25, 6],
-      "color" : [150, 150, 100],
-      "pointLight" : true,
-      "flickerPeriod" : 0.075, //The base time required for flickering to go through an entire cycle. 
-      "flickerPeriodVariance" : 0.05, //The amount by which the flicker period can deviate from the base value in either direction. 
-      "flickerMinIntensity" : 0.95, //Minimum flicker intensity 
-      "flickerMaxIntensity" : 0.975, //Maximum flicker intensity 
-      "flickerIntensityVariance" : 0.025,
-      "pointAngle" : 270,
-      "beamAmbience" : 0,
-      "pointBeam" : 2.5
-    },
-    "cockpitlightRight" : {
-      "active" : true,
-      "rotationGroup" : "cockpit",
-      "transformationGroups" : ["flip", "rotation"],
-      "position" : [3.25, 6],
-      "color" : [150, 150, 100],
-      "pointLight" : true,
-      "flickerPeriod" : 0.075, //The base time required for flickering to go through an entire cycle. 
-      "flickerPeriodVariance" : 0.05, //The amount by which the flicker period can deviate from the base value in either direction. 
-      "flickerMinIntensity" : 0.95, //Minimum flicker intensity 
-      "flickerMaxIntensity" : 0.975, //Maximum flicker intensity 
-      "flickerIntensityVariance" : 0.025,
-      "pointAngle" : 270,
-      "beamAmbience" : 0,
-      "pointBeam" : 2.5
+      "pointBeam" : 0.4
     }
   },
   

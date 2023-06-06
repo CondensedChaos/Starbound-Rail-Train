@@ -24,6 +24,8 @@ function init()
   self.sfxRampUpTimer = 0.1
   
   self.defaultStopLenght = 6
+  
+  self.approachingBumperSpeedLimit = 20
 
   self.listOfCars = root.assetJson("/objects/crafting/trainConfigurator/listOfCars.json")
   self.railTypes = root.assetJson("/rails.config")
@@ -229,6 +231,65 @@ function init()
 	animator.setAnimationState("pantograph", "hidden")
   end
   
+  if storage.firstCar then
+    if self.railRider.facing > 0 then
+      animator.setLightActive("headlightBeam", true)
+      animator.setLightActive("reverseheadlightBeam", false)
+      animator.setLightActive("taillight", false)
+      animator.setLightActive("reversetaillight", false)
+      animator.setAnimationState("taillight", "off")
+      animator.setAnimationState("reversetaillight", "off")
+      animator.setAnimationState("headlight", "on")
+      animator.setAnimationState("reverseheadlight", "off")
+    else
+      animator.setLightActive("headlightBeam", false)
+      animator.setLightActive("reverseheadlightBeam", true)
+      animator.setLightActive("taillight", false)
+      animator.setLightActive("reversetaillight", false)
+      animator.setAnimationState("taillight", "off")
+      animator.setAnimationState("reversetaillight", "off")
+      animator.setAnimationState("headlight", "off")
+      animator.setAnimationState("reverseheadlight", "on")
+    end
+  elseif storage.lastCar then
+    if self.railRider.facing > 0 then
+      animator.setLightActive("headlightBeam", false)
+      animator.setLightActive("reverseheadlightBeam", false)
+      animator.setLightActive("taillight", true)
+      animator.setLightActive("reversetaillight", false)
+      animator.setAnimationState("taillight", "on")
+      animator.setAnimationState("reversetaillight", "off")
+      animator.setAnimationState("headlight", "off")
+      animator.setAnimationState("reverseheadlight", "off")
+    else
+      animator.setLightActive("headlightBeam", false)
+      animator.setLightActive("reverseheadlightBeam", false)
+      animator.setLightActive("taillight", false)
+      animator.setLightActive("reversetaillight", true)
+      animator.setAnimationState("taillight", "off")
+      animator.setAnimationState("reversetaillight", "on")
+      animator.setAnimationState("headlight", "off")
+      animator.setAnimationState("reverseheadlight", "off")
+    end
+  else
+    animator.setLightActive("headlightBeam", false)
+    animator.setLightActive("reverseheadlightBeam", false)
+    animator.setLightActive("taillight", false)
+    animator.setLightActive("reversetaillight", false)
+    animator.setAnimationState("taillight", "off")
+    animator.setAnimationState("reversetaillight", "off")
+    animator.setAnimationState("headlight", "off")
+    animator.setAnimationState("reverseheadlight", "off")
+  end
+  
+  --if self.railRider.facing > 0 then
+    --animator.setLightPointAngle("headlightBeam",0)
+    --animator.setLightPointAngle("reverseheadlightBeam",180)
+  --else
+    --animator.setLightPointAngle("headlightBeam",180)
+    --animator.setLightPointAngle("reverseheadlightBeam",0)
+  --end
+  
   if not storage.specular and storage.reversed then
 	animator.scaleTransformationGroup("flip", {-1, 1})
 	flip(self.flipTable)
@@ -338,14 +399,15 @@ function update(dt)
 	----.circular .pos .uuids .groupName
 	----storage.currentStation
 	----storage.nextStation
-  
+  local pos
   if storage.firstCar then
     --if self.railRider:onRail() then
-	  railStopsRoutine(dt,storage.stationControlled)
+      pos = entity.position()
+	  railStopsRoutine(dt,storage.stationControlled,pos)
 	--end
     if self.testRunMode then
 	  if self.testModeCanStart then
-	    testRunModeRoutine()
+	    testRunModeRoutine(util.tileCenter(pos))
 	  else
 	    self.testModeStartTimer = world.time() - self.testModeStartTimerT0
 		sb.logInfo("=========test mode start timer " .. tostring(self.testModeStartTimer))
@@ -405,7 +467,18 @@ function update(dt)
 		  end
 		end
       else
-        regulateSpeedFirstCar(dt, storage.speedMultiplier)
+        if self.railRider.moving then
+          if not (storage.stopping and self.approachingStation and storage.atRailStop) then
+            if storage.approachingBumper then
+              regulateSpeedFirstCarApproachingBumper(dt, storage.speedMultiplier)
+            else
+              checkForBumpers(pos)
+              if not storage.departingFromStation then
+                regulateSpeedFirstCar(dt, storage.speedMultiplier)
+              end
+            end
+          end
+        end
         if storage.invertAtNextCycle then
           invert()
           self.railRider.direction = (self.railRider.direction + 3) % 8 + 1
@@ -445,7 +518,11 @@ function update(dt)
 	  checkrotation()
 	  sfxVolumeAdjust(dt)
 	  if (self.railRider:checkTile(mcontroller.position()) == "metamaterial:railreverse") and storage.firstCar then
-        if not storage.oneCarSet then invert() end
+        if not storage.oneCarSet then
+          invert()
+          --bumpinvert()
+        end
+        storage.approachingBumper = false
       end
 	  if self.childCarID and not storage.lastCar and not storage.oneCarSet then
 	    if world.entityExists(self.childCarID) then
@@ -626,7 +703,7 @@ function updateIDs()
 
 end
 
-function railStopsRoutine(dt,stationControlled)
+function railStopsRoutine(dt,stationControlled,pos)
   local distanceToStop
   if self.stoppingFriction == nil then
     self.stoppingFriction = 50
@@ -646,7 +723,6 @@ function railStopsRoutine(dt,stationControlled)
   end    
   
   if self.railRider.moving and not storage.stopping and not storage.atRailStop and not storage.departingFromStation then
-    local pos = entity.position()
 	local stopsNearby
 	if storage.inverted then
 	  --storage.trainsetLenInverted
@@ -958,13 +1034,13 @@ function railStopsRoutine(dt,stationControlled)
   
 end
 
-function testRunModeRoutine()
+function testRunModeRoutine(currentStopPos)
 
 	--if world.magnitude(mcontroller.position(), stationPos) <= 1 then
 	if storage.atRailStop then
 	  
 	  local posTarget = util.tileCenter(self.nodePos[self.nextStation])
-	  local currentStopPos = util.tileCenter(storage.railStopPosReal)
+	  --local currentStopPos = util.tileCenter(storage.railStopPosReal)
 	  
 	  sb.logInfo("=============TEST MODE DETECTED RAIL STOP AT: =========== " .. tostring(currentStopPos[1]) .. "," .. tostring(currentStopPos[2]))
 	  sb.logInfo("=============TARGET RAIL STOP (" .. tostring(self.nextStation) .. ") pos:"  .. tostring(posTarget[1]) .. "," .. tostring(posTarget[2]))
@@ -1006,31 +1082,96 @@ function start(resumeSpeed)
   end
 end
 
+--function bumpinvert()
+  --mcontroller.setVelocity({0, 0})
+  --self.railRider.moving = false
+  --if self.childCarID and (not storage.lastCar) then
+    --if world.entityExists(self.childCarID) then
+	  --world.callScriptedEntity(self.childCarID, "stop")
+    --end
+  --end
+  --invert(true)
+--end
+
+function checkForBumpers(pos)
+  local bumpersNearby
+  if storage.inverted then
+	--storage.trainsetLenInverted
+	if self.railRider.facing > 0 then
+      bumpersNearby = world.objectQuery({pos[1], pos[2] - 2.5}, {pos[1] + self.stationDetectionSpace, pos[2] + 2.5}, { name = "railbumper", boundMode = "position", order = "nearest" })
+	else
+      bumpersNearby = world.objectQuery({pos[1] - self.stationDetectionSpace, pos[2] - 2.5}, {pos[1], pos[2] + 2.5}, { name = "railbumper", boundMode = "position", order = "nearest" })
+	end
+  else
+	if self.railRider.facing > 0 then
+	  bumpersNearby = world.objectQuery({pos[1], pos[2] - 2.5}, {pos[1] + self.stationDetectionSpace, pos[2] + 2.5}, { name = "railbumper", boundMode = "position", order = "nearest" })
+	else
+	  bumpersNearby = world.objectQuery({pos[1] - self.stationDetectionSpace, pos[2] - 2.5}, {pos[1], pos[2] + 2.5}, { name = "railbumper", boundMode = "position", order = "nearest" })
+	end
+  end
+    
+  if #bumpersNearby > 0 then
+	sb.logInfo("\nINCOMING BUMPER DETECTED :")
+	tprint(bumpersNearby)
+    local bumperId = bumpersNearby[1]
+	local bumperPos = util.tileCenter(world.entityPosition(bumperId))
+    storage.approachingBumper = true
+  end
+  
+end
+
+function regulateSpeedFirstCarApproachingBumper(dt, speedMultiplier)
+  local currentRailMaterial = self.railRider.onRailType
+  if self.formerRailMaterial == nil then
+	self.formerRailMaterial = currentRailMaterial
+    self.speedLimit = self.railTypes[currentRailMaterial].speedLimit / speedMultiplier
+    self.currentFriction = self.railTypes[currentRailMaterial].friction
+    self.frictionEffect = self.currentFriction * dt
+  end
+  if self.formerRailMaterial ~= currentRailMaterial then
+    currentRailMaterial = self.railRider.onRailType
+	self.formerRailMaterial = currentRailMaterial
+	self.speedLimit = self.railTypes[currentRailMaterial].speedLimit / speedMultiplier
+	self.currentFriction = self.railTypes[currentRailMaterial].friction
+    self.frictionEffect = self.currentFriction * dt
+  end
+  local approachingBumperFriction = 50
+  --self.approachingBumperSpeedLimit = 20
+        
+  self.frictionEffect = (approachingBumperFriction + self.currentFriction) * dt
+  self.railRider.speed = self.railRider.speed - self.frictionEffect
+	    
+  local aprroachingBumperLimit = self.speedLimit
+  if self.speedLimit > self.approachingBumperSpeedLimit then
+	aprroachingBumperLimit = self.approachingBumperSpeedLimit
+  end
+  self.railRider.speed = util.clamp(self.railRider.speed, 20, aprroachingBumperLimit)
+end
+
 function regulateSpeedFirstCar(dt, speedMultiplier)
-	
-    if self.railRider.moving and not (storage.stopping and self.approachingStation and storage.atRailStop and storage.departingFromStation) then
-	  local currentRailMaterial = self.railRider.onRailType
-	  if self.formerRailMaterial == nil then
-	    self.formerRailMaterial = currentRailMaterial
-		self.speedLimit = self.railTypes[currentRailMaterial].speedLimit / speedMultiplier
-	    self.currentFriction = self.railTypes[currentRailMaterial].friction
-        self.frictionEffect = self.currentFriction * dt
-	  end
-	  if self.formerRailMaterial ~= currentRailMaterial then
-        currentRailMaterial = self.railRider.onRailType
-	    self.formerRailMaterial = currentRailMaterial
-	    self.speedLimit = self.railTypes[currentRailMaterial].speedLimit / speedMultiplier
-	    self.currentFriction = self.railTypes[currentRailMaterial].friction
-        self.frictionEffect = self.currentFriction * dt
-      end
-      if self.railRider.speed < self.speedLimit  then
-	    self.frictionEffect = self.currentFriction * dt 
-	    if self.railRider.speed < 20 then
-		  --self.railRider.speed = self.railRider.speed + 0.5 
-		--elseif self.railRider.speed < 65 then
-		  self.railRider.speed = (self.railRider.speed + (self.railRider.speed / 15)) - self.frictionEffect
-		else
-		  self.railRider.speed = (self.railRider.speed + (self.railRider.speed / 13)) - self.frictionEffect
+
+    local currentRailMaterial = self.railRider.onRailType
+	if self.formerRailMaterial == nil then
+	  self.formerRailMaterial = currentRailMaterial
+      self.speedLimit = self.railTypes[currentRailMaterial].speedLimit / speedMultiplier
+      self.currentFriction = self.railTypes[currentRailMaterial].friction
+      self.frictionEffect = self.currentFriction * dt
+	end
+	if self.formerRailMaterial ~= currentRailMaterial then
+      currentRailMaterial = self.railRider.onRailType
+	  self.formerRailMaterial = currentRailMaterial
+	  self.speedLimit = self.railTypes[currentRailMaterial].speedLimit / speedMultiplier
+	  self.currentFriction = self.railTypes[currentRailMaterial].friction
+      self.frictionEffect = self.currentFriction * dt
+    end
+    if (self.railRider.speed < self.speedLimit) then
+	  self.frictionEffect = self.currentFriction * dt 
+	  if self.railRider.speed < 20 then
+      --self.railRider.speed = self.railRider.speed + 0.5 
+	  --elseif self.railRider.speed < 65 then
+	    self.railRider.speed = (self.railRider.speed + (self.railRider.speed / 15)) - self.frictionEffect
+	  else
+		self.railRider.speed = (self.railRider.speed + (self.railRider.speed / 13)) - self.frictionEffect
           --self.frictionEffect = self.currentFriction * dt 
           --self.railRider.speed = (self.railRider.speed + 0.5 ) - self.frictionEffect
 		--elseif (self.railRider.speed > 20) and (self.railRider.speed < 50) then
@@ -1045,15 +1186,13 @@ function regulateSpeedFirstCar(dt, speedMultiplier)
 		--elseif (self.railRider.speed > 70) then
 		  --self.frictionEffect = self.currentFriction * dt 
           --self.railRider.speed = (self.railRider.speed + 7 ) - self.frictionEffect
-        end
-        --sb.logInfo("Accelerating, speed: " .. tostring(self.railRider.speed))
-      elseif self.railRider.speed > self.speedLimit then
-        --self.frictionEffect = self.currentFriction * dt 
-        self.railRider.speed = (self.railRider.speed - 4 ) - self.frictionEffect
-	    --sb.logInfo("decelerating, speed: " .. tostring(self.railRider.speed))
       end
-	end
-  
+        --sb.logInfo("Accelerating, speed: " .. tostring(self.railRider.speed))
+    elseif self.railRider.speed > self.speedLimit then
+        --self.frictionEffect = self.currentFriction * dt 
+      self.railRider.speed = (self.railRider.speed - 4 ) - self.frictionEffect
+	    --sb.logInfo("decelerating, speed: " .. tostring(self.railRider.speed))
+    end
 end
 
 function handleUseGravity()
@@ -1539,30 +1678,53 @@ function invert()
 	self.checkDistance = false
     self.checkDistanceTimer = 0
 	self.CheckDistanceTimerT0 = world.time() - 3
-	if storage.inverted and not (storage.stationControlledTrainUninit or self.waitingToLoadIDS) then
+    
+	if storage.inverted then
 	  self.trainsetData = self.trainsetOriginal
-      if not storage.originalCar then
-        if self.spawnedTrainsIDs == nil then
-          self.spawnedTrainsIDs = {}
-          self.spawnedTrainsIDs.E = {}
-          self.spawnedTrainsIDs.W = {}
-          self.spawnedTrainsIDs.E = world.getProperty(storage.stationsTable.groupName .. "trainsidsE_file")
-          self.spawnedTrainsIDs.W = world.getProperty(storage.stationsTable.groupName .. "trainsidsW_file")
-        end
-        if storage.timetable.direction == "E" then
-          self.spawnedTrainsIDs.E = world.getProperty(storage.stationsTable.groupName .. "trainsidsE_file")
-          self.spawnedTrainsIDs.E[storage.timetable.trainNum] = entity.id()
-          world.setProperty(storage.stationsTable.groupName .. "trainsidsE_file", self.spawnedTrainsIDs.E)
-        else
-          self.spawnedTrainsIDs.W = world.getProperty(storage.stationsTable.groupName .. "trainsidsW_file")
-          self.spawnedTrainsIDs.W[storage.timetable.trainNum] = entity.id()
-          world.setProperty(storage.stationsTable.groupName .. "trainsidsW_file", self.spawnedTrainsIDs.W)
+      if storage.stationControlled and not (storage.stationControlledTrainUninit or self.waitingToLoadIDS) then
+        if not storage.originalCar then
+          if self.spawnedTrainsIDs == nil then
+            self.spawnedTrainsIDs = {}
+            self.spawnedTrainsIDs.E = {}
+            self.spawnedTrainsIDs.W = {}
+            self.spawnedTrainsIDs.E = world.getProperty(storage.stationsTable.groupName .. "trainsidsE_file")
+            self.spawnedTrainsIDs.W = world.getProperty(storage.stationsTable.groupName .. "trainsidsW_file")
+          end
+          if storage.timetable.direction == "E" then
+            self.spawnedTrainsIDs.E = world.getProperty(storage.stationsTable.groupName .. "trainsidsE_file")
+            self.spawnedTrainsIDs.E[storage.timetable.trainNum] = entity.id()
+            world.setProperty(storage.stationsTable.groupName .. "trainsidsE_file", self.spawnedTrainsIDs.E)
+         else
+            self.spawnedTrainsIDs.W = world.getProperty(storage.stationsTable.groupName .. "trainsidsW_file")
+            self.spawnedTrainsIDs.W[storage.timetable.trainNum] = entity.id()
+            world.setProperty(storage.stationsTable.groupName .. "trainsidsW_file", self.spawnedTrainsIDs.W)
+          end
         end
       end
 	else
       self.trainsetData = self.trainsetInverted
 	end
 	storage.inverted = not storage.inverted
+        
+    if self.railRider.facing > 0 then
+      animator.setLightActive("headlightBeam", false)
+      animator.setLightActive("reverseheadlightBeam", false)
+      animator.setLightActive("taillight", true)
+      animator.setLightActive("reversetaillight", false)
+      animator.setAnimationState("taillight", "on")
+      animator.setAnimationState("reversetaillight", "off")
+      animator.setAnimationState("headlight", "off")
+      animator.setAnimationState("reverseheadlight", "off")
+    else
+      animator.setLightActive("headlightBeam", false)
+      animator.setLightActive("reverseheadlightBeam", false)
+      animator.setLightActive("taillight", false)
+      animator.setLightActive("reversetaillight", true)
+      animator.setAnimationState("taillight", "off")
+      animator.setAnimationState("reversetaillight", "on")
+      animator.setAnimationState("headlight", "off")
+      animator.setAnimationState("reverseheadlight", "off")
+    end
 	
 	self.trainsetData = {}
 	self.trainsetData = deepcopy(newTrainSet)
@@ -1613,12 +1775,37 @@ function handleInvert(_, _, carNumber, stationControlled, currentStation, nextSt
 	vehicle.setPersistent(true)
 	self.childCarID = self.parentCarId
 	self.parentCarId = nil
-	self.railRider.direction = (self.railRider.direction + 3) % 8 + 1
-	self.railRider:findNextNode()
+    
+    --if bumperpresent then
+      --start(self.approachingBumperSpeedLimit)
+    --else
+      self.railRider.direction = (self.railRider.direction + 3) % 8 + 1
+      self.railRider:findNextNode()
+    --end
 	
 	calculateTargetDistanceToChild()
 	
 	regulateSpeedOfChildcar(self.childCarID)
+    
+    if self.railRider.facing > 0 then
+      animator.setLightActive("headlightBeam", false)
+      animator.setLightActive("reverseheadlightBeam", true)
+      animator.setLightActive("taillight", false)
+      animator.setLightActive("reversetaillight", false)
+      animator.setAnimationState("taillight", "off")
+      animator.setAnimationState("reversetaillight", "off")
+      animator.setAnimationState("headlight", "off")
+      animator.setAnimationState("reverseheadlight", "on")
+    else
+      animator.setLightActive("headlightBeam", true)
+      animator.setLightActive("reverseheadlightBeam", false)
+      animator.setLightActive("taillight", false)
+      animator.setLightActive("reversetaillight", false)
+      animator.setAnimationState("taillight", "off")
+      animator.setAnimationState("reversetaillight", "off")
+      animator.setAnimationState("headlight", "on")
+      animator.setAnimationState("reverseheadlight", "off")
+    end
   else
     storage.carNumber = carNumber
 	self.railRider.direction = (self.railRider.direction + 3) % 8 + 1

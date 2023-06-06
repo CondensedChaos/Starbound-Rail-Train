@@ -19,7 +19,7 @@
       }
    },
    {
-      "name" : "SubwayTram-linked",
+      "name" : "XXLSubwayTram-linked",
       "carNumber" : 2,
       "color" : "blue",
       "cockpitColor" : "red",

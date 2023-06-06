@@ -133,6 +133,10 @@
       "statusEffects" : ["highprotection", "breathprotectionvehicle"]
     }
   },
+  
+  //Health and damage
+  "protection" : 50,
+  "maxHealth" : 1000,
 
   "physicsCollisions" : {
     "doorsRight": {

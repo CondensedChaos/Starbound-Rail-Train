@@ -5,22 +5,22 @@
     //longDescription will appear under the preview
     
     "LongDescription" : "Small light rail car for passengers transportation, suitable for rail tracks with several slopes\npassengers capacity: 5",
-    "price" : 1000,
+    "price" : 500,
     "imgPath" : "/vehicles/subwayTrain.linked/",
     "colors": ["blue", "red", "cyan", "white", "yellow"],
     "cockpitColors" : ["red", "blue", "white", "yellow"],
     "carLenghtPixels" : 83,
     "carHeightPixels" : 79, //including pantograph minus 1 pixel
     "hasPantograph" : true, //if it has a pantograph sprite
-    "hasDecals" : true,
-    "specular" : true,
+    "hasDecals" : true, //if it has decals sprites
+    "specular" : true, //if mirroring the sprites produces the same image
     "decalNames" : ["A", "B", "C"],//optional, decals
     "decals" : { // [[<decal1NameString> , <decal0> , ..<decalN], [<decal2NameString> , <decal0> , ..<decalN>]]
       "A" : [0, 1, 2, 3, 4], //<decal1String><decal0> is the sprite of decal1 with no decal
       "B" : [0, 1, 2, 3, 4],
       "C" : [0, 1]
     },
-    "DisplayNames" : {
+    "DisplayNames" : { //human-readable names for its parts, those will show up in train configurator
       "color" : "Bottom",
       "cockpit" : "Top",
       "decals" : {
@@ -29,31 +29,31 @@
         "C" : "Graffiti"
       }
     },
-    "decalsFlippable" : {
-      "A" : [false, true, true,true],
-      "B" : [false, true, true],
+    "decalsFlippable" : { //similar to "specular": true if the decal sprite can be mirrored
+      "A" : [false, true, true, true, true],
+      "B" : [false, true, true, true, true],
       "C" : [false, false]
     }
   },   
   "XXLSubwayTram-linked" : {
     "description" : "Long subway train car", 
     "LongDescription" : "Light rail car for passengers transportation like the ones found in subways, suitable for straight line rail tracks\npassengers capacity: 12",
-    "price" : 1500,
+    "price" : 750,
     "imgPath" : "/vehicles/XXLsubwayTrain.linked/",
     "colors": ["blue", "red", "cyan", "white", "yellow"],
     "cockpitColors" : ["red", "blue", "white", "yellow"],
-    "carLenghtPixels" : 145,
-    "carHeightPixels" : 79,
-    "hasPantograph" : true, 
-    "hasDecals" : true,
-    "specular" : true,
+    "carLenghtPixels" : 145, 
+    "carHeightPixels" : 79, //including pantograph minus 1 pixel
+    "hasPantograph" : true, //if it has a pantograph sprite
+    "hasDecals" : true, //if it has decals sprites
+    "specular" : true, //if mirroring the sprites produces the same image
     "decalNames" : ["A", "B", "C"],
     "decals" : {
       "A" : [0, 1, 2, 3, 4], 
       "B" : [0, 1, 2, 3, 4],
       "C" : [0, 1]
     },
-    "DisplayNames" : {
+    "DisplayNames" : { //human-readable names for its parts, those will show up in train configurator
       "color" : "Bottom",
       "cockpit" : "Top",
       "decals" : {
@@ -63,8 +63,8 @@
       }
     },
     "decalsFlippable" : {
-      "A" : [false, true, true,true],
-      "B" : [false, true, true],
+      "A" : [false, true, true, true, true],
+      "B" : [false, true, true, true, true],
       "C" : [false, false]
     }
   } 

@@ -1,0 +1,8 @@
+{
+  "itemName" : "trainfloppydisk1",
+  "price" : 2,
+  "rarity" : "common",
+  "inventoryIcon" : "backupfloppydisk.png",
+  "description" : "Contains backup data for a Station Controller",
+  "shortdescription" : "Backup Floppy Disk"
+}
