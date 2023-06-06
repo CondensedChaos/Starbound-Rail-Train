@@ -746,7 +746,6 @@ function railStopsRoutine(dt,stationControlled,pos)
   if stationControlled and not storage.atRailStop then
     --self.scheduleTimerT0
     storage.scheduleTimer = world.time() - self.scheduleTimerT0
-    sb.logInfo("Elapsed time: " .. tostring(storage.scheduleTimer))
   end    
   
   if self.railRider.moving and not storage.stopping and not storage.atRailStop and not storage.departingFromStation then
