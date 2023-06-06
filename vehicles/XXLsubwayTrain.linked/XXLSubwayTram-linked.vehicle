@@ -81,19 +81,19 @@
     "passengerSeat3" : {
       "part" : "cockpit",
       "partAnchor" : "passengerSeatPosition3",
-      "orientation" : "stand",
+      "orientation" : "sit",
       "statusEffects" : ["highprotection", "breathprotectionvehicle"]
     },
     "passengerSeat4" : {
       "part" : "cockpit",
       "partAnchor" : "passengerSeatPosition4",
-      "orientation" : "stand",
+      "orientation" : "sit",
       "statusEffects" : ["highprotection", "breathprotectionvehicle"]
     },
     "passengerSeat5" : {
       "part" : "cockpit",
       "partAnchor" : "passengerSeatPosition5",
-      "orientation" : "stand",
+      "orientation" : "sit",
       "statusEffects" : ["highprotection", "breathprotectionvehicle"]
     },
     "passengerSeat6" : {
@@ -111,13 +111,13 @@
     "passengerSeat8" : {
       "part" : "cockpit",
       "partAnchor" : "passengerSeatPosition8",
-      "orientation" : "stand",
+      "orientation" : "sit",
       "statusEffects" : ["highprotection", "breathprotectionvehicle"]
     },
     "passengerSeat9" : {
       "part" : "cockpit",
       "partAnchor" : "passengerSeatPosition9",
-      "orientation" : "stand",
+      "orientation" : "sit",
       "statusEffects" : ["highprotection", "breathprotectionvehicle"]
     },
     "passengerSeat10" : {

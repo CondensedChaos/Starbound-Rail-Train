@@ -81,13 +81,13 @@
     "passengerSeat3" : {
       "part" : "cockpit",
       "partAnchor" : "passengerSeatPosition3",
-      "orientation" : "stand",
+      "orientation" : "sit",
       "statusEffects" : ["highprotection", "breathprotectionvehicle"]
     },
     "passengerSeat4" : {
       "part" : "cockpit",
       "partAnchor" : "passengerSeatPosition4",
-      "orientation" : "stand",
+      "orientation" : "sit",
       "statusEffects" : ["highprotection", "breathprotectionvehicle"]
     }
   },
