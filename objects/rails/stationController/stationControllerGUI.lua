@@ -725,6 +725,11 @@ function saveBackupFileButtonPressed(widgetName, widgetData)
   player.giveItem(itemDescriptor)
 end
 
+function cancelAddTrainButton(widgetName, widgetData)
+  widget.setVisible("timetableOverlay.addTrainOverlay", false)
+  setTimetableButtonPressed()
+end
+
 function addTrainButtonPressed(widgetName, widgetData)
 
   local stationslistname = "timetableOverlay.addTrainOverlay.stationSelectScrollArea.stationSelectList"
@@ -747,9 +752,7 @@ function addTrainButtonPressed(widgetName, widgetData)
   
   local numOfStations = #self.saveFile.global[self.groupEditing].data.testRunsTimesMAX
   
-  if self.saveFile.global[self.groupEditing].data.circular then
-    numOfStations = numOfStations -1
-  end
+  numOfStations = numOfStations -1
   
   for i=1,numOfStations do
     local listItem = string.format("%s.%s",stationslistname, widget.addListItem(stationslistname))
@@ -760,11 +763,11 @@ function addTrainButtonPressed(widgetName, widgetData)
   self.trainToAdd = {"E",1,0}
   --{direction,startStation,startTime}
   
-  if not self.saveFile.global[self.groupEditing].data.circular then
-    local lastStation = #self.saveFile.global[self.groupEditing].data.testRunsTimesMAX
-    self.trainToAdd[2] = lastStation
-	widget.setText("timetableOverlay.addTrainOverlay.startStationLabel","Start Station : ^green;" .. tostring(lastStation).."^reset;")
-  end
+  --if not self.saveFile.global[self.groupEditing].data.circular then
+    --local lastStation = #self.saveFile.global[self.groupEditing].data.testRunsTimesMAX
+    --self.trainToAdd[2] = 1
+	--widget.setText("timetableOverlay.addTrainOverlay.startStationLabel","Start Station : ^green;" .. tostring(self.trainToAdd[2]).."^reset;")
+  --end
 
 end
 
@@ -842,19 +845,49 @@ end
 function directionRadioGroupCallback(id)
   if self.trainToAdd == nil then
     self.trainToAdd = {"E",1,0}
-	if not self.saveFile.global[self.groupEditing].data.circular then
-      local lastStation = #self.saveFile.global[self.groupEditing].data.testRunsTimesMAX
-      self.trainToAdd[2] = lastStation
-	  widget.setText("timetableOverlay.addTrainOverlay.startStationLabel","Start Station : ^green;" .. tostring(lastStation).."^reset;")
-    end
+	--if not self.saveFile.global[self.groupEditing].data.circular then
+      --local lastStation = #self.saveFile.global[self.groupEditing].data.testRunsTimesMAX
+      --self.trainToAdd[2] = lastStation
+	  --widget.setText("timetableOverlay.addTrainOverlay.startStationLabel","Start Station : ^green;" .. tostring(lastStation).."^reset;")
+    --end
   end
+  local numOfStations = #self.saveFile.global[self.groupEditing].data.testRunsTimesMAX
+  local stationslistname = "timetableOverlay.addTrainOverlay.stationSelectScrollArea.stationSelectList"
   if id == "0" then
     self.trainToAdd[1] = "E"
 	tprint(self.trainToAdd)
+    if not self.saveFile.global[self.groupEditing].data.circular then
+      local lastStation = #self.saveFile.global[self.groupEditing].data.testRunsTimesMAX
+      if self.trainToAdd[2] == lastStation then
+        self.trainToAdd[2] = 1
+        widget.setText("timetableOverlay.addTrainOverlay.startStationLabel","Start Station : ^green;" .. tostring(1).."^reset;")
+      end
+      widget.clearListItems(stationslistname)
+
+      for i=1,(numOfStations-1) do
+        local listItem = string.format("%s.%s",stationslistname, widget.addListItem(stationslistname))
+        widget.setText(listItem .. ".stationLabel", "^green;Station " .. tostring(i) .. "^reset;")
+        widget.setData(listItem, i)
+      end
+    end
   end
   if id == "1" then
     self.trainToAdd[1] = "W"
 	tprint(self.trainToAdd)
+    if not self.saveFile.global[self.groupEditing].data.circular then
+      local lastStation = #self.saveFile.global[self.groupEditing].data.testRunsTimesMAX
+      if self.trainToAdd[2] == 1 then
+        self.trainToAdd[2] = lastStation
+        widget.setText("timetableOverlay.addTrainOverlay.startStationLabel","Start Station : ^green;" .. tostring(lastStation).."^reset;")
+      end
+      widget.clearListItems(stationslistname)
+
+      for i=2,numOfStations do
+        local listItem = string.format("%s.%s",stationslistname, widget.addListItem(stationslistname))
+        widget.setText(listItem .. ".stationLabel", "^green;Station " .. tostring(i) .. "^reset;")
+        widget.setData(listItem, i)
+      end
+    end
   end
 end
 
@@ -879,11 +912,6 @@ function timecallback(widgetName, widgetData)
   local startTime = widget.getText("timetableOverlay.addTrainOverlay.timeTextBox")
   if self.trainToAdd == nil then
     self.trainToAdd = {"E",1,0}
-	if not self.saveFile.global[self.groupEditing].data.circular then
-      local lastStation = #self.saveFile.global[self.groupEditing].data.testRunsTimesMAX
-      self.trainToAdd[2] = lastStation
-	  widget.setText("timetableOverlay.addTrainOverlay.startStationLabel","Start Station : ^green;" .. tostring(lastStation).."^reset;")
-    end
   end
   --if startTime == nil then
     --widget.setText("timetableOverlay.addTrainOverlay.timeTextBox","0")
@@ -1837,6 +1865,11 @@ end
 function changeTrainStartButtonPressed(widgetName, widgetData)
   local trainNum = self.editingTrain[1]
   local direction = self.editingTrain[2]
+  if direction == "E" then 
+    dataName = "trainsEast"
+  else
+    dataName = "trainsWest"
+  end
   widget.setVisible("timetableOverlay.changeStartingParamsOverlay", true)
   widget.setVisible("timetableOverlay.trainSettingsEastOverlay",false)
   widget.setVisible("timetableOverlay.trainSettingsWestOverlay",false)
@@ -1844,6 +1877,8 @@ function changeTrainStartButtonPressed(widgetName, widgetData)
   widget.setVisible("timetableOverlay.trainsWestDataScrollArea",false)
   widget.setVisible("timetableOverlay.selectedTrainDataLabel", false)
   widget.setText("timetableOverlay.changeStartingParamsOverlay.addTrainLabel", "^yellow;Train ^red;" .. tostring(trainNum) .. "-" .. direction .. "^yellow; Starting params:^reset;")
+  
+  widget.setVisible("timetableOverlay.addTrainButton", false)
   
   if direction == "E" then
 	dataName = "trainsEast"
@@ -1864,7 +1899,7 @@ function changeTrainStartButtonPressed(widgetName, widgetData)
   
   widget.clearListItems(stationslistname)
   
-  widget.setText("timetableOverlay.changeStartingParamsOverlay.timeTextBox","0")
+  widget.setText("timetableOverlay.changeStartingParamsOverlay.timeTextBox",tostring(startTime))
   
   local numOfStations = #self.saveFile.global[self.groupEditing].data.testRunsTimesMAX
   
@@ -1872,7 +1907,19 @@ function changeTrainStartButtonPressed(widgetName, widgetData)
     numOfStations = numOfStations -1
   end
   
-  for s=1,numOfStations do
+  local startstation = 1
+  local endstation = numOfStations
+  
+  if not self.saveFile.global[self.groupEditing].data.circular then
+    if direction == "E" then
+      endstation = numOfStations - 1
+    else
+      startstation = 2
+    end
+  end
+  
+  
+  for s=startstation,endstation do
     local listItem = string.format("%s.%s",stationslistname, widget.addListItem(stationslistname))
     widget.setText(listItem .. ".stationLabel", "^green;Station " .. tostring(s) .. "^reset;")
     widget.setData(listItem, s)
@@ -1919,12 +1966,18 @@ function saveStartingParamsButtonPressed(widgetName, widgetData)
   self.reloadDataTimerSet = true
   widget.setVisible("timetableOverlay.loadingOverlay", true)
   widget.setText("timetableOverlay.loadingOverlay.selectedTrainLabel","Train ^red;" .. trainNum .. "-" .. direction .. "^reset;:")
+  widget.setVisible("timetableOverlay.addTrainButton", true)
 end
 
 function discardtartingParamsButtonPressed(widgetName, widgetData)
   widget.setVisible("timetableOverlay.changeStartingParamsOverlay", false)
+  widget.setVisible("timetableOverlay.addTrainButton", true)
   self.startingParams = nil
   trainsListSelected(self.resumewidgedname)
+end
+
+function stopTrainsButtonPressed(widgetName, widgetData)
+  world.sendEntityMessage(pane.sourceEntity(), "stopTrains" )
 end
 
 function startTrainsButtonPressed(widgetName, widgetData)
@@ -2026,6 +2079,8 @@ end
 
 function startSelectedTrainsButton(widgetName, widgetData)
   world.sendEntityMessage(pane.sourceEntity(), "startMoreLines", self.groupstostart)
+  widget.setVisible("startMoreGroupsOverlay", false)
+  widget.setVisible("groupsOverlay", true)
 end
 
 function removeSpawnerItemButtonPressed(widgetName, widgetData)

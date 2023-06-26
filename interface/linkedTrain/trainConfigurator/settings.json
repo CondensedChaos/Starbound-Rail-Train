@@ -2,6 +2,7 @@
 "paneImgPath" : "/interface/linkedTrain/trainConfigurator/",
 "vehiclesList" : ["SubwayTram-linked", "XXLSubwayTram-linked"],
 "itemName" : "linked-train",
+"logging" : false,
 "defaultTrainset" : [
    {
       "name" : "SubwayTram-linked",

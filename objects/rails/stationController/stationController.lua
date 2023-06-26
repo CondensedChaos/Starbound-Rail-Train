@@ -7,6 +7,7 @@ function init()
   storage.stopLenght = (config.getParameter("stopLenght", 6))
   
   self.settingsConfig = root.assetJson("/interface/linkedTrain/trainConfigurator/settings.json")
+  self.logging = self.settingsConfig.logging
   self.defaultTrainset = self.settingsConfig.defaultTrainset
   self.testVehicleName = self.settingsConfig.itemName
 
@@ -43,17 +44,17 @@ function forceReloadData(_,_, pane, dontLog, nodepos)
     initNodePos()
   else
     storage.saveFile = world.getProperty("stationController_file")
-    sb.logInfo("FORCING DATA RELOAD: ")
+    if self.logging then sb.logInfo("FORCING DATA RELOAD: ") end
     local oldnumber = self.stationNum
     self.stationNum = storage.saveFile[storage.uuid].number
     if self.stationNum == oldnumber then
-      sb.logInfo("STATION NUMBER " .. tostring(self.stationNum))
+      if self.logging then sb.logInfo("STATION NUMBER " .. tostring(self.stationNum)) end
     else
-      sb.logInfo("STATION NUMBER " .. tostring(oldnumber) .. "IS NOW NUMBER " .. tostring(self.stationNum))
+      if self.logging then sb.logInfo("STATION NUMBER " .. tostring(oldnumber) .. "IS NOW NUMBER " .. tostring(self.stationNum)) end
     end
   
     if not dontLog then
-      sb.logInfo("SAVE FILE AS FOLLOWS: ")  
+      if self.logging then sb.logInfo("SAVE FILE AS FOLLOWS: ") end
     end
   
     if storage.saveFile[storage.uuid].grouped then
@@ -65,7 +66,7 @@ function forceReloadData(_,_, pane, dontLog, nodepos)
     end
   
     if storage.saveFile and not dontLog then
-      tprint(storage.saveFile)
+      if self.logging then tprint(storage.saveFile) end
     end
   
     if pane then
@@ -127,12 +128,13 @@ function startMoreLines(_,_,groupstostart)
     for key, value in pairs(self.spawningmorelinestable) do
       tprint(value)
       local groupname = key
-      sb.logInfo("groupname=" .. tostring(groupname))
+      if self.logging then sb.logInfo("groupname=" .. tostring(groupname)) end
       local numberOfTrainsE = value.numberOfTrainsE
       local numberOfTrainsW = value.numberOfTrainsW
-      sb.logInfo("numberOfTrainsE=" .. tostring(numberOfTrainsE))
-      sb.logInfo("numberOfTrainsW=" .. tostring(numberOfTrainsW))
-      
+      if self.logging then 
+        sb.logInfo("numberOfTrainsE=" .. tostring(numberOfTrainsE))
+        sb.logInfo("numberOfTrainsW=" .. tostring(numberOfTrainsW))
+      end
       if groupname == storage.group then
         startTrains(_,_, groupname, numberOfTrainsE, numberOfTrainsW)
       else
@@ -142,7 +144,7 @@ function startMoreLines(_,_,groupstostart)
       end
     end
   else
-    sb.logInfo("could not get all entity ids of all lines, trying again in 3 seconds")
+    if self.logging then sb.logInfo("could not get all entity ids of all lines, trying again in 3 seconds") end
     self.spawningmorelinesfailed = true
     self.spawningmorelinesfailedTimer = 0
     self.spawningmorelinesfailedTimerT0 = world.time()
@@ -150,27 +152,63 @@ function startMoreLines(_,_,groupstostart)
 end
 
 function stopTrains(_,_)
-  self.spawnedTrainsIDs.E = world.getProperty(storage.group .. "trainsidsE_file")
-  self.spawnedTrainsIDs.W = world.getProperty(storage.group .. "trainsidsW_file")
+  if not self.spawnedTrainsIDs then
+    self.spawnedTrainsIDs = {}
+    self.spawnedTrainsIDs.E = {}
+    self.spawnedTrainsIDs.W = {}
+  end
   
+  if not storage.numberOfTrainsE then
+    storage.saveFile = world.getProperty("stationController_file")
+    storage.numberOfTrainsE = storage.saveFile.global[storage.group].data.numberOfTrainsE
+  end
+  if not storage.numberOfTrainsW then
+    storage.saveFile = world.getProperty("stationController_file")
+    storage.numberOfTrainsW = storage.saveFile.global[storage.group].data.numberOfTrainsW
+  end
+  
+  if self.logging then sb.logInfo(tostring(storage.group) .. " SHUTTING DOWN TRAINS") end
+    
   if storage.numberOfTrainsE > 0 then
-    for i=1,storage.numberOfTrainsE do
-      if self.spawnedTrainsIDs.E[i] then
-        sb.logInfo("=================ATTEMPTING TO SHUT DOWN TRAIN ".. tostring(i) .." EAST==========")
-        if world.entityExists(self.spawnedTrainsIDs.E[i]) then
-          sb.logInfo("Train " .. tostring(i) .. "-E Exist sending message")
-          world.sendEntityMessage(self.spawnedTrainsIDs.E[i], "stopGroup")
+    
+    for t=1,storage.numberOfTrainsE do
+      self.spawnedTrainsIDs.E[t] = world.getProperty(storage.group .. "trainsidsE_" .. tostring(t))
+    end
+    if self.logging then 
+      sb.logInfo(tostring(storage.group) .. " Entity IDs East:")
+      tprint(self.spawnedTrainsIDs.E)
+    end
+    
+    if self.spawnedTrainsIDs.E then
+      for i=1,storage.numberOfTrainsE do
+        if self.spawnedTrainsIDs.E[i] then
+          if self.logging then sb.logInfo("=================ATTEMPTING TO SHUT DOWN TRAIN ".. tostring(i) .." EAST (" .. tostring(storage.group) .. ")==========") end
+          if world.entityExists(self.spawnedTrainsIDs.E[i]) then
+            if self.logging then sb.logInfo("Train " .. tostring(i) .. "-E Exist sending message") end
+            world.sendEntityMessage(self.spawnedTrainsIDs.E[i], "stopGroup")
+          end
         end
       end
     end
   end
   if storage.numberOfTrainsW > 0 then
-    for i=1,storage.numberOfTrainsW do
-      if self.spawnedTrainsIDs.W[i] then
-        sb.logInfo("=================ATTEMPTING TO SHUT DOWN TRAIN ".. tostring(i) .." WEST==========")
-        if world.entityExists(self.spawnedTrainsIDs.W[i]) then
-          sb.logInfo("Train " .. tostring(i) .. "-W Exist sending message")
-          world.sendEntityMessage(self.spawnedTrainsIDs.W[i], "stopGroup")
+    
+    for t=1,storage.numberOfTrainsW do
+      self.spawnedTrainsIDs.W[t] = world.getProperty(storage.group .. "trainsidsW_" .. tostring(t))
+    end
+    if self.logging then 
+      sb.logInfo(tostring(storage.group) .. " Entity IDs West:")
+      tprint(self.spawnedTrainsIDs.W)
+    end
+    
+    if self.spawnedTrainsIDs.W then
+      for i=1,storage.numberOfTrainsW do
+        if self.spawnedTrainsIDs.W[i] then
+          if self.logging then sb.logInfo("=================ATTEMPTING TO SHUT DOWN TRAIN ".. tostring(i) .." WEST (" .. tostring(storage.group) .. ")==========") end
+          if world.entityExists(self.spawnedTrainsIDs.W[i]) then
+            if self.logging then sb.logInfo("Train " .. tostring(i) .. "-W Exist sending message") end
+            world.sendEntityMessage(self.spawnedTrainsIDs.W[i], "stopGroup")
+          end
         end
       end
     end
@@ -185,7 +223,7 @@ function startTrains(_,_, group,ntrainE,ntrainW)
   ----tprint(self.vehicleFile)
   ----tprint(self.vehicleFile[group].trainsEast)
   
-  sb.logInfo("==============STARTING TRAINS FOR GROUP=" .. tostring(group) .. " ntrainE=" .. tostring(ntrainE) .. " ntrainW=" .. tostring(ntrainW))
+  if self.logging then sb.logInfo("==============STARTING TRAINS FOR GROUP=" .. tostring(group) .. " ntrainE=" .. tostring(ntrainE) .. " ntrainW=" .. tostring(ntrainW)) end
   
   storage.saveFile = world.getProperty("stationController_file")
   
@@ -247,11 +285,12 @@ function startTrains(_,_, group,ntrainE,ntrainW)
       self.numberOfSpawnTimes = self.numberOfSpawnTimes + 1
     end
   end
-  sb.logInfo("=========self.spawnTimes:")
-  tprint(self.spawnTimes)
-  sb.logInfo("========")
-  sb.logInfo("self.numberOfSpawnTimes " .. tostring(self.numberOfSpawnTimes))
-  
+  if self.logging then 
+    sb.logInfo("=========self.spawnTimes:")
+    tprint(self.spawnTimes)
+    sb.logInfo("========")
+    sb.logInfo("self.numberOfSpawnTimes " .. tostring(self.numberOfSpawnTimes))
+  end
   timetabletemp = {}
   self.trainstostart = {}
   
@@ -280,10 +319,11 @@ function startTrains(_,_, group,ntrainE,ntrainW)
   --sb.logInfo("=========self.self.timetable:")
   --tprint(self.timetable)
   
-  sb.logInfo("Trains to start per each time:")
-  tprint(self.trainstostart)
-  
-  sb.logInfo("Total num of trains to spawn: " .. tostring(self.numOfTrainsToSpawn))
+  if self.logging then 
+    sb.logInfo("Trains to start per each time:")
+    tprint(self.trainstostart)
+    sb.logInfo("Total num of trains to spawn: " .. tostring(self.numOfTrainsToSpawn))
+  end
   
   storage.saveFile.global[group].data.spawningTrains = true
   self.spawningTrains = true
@@ -310,12 +350,12 @@ function spawnTrains(group)
   --self.timetable = { {{direction,startTime,train,vehicle,startStation},{direction,startTime,train,vehicle,startStation}}...{{direction,startTime,train,vehicle,startStation}} }
  
   if self.spawningTrainsInit then
-    sb.logInfo("=================spawnTrains() init")
+    if self.logging then sb.logInfo("=================spawnTrains() init") end
     --self.numberOfSpawnTimes = #self.spawnTimes
     self.currentSpawnTimeSection = 1
-    tprint(self.spawnTimes)
+    if self.logging then tprint(self.spawnTimes) end
     self.currentSpawnTime = self.spawnTimes[1]
-    sb.logInfo("self.currentSpawnTime: " .. tostring(self.currentSpawnTime))
+    if self.logging then sb.logInfo("self.currentSpawnTime: " .. tostring(self.currentSpawnTime)) end
     self.trainsToSpawnForCurrentTime = self.trainstostart[1]
     self.currentTrainToSpawn = 1
     --self.currentTrainToSpawnThisTime = 1
@@ -339,7 +379,7 @@ function spawnTrains(group)
   
   if (self.stationSpawnTimer >= self.currentSpawnTime) then --or self.spawningTrainsInit then
     --sb.logInfo("==========================initiating next spawn sequence as per timer or init")
-    sb.logInfo("==========================initiating next spawn sequence as per timer")
+    if self.logging then sb.logInfo("==========================initiating next spawn sequence as per timer") end
     for t=1,self.trainsToSpawnForCurrentTime do
       local spawnOffset = {}
       local direction
@@ -359,7 +399,7 @@ function spawnTrains(group)
         --spawnOffset[2] = startStationPos[2] + 1
       end
       spawnOffset[2] = startStationPos[2] + 1
-      sb.logInfo("============================t is " .. tostring(t) .. " self.currentTrainToSpawn: " .. tostring(self.currentTrainToSpawn) .. " self.trainsToSpawnForCurrentTime: " .. tostring(self.trainsToSpawnForCurrentTime) )
+      if self.logging then sb.logInfo("============================t is " .. tostring(t) .. " self.currentTrainToSpawn: " .. tostring(self.currentTrainToSpawn) .. " self.trainsToSpawnForCurrentTime: " .. tostring(self.trainsToSpawnForCurrentTime) ) end
       local currentTrainVehicle = self.timetable[self.currentSpawnTimeSection][t].vehicle
       local vehicleParameters = currentTrainVehicle.parameters
       vehicleParameters.initialFacing = direction
@@ -390,36 +430,42 @@ function spawnTrains(group)
       
       if direction == 1 then
         local trainNum = self.timetable[self.currentSpawnTimeSection][t].train
-        sb.logInfo("=================self.timetable[self.currentSpawnTimeSection][t]")
-        tprint(self.timetable[self.currentSpawnTimeSection][t])
-        sb.logInfo("Direction E, trainNum =" .. tostring(trainNum))
+        if self.logging then 
+          sb.logInfo("=================self.timetable[self.currentSpawnTimeSection][t]")
+          tprint(self.timetable[self.currentSpawnTimeSection][t])
+          sb.logInfo("Direction E, trainNum =" .. tostring(trainNum))
+        end
         --self.spawnedTrainsIDs.E[trainNum] = world.spawnVehicle(vehicleName, spawnOffset, vehicleParameters)
         local trainEntity = world.spawnVehicle(vehicleName, spawnOffset, vehicleParameters)
         if trainEntity then
            if not world.entityExists(trainEntity) then
-             sb.logInfo("================Train Spawn Failed, Entity don't exist=================") --handle how to start over
+             sb.logInfo("================Train Spawn Failed, Entity don't exist=================")--handle how to start over
            else
-             sb.logInfo("===========================Train spawned succesfull self.currentTrainToSpawn: " .. tostring(self.currentTrainToSpawn) .. " t is ".. tostring(t) .. " entity ID: " .. tostring(trainEntity))
+             if self.logging then sb.logInfo("===========================Train spawned succesfull self.currentTrainToSpawn: " .. tostring(self.currentTrainToSpawn) .. " t is ".. tostring(t) .. " entity ID: " .. tostring(trainEntity)) end
              self.currentTrainToSpawn = self.currentTrainToSpawn + 1
              self.spawnedTrainsIDs.E[trainNum] = trainEntity
+             world.setProperty(group .. "trainsidsE_" .. tostring(trainNum) , trainEntity)
            end
         else
           sb.logInfo("================Train Spawn Failed, entity is " .. tostring(trainEntity) .. "=================") --nil=handle how to start over
         end
       else
         local trainNum = self.timetable[self.currentSpawnTimeSection][t].train
-        sb.logInfo("=================self.timetable[self.currentSpawnTimeSection][t]")
-        tprint(self.timetable[self.currentSpawnTimeSection][t])
-        sb.logInfo("Direction W, trainNum =" .. tostring(trainNum))
+        if self.logging then 
+          sb.logInfo("=================self.timetable[self.currentSpawnTimeSection][t]")
+          tprint(self.timetable[self.currentSpawnTimeSection][t])
+          sb.logInfo("Direction W, trainNum =" .. tostring(trainNum))
+        end
         --self.spawnedTrainsIDs.W[trainNum] = world.spawnVehicle(vehicleName, spawnOffset, vehicleParameters)
         local trainEntity = world.spawnVehicle(vehicleName, spawnOffset, vehicleParameters)
         if trainEntity then
           if not world.entityExists(trainEntity) then
             sb.logInfo("================Train Spawn Failed, Entity don't exist=================") --handle how to start over
           else
-            sb.logInfo("===========================Train spawned succesfull self.currentTrainToSpawn: " .. tostring(self.currentTrainToSpawn) .. " t is ".. tostring(t) .. " entity ID: " .. tostring(trainEntity))
+            if self.logging then sb.logInfo("===========================Train spawned succesfull self.currentTrainToSpawn: " .. tostring(self.currentTrainToSpawn) .. " t is ".. tostring(t) .. " entity ID: " .. tostring(trainEntity)) end
             self.currentTrainToSpawn = self.currentTrainToSpawn + 1
             self.spawnedTrainsIDs.W[trainNum] = trainEntity
+            world.setProperty(group .. "trainsidsW_" .. tostring(trainNum) , trainEntity)
           end
         else
           sb.logInfo("================Train Spawn Failed, entity is " .. tostring(trainEntity) .. "=================") --nil=handle how to start over
@@ -436,10 +482,14 @@ function spawnTrains(group)
     end
     self.currentSpawnTimeSection = self.currentSpawnTimeSection + 1
     if self.currentSpawnTimeSection <= self.numberOfSpawnTimes then
-      sb.logInfo("==========================self.currentSpawnTimeSection <= self.numberOfSpawnTimes======================")
-      sb.logInfo("self.currentSpawnTime before: " .. tostring(self.currentSpawnTime) .. " self.currentSpawnTimeSection: " .. tostring(self.currentSpawnTimeSection))
+      if self.logging then 
+        sb.logInfo("==========================self.currentSpawnTimeSection <= self.numberOfSpawnTimes======================")
+        sb.logInfo("self.currentSpawnTime before: " .. tostring(self.currentSpawnTime) .. " self.currentSpawnTimeSection: " .. tostring(self.currentSpawnTimeSection))
+      end
       self.currentSpawnTime = self.spawnTimes[self.currentSpawnTimeSection]
-      sb.logInfo("self.currentSpawnTime after: " .. tostring(self.currentSpawnTime) .. " self.currentSpawnTimeSection: " .. tostring(self.currentSpawnTimeSection))
+      if self.logging then 
+        sb.logInfo("self.currentSpawnTime after: " .. tostring(self.currentSpawnTime) .. " self.currentSpawnTimeSection: " .. tostring(self.currentSpawnTimeSection))
+      end
       self.trainsToSpawnForCurrentTime = self.trainstostart[self.currentSpawnTimeSection]
     else
       self.spawningTrains = false
@@ -450,23 +500,24 @@ function spawnTrains(group)
       storage.trainsUninit = false
       world.setProperty("stationController_file", storage.saveFile)
       standardReload()
-      
-      --self.spawnedTrainsIDs.E[trainNum]
-      --self.spawnedTrainsIDs.W[trainNum]
-      world.setProperty(storage.group .. "trainsidsE_file", self.spawnedTrainsIDs.E)
-      world.setProperty(storage.group .. "trainsidsW_file", self.spawnedTrainsIDs.W)
-      
-      sb.logInfo("=======================Train Spawn Ended============================")
-      sb.logInfo("Entity IDs of trains")
+            
+      if self.logging then 
+        sb.logInfo("=======================Train Spawn Ended============================")
+        sb.logInfo("Entity IDs of trains")
+      end
       if self.spawnedTrainsIDs.E then
-        sb.logInfo("East:")
-        tprint(self.spawnedTrainsIDs.E)
+        if self.logging then 
+          sb.logInfo("East:")
+          tprint(self.spawnedTrainsIDs.E)
+        end
       end
       if self.spawnedTrainsIDs.W then
-        sb.logInfo("West:")
-        tprint(self.spawnedTrainsIDs.W)
+        if self.logging then 
+          sb.logInfo("West:")
+          tprint(self.spawnedTrainsIDs.W)
+        end
       end
-      sb.logInfo("Nr. of trains East= " .. tostring(storage.numberOfTrainsE) .. " Nr. of trains West= " .. tostring(storage.numberOfTrainsW))
+      if self.logging then sb.logInfo("Nr. of trains East= " .. tostring(storage.numberOfTrainsE) .. " Nr. of trains West= " .. tostring(storage.numberOfTrainsW)) end
     end
   end
   
@@ -509,11 +560,15 @@ function startTestRun(_,_,numOfTestRuns,totalTestRuns,addtestruns)
   self.testrunStartFrom = totalTestRuns
   self.currentTestRun = 1
   
-  sb.logInfo("====station nr " .. tostring(storage.numInGroup) .. " group " .. storage.group .. " TEST RUN INIT=====")
-  sb.logInfo("==========TEST RUN INIT======= self.numOfTestRunTodo = " ..tostring(self.numOfTestRunTodo) .. " self.testrunStartFrom = " .. tostring(self.testrunStartFrom))
+  if self.logging then 
+    sb.logInfo("====station nr " .. tostring(storage.numInGroup) .. " group " .. storage.group .. " TEST RUN INIT=====")
+    sb.logInfo("==========TEST RUN INIT======= self.numOfTestRunTodo = " ..tostring(self.numOfTestRunTodo) .. " self.testrunStartFrom = " .. tostring(self.testrunStartFrom))
+  end
   storage.saveFile = world.getProperty("stationController_file")
   self.circularLine = storage.saveFile.global[storage.group].data.circular
-  sb.logInfo("CIRCULAR: " .. tostring(self.circularLine))
+  if self.logging then 
+    sb.logInfo("CIRCULAR: " .. tostring(self.circularLine))
+  end
   self.waitingToCloseLoop = false
   self.testRunInit = true
   self.stationsData = {}
@@ -535,12 +590,12 @@ function startTestRun(_,_,numOfTestRuns,totalTestRuns,addtestruns)
     self.stationsData.ready[i] = false
   end
   
-  sb.logInfo("ITERATION ==========================================")
+  if self.logging then sb.logInfo("ITERATION ==========================================") end
   for k,v in pairs(storage.saveFile[storage.group]) do
     --self.numOfStationsInGroup = self.numOfStationsInGroup + 1  
     index = storage.saveFile[storage.group][k].number
     members[index] = k
-    sb.logInfo("k " .. tostring(k) .. " index " .. tostring(index))
+    if self.logging then sb.logInfo("k " .. tostring(k) .. " index " .. tostring(index)) end
     if k ~= storage.uuid then
       local id = world.loadUniqueEntity(k)
       if (id ~= nil) and (id ~= 0 ) then
@@ -549,8 +604,10 @@ function startTestRun(_,_,numOfTestRuns,totalTestRuns,addtestruns)
       end
     end
   end
-  sb.logInfo("MEMBERS ==========================================")
-  tprint(members)
+  if self.logging then 
+    sb.logInfo("MEMBERS ==========================================")
+    tprint(members)
+  end
   self.testRunReady = true
   for i=2,self.numOfStationsInGroup do
     if not self.stationsData.ready[i] then
@@ -559,29 +616,12 @@ function startTestRun(_,_,numOfTestRuns,totalTestRuns,addtestruns)
       break
     end
   end
-  
-  --if self.nonReadyStations > 0 then
-    --self.testRunReady = false
-  --else
-    --self.testRunReady = true
-  --end
 
-  sb.logInfo("Stations data printed from station ")
-  tprint(self.stationsData)
-  sb.logInfo("testRunReady " .. tostring(self.testRunReady))
-  --sb.logInfo("nonReadyStations " .. tostring(self.nonReadyStations))
-  
-  sb.logInfo("NUM OF STATIONS IN GROUP " .. tostring(self.numOfStationsInGroup))
-  --storage.saveFile.global[storage.group].data.numOfStations = self.numOfStationsInGroup
-  
-  
-  
-  --local testRunIndex = self.testrunStartFrom + self.currentTestRun
-  
-  --self.grouptestrunfile.times[testRunIndex][1] = 0
-  
-  ----storage.saveFile.global[storage.group].data.uuids = {}
-  ----storage.saveFile.global[storage.group].data.uuids = deepcopy(members)
+  if self.logging then sb.logInfo("Stations data printed from station ")
+    tprint(self.stationsData)
+    sb.logInfo("testRunReady " .. tostring(self.testRunReady))
+    sb.logInfo("NUM OF STATIONS IN GROUP " .. tostring(self.numOfStationsInGroup))
+  end
   
   world.setProperty("stationController_file", storage.saveFile)
   
@@ -609,10 +649,10 @@ function testRunInit()
   
   storage.saveFile = world.getProperty("stationController_file")
   
-  sb.logInfo("====station nr " .. tostring(storage.numInGroup) .. " group " .. storage.group .. " TEST RUN STARTED=====")
+  if self.logging then sb.logInfo("====station nr " .. tostring(storage.numInGroup) .. " group " .. storage.group .. " TEST RUN STARTED=====") end
   
   self.testRunMode = true
-  sb.logInfo("CIRCULAR: " .. tostring(self.circularLine))
+  if self.logging then sb.logInfo("CIRCULAR: " .. tostring(self.circularLine)) end
   
   --self.defaultTrainset = self.settingsConfig.defaultTrainset
   --self.testVehicleName = self.settingsConfig.itemName
@@ -640,11 +680,11 @@ function testRunInit()
     
   local stopPos = getStopPos()
   
-  sb.logInfo("station nr " .. tostring(storage.numInGroup) .. " pos of connected nodes ")
-  --stopPos = world.entityPosition(stopID)
-  sb.logInfo("pos " .. tostring(stopPos))
-  tprint(stopPos)
-
+  if self.logging then sb.logInfo("station nr " .. tostring(storage.numInGroup) .. " pos of connected nodes ")
+    --stopPos = world.entityPosition(stopID)
+    sb.logInfo("pos " .. tostring(stopPos))
+    tprint(stopPos)
+  end
     --handle error of stop node not connected
 
   --SPANW CAR:
@@ -663,8 +703,10 @@ function testRunInit()
   self.timesABS = {}
   self.timesABS[1] = self.testrunT0
   
-  sb.logInfo("self.timesABS for testrun nr. " .. tostring(self.currentTestRun) .. " total testruns to do " .. tostring(self.numOfTestRunTodo))
-  tprint(self.timesABS)
+  if self.logging then 
+    sb.logInfo("self.timesABS for testrun nr. " .. tostring(self.currentTestRun) .. " total testruns to do " .. tostring(self.numOfTestRunTodo))
+    tprint(self.timesABS)
+  end
   
   self.testRuns = {}
   
@@ -672,14 +714,9 @@ function testRunInit()
   
   world.sendEntityMessage(self.testRunCarID0, "testRunModeEnabled", numStations, self.stationsData, self.stationsData.nodePos, self.circularLine)
   
-  sb.logInfo("station " .. tostring(storage.numInGroup) .. " T0 " .. tostring(self.testrunT0) )
-  
-  --local testRunIndex = self.testrunStartFrom + self.currentTestRun
-  ----self.grouptestrunfile.timesABS[testRunIndex] = {}
-  --self.grouptestrunfile.timesABS[testRunIndex][1] = self.testrunT0
+  if self.logging then sb.logInfo("station " .. tostring(storage.numInGroup) .. " T0 " .. tostring(self.testrunT0) ) end
     
   world.setProperty("stationController_file", storage.saveFile)
-  --standardReload()
 
   local testCar = self.testRunCarID0
 
@@ -689,11 +726,6 @@ function testRunInit()
   end
   
   self.testRunInit = false
-  
-  --sb.logInfo("=========================TIMES ABS:")
-  --tprint(self.grouptestrunfile.timesABS)
-  --sb.logInfo("=========================TIMES:")
-  --tprint(self.grouptestrunfile.times)
   
 end
 
@@ -709,16 +741,18 @@ function testRunMode(_,_, carID, numOfStations, T0, numOfTestRuns, totalTestRuns
   self.testRunCarID0 = carID
   self.numOfStationsInGroup = numOfStations
   self.testrunT0 = T0
-  sb.logInfo("Station nr " .. tostring(storage.numInGroup) .. " TEST RUN ON, num of stations " .. tostring(self.numOfStationsInGroup) .. " self.numOfTestRunTodo = " .. tostring(self.numOfTestRunTodo) .. " self.testrunStartFrom = " .. tostring(self.testrunStartFrom) .. " currentTestRun = " .. tostring(self.currentTestRun))
-  if storage.numInGroup == self.numOfStationsInGroup then
-    sb.logInfo("==================Last station received the TEST RUN MSG==============================")
+  if self.logging then
+    sb.logInfo("Station nr " .. tostring(storage.numInGroup) .. " TEST RUN ON, num of stations " .. tostring(self.numOfStationsInGroup) .. " self.numOfTestRunTodo = " .. tostring(self.numOfTestRunTodo) .. " self.testrunStartFrom = " .. tostring(self.testrunStartFrom) .. " currentTestRun = " .. tostring(self.currentTestRun))
+    if (storage.numInGroup == self.numOfStationsInGroup) then
+      sb.logInfo("==================Last station received the TEST RUN MSG==============================")
+    end
   end
   
 end
 
 function endTestRun(_,_)
   
-  sb.logInfo("station " .. tostring(storage.numInGroup) .. " received message test run ended ")
+  if self.logging then sb.logInfo("station " .. tostring(storage.numInGroup) .. " received message test run ended ") end
   
   storage.saveFile = world.getProperty("stationController_file")
   
@@ -734,8 +768,11 @@ function endTestRun(_,_)
         --self.testRuns[self.currentTestRun - 1] = deepcopy(self.timesABS)
         table.insert(self.testRuns, self.timesABS)
         self.timesABS = nil
-        sb.logInfo("===========Test run nr. " .. tostring(self.currentTestRun - 1) .. " completed. TestRuns table as follows:")
-        tprint(self.testRuns)
+        
+        if self.logging then 
+          sb.logInfo("===========Test run nr. " .. tostring(self.currentTestRun - 1) .. " completed. TestRuns table as follows:")
+          tprint(self.testRuns)
+        end
         
         storage.saveFile.global[storage.group].data.testrunsnum = storage.saveFile.global[storage.group].data.testrunsnum + self.numOfTestRunTodo
         storage.saveFile.global[storage.group].data.testRunsABS = self.testRuns
@@ -753,8 +790,10 @@ function endTestRun(_,_)
         
         self.testRuns[self.currentTestRun - 1] = deepcopy(self.timesABS)
         self.timesABS = nil
-        sb.logInfo("===========Test run nr. " .. tostring(self.currentTestRun - 1) .. " completed. TestRuns table as follows:")
-        tprint(self.testRuns)
+        if self.logging then 
+          sb.logInfo("===========Test run nr. " .. tostring(self.currentTestRun - 1) .. " completed. TestRuns table as follows:")
+          tprint(self.testRuns)
+        end
         
         self.testRunMode = true
         self.testRunCarID0 = world.spawnVehicle(self.testRunvehicleName, self.testRunspawnoffset, self.testRunvehicleParameters)
@@ -842,8 +881,10 @@ function calculateTimes()
       end
     end    
   end
-  sb.logInfo("times relative:")
-  tprint(times)
+  if self.logging then 
+    sb.logInfo("times relative:")
+    tprint(times)
+  end
   
   for t=1,self.numOfTestRunTodo do
     for s=1,numStations do
@@ -864,13 +905,12 @@ function calculateTimes()
   end
   
   if self.addTestRuns then
-    sb.logInfo("Adding testruns to dataset")
-    sb.logInfo("current DataSet=")
-    tprint(storage.saveFile.global[storage.group].data.testRunsTimes)
-    
-    --table.insert(storage.saveFile.global[storage.group].data.testRunsTimes, timesTidy)
-    --timesTidy = deepcopy(storage.saveFile.global[storage.group].data.testRunsTimes)
-    
+    if self.logging then 
+      sb.logInfo("Adding testruns to dataset")
+      sb.logInfo("current DataSet=")
+      tprint(storage.saveFile.global[storage.group].data.testRunsTimes)
+    end
+        
     local toappend = storage.saveFile.global[storage.group].data.testRunsTimes
     
     local arrayLen = #timesTidy
@@ -885,8 +925,10 @@ function calculateTimes()
     storage.saveFile.global[storage.group].data.testRunsTimesMAX = nil
   end
   
-  sb.logInfo("times relative(tidy):")
-  tprint(timesTidy)
+  if self.logging then 
+    sb.logInfo("times relative(tidy):")
+    tprint(timesTidy)
+  end
   
   local timesByStation = {}
   timesByStation[1] = {}
@@ -1299,82 +1341,6 @@ function update(dt)
      end
    end
    
-   if storage.trainsUninit and storage.numInGroup == 1 and storage.groupOperational then
-     if not self.spawnedTrainsIDs then
-       self.spawnedTrainsIDs = {}
-       self.spawnedTrainsIDs.E = {}
-       self.spawnedTrainsIDs.W = {}
-       sb.logInfo("storage.numberOfTrainsE = " .. tostring(storage.numberOfTrainsE))
-       sb.logInfo("storage.numberOfTrainsW = " .. tostring(storage.numberOfTrainsW))
-     end
-     if storage.numberOfTrainsE > 0 then
-       if not self.trainsUninitTimerE then
-         self.trainsUninitTimerE = 0
-         self.trainsUninitTimerET0 = world.time()
-         self.trainsUninitTimerTargetE = 4
-         self.trainsUninitTimerTargetE = self.trainsUninitTimerTargetE + 4
-         if storage.numberOfTrainsE > 1 then
-           for t=2,storage.numberOfTrainsE do
-             self.trainsUninitTimerTargetE = self.trainsUninitTimerTargetE + 4 + 4*t
-           end
-         end
-         sb.logInfo("==========================storage.trainsUninit=true===============self.trainsUninitTimerTargetE = " .. tostring(self.trainsUninitTimerTargetE) .. " self.trainsUninitTimerTargetW = " .. tostring(self.trainsUninitTimerTargetW))
-       end
-       self.trainsUninitTimerE = world.time() - self.trainsUninitTimerET0
-     else
-       storage.trainsUninitE = true
-     end
-     
-     if storage.numberOfTrainsW > 0 then
-       if not self.trainsUninitTimerW then
-         self.trainsUninitTimerW = 0
-         self.trainsUninitTimerWT0 = world.time()
-         self.trainsUninitTimerTargetW = 4
-         self.trainsUninitTimerTargetW = self.trainsUninitTimerTargetW + 4
-         if storage.numberOfTrainsW > 1 then
-           for t=2,storage.numberOfTrainsW do
-             self.trainsUninitTimerTargetW = self.trainsUninitTimerTargetW + 4 + 4*t
-           end
-         end
-         sb.logInfo("==========================storage.trainsUninit=true===============self.trainsUninitTimerTargetE = " .. tostring(self.trainsUninitTimerTargetE) .. " self.trainsUninitTimerTargetW = " .. tostring(self.trainsUninitTimerTargetW))
-       end
-       self.trainsUninitTimerW = world.time() - self.trainsUninitTimerWT0
-     else
-       storage.trainsUninitW = true
-     end     
-     
-     if (self.trainsUninitTimerE >= self.trainsUninitTimerTargetE ) then
-       sb.logInfo("==========================storage.trainsUninitE=true=============== TIMER E ENDED, Retrieving trains id (hopefully)")
-       self.trainsidsEtemp = world.getProperty(storage.group .. "trainsidsE_file")
-       if storage.numberOfTrainsE > 0 then
-         sb.logInfo("============================self.spawnedTrainsIDs.E===============")
-         sb.logInfo("before:")
-         tprint(self.spawnedTrainsIDs.E)
-         sb.logInfo("after:")
-         tprint(self.trainsidsEtemp)
-         self.spawnedTrainsIDs.E = self.trainsidsEtemp
-         storage.trainsUninitE = true
-       end
-     end
-     if (self.trainsUninitTimerW >= self.trainsUninitTimerTargetW ) then
-       sb.logInfo("==========================storage.trainsUninitW=true=============== TIMER W ENDED, Retrieving trains id (hopefully)")
-       self.trainsidsWtemp = world.getProperty(storage.group .. "trainsidsW_file")
-       if storage.numberOfTrainsW > 0 then
-         sb.logInfo("============================self.spawnedTrainsIDs.W===============")
-         sb.logInfo("before:")
-         tprint(self.spawnedTrainsIDs.W)
-         sb.logInfo("after:")
-         tprint(self.trainsidsWtemp)
-         self.spawnedTrainsIDs.W = self.trainsidsWtemp
-         storage.trainsUninitW = true
-       end
-     end
-     
-     if storage.trainsUninitE and storage.trainsUninitW then
-       storage.trainsUninit = false
-     end
-     
-   end
 end
 
 function onNodeConnectionChange(args)
@@ -1512,16 +1478,20 @@ end
 
 -- Print contents of "tbl", with indentation.
 -- "indent" sets the initial level of indentation.
-function tprint(tbl, indent)
+function tprint(tbl, indent) --debug purposes
   if not indent then indent = 0 end
-  for k, v in pairs(tbl) do
-    formatting = string.rep("  ", indent) .. k .. ": "
-    if type(v) == "table" then
-      sb.logInfo(tostring(formatting))
-      tprint(v, indent+1)
-    else
-      sb.logInfo(tostring(formatting) .. tostring(v))
+  if type(tbl) == "table" then
+    for k, v in pairs(tbl) do
+      formatting = string.rep("  ", indent) .. k .. ": "
+      if type(v) == "table" then
+        sb.logInfo(tostring(formatting))
+        tprint(v, indent+1)
+      else
+        sb.logInfo(tostring(formatting) .. tostring(v))
+      end
     end
+  else
+    sb.logInfo("not a table:" .. tostring(tbl))
   end
 end
 
