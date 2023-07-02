@@ -12,6 +12,21 @@ https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/4178b4ee
 
 https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/c0e2f220-4395-4295-b31c-ec47edf8d10f
 
+---
+# Installation
+Grab latest release from [here](https://github.com/CondensedChaos/Starbound-Rail-Train/releases)
+download either the zipped (.zip) version or the .pak version
+-If you downloaded the zipped version it has to be extracted in <Starbound folder>\mods
+-If you downloaded the .pak version just put the .pak file as it is in <Starbound folder>\mods
+
+Starbound folder is typically for Steam version: "C:\Program Files (x86)\Steam\steamapps\common\Starbound\" for the windows version
+GOG or other version are typically under either "C:\Program Files (x86)\Starbound" or "C:\Program Files\Starbound" for the windows version
+
+You will need to download and overwrite again the mod evertytime it gets updated if you download it from GitHub
+
+There's also a Steam Workshop version that gets autoupdated but you need to have a Starbound copy bought from Steam, get it [here](steamcommunity.com/sharedfiles/filedetails/?id=)
+
+---
 ## Free Mode
 In free mode the trains are crafted using the **"Trainset Configurator"** (crafted at Rail Crafting Table) and just placed on the rails.
 
@@ -38,12 +53,6 @@ Then go back to the station controller to create the schedule using the data fro
 Then you'll have to craft a train at the **Trainset Configurator** for each tran you schedule, and import the items in the Train Configurator (more in depth usage for Scheduled mode here)
 
 Catenaries and/or Chunk Loaders has to be used too in scheduled mode.
----
-# Installation
-..........................................................................
-
-..........................................................................
-
 ---
 # Reccomended mods
 ..........................................................................
