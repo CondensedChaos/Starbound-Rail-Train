@@ -15,6 +15,7 @@ https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/c0e2f220
 ---
 # Installation
 Grab latest release from [here](https://github.com/CondensedChaos/Starbound-Rail-Train/releases)
+
 download either the zipped (.zip) version or the .pak version
 -If you downloaded the zipped version it has to be extracted in <Starbound folder>\mods
 -If you downloaded the .pak version just put the .pak file as it is in <Starbound folder>\mods
