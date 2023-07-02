@@ -21,9 +21,9 @@ download either the zipped (.zip) version or the .pak version
 Zip version name: "Starbound-Rail-Train-<version>.zip"
 Pak version name: "Starbound-Rail-Train-<version>.pak"
 
--If you downloaded the zipped version it has to be extracted in <Starbound folder>\mods
+-If you downloaded the zipped version it has to be extracted in < Starbound folder >\mods
 
--If you downloaded the .pak version just put the .pak file as it is in <Starbound folder>\mods
+-If you downloaded the .pak version just put the .pak file as it is in < Starbound folder >\mods
 
 Starbound folder is typically for Steam version: "C:\Program Files (x86)\Steam\steamapps\common\Starbound\" for the windows version
 
@@ -35,9 +35,9 @@ Steam Workshop version that gets autoupdated is also available but you need to h
 
 In the [releases tab](https://github.com/CondensedChaos/Starbound-Rail-Train/releases) there's also an instance world that includes a ready-made demo train network of two lines that can be used to understand better how the mod works.
 
-it's called "raildemo.zip", to install it you have to open the downloaded zip file and unzip the content of the folder named as "1 - ..." in <Starbound folder>\mods
+it's called "raildemo.zip", to install it you have to open the downloaded zip file and unzip the content of the folder named as "1 - ..." in < Starbound folder >\mods
 
-and the content of folder named as "2 - ..." in <Starbound folder>\universe\storage
+and the content of folder named as "2 - ..." in < Starbound folder >\universe\storage
 
 To access the demo just craft a "rail demo world teleporter" from the empty-hand (press C in-game) crafting.
 
