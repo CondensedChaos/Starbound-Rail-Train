@@ -45,7 +45,7 @@ Place the teleporter and warp in the demo-world.
 
 When warped you will find yourself at the first station of the network, trains are stopped when entering the first time, just open any "Station Controller" (refer to components) and go in the "Lines" tab and click "Start trains" and select both "Line A" and "Line B", trains will be spawned according to a schedule that was made on my computer, so running times might be different because of system performance and lag. If you want you can use this netowrk to make your own schedule.
 
-Refer to "rail-demo" for more informations
+Refer to [rail-demo](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#rail-demo) for more informations
 
 ---
 ## Free Mode
