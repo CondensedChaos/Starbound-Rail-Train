@@ -17,10 +17,13 @@ https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/c0e2f220
 Grab latest release from [here](https://github.com/CondensedChaos/Starbound-Rail-Train/releases)
 
 download either the zipped (.zip) version or the .pak version
+
 -If you downloaded the zipped version it has to be extracted in <Starbound folder>\mods
+
 -If you downloaded the .pak version just put the .pak file as it is in <Starbound folder>\mods
 
 Starbound folder is typically for Steam version: "C:\Program Files (x86)\Steam\steamapps\common\Starbound\" for the windows version
+
 GOG or other version are typically under either "C:\Program Files (x86)\Starbound" or "C:\Program Files\Starbound" for the windows version
 
 You will need to download and overwrite again the mod evertytime it gets updated if you download it from GitHub
