@@ -33,7 +33,7 @@ You will need to download and overwrite again the mod evertytime it gets updated
 
 Steam Workshop version that gets autoupdated is also available but you need to have a Starbound copy bought from Steam, get it [here](steamcommunity.com/sharedfiles/filedetails/?id=)
 
-In the [releases tab](https://github.com/CondensedChaos/Starbound-Rail-Train/releases) there's also an instance world that includes a ready-made demo train network of two lines that can be used to understand beter how the mod works.
+In the [releases tab](https://github.com/CondensedChaos/Starbound-Rail-Train/releases) there's also an instance world that includes a ready-made demo train network of two lines that can be used to understand better how the mod works.
 
 it's called "raildemo.zip", to install it you have to open the downloaded zip file and unzip the content of the folder named as "1 - ..." in <Starbound folder>\mods
 
