@@ -3,6 +3,7 @@ require "/scripts/rect.lua"
 function init()
   self.listOfCars = root.assetJson("/objects/crafting/trainConfigurator/listOfCars.json")
   self.settingsConfig = root.assetJson("/interface/linkedTrain/trainConfigurator/settings.json")
+  self.logging = self.settingsConfig.logging
   
   self.placementRange = config.getParameter("placementRange")
   self.placementBounds = config.getParameter("placementBounds")
@@ -75,8 +76,13 @@ function init()
 	  for j=1,numberOfDecals do
 		currentDecal = decalnames[j]
 		currentDecalSprite = decalsTable[currentDecal]
+        local renderdecal0 = self.listOfCars[vehicleName].decal0rendered[currentDecal]
 		if currentDecalSprite == "0" then
-		  self.previewImgsArray[i][3+j] = tostring(self.imgPath) .. "empty.png"
+          if renderdecal0 then
+            self.previewImgsArray[i][3+j] = tostring(self.imgPath) .. tostring(vehicleName) .. "/decal" .. tostring(currentDecal) .. "/0.png"
+          else
+            self.previewImgsArray[i][3+j] = tostring(self.imgPath) .. "empty.png"
+          end
 		else
 		  self.previewImgsArray[i][3+j] = tostring(self.imgPath) .. tostring(vehicleName) .. "/decal" .. tostring(currentDecal) .. "/" .. tostring(currentDecalSprite) .. ".png"
 		end

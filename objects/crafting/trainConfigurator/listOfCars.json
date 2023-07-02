@@ -14,11 +14,12 @@
     "hasPantograph" : true, //if it has a pantograph sprite
     "hasDecals" : true, //if it has decals sprites
     "specular" : true, //if mirroring the sprites produces the same image
-    "decalNames" : ["A", "B", "C"],//optional, decals
+    "decalNames" : ["A", "B", "C", "D"],//optional, decals
     "decals" : { // [[<decal1NameString> , <decal0> , ..<decalN], [<decal2NameString> , <decal0> , ..<decalN>]]
       "A" : [0, 1, 2, 3, 4], //<decal1String><decal0> is the sprite of decal1 with no decal
       "B" : [0, 1, 2, 3, 4],
-      "C" : [0, 1]
+      "C" : [0, 1],
+      "D" : [0, 1]
     },
     "DisplayNames" : { //human-readable names for its parts, those will show up in train configurator
       "color" : "Bottom",
@@ -26,13 +27,21 @@
       "decals" : {
         "A" : "Roof",
         "B" : "Center",
-        "C" : "Graffiti"
+        "C" : "Graffiti",
+        "D" : "Wheels"
       }
     },
     "decalsFlippable" : { //similar to "specular": true if the decal sprite can be mirrored
       "A" : [false, true, true, true, true],
       "B" : [false, true, true, true, true],
-      "C" : [false, false]
+      "C" : [false, false],
+      "D" : [false, false]
+    },
+    "decal0rendered" : {
+      "A" : false,
+      "B" : false,
+      "C" : false,
+      "D" : true
     }
   },   
   "XXLSubwayTram-linked" : {
@@ -47,11 +56,12 @@
     "hasPantograph" : true, //if it has a pantograph sprite
     "hasDecals" : true, //if it has decals sprites
     "specular" : true, //if mirroring the sprites produces the same image
-    "decalNames" : ["A", "B", "C"],
+    "decalNames" : ["A", "B", "C", "D"],
     "decals" : {
       "A" : [0, 1, 2, 3, 4], 
       "B" : [0, 1, 2, 3, 4],
-      "C" : [0, 1]
+      "C" : [0, 1],
+      "D" : [0, 1]
     },
     "DisplayNames" : { //human-readable names for its parts, those will show up in train configurator
       "color" : "Bottom",
@@ -59,13 +69,21 @@
       "decals" : {
         "A" : "Roof",
         "B" : "Center",
-        "C" : "Graffiti"
+        "C" : "Graffiti",
+        "D" : "Wheels"
       }
     },
     "decalsFlippable" : {
       "A" : [false, true, true, true, true],
       "B" : [false, true, true, true, true],
-      "C" : [false, false]
+      "C" : [false, false],
+      "D" : [false, false]
+    },
+    "decal0rendered" : {
+      "A" : false,
+      "B" : false,
+      "C" : false,
+      "D" : true
     }
   } 
 

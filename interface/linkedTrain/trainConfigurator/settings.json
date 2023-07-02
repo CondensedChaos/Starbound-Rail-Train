@@ -12,11 +12,12 @@
       "pantographVisibile" : true,
       "doorLocked" : false,
       "reversed" : false,
-      "decalNames" : ["A", "B", "C"],
+      "decalNames" : ["A", "B", "C", "D"],
       "decals": {
         "A" : 0,
         "B" : 0,
-        "C" : 1
+        "C" : 0,
+        "D" : 0
       }
    },
    {
@@ -27,11 +28,12 @@
       "pantographVisibile" : false,
       "doorLocked" : false,
       "reversed" : false,
-      "decalNames" : ["A", "B", "C"],
+      "decalNames" : ["A", "B", "C", "D"],
       "decals": {
         "A" : 0,
         "B" : 0,
-        "C" : 0
+        "C" : 0,
+        "D" : 0
       }
    },
    {
@@ -42,11 +44,12 @@
       "pantographVisibile" : true,
       "doorLocked" : false,
       "reversed" : true,
-      "decalNames" : ["A", "B", "C"],
+      "decalNames" : ["A", "B", "C", "D"],
       "decals": {
         "A" : 0,
         "B" : 0,
-        "C" : 0
+        "C" : 0,
+        "D" : 0
       }
    }
   ]

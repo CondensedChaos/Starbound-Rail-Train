@@ -390,6 +390,7 @@ function init()
 
   self.listOfCars = root.assetJson("/objects/crafting/trainConfigurator/listOfCars.json")
   self.settingsConfig = root.assetJson("/interface/linkedTrain/trainConfigurator/settings.json")
+  self.logging = self.settingsConfig.logging
   
   self.sounds = config.getParameter("sounds")
   
@@ -402,7 +403,7 @@ function init()
   
   --self.numberOfVehicleTypes = 0
   --for _ in pairs(self.listOfCars) do self.numberOfVehicleTypes = self.numberOfVehicleTypes + 1 end
-  sb.logInfo("\nself.numberOfVehicleTypes " .. tostring(self.numberOfVehicleTypes))
+  if self.logging then sb.logInfo("\nself.numberOfVehicleTypes " .. tostring(self.numberOfVehicleTypes)) end
   
   self.defaultTrainset = self.settingsConfig.defaultTrainset
   self.itemName = self.settingsConfig.itemName
@@ -438,10 +439,12 @@ function init()
   
   self.numberOfCars = tonumber(self.numberOfCars)
   
-  sb.logInfo("\nTrainset ")
-  tprint(self.trainSet)
-  sb.logInfo("\nTrainset INDEXED ")
-  tprint(self.trainsetIndexed)
+  if self.logging then 
+    sb.logInfo("\nTrainset ")
+    tprint(self.trainSet)
+    sb.logInfo("\nTrainset INDEXED ")
+    tprint(self.trainsetIndexed)
+  end
   
   widget.setText("valuenumberOfCars", self.numberOfCars)
   for i=1,self.numberOfCars do
@@ -516,7 +519,7 @@ function getDefaultValues(vehicleName)
       end
     end
 	
-    tprint(default)
+    if self.logging then tprint(default) end
 	
     return default
   end
@@ -609,7 +612,7 @@ function update(dt)
 end
 
 function trainsetToIndexes(indata)
-    sb.logInfo("\ntrainsetToIndexes() called")
+    if self.logging then sb.logInfo("\ntrainsetToIndexes() called") end
 
   local data = {}
   
@@ -731,17 +734,18 @@ function loadTrainsetButtonPressed(widgetName, widgetData)
   widget.setText("valuenumberOfCars", self.numberOfCars)
   local dump = "\n================stuff got from objects in variables==========="
   dump = dump .. "\nself.numberOfCars " .. tostring(self.numberOfCars)
-  sb.logInfo(tostring(dump))
-  --sb.logInfo("\nself.trainSet ")
-  --sb.logInfo("\n")
-  --tprint(self.trainSet)
-  sb.logInfo("\nitem descriptor ")
-  sb.logInfo("\n")
-  tprint(item)
-  sb.logInfo("\nitem config ")
-  sb.logInfo("\n")
-  tprint(itemConfig)
-  
+  if self.logging then 
+    sb.logInfo(tostring(dump))
+    --sb.logInfo("\nself.trainSet ")
+    --sb.logInfo("\n")
+    --tprint(self.trainSet)
+    sb.logInfo("\nitem descriptor ")
+    sb.logInfo("\n")
+    tprint(item)
+    sb.logInfo("\nitem config ")
+    sb.logInfo("\n")
+    tprint(itemConfig)
+  end
   
   self.editingExistingItem = true
   
@@ -750,15 +754,17 @@ end
 function saveTrainsetButtonPressed(widgetName, widgetData)
 
   local item = world.containerItemAt(pane.containerEntityId(), 0)
-  
-  local dump = "\n================BEFORE stuff got from objects in variables SAVE TRAINSET==========="
-  dump = dump .. "\nself.numberOfCars " .. tostring(self.numberOfCars)
-  sb.logInfo(tostring(dump))
-  --sb.logInfo("\nself.trainSet ")
-  --sb.logInfo("\n")
-  --tprint(self.trainSet)
-  sb.logInfo("\nitem descriptor ")
-  sb.logInfo("\n")
+
+  if self.logging then
+    local dump = "\n================BEFORE stuff got from objects in variables SAVE TRAINSET==========="
+    dump = dump .. "\nself.numberOfCars " .. tostring(self.numberOfCars)
+    sb.logInfo(tostring(dump))
+    --sb.logInfo("\nself.trainSet ")
+    --sb.logInfo("\n")
+    --tprint(self.trainSet)
+    sb.logInfo("\nitem descriptor ")
+    sb.logInfo("\n")
+  end
   
   item.parameters.numberOfCars = self.numberOfCars
   
@@ -766,17 +772,18 @@ function saveTrainsetButtonPressed(widgetName, widgetData)
   
   item.parameters.trainsetData = deepcopy(self.trainSet)
   
-  tprint(item)
-  
-  local dump = "\n================AFTER stuff got from objects in variables SAVE TRAINSET==========="
-  dump = dump .. "\nself.numberOfCars " .. tostring(self.numberOfCars)
-  sb.logInfo(tostring(dump))
-  --sb.logInfo("\nself.trainSet ")
-  --sb.logInfo("\n")
-  --tprint(self.trainSet)
-  sb.logInfo("\nitem descriptor ")
-  sb.logInfo("\n")
-  tprint(item)
+  if self.logging then
+      tprint(item) 
+    local dump = "\n================AFTER stuff got from objects in variables SAVE TRAINSET==========="
+    dump = dump .. "\nself.numberOfCars " .. tostring(self.numberOfCars)
+    sb.logInfo(tostring(dump))
+    --sb.logInfo("\nself.trainSet ")
+    --sb.logInfo("\n")
+    --tprint(self.trainSet)
+    sb.logInfo("\nitem descriptor ")
+    sb.logInfo("\n")
+    tprint(item)
+  end
 
   world.containerTakeAt(pane.containerEntityId(), 0)
   
@@ -863,7 +870,7 @@ end
 
 function displayCarData(TrainSetData, indexedTrainset, carNumber)
 
-sb.logInfo("\ndisplaycardata() car N " .. tostring(carNumber) .. "called")
+  if self.logging thensb.logInfo("\ndisplaycardata() car N " .. tostring(carNumber) .. "called") end
 
   local vehicleName = indexedTrainset[carNumber].vehicleName
   local hasPantograph = self.listOfCars[vehicleName].hasPantograph
@@ -1060,7 +1067,7 @@ function debugButton(widgetName, widgetData)
 	--sb.logInfo("\nitemConfig ")
 	--tprint(itemConfig)
   else
-    sb.logInfo(tostring("item slot looks empty"))
+    if self.logging then sb.logInfo(tostring("item slot looks kinda empty")) end
   end
   
   --if self.listOfCars then
@@ -1070,8 +1077,10 @@ function debugButton(widgetName, widgetData)
   --else
     --sb.logInfo("\n failed to load /objects/crafting/trainConfigurator/listOfCars.json")
   --end
-  sb.logInfo("\nself.trainset ")
-  tprint(self.trainSet)
+  if self.logging then
+    sb.logInfo("\nself.trainset ")
+    tprint(self.trainSet)
+  end
 
   widget.setVisible("CurrentCarNumberLabel", true)
   widget.setVisible("CurrentCarNumberValue", true)
@@ -1108,24 +1117,30 @@ function debugButton(widgetName, widgetData)
   
   if self.editingCar then
     local vehicleName = self.trainSet[self.editingCar].name
-    sb.logInfo("\nvehicle name " .. tostring(vehicleName))
+    if self.logging then sb.logInfo("\nvehicle name " .. tostring(vehicleName)) end
     local previewImage = updateImage(self.editingCar)
-    sb.logInfo("\npreview image " .. tostring(previewImage))
+    if self.logging then sb.logInfo("\npreview image " .. tostring(previewImage)) end
     local numberOfColors = #self.listOfCars[vehicleName].colors
-    sb.logInfo("\nnumber of colors " .. tostring(numberOfColors))
+    if self.logging then sb.logInfo("\nnumber of colors " .. tostring(numberOfColors)) end
     local numberOfCockpitColors = #self.listOfCars[vehicleName].cockpitColors
-    sb.logInfo("\nnumber of cock;) pit colors " .. tostring(numberOfCockpitColors))
+    if self.logging then sb.logInfo("\nnumber of cock;) pit colors " .. tostring(numberOfCockpitColors)) end
     local numberOfDecals = #self.listOfCars[vehicleName].decalNames
-    sb.logInfo("\nnumber of decals " .. tostring(numberOfDecals))
+    if self.logging then sb.logInfo("\nnumber of decals " .. tostring(numberOfDecals)) end
     local colorsTable = self.listOfCars[vehicleName].colors
-     sb.logInfo("\ncolorstable ")
-     tprint(colorsTable)
+    if self.logging then 
+      sb.logInfo("\ncolorstable ")
+      tprint(colorsTable)
+    end
     local cockpitColorsTable = self.listOfCars[vehicleName].cockpitColors
-    sb.logInfo("\ncock pit colors table ")
-    tprint(cockpitColorsTable)
+    if self.logging then 
+      sb.logInfo("\ncock pit colors table ")
+      tprint(cockpitColorsTable)
+    end
     local decalsTable = self.listOfCars[vehicleName].decals
-    sb.logInfo("\ndecals table ")
-    tprint(decalsTable)
+    if self.logging then 
+      sb.logInfo("\ndecals table ")
+      tprint(decalsTable)
+    end
   end
   
 end
@@ -1187,8 +1202,13 @@ function getImages(carNumber, TrainSetData)
 	for k=1,decalsNumber do
 	  local currentDecal = tostring(decalnames[k])
 	  local currentDecalSprite = decalsTable[currentDecal]
+      local renderdecal0 = self.listOfCars[vehicleName].decal0rendered[currentDecal]
 	  if currentDecalSprite == 0 then
-	    previewImgsArray["decal" .. tostring(k)] = self.paneImgPath .. "empty.png" 
+        if renderdecal0 then
+          previewImgsArray["decal" .. tostring(k)] = self.paneImgPath .. vehicleName .. "/decal" .. currentDecal .. "/0.png"
+        else
+          previewImgsArray["decal" .. tostring(k)] = self.paneImgPath .. "empty.png" 
+        end
       else
 	    previewImgsArray["decal" .. tostring(k)] = self.paneImgPath .. vehicleName .. "/decal" .. currentDecal .. "/" .. tostring(currentDecalSprite) .. ".png"
       end	  
@@ -1242,7 +1262,7 @@ function reloadCaptions()
  end
  
  function discard()
-   sb.logInfo("\ndiscard function ")
+   if self.logging then sb.logInfo("\ndiscard function ") end
    --reloadCaptions()
    self.trainsetTemp = {}
    self.trainsetTemp = deepcopy(self.trainSet)

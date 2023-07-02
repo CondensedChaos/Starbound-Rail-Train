@@ -180,6 +180,9 @@ function init()
   self.uuid = config.getParameter("uuid")
   self.slottedItem = config.getParameter("slottedItem")
   
+  self.settingsConfig = root.assetJson("/interface/linkedTrain/trainConfigurator/settings.json")
+  self.logging = self.settingsConfig.logging
+  
   self.groupVehiclesFile = world.getProperty("stationController_vehicles_file")
   if self.groupVehiclesFile == nil then
     self.groupVehiclesFile = {}
@@ -215,10 +218,11 @@ function init()
 	widget.setText("mainOverlay.numInGroupValue", "^green;" .. tostring(numInGroup) .. "^reset;")
   end
   
-  sb.logInfo("GUI INTERFACE OPENED")
-  sb.logInfo("UUID IS " .. tostring(self.uuid))
-  tprint(self.saveFile)
-  
+  if self.logging then
+    sb.logInfo("GUI INTERFACE OPENED")
+    sb.logInfo("UUID IS " .. tostring(self.uuid))
+    tprint(self.saveFile)
+  end
 end
 
 function update(dt)
@@ -323,7 +327,7 @@ function update(dt)
   
   if self.reloadDataTimerSet then
     self.reloadDataTimer = world.time() - self.reloadDataTimerT0
-    sb.logInfo("update dt timer=" .. tostring(self.reloadDataTimer))
+    if self.logging then sb.logInfo("update dt timer=" .. tostring(self.reloadDataTimer)) end
     if self.reloadDataTimer >= 4 then
       self.reloadDataTimerSet = false
       --sb.logInfo("RELOAD TIMER ENDED T=" .. tostring(world.time()))
@@ -334,7 +338,7 @@ function update(dt)
   
   if self.reloadDataTimer1Set then
     self.reloadDataTimer1 = world.time() - self.reloadDataTimer1T0
-    sb.logInfo("update dt timer=" .. tostring(self.reloadDataTimer1))
+    if self.logging then sb.logInfo("update dt timer=" .. tostring(self.reloadDataTimer1)) end
     if self.reloadDataTimer1 >= 4 then
       self.reloadDataTimer1Set = false
       --sb.logInfo("RELOAD TIMER ENDED T=" .. tostring(world.time()))
@@ -449,7 +453,7 @@ function groupStationsButtonPressed(widgetName, widgetData)
       
     end
     
-    tprint(membersString)
+    if self.logging then tprint(membersString) end
     
     ------------------
     
@@ -507,7 +511,7 @@ end
 
 function getPlanetName()
   local worldID = player.worldId()
-  sb.logInfo(tostring(worldID))
+  if self.logging then sb.logInfo(tostring(worldID)) end
   
   --local currsys = celestial.currentSystem()
   --tprint(currsys)
@@ -519,7 +523,7 @@ function getPlanetName()
   local planetname
   
   if worldID:sub(1,14) == "CelestialWorld" then
-    sb.logInfo("Is a celestial world")
+    if self.logging then sb.logInfo("Is a celestial world") end
     local stopindex
     local stopindex2
     local stopindex3
@@ -532,7 +536,7 @@ function getPlanetName()
     for i=16,#worldIDTable do
       if worldIDTable[i] == ":" then
         stopindex = i
-        sb.logInfo("stopindex " .. tostring(stopindex))
+        if self.logging then sb.logInfo("stopindex " .. tostring(stopindex)) end
         coord1 = tonumber(worldID:sub(16, stopindex-1))
         break
       end
@@ -540,7 +544,7 @@ function getPlanetName()
     for i=stopindex+1,#worldIDTable do
       if worldIDTable[i] == ":" then
         stopindex2 = i
-        sb.logInfo("stopindex " .. tostring(stopindex2))
+        if self.logging then sb.logInfo("stopindex " .. tostring(stopindex2)) end
         coord2 = tonumber(worldID:sub(stopindex+1, stopindex2-1))
         break
       end
@@ -548,7 +552,7 @@ function getPlanetName()
     for i=stopindex2+1,#worldIDTable do
       if worldIDTable[i] == ":" then
         stopindex3 = i
-        sb.logInfo("stopindex " .. tostring(stopindex3))
+        if self.logging then sb.logInfo("stopindex " .. tostring(stopindex3)) end
         coord3 = tonumber(worldID:sub(stopindex2+1, stopindex3-1))
         break
       end
@@ -572,9 +576,11 @@ function getPlanetName()
     end
   
     local celestialCoord = {satellite=satellitecoords, planet=planetcoords, location ={coord1,coord2,coord3}}
-    sb.logInfo("rebuilt coords:")
-    tprint(celestialCoord)
-  
+    if self.logging then 
+      sb.logInfo("rebuilt coords:")
+      tprint(celestialCoord)
+    end
+    
     planetname = celestial.planetName(celestialCoord)
   
     --sb.logInfo(tostring(planetname))
@@ -611,7 +617,7 @@ function debug1ButtonPressed()
   
   local planetName = getPlanetName()
   
-  sb.logInfo(tostring(planetName))
+  if self.logging then sb.logInfo(tostring(planetName)) end
   
   --local uuid = ""
   --sb.logInfo("player UUID: " .. uuid)
@@ -681,8 +687,10 @@ function importButtonPressed(widgetName, widgetData)
     end
     local newsavefile = slottedItem.parameters.savefile
     local newvehiclefile = slottedItem.parameters.vehiclesfile
-    sb.logInfo("===================================================================================")
-    tprint(newsavefile)
+    if self.logging then 
+      sb.logInfo("===================================================================================")
+      tprint(newsavefile)
+    end
     player.giveItem(slottedItem)
     widget.setItemSlotItem(slot_widget, nil)
     self.saveFile = deepcopy(newsavefile)
@@ -721,7 +729,7 @@ function saveBackupFileButtonPressed(widgetName, widgetData)
   itemDescriptor.parameters.savefile = self.saveFile
   itemDescriptor.parameters.vehiclesfile = self.groupVehiclesFile
   itemDescriptor.parameters.description = "Contains trains systems data of Planet " .. itemDescriptor.parameters.planetname
-  tprint(itemDescriptor)
+  if self.logging then tprint(itemDescriptor) end
   player.giveItem(itemDescriptor)
 end
 
@@ -735,7 +743,7 @@ function addTrainButtonPressed(widgetName, widgetData)
   local stationslistname = "timetableOverlay.addTrainOverlay.stationSelectScrollArea.stationSelectList"
   
   self.saveFile = world.getProperty("stationController_file")
-  tprint(self.saveFile.global[self.groupEditing].data)
+  if self.logging then tprint(self.saveFile.global[self.groupEditing].data) end
   
   widget.setVisible("timetableOverlay.addTrainOverlay", true)
   widget.setVisible("timetableOverlay.trainSettingsEastOverlay",false)
@@ -855,7 +863,7 @@ function directionRadioGroupCallback(id)
   local stationslistname = "timetableOverlay.addTrainOverlay.stationSelectScrollArea.stationSelectList"
   if id == "0" then
     self.trainToAdd[1] = "E"
-	tprint(self.trainToAdd)
+	if self.logging then tprint(self.trainToAdd) end
     if not self.saveFile.global[self.groupEditing].data.circular then
       local lastStation = #self.saveFile.global[self.groupEditing].data.testRunsTimesMAX
       if self.trainToAdd[2] == lastStation then
@@ -873,7 +881,7 @@ function directionRadioGroupCallback(id)
   end
   if id == "1" then
     self.trainToAdd[1] = "W"
-	tprint(self.trainToAdd)
+	if self.logging then tprint(self.trainToAdd) end
     if not self.saveFile.global[self.groupEditing].data.circular then
       local lastStation = #self.saveFile.global[self.groupEditing].data.testRunsTimesMAX
       if self.trainToAdd[2] == 1 then
@@ -905,7 +913,7 @@ function timeEnterKey(widgetName, widgetData)
     --widget.setText("timetableOverlay.addTrainOverlay.timeTextBox","0")
   --end
   self.trainToAdd[3] = tonumber(startTime) or 0
-  tprint(self.trainToAdd)
+  if self.logging then tprint(self.trainToAdd) end
 end
 
 function timecallback(widgetName, widgetData)
@@ -917,7 +925,7 @@ function timecallback(widgetName, widgetData)
     --widget.setText("timetableOverlay.addTrainOverlay.timeTextBox","0")
   --end
   self.trainToAdd[3] = tonumber(startTime) or 0
-  tprint(self.trainToAdd)
+  if self.logging then tprint(self.trainToAdd) end
 end
 
 function setTimetableButtonPressed(widgetName, widgetData)
@@ -1066,7 +1074,7 @@ function makeTrainList(direction, numoftrains)
     listname = self.trainsWestListName
   end
   
-  sb.logInfo("Make train list " .. direction .. " numtrains=" .. tostring(numtrains))
+  if self.logging then sb.logInfo("Make train list " .. direction .. " numtrains=" .. tostring(numtrains)) end
   
   for t=1,numtrains do
     local listItem = string.format("%s.%s",listname, widget.addListItem(listname))
@@ -1104,9 +1112,10 @@ function trainsListSelected(widgetName, widgetData)
 	
 	self.editingTrain = itemData
 	--data format for widget array : {trainNum,direction}
-    sb.logInfo("==============self.editingTrain:")
-    tprint(self.editingTrain)
-	
+    if self.logging then 
+      sb.logInfo("==============self.editingTrain:")
+      tprint(self.editingTrain)
+	end
 	self.viewingAtrain = true
 	
 	widget.setVisible("timetableOverlay.addTrainOverlay", false)
@@ -1115,15 +1124,17 @@ function trainsListSelected(widgetName, widgetData)
 	local direction = itemData[2]
 	local speedsArray
 	local stopsLenArray
-    sb.logInfo("widgetName")
-    sb.logInfo(tostring(widgetName))
+    if self.logging then 
+      sb.logInfo("widgetName")
+      sb.logInfo(tostring(widgetName))
+    end
     
     if widgetName == "trainsWestList" then
 	  speedsArray = self.saveFile.global[self.groupEditing].data.trainsWest.speeds[trainNum]
 	  stopsLenArray = self.saveFile.global[self.groupEditing].data.trainsWest.stopsLen[trainNum]
       if (not speedsArray) or (not stopsLenArray) then
         --speedsArray = self.saveFile.global[self.groupEditing].data.trainsEast.speeds[tostring(trainNum)]
-        sb.logInfo("=========ARRAYS MALFORMED=======")
+        if self.logging then sb.logInfo("=========ARRAYS MALFORMED=======") end
         rebuildDataArrays("E")
         self.resumewidgedname = widgetName
         widget.setVisible("timetableOverlay.loadingOverlay", true)
@@ -1135,15 +1146,17 @@ function trainsListSelected(widgetName, widgetData)
         widget.setText("timetableOverlay.loadingOverlay.selectedTrainLabel","Train ^red;" .. itemData[1] .. "-" .. itemData[2] .. "^reset;:")
         return
       end
-      sb.logInfo("=======================----------W------===================")
-      sb.logInfo(tostring(speedsArray))
-      sb.logInfo(tostring(stopsLenArray))
-      sb.logInfo("self.groupEditing")
-      sb.logInfo(tostring(self.groupEditing))
-      sb.logInfo("trainNum")
-      sb.logInfo(tostring(trainNum))
-      tprint(self.saveFile.global[self.groupEditing].data.trainsWest.speeds[trainNum])
-      tprint(self.saveFile.global[self.groupEditing].data.trainsWest.speeds[tostring(trainNum)])
+      if self.logging then 
+        sb.logInfo("=======================----------W------===================")
+        sb.logInfo(tostring(speedsArray))
+        sb.logInfo(tostring(stopsLenArray))
+        sb.logInfo("self.groupEditing")
+        sb.logInfo(tostring(self.groupEditing))
+        sb.logInfo("trainNum")
+        sb.logInfo(tostring(trainNum))
+        tprint(self.saveFile.global[self.groupEditing].data.trainsWest.speeds[trainNum])
+        tprint(self.saveFile.global[self.groupEditing].data.trainsWest.speeds[tostring(trainNum)])
+      end
 	  widget.setVisible("timetableOverlay.trainsEastDataScrollArea", false)
 	  widget.setVisible("timetableOverlay.trainsWestDataScrollArea", true)
 	  widget.setVisible("timetableOverlay.trainSettingsWestOverlay", true)
@@ -1160,7 +1173,7 @@ function trainsListSelected(widgetName, widgetData)
       stopsLenArray = self.saveFile.global[self.groupEditing].data.trainsEast.stopsLen[trainNum]
       if (not speedsArray) or (not stopsLenArray) then
         --speedsArray = self.saveFile.global[self.groupEditing].data.trainsEast.speeds[tostring(trainNum)]
-        sb.logInfo("=========ARRAYS MALFORMED=======")
+        if self.logging then sb.logInfo("=========ARRAYS MALFORMED=======") end
         rebuildDataArrays("E")
         self.resumewidgedname = widgetName
         widget.setVisible("timetableOverlay.loadingOverlay", true)
@@ -1172,15 +1185,17 @@ function trainsListSelected(widgetName, widgetData)
         widget.setText("timetableOverlay.loadingOverlay.selectedTrainLabel","Train ^red;" .. itemData[1] .. "-" .. itemData[2] .. "^reset;:")
         return
       end
-      sb.logInfo("=======================-------E---------===================")
-      sb.logInfo(tostring(speedsArray))
-      sb.logInfo(tostring(stopsLenArray))
-      sb.logInfo("self.groupEditing")
-      sb.logInfo(tostring(self.groupEditing))
-      sb.logInfo("trainNum")
-      sb.logInfo(tostring(trainNum))
-      tprint(self.saveFile.global[self.groupEditing].data.trainsEast.speeds[trainNum])
-      tprint(self.saveFile.global[self.groupEditing].data.trainsEast.speeds[tostring(trainNum)])
+      if self.logging then 
+        sb.logInfo("=======================-------E---------===================")
+        sb.logInfo(tostring(speedsArray))
+        sb.logInfo(tostring(stopsLenArray))
+        sb.logInfo("self.groupEditing")
+        sb.logInfo(tostring(self.groupEditing))
+        sb.logInfo("trainNum")
+        sb.logInfo(tostring(trainNum))
+        tprint(self.saveFile.global[self.groupEditing].data.trainsEast.speeds[trainNum])
+        tprint(self.saveFile.global[self.groupEditing].data.trainsEast.speeds[tostring(trainNum)])
+      end
 	  widget.setVisible("timetableOverlay.trainsWestDataScrollArea", false)
 	  widget.setVisible("timetableOverlay.trainsEastDataScrollArea", true)
 
@@ -1201,7 +1216,7 @@ function trainsListSelected(widgetName, widgetData)
 end
 
 function rebuildDataArrays(direction)
-  sb.logInfo("rebuildDataArrays called direction=",direction)
+  if self.logging then sb.logInfo("rebuildDataArrays called direction=",direction) end
   local dataname
   local numtrains
   local rebuildspeed
@@ -1221,11 +1236,11 @@ function rebuildDataArrays(direction)
   if numtrains>=1 then
     if not speedsArray[1] then
       rebuildspeed = true
-      sb.logInfo("rebuildspeeds")
+      if self.logging then sb.logInfo("rebuildspeeds") end
     end
     if not stopsArray[1] then
       rebuiltops = true
-      sb.logInfo("rebuildstops")
+      if self.logging then sb.logInfo("rebuildstops") end
     end
   end
   local newspeedsarray
@@ -1251,7 +1266,7 @@ function rebuildDataArrays(direction)
   self.reloadDataTimer = 0
   self.reloadDataTimerT0 = world.time()
   self.reloadDataTimerSet = true
-  sb.logInfo("RELOAD TIMER ENGAGED T0=" .. tostring(self.reloadDataTimerT0))
+  if self.logging then sb.logInfo("RELOAD TIMER ENGAGED T0=" .. tostring(self.reloadDataTimerT0)) end
   --while self.reloadDataTimer < 15 do
     --self.reloadDataTimer = world.time() - self.reloadDataTimerT0
     --sb.logInfo("RELOAD TIMER=".. tostring(self.reloadDataTimer) .. " world.time()=" .. tostring(world.time()))
@@ -1267,7 +1282,7 @@ end
 
 function waiting()
   while true do
-    util.run(60,sb.logInfo("WAITING"))
+    util.run(60, sb.logInfo("WAITING"))
     coroutine.yield()
   end
 end
@@ -1287,7 +1302,7 @@ end
 
 function deleteTrainComfirmButtonPressed(widgetName, widgetData)
  
-  sb.logInfo("delete button pressed")
+  if self.logging then sb.logInfo("delete button pressed") end
   
   self.groupVehiclesFile = world.getProperty("stationController_vehicles_file")
   self.saveFile = world.getProperty("stationController_file")
@@ -1296,7 +1311,7 @@ function deleteTrainComfirmButtonPressed(widgetName, widgetData)
   local direction = self.editingTrain[2]
   local dataName
   
-  sb.logInfo("numberOfTrainsE=" .. tostring(self.saveFile.global[self.groupEditing].data.numberOfTrainsE) .. " numberOfTrainsW=" .. tostring(self.saveFile.global[self.groupEditing].data.numberOfTrainsW))
+  if self.logging then sb.logInfo("numberOfTrainsE=" .. tostring(self.saveFile.global[self.groupEditing].data.numberOfTrainsE) .. " numberOfTrainsW=" .. tostring(self.saveFile.global[self.groupEditing].data.numberOfTrainsW)) end
   
   local numtrains
   if direction == "E" then 
@@ -1311,10 +1326,11 @@ function deleteTrainComfirmButtonPressed(widgetName, widgetData)
     self.saveFile.global[self.groupEditing].data.numberOfTrainsW = numtrains
   end
   
-  sb.logInfo("numberOfTrainsE after=" .. tostring(self.saveFile.global[self.groupEditing].data.numberOfTrainsE) .."numberOfTrainsW after=" .. tostring(self.saveFile.global[self.groupEditing].data.numberOfTrainsW))
-  
-  tprint(self.saveFile.global[self.groupEditing].data[dataName])
-  sb.logInfo("===================")
+  if self.logging then 
+    sb.logInfo("numberOfTrainsE after=" .. tostring(self.saveFile.global[self.groupEditing].data.numberOfTrainsE) .."numberOfTrainsW after=" .. tostring(self.saveFile.global[self.groupEditing].data.numberOfTrainsW))
+    tprint(self.saveFile.global[self.groupEditing].data[dataName])
+    sb.logInfo("===================")
+  end
   
   table.remove(self.saveFile.global[self.groupEditing].data[dataName].speeds, trainNum)
   table.remove(self.saveFile.global[self.groupEditing].data[dataName].stopsLen, trainNum)
@@ -1331,7 +1347,7 @@ function deleteTrainComfirmButtonPressed(widgetName, widgetData)
     
   end
   table.remove(self.saveFile.global[self.groupEditing].data[dataName].vehiclePresent, trainNum)
-  tprint(self.saveFile.global[self.groupEditing].data[dataName])
+  if self.logging then tprint(self.saveFile.global[self.groupEditing].data[dataName]) end
   
   world.setProperty("stationController_file", self.saveFile)
   
@@ -1403,7 +1419,7 @@ function trainsDataListSelected(widgetName, widgetData)
 	  overlayName = "trainSettingsWestOverlay"
 	end
 	
-	sb.logInfo("speed " .. tostring(speed) .. " stopLen " .. tostring(stopLen) .. " station " .. tostring(station) .. " direction " .. tostring(direction))
+	if self.logging then sb.logInfo("speed " .. tostring(speed) .. " stopLen " .. tostring(stopLen) .. " station " .. tostring(station) .. " direction " .. tostring(direction)) end
 	
     --variable to tell to other functions what stations are we editing and the original data
 	--format: self.timetableEditing = {trainNum,direction,station,numOfStations,circular,Originalspeed,OriginalstopLen,newSpeed,newStopLen}
@@ -1799,8 +1815,10 @@ if slottedItem then
   end
   
   
-  sb.logInfo("Train num " .. tostring(trainNum) .. "-" .. tostring(direction) .. " vehicle spawner item descriptor:")
-  tprint(slottedItem)
+  if self.logging then
+    sb.logInfo("Train num " .. tostring(trainNum) .. "-" .. tostring(direction) .. " vehicle spawner item descriptor:")
+    tprint(slottedItem)
+  end
   
   widget.setVisible(slot_widget, false)
   widget.setVisible(overlayname .. ".ErrorLabel1",false)
@@ -1930,13 +1948,13 @@ end
 function timeEditEnterKey(widgetName, widgetData)
   local startTime = widget.getText("timetableOverlay.changeStartingParamsOverlay.timeTextBox")
   self.startingParams[2] = startTime or self.startingParams[2]
-  tprint(self.startingParams)
+  if self.logging then tprint(self.startingParams) end
 end
 
 function timeEditcallback(widgetName, widgetData)
   local startTime = widget.getText("timetableOverlay.changeStartingParamsOverlay.timeTextBox")
   self.startingParams[2] = startTime or self.startingParams[2]
-  tprint(self.startingParams)
+ if self.logging then  tprint(self.startingParams) end
 end
 
 function stationEditSelected(widgetName, widgetData)
@@ -1947,7 +1965,7 @@ function stationEditSelected(widgetName, widgetData)
     itemData = widget.getData(string.format("%s.%s", listName, listItem))
 	widget.setText("timetableOverlay.changeStartingParamsOverlay.startStationLabel","Start Station : ^green;" .. tostring(itemData).."^reset;")
 	self.startingParams[1] = tonumber(itemData)
-	tprint(self.startingParams)
+	if self.logging then tprint(self.startingParams) end
   end
 end
 
@@ -2025,7 +2043,7 @@ function startTrainsButtonPressed(widgetName, widgetData)
           end
         end
       end
-      tprint(self.groupstostart)
+      if self.logging then tprint(self.groupstostart) end
     else
       local numberOfTrainsE = self.saveFile.global[self.groupEditing].data.numberOfTrainsE
       local numberOfTrainsW = self.saveFile.global[self.groupEditing].data.numberOfTrainsW
@@ -2045,7 +2063,7 @@ function startMoreLinesSelected(widgetName, widgetData)
   if listItem then
     local listitemname = string.format("%s.%s", listName, listItem)
     local groupname = widget.getData(listitemname)
-    sb.logInfo("groupname =" .. groupname)
+    if self.logging then sb.logInfo("groupname =" .. groupname) end
     
     if self.groupstostart[groupname] == true then
       widget.setImage(listitemname .. ".lineCheckBox", "/interface/title/checkboxnocheck.png")
@@ -2072,7 +2090,7 @@ function startMoreLinesSelected(widgetName, widgetData)
       end
     end
     
-    tprint(self.groupstostart)
+    if self.logging then tprint(self.groupstostart) end
     
   end
 end
@@ -2270,8 +2288,10 @@ function addStationToGroupButtonPressed(widgetName, widgetData)
      if self.saveFile[stationsList[i]].group ~= self.groupEditing then
        local stationDisplayName = self.saveFile[stationsList[i]].name
        local listItem = string.format("%s.%s",self.widgetListName, widget.addListItem(self.widgetListName))
-	   sb.logInfo("listItem " .. tostring(i) .. " " .. listItem .. " ==> " .. listItem .. ".member")
-	   sb.logInfo("stationDisplayName " .. stationDisplayName)
+	   if self.logging then 
+         sb.logInfo("listItem " .. tostring(i) .. " " .. listItem .. " ==> " .. listItem .. ".member")
+	     sb.logInfo("stationDisplayName " .. stationDisplayName)
+       end
 	   widget.setText(listItem .. ".member", stationDisplayName)
 	   widget.setData(listItem, stationsList[i])
 	 end
@@ -2288,8 +2308,10 @@ end
 function addToGroup(group)
   local numInGroup = 0
   for _ in pairs(self.saveFile[group]) do numInGroup = numInGroup + 1 end
-  sb.logInfo("self.groupEditing " .. group)
-  sb.logInfo("self.addStationToGroup " .. self.addStationToGroup)
+  if self.logging then 
+    sb.logInfo("self.groupEditing " .. group)
+    sb.logInfo("self.addStationToGroup " .. self.addStationToGroup)
+  end
   self.saveFile[group][self.addStationToGroup] = {}
   numInGroup = numInGroup + 1
   self.saveFile[group][self.addStationToGroup].number = numInGroup 
@@ -2303,7 +2325,7 @@ function addToGroup(group)
     self.saveFile.global[group].data.nodesPos[numInGroup + 1] = self.saveFile.global[group].data.nodesPos[1]
   end
   
-  tprint(self.saveFile)
+  if self.logging then tprint(self.saveFile) end
   
   world.setProperty("stationController_file", self.saveFile)
   self.saveFile = world.getProperty("stationController_file")
@@ -2320,9 +2342,9 @@ end
 function stationsListSelected(widgetName, widgetData)
   local listItem = widget.getListSelected(self.widgetListName)
   if listItem then
-    sb.logInfo("listitem " .. tostring(listItem))
+    if self.logging then sb.logInfo("listitem " .. tostring(listItem)) end
     local itemData = widget.getData(string.format("%s.%s", self.widgetListName, listItem))
-	sb.logInfo("widget.getData " .. tostring(itemData))
+	if self.logging then sb.logInfo("widget.getData " .. tostring(itemData)) end
 	--if type(itemData) == "table" then tprint(itemData) end
 	self.addStationToGroup = itemData
 	widget.setVisible("addStationOverlay.addStationLabel", true)
@@ -2408,8 +2430,10 @@ function calculatedist()
     
   end
   
-  sb.logInfo("distance array=")
-  tprint(distarray)
+  if self.logging then 
+    sb.logInfo("distance array=")
+    tprint(distarray)
+  end
   
   self.saveFile.global[self.groupEditing].data.distances = distarray
   
@@ -2431,7 +2455,7 @@ function additionalDistancesButtonPressed(widgetName, widgetData)
   widget.clearListItems(stations2listname)
   
   local groupname
-  tprint(self.saveFile.global.groups)
+  if self.logging then tprint(self.saveFile.global.groups) end
   
   self.additionalDistancesLine1ListItems = {}
   
@@ -2502,8 +2526,10 @@ function additionalDistancesLineSelected(numlist)
       self.additionalDistanceData[2] = {}
     end
     self.additionalDistanceData[1][numlist] = groupname
-    sb.logInfo(" SELECTED:")
-    tprint(self.additionalDistanceData)
+    if self.logging then 
+      sb.logInfo(" SELECTED:")
+      tprint(self.additionalDistanceData)
+    end
     
     local stationslistname = "additionalDistancesOverlay.stations" .. tostring(numlist) .. "ScrollArea.stationsList"
     widget.clearListItems(stationslistname)
@@ -2553,14 +2579,16 @@ function additionalDistancesStationSelected(numlist)
     
     local numstation = widget.getData(string.format("%s.%s", listName, listItem))
     self.additionalDistanceData[2][numlist] = numstation
-    sb.logInfo(" SELECTED:")
-    tprint(self.additionalDistanceData)
+    if self.logging then 
+      sb.logInfo(" SELECTED:")
+      tprint(self.additionalDistanceData)
+    end
     
     local txtwidget = string.format("%s.%s", listName, listItem) .. ".stationName"
     widget.setText(txtwidget, "^green;" .. "Station " .. tostring(numstation) .. "^reset;")
     
     if self.additionalDistanceData[1][1] and self.additionalDistanceData[1][2] and self.additionalDistanceData[2][1] and self.additionalDistanceData[2][2] then
-      sb.logInfo("show distance")
+      if self.logging then sb.logInfo("show distance") end
       widget.setVisible("additionalDistancesOverlay.distance1Label", true)
       local group1 = self.additionalDistanceData[1][1]
       local group2 = self.additionalDistanceData[1][2]
@@ -2572,12 +2600,14 @@ function additionalDistancesStationSelected(numlist)
       station1pos = self.saveFile.global[group1].data.nodesPos[station1]
       station2pos = self.saveFile.global[group2].data.nodesPos[station2]
       
-      tprint(station1pos)
-      tprint(station2pos)
+      if self.logging then 
+        tprint(station1pos)
+        tprint(station2pos)
+      end
       
       local planetsize = world.size()
       local distance = distanceMathMagick(tonumber(station1pos[1]),tonumber(station2pos[1]),tonumber(station1pos[2]),tonumber(station2pos[2]),planetsize)
-      sb.logInfo("distance " .. tostring(distance))
+      if self.logging then sb.logInfo("distance " .. tostring(distance)) end
       
       widget.setText("additionalDistancesOverlay.distance2Label", "^red;" .. tostring(distance) .. "^reset; blocks")
     end
@@ -2592,25 +2622,27 @@ function testRunButtonPressed(widgetName, widgetData)
   widget.setText("testRunOverlay.testRunNumValue",self.numOfTestRunTodo)
   
   local nodepos = self.saveFile.global[self.groupEditing].data.nodesPos
-  sb.logInfo("NODEPOS==============")
-  tprint(nodepos)
+  if self.logging then 
+    sb.logInfo("NODEPOS==============")
+    tprint(nodepos)
+  end
   
   local nodeposconnected = true
   if nodepos == nil then
     nodeposconnected = false
     self.saveFile.global[self.groupEditing].data.nodeposconnected = false
     world.setProperty("stationController_file", self.saveFile)
-    sb.logInfo("=====NIL=======nodeposconnected = " .. tostring(nodeposconnected))
+    if self.logging then sb.logInfo("=====NIL=======nodeposconnected = " .. tostring(nodeposconnected)) end
   else
     for s=1,#nodepos do
-      tprint(nodepos[s])
+      if self.logging then tprint(nodepos[s]) end
       if not nodepos[s] then
         nodeposconnected = false
       end
     end
     self.saveFile.global[self.groupEditing].data.nodeposconnected = nodeposconnected
     world.setProperty("stationController_file", self.saveFile)
-    sb.logInfo("======1=======nodeposconnected = " .. tostring(nodeposconnected))
+    if self.logging then sb.logInfo("======1=======nodeposconnected = " .. tostring(nodeposconnected)) end
   end
   
   if nodeposconnected then
@@ -2662,7 +2694,7 @@ function testRunButtonPressed(widgetName, widgetData)
     ---- = self.saveFile.global[self.groupEditing].data.testruns.timesMax
     ---- = self.saveFile.global[self.groupEditing].data.testruns.timesMin
     ---- = self.saveFile.global[self.groupEditing].data.testruns.timesAvg
-    sb.logInfo("==========TEST RUN menu opened testrun completed = " ..tostring(self.saveFile.global[self.groupEditing].data.testRunCompleted))
+    if self.logging then sb.logInfo("==========TEST RUN menu opened testrun completed = " ..tostring(self.saveFile.global[self.groupEditing].data.testRunCompleted)) end
     
     widget.setVisible("testRunOverlay.testRunDataScrollArea", true)
     widget.setVisible("testRunOverlay.seeStatisticsButton",true)
@@ -2713,17 +2745,19 @@ function testRunButtonPressed(widgetName, widgetData)
       else
 	    stationDisplayName = tostring(i-1) .. " to " .. tostring(i) .. ":"
 	  end
-	  sb.logInfo("listItem " .. tostring(i) .. " " .. listItem .. " ==> " .. listItem .. ".stationLabel")
-	  sb.logInfo("stationDisplayName " .. stationDisplayName)
+	  if self.logging then 
+        sb.logInfo("listItem " .. tostring(i) .. " " .. listItem .. " ==> " .. listItem .. ".stationLabel")
+	    sb.logInfo("stationDisplayName " .. stationDisplayName)
+      end
       widget.setText(listItem .. ".stationLabel", stationDisplayName)
 	  
 	  if self.saveFile.global[self.groupEditing].data.circular and (i == #timesArray) then
 	    widget.setPosition(listItem .. ".stationLabel", {75, 10})
 	  end
 	  
-	  sb.logInfo("listItem " .. tostring(i) .. " " .. listItem .. " ==> " .. listItem .. ".timeLabel")
+	  if self.logging then sb.logInfo("listItem " .. tostring(i) .. " " .. listItem .. " ==> " .. listItem .. ".timeLabel") end
 	  widget.setText(listItem .. ".timeLabel", tostring(timesArray[i]) .. " s")
-	  sb.logInfo("listItem " .. tostring(i) .. " " .. listItem .. " ==> " .. listItem .. ".stopLenghtLabel")
+	  if self.logging then sb.logInfo("listItem " .. tostring(i) .. " " .. listItem .. " ==> " .. listItem .. ".stopLenghtLabel") end
 	  widget.setText(listItem .. ".stopLenghtLabel", tostring(self.defaultStopLen) .. " seconds stop")
 	end
 	
@@ -2732,7 +2766,7 @@ function testRunButtonPressed(widgetName, widgetData)
 	
 	if self.saveFile.global[self.groupEditing].data.toBeInit == nil then
 	  self.saveFile.global[self.groupEditing].data.toBeInit = true
-      sb.logInfo("=============self.saveFile.global[self.groupEditing].data.toBeInit" .. tostring(self.saveFile.global[self.groupEditing].data.toBeInit))
+      if self.logging then sb.logInfo("=============self.saveFile.global[self.groupEditing].data.toBeInit" .. tostring(self.saveFile.global[self.groupEditing].data.toBeInit)) end
 	end
 	
     --calculatedist()
@@ -2741,7 +2775,7 @@ function testRunButtonPressed(widgetName, widgetData)
 	
 	
   else
-    sb.logInfo("==========TEST RUN menu opened testrun completed = " ..tostring(self.saveFile.global[self.groupEditing].data.testRunCompleted))
+    if self.logging then sb.logInfo("==========TEST RUN menu opened testrun completed = " ..tostring(self.saveFile.global[self.groupEditing].data.testRunCompleted)) end
     
     widget.setVisible("testRunOverlay.seeStatisticsButton",false)
     widget.setVisible("testRunOverlay.testRunDataScrollArea", false)
@@ -2803,7 +2837,7 @@ function reorderStationsListSelected(widgetName, widgetData)
   local listName = "reorderGroupStationsOverlay.stationsScrollArea.stationsList"
   local listItem = widget.getListSelected(listName)
   if listItem then
-    sb.logInfo("listitem " .. tostring(listItem))
+    if self.logging then sb.logInfo("listitem " .. tostring(listItem)) end
     local itemData = widget.getData(string.format("%s.%s", listName, listItem))
     widget.setVisible("reorderGroupStationsOverlay.reorderStationname", true)
     widget.setVisible("reorderGroupStationsOverlay.stationNumvalue", true)
@@ -2920,8 +2954,10 @@ function reorderGroupArrays(array, circular, number, method)
   local oldgroupMembers = deepcopy(array)
   local newgroupMembers = {}
   
-  sb.logInfo("before:")
-  tprint(oldgroupMembers)
+  if self.logging then 
+    sb.logInfo("before:")
+    tprint(oldgroupMembers)
+  end
   
   local arraylen
   if circular then
@@ -2963,8 +2999,10 @@ function reorderGroupArrays(array, circular, number, method)
     newgroupMembers[arraylen] = newgroupMembers[1]
   end
   
-  sb.logInfo("after:")
-  tprint(newgroupMembers)
+  if self.logging then 
+    sb.logInfo("after:")
+    tprint(newgroupMembers)
+  end
   return newgroupMembers
   
 end
@@ -2981,7 +3019,7 @@ function testRunDataListSelected(widgetName, widgetData)
 end
 
 function backbutton(widgetName, widgetData)
-  sb.logInfo("widgetName=" .. tostring(widgetName))
+  if self.logging then sb.logInfo("widgetName=" .. tostring(widgetName)) end
   if widgetName == "backToMainFromStatisticsButton" then
     widget.setVisible("testRunOverlay", true)
     widget.setVisible("statisticsOverlay", false)
@@ -3242,11 +3280,11 @@ function changeStationNameButtonPressed(widgetName, widgetData)
   end
 
   local statuionUUIDS = self.saveFile.global.stationsList
-  tprint(statuionUUIDS)
+  if self.logging then tprint(statuionUUIDS) end
   
   for i=1,#statuionUUIDS do
     local namechk = self.saveFile[statuionUUIDS[i]].name
-    sb.logInfo(namechk)
+    if self.logging then sb.logInfo(namechk) end
     if stationName == namechk then
       stationNameError("taken")
 	  return
@@ -3302,7 +3340,7 @@ function slotleftclick(slot_widget)
 	  slot_widget = "timetableOverlay.trainSettingsWestOverlay" .. "." .. slot_widget
     end
 	
-	sb.logInfo("slot_widget " .. tostring(slot_widget))
+	if self.logging then sb.logInfo("slot_widget " .. tostring(slot_widget)) end
 
     --Get (a copy of) the item descriptor the player was holding
     local heldItem = player.swapSlotItem()
@@ -3403,7 +3441,7 @@ function slotrightclick(slot_widget)
 	  slot_widget = "timetableOverlay.trainSettingsWestOverlay" .. "." .. slot_widget
     end
 	
-	sb.logInfo("slot_widget " .. tostring(slot_widget))
+	if self.logging then sb.logInfo("slot_widget " .. tostring(slot_widget)) end
   
     --Get (a copy of) the item descriptor the player was holding
     local heldItem = player.swapSlotItem()

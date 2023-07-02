@@ -1,0 +1,46 @@
+{
+  "objectName" : "stationController2",
+  "colonyTags" : ["electronic", "wired"],
+  "printable" : false,
+  "rarity" : "Common",
+  "description" : "Starts and stops trains at a station and cofigures the network, wire this to a marker",
+  "shortdescription" : "Station Controller",
+  "race" : "generic",
+
+  "category" : "wire",
+  "price" : 20,
+
+  "humanDescription" : "Station Controller",
+
+  "inventoryIcon" : "stationController2icon.png",
+  "orientations" : [
+    {
+      "dualImage" : "stationController2.png:<color>.<frame>",
+      "imagePosition" : [0, 0],
+      "frames" : 9,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+    }
+  ],
+
+  "scripts" : [
+    "/objects/rails/stationController/stationController.lua"
+  ],
+  "scriptDelta" : 1,
+  
+  "interactData" : "/interface/linkedTrain/stationController/stationControllerGUI.config",
+  "interactAction" : "ScriptPane",
+
+  "animation" : "/objects/rails/stationController/stationController2.animation",
+
+  "animationParts" : {
+    "switch" : "stationController2.png"
+  },
+  "animationPosition" : [8, 8],
+  
+  "outputNodes" : [ [0, 0] ],
+  
+  "stopLenght" : 6
+  
+}

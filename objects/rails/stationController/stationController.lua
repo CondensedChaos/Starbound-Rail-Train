@@ -126,7 +126,7 @@ function startMoreLines(_,_,groupstostart)
   end
   if self.spawningmorelinesallready then
     for key, value in pairs(self.spawningmorelinestable) do
-      tprint(value)
+      if self.logging then tprint(value) end
       local groupname = key
       if self.logging then sb.logInfo("groupname=" .. tostring(groupname)) end
       local numberOfTrainsE = value.numberOfTrainsE
@@ -941,8 +941,10 @@ function calculateTimes()
       timesByStation[s][t] = timesTidy[t][s]
     end
   end
-  sb.logInfo("times by station:")
-  tprint(timesByStation)
+  if self.logging then
+    sb.logInfo("times by station:")
+    tprint(timesByStation)
+  end
   
   local timesSorted = {}
   timesSorted[1] = {}
@@ -952,23 +954,31 @@ function calculateTimes()
     table.sort(dataSorted)
     timesSorted[s] = dataSorted
   end
-  sb.logInfo("times by Station (sorted):")
-  tprint(timesSorted)
+  
+  if self.logging then
+    sb.logInfo("times by Station (sorted):")
+    tprint(timesSorted)
+  end
   
   timesMIN[1] = 0
   for s=2,numStations do
     timesMIN[s] = timesSorted[s][1]
   end
-  sb.logInfo("times MIN:")
-  tprint(timesMIN)
+  
+  if self.logging then
+    sb.logInfo("times MIN:")
+    tprint(timesMIN)
+  end
   
   timesMAX[1] = 0
   for s=2,numStations do
     --timesMAX[s] = timesSorted[s][testrunsnum]
     timesMAX[s] = math.ceil(timesSorted[s][testrunsnum])
   end
-  sb.logInfo("times MAX:")
-  tprint(timesMAX)
+  if self.logging then
+    sb.logInfo("times MAX:")
+    tprint(timesMAX)
+  end
   
   timesAVG[1] = 0
   for s=2,numStations do
@@ -978,8 +988,11 @@ function calculateTimes()
     end
     timesAVG[s] = timeSum / testrunsnum
   end
-  sb.logInfo("times AVERAGE:")
-  tprint(timesAVG)
+  
+  if self.logging then
+    sb.logInfo("times AVERAGE:")
+    tprint(timesAVG)
+  end
   
   storage.saveFile.global[storage.group].data.testRunsTimesMAXWest = {}
   
@@ -990,7 +1003,8 @@ function calculateTimes()
   for i=2,arrayLen do
 	storage.saveFile.global[storage.group].data.testRunsTimesMAXWest[i] = timesMAX[arrayLen-(i-2)]
   end
-  tprint(storage.saveFile.global[storage.group].data.testRunsTimesMAXWest)
+  
+  if self.logging then tprint(storage.saveFile.global[storage.group].data.testRunsTimesMAXWest) end
   
   storage.saveFile.global[storage.group].data.testRunsTimes = timesTidy
   storage.saveFile.global[storage.group].data.testRunsTimesAVG = timesAVG
@@ -1006,14 +1020,16 @@ end
 
 function receiveTime(_,_, numStation, absoluteTime)
   self.timesABS[numStation] = absoluteTime
-  sb.logInfo("===========station " .. tostring(storage.numInGroup) .. " receiveTime from Station " .. tostring(numStation) .. " Time is " .. tostring(absoluteTime))
-  sb.logInfo("self.timesABS for testrun nr. " .. tostring(self.currentTestRun) .. " total testruns to do " .. tostring(self.numOfTestRunTodo))
-  tprint(self.timesABS)
+  if self.logging then
+    sb.logInfo("===========station " .. tostring(storage.numInGroup) .. " receiveTime from Station " .. tostring(numStation) .. " Time is " .. tostring(absoluteTime))
+    sb.logInfo("self.timesABS for testrun nr. " .. tostring(self.currentTestRun) .. " total testruns to do " .. tostring(self.numOfTestRunTodo))
+    tprint(self.timesABS)
+  end
 end
 
 function testRunCarArrivedAt(_,_, numStation, absoluteTime)
 
-  sb.logInfo("station " .. tostring(storage.numInGroup) .. " test car arrived at " .. tostring(numStation) .. " T1 " .. tostring(absoluteTime) )
+  if self.logging then sb.logInfo("station " .. tostring(storage.numInGroup) .. " test car arrived at " .. tostring(numStation) .. " T1 " .. tostring(absoluteTime) ) end
 
   storage.saveFile = world.getProperty("stationController_file")
   
@@ -1021,9 +1037,11 @@ function testRunCarArrivedAt(_,_, numStation, absoluteTime)
     world.sendEntityMessage(self.firstStationId, "receiveTime", numStation, absoluteTime)
   elseif numStation == self.numOfStationsInGroup + 1 then
     self.timesABS[numStation] = absoluteTime
-    sb.logInfo("===========station " .. tostring(storage.numInGroup) .. " receiveTime from Station " .. tostring(numStation) .. " Time is " .. tostring(absoluteTime))
-    sb.logInfo("self.timesABS for testrun nr. " .. tostring(self.currentTestRun) .. " total testruns to do " .. tostring(self.numOfTestRunTodo))
-    tprint(self.timesABS)
+    if self.logging then
+      sb.logInfo("===========station " .. tostring(storage.numInGroup) .. " receiveTime from Station " .. tostring(numStation) .. " Time is " .. tostring(absoluteTime))
+      sb.logInfo("self.timesABS for testrun nr. " .. tostring(self.currentTestRun) .. " total testruns to do " .. tostring(self.numOfTestRunTodo))
+      tprint(self.timesABS)
+    end
   end
   
   self.testRunMode = false
@@ -1064,9 +1082,10 @@ function testRunCarArrivedAt(_,_, numStation, absoluteTime)
       --self.testRuns[self.currentTestRun - 1] = deepcopy(self.timesABS)
       table.insert(self.testRuns, self.timesABS)
       self.timesABS = nil
-      sb.logInfo("===========Test run nr. " .. tostring(self.currentTestRun - 1) .. " completed. TestRuns table as follows:")
-      tprint(self.testRuns)
-      
+      if self.logging then 
+        sb.logInfo("===========Test run nr. " .. tostring(self.currentTestRun - 1) .. " completed. TestRuns table as follows:")
+        tprint(self.testRuns)
+      end
       storage.saveFile.global[storage.group].data.testrunsnum = storage.saveFile.global[storage.group].data.testrunsnum + self.numOfTestRunTodo
       storage.saveFile.global[storage.group].data.testRunsABS = self.testRuns
       
@@ -1083,9 +1102,10 @@ function testRunCarArrivedAt(_,_, numStation, absoluteTime)
       
       self.testRuns[self.currentTestRun - 1] = deepcopy(self.timesABS)
       self.timesABS = nil
-      sb.logInfo("===========Test run nr. " .. tostring(self.currentTestRun - 1) .. " completed. TestRuns table as follows:")
-      tprint(self.testRuns)
-      
+      if self.logging then 
+        sb.logInfo("===========Test run nr. " .. tostring(self.currentTestRun - 1) .. " completed. TestRuns table as follows:")
+        tprint(self.testRuns)
+      end
       self.testRunMode = true
       self.testRunCarID0 = world.spawnVehicle(self.testRunvehicleName, self.testRunspawnoffset, self.testRunvehicleParameters)
       self.testrunT0 = world.time()
@@ -1195,11 +1215,12 @@ function update(dt)
       self.testRunInit = false
       testRunInit()
     end
-    
-    sb.logInfo("Stations data printed from station = FURTHER ITERATION")
-    tprint(self.stationsData)
-    sb.logInfo("testRunReady " .. tostring(self.testRunReady))
-    sb.logInfo("nonReadyStations " .. tostring(self.nonReadyStations))
+    if self.logging then 
+      sb.logInfo("Stations data printed from station = FURTHER ITERATION")
+      tprint(self.stationsData)
+      sb.logInfo("testRunReady " .. tostring(self.testRunReady))
+      sb.logInfo("nonReadyStations " .. tostring(self.nonReadyStations))
+    end
   end
   
    if self.init then
@@ -1208,7 +1229,7 @@ function update(dt)
      end
      world.setUniqueId(entity.id(), storage.uuid)
      local idfromuuid = world.loadUniqueEntity(storage.uuid)
-     sb.logInfo("ATTEMPTING TO GET ENTITY ID FROM UUID : " .. tostring(idfromuuid) .. " it should be " .. tostring(entity.id()) )
+     if self.logging then  sb.logInfo("ATTEMPTING TO GET ENTITY ID FROM UUID : " .. tostring(idfromuuid) .. " it should be " .. tostring(entity.id()) ) end
      if idfromuuid then
        self.uuidInit = false
      else
@@ -1216,7 +1237,7 @@ function update(dt)
      end
      storage.saveFile = world.getProperty("stationController_file")
      if storage.saveFile == nil then
-       sb.logInfo("INITIALIZING SAVE FILE")
+       if self.logging then sb.logInfo("INITIALIZING SAVE FILE") end
        self.stationNum = 1
        storage.saveFile = {}
        storage.saveFile.global = {}
@@ -1236,12 +1257,12 @@ function update(dt)
        --storage.saveFile[storage.uuid].nodepos = {}
        world.setProperty("stationController_file", storage.saveFile)
        storage.saveFile = world.getProperty("stationController_file")
-       sb.logInfo("SAVE FILE AS FOLLOWS: ")
+       if self.logging then sb.logInfo("SAVE FILE AS FOLLOWS: ") end
        if storage.saveFile then tprint(storage.saveFile) end
      else
-       sb.logInfo("SAVE FILE FOUND: ")
+       if self.logging then sb.logInfo("SAVE FILE FOUND: ") end
        if storage.saveFile[storage.uuid] == nil then
-         sb.logInfo("THIS STATION IS ==NOT== IN SAVE FILE ")
+         if self.logging then sb.logInfo("THIS STATION IS ==NOT== IN SAVE FILE ") end
          storage.saveFile.global.numOfStations = storage.saveFile.global.numOfStations +1
          self.stationNum = storage.saveFile.global.numOfStations
          storage.saveFile.global.stationsList[storage.saveFile.global.numOfStations] = storage.uuid
@@ -1270,7 +1291,7 @@ function update(dt)
          end
        else
          self.stationNum = storage.saveFile[storage.uuid].number
-         sb.logInfo("STATION NUMBER " .. tostring(self.stationNum))
+         if self.logging then sb.logInfo("STATION NUMBER " .. tostring(self.stationNum)) end
          if storage.saveFile[storage.uuid].grouped then
          end
        end
@@ -1296,7 +1317,7 @@ function update(dt)
    if self.uuidInit then
      world.setUniqueId(entity.id(), storage.uuid)
      local idfromuuid = world.loadUniqueEntity(storage.uuid)
-     sb.logInfo("ATTEMPTING TO GET ENTITY ID FROM UUID : " .. tostring(idfromuuid) .. " it should be " .. tostring(entity.id()) )
+     if self.logging then sb.logInfo("ATTEMPTING TO GET ENTITY ID FROM UUID : " .. tostring(idfromuuid) .. " it should be " .. tostring(entity.id()) ) end
      if idfromuuid then
        self.uuidInit = false
      else

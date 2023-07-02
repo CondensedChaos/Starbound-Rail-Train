@@ -1,0 +1,9 @@
+{
+  "input" : [
+    { "item" : "wire", "count" : 2 },
+    { "item" : "siliconboard", "count" : 1 },
+    { "item" : "smallbattery", "count" : 1 }
+  ],
+  "output" : { "item" : "stationController2", "count" : 1 },
+  "groups" : [ "rail" ]
+}

@@ -218,8 +218,14 @@ function init()
 	  
 	  self.flipTable[3+i] = decalsFlippableTable[currentDecal][indexOf(decalsIndexes[currentDecal], currentDecalSprite)]
 	  
+      local renderdecal0 = self.listOfCars[vehicleName].decal0rendered[currentDecal]
+      
 	  if (currentDecalSprite == 0) or (currentDecalSprite == "0") then
-	    animator.setPartTag(currentDecalBaseString, "partImage", self.imgPath .. "decalPlaceholder.png")
+        if renderdecal0 then
+          animator.setPartTag(currentDecalBaseString, "partImage", self.imgPath .. currentDecalBaseString .. "0.png")
+        else
+          animator.setPartTag(currentDecalBaseString, "partImage", self.imgPath .. "decalPlaceholder.png")
+        end
 	  else
 	    animator.setPartTag(currentDecalBaseString, "partImage", self.imgPath .. currentDecalBaseString .. currentDecalSprite .. ".png")
 	  end
