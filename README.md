@@ -343,6 +343,19 @@ Circular/non circular
 ..........................................................................
 
 ---
+
+# To-do
+1) More colors for the trains
+2) Live view of trains running in each line in Station Controller's GUI
+3) Live view of testruns in Station Controller's GUI
+4) Error handlings for line naming/renaming and stations naming/renaming
+5) Deleting a station from a line is not implemented yet
+6) Renaming of lines button not implemented yet (it's present but does nothing)
+7) Delete line button
+8) Adding a dialog to change stop lenght and speed for all (or some) scheduled trains all at one
+9) Train spawn error handling
+10) The eventuality that trains are deleted after some time has to be taken into account and periodical checks that all trains exist
+
 # Modding
 ..........................................................................
 
