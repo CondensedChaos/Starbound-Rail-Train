@@ -164,18 +164,23 @@ or
 ---
 
 # Usage
-..........................................................................
+To allow Starbound to run the trains you will need to use rail chunk-loaders.  
+Similar to Minecraft's [Chunk Loaders](https://www.sportskeeda.com/minecraft/chunk-loaders-minecraft-all-need-know) they are items that sits on the rails and have to be placed every 18 tiles.  
+Starbound divides the world in chunks, each chunk is roughly 20x20 tiles, if no player is present in a determined chunk the game will not render that chunk so for example it will have the effect that any vehicle running outside player's vicinity will be stopped.  
+Rail chunk loaders force the chunk where they are put to not be put to sleep.
 
-..........................................................................
+There are two kinds of Rail Chunk Loaders: simple chunk loaders and catenaries
 
 ## Tram network preparation
 
 ### Height requirements
-
+Minimum height if you're buiding a tunnel and you're using catenaries is 12 blocks:
 ![size1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/42efff3b-a6a2-482d-99aa-d56f8b037fdd)
 
+The trains comprehensive of Pantographs are 10 blocks high:
 ![size2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/f077ae2e-ef5e-45c3-920b-1bd02f8deb7b)
 
+If you're building a tunnels and you don't want to use catenaries and pantographs, the minimum height to allow trains to pass is 9 blocks:
 ![size3](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/b8263d55-0b54-4b9e-a2b2-0c9ff8f110e6)
 
 ### Place Rail Chunk loaders or Catenaries
@@ -296,25 +301,18 @@ or
 ..........................................................................
 
 ### Prepare your network
-Refer to [Tram Network Preparation](https://github.com/CondensedChaos/Starbound-Rail-Train/blob/main/README.md#tram-network-preparation)
 
 ### Place Rail Station Markers
-..........................................................................
-
-..........................................................................
+Refer to [Place Rail Stations Markers](https://github.com/CondensedChaos/Starbound-Rail-Train/blob/main/README.md#place-rail-stations-markers)
 
 ### Place Chunk Loaders/Catenaries
-..........................................................................
-
-..........................................................................
+Refer to [Tram Network Preparation](https://github.com/CondensedChaos/Starbound-Rail-Train/blob/main/README.md#tram-network-preparation)
 
 ### Place the rails
 
 
 ### Craft trains
-..........................................................................
-
-..........................................................................
+Craft a Trainset Configurator from Rail Crafting Table and refer to [Trainset-Configurator](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#trainset-configurator)
 
 ### Place trains
 ..........................................................................
@@ -328,9 +326,6 @@ Refer to [Tram Network Preparation](https://github.com/CondensedChaos/Starbound-
 ..........................................................................
 
 ### Prepare your network
-..........................................................................
-
-..........................................................................
 
 ### Place Rail Station Markers
 ![stationmarker1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/42809523-4da6-46e4-a657-ab4208f94a25)
@@ -368,9 +363,7 @@ And wire them to Rail Station Markers
 
 
 ### Place Chunk Loaders/Catenaries
-..........................................................................
-
-..........................................................................
+Refer to [Place Rail Chunk loaders or Catenaries](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#place-rail-chunk-loaders-or-catenaries)
 
 ### Place the rails
 
@@ -417,10 +410,12 @@ Circular/non circular
 ![line creation19](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/55f471e5-6f91-45cc-8ac9-f9028007320b)
 
 ### Make schedules with web-app
-..........................................................................
+Open the trains schedule web-app [here](condensedchaos.github.io )
+
+Usage of the Web-App: [here](https://github.com/CondensedChaos/condensedchaos.github.io/tree/main)
 
 ### Craft Trains
-..........................................................................
+Craft a Trainset Configurator from Rail Crafting Table and refer to [Trainset-Configurator](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#trainset-configurator)
 
 ### Create the schedule in-game
 ![00](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/b6ff8dee-ac1f-49d7-947d-ef3fd387def4)
