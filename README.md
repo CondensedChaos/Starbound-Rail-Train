@@ -83,16 +83,18 @@ Catenaries and/or Chunk Loaders has to be used too in scheduled mode.
 # Reccomended mods
 
 ## Many Tabs compatibility patch
+A patch to support Many tabs, highly reccomended, needs Many Tabs and Many Tabs Handcrafting Expansion
 
+It will create an own tab in the Rail Crafting Table for all the craftable components of this mod  
 ### From Steam Workshop:
-
+[here](http://)
 ### DRM-free version:
-
 [From Github](https://github.com/CondensedChaos/Starbound-Rail-Train-Many-Tabs-Patch/tree/main)
 
 ---
 
 ## Many Tabs:
+This mod allows nearly all Crafting Tables to have more tabs to avoid cluttering if you use many mods
 ### From Steam Workshop:
 [Part 1](https://steamcommunity.com/workshop/filedetails/?id=1119086325) and [Part 2](https://steamcommunity.com/workshop/filedetails/?id=956247051)
 Be sure to subscribe to both mods (it's a 2-part mod)
@@ -105,6 +107,7 @@ If you're downloading from SkyMods be sure to download both Part 1 and Part 2
 ---
 
 ## Many Tabs Handcrafting Expansion:
+It expands Many Tabs to support even more crafting tables
 ### From Steam Workshop:
 [Part 1](https://steamcommunity.com/workshop/filedetails/?id=2248892900) and [Part 2](https://steamcommunity.com/workshop/filedetails/?id=956247051)
 Be sure to subscribe to both mods (it's a 2-part mod)
@@ -112,11 +115,16 @@ Be sure to subscribe to both mods (it's a 2-part mod)
 [From SkyMods Part 1](https://catalogue.smods.ru/archives/111834) and [Part 2](https://catalogue.smods.ru/archives/111835)
 Be sure to download both Part 1 and Part 2
 
+---
+
 ## Many Tabs Rail Crafting Table:
+It expands Many Tabs to better support Rail Crafting Table
 ### From Steam Workshop:
 [Here](https://steamcommunity.com/sharedfiles/filedetails/?id=2810272474) 
 ### DRM-Free version:
 Not yet available, will notify when it will be available
+
+---
 
 ## Enhanced Rails
 It will allow you to use an additional rail network (slick rail) that will allows for faster trains
@@ -124,6 +132,7 @@ It will allow you to use an additional rail network (slick rail) that will allow
 [here](https://steamcommunity.com/sharedfiles/filedetails/?id=921924325)
 ### DRM-Free version:
 [from Chucklefish forum](https://community.playstarbound.com/resources/enhanced-rails.4708/)
+
 ---
 
 ## Instant Crafting
