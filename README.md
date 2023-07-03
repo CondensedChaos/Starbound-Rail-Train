@@ -184,6 +184,10 @@ or
 
 ![catenaries4](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/18e21977-fa29-4d84-ad94-c1e4ef0f96bb)
 
+![catenaries8](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/40ed3124-ac8c-4bd2-a0f1-ebf3f310ca85)
+
+![catenaries9](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/c52c7899-d5b0-4774-a816-193d86ce6bea)
+
 ![catenaries5](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/598ec510-1645-4fcd-b6e4-495e6114c4b6)
 
 ![catenaries6](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/0db2c829-911b-4f28-b5d6-bbc77a54f343)
@@ -197,10 +201,6 @@ or
 ![catenaries7c](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/2a270538-c2b1-4932-aae2-812cdaae1274)
 
 ![catenaries7d](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/46987784-895f-4830-9c51-d63caee12fb7)
-
-![catenaries8](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/40ed3124-ac8c-4bd2-a0f1-ebf3f310ca85)
-
-![catenaries9](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/c52c7899-d5b0-4774-a816-193d86ce6bea)
 
 ![stationmarker1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/42809523-4da6-46e4-a657-ab4208f94a25)
 
