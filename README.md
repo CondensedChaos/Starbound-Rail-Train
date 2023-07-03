@@ -175,12 +175,15 @@ There are two kinds of Rail Chunk Loaders: simple chunk loaders and catenaries
 
 ### Height requirements
 Minimum height if you're buiding a tunnel and you're using catenaries is 12 blocks:
+
 ![size1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/42efff3b-a6a2-482d-99aa-d56f8b037fdd)
 
 The trains comprehensive of Pantographs are 10 blocks high:
+
 ![size2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/f077ae2e-ef5e-45c3-920b-1bd02f8deb7b)
 
 If you're building a tunnels and you don't want to use catenaries and pantographs, the minimum height to allow trains to pass is 9 blocks:
+
 ![size3](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/b8263d55-0b54-4b9e-a2b2-0c9ff8f110e6)
 
 ### Place Rail Chunk loaders or Catenaries
