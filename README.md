@@ -170,11 +170,15 @@ or
 
 ## Tram network preparation
 
+### Height requirements
+
 ![size1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/42efff3b-a6a2-482d-99aa-d56f8b037fdd)
 
 ![size2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/f077ae2e-ef5e-45c3-920b-1bd02f8deb7b)
 
 ![size3](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/b8263d55-0b54-4b9e-a2b2-0c9ff8f110e6)
+
+### Place Rail Chunk loaders or Catenaries
 
 ![catenaries1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e199536e-e385-4fbc-8ebd-463c44d864a6)
 
@@ -201,6 +205,8 @@ or
 ![catenaries7c](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/2a270538-c2b1-4932-aae2-812cdaae1274)
 
 ![catenaries7d](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/46987784-895f-4830-9c51-d63caee12fb7)
+
+### Place Rail Stations Markers
 
 ![stationmarker1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/42809523-4da6-46e4-a657-ab4208f94a25)
 
@@ -290,9 +296,7 @@ or
 ..........................................................................
 
 ### Prepare your network
-..........................................................................
-
-..........................................................................
+Refer to [Tram Network Preparation](https://github.com/CondensedChaos/Starbound-Rail-Train/blob/main/README.md#tram-network-preparation)
 
 ### Place Rail Station Markers
 ..........................................................................
