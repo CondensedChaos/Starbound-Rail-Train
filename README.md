@@ -78,15 +78,79 @@ Then go back to the station controller to create the schedule using the data fro
 Then you'll have to craft a train at the **Trainset Configurator** for each tran you schedule, and import the items in the Train Configurator (more in depth usage for Scheduled mode here)
 
 Catenaries and/or Chunk Loaders has to be used too in scheduled mode.
+
 ---
 # Reccomended mods
-..........................................................................
 
-..........................................................................
+## Many Tabs compatibility patch
 
-[Many Tabs compatibility patch](https://github.com/CondensedChaos/Starbound-Rail-Train-Many-Tabs-Patch/tree/main)
+### From Steam Workshop:
+
+### DRM-free version:
+
+[From Github](https://github.com/CondensedChaos/Starbound-Rail-Train-Many-Tabs-Patch/tree/main)
 
 ---
+
+## Many Tabs:
+### From Steam Workshop:
+[Part 1](https://steamcommunity.com/workshop/filedetails/?id=1119086325) and [Part 2](https://steamcommunity.com/workshop/filedetails/?id=956247051)
+Be sure to subscribe to both mods (it's a 2-part mod)
+### DRM-free version:
+[From Chucklefish Forum](https://community.playstarbound.com/resources/many-tabs.4813/)
+or 
+[From SkyMods Part 1](https://catalogue.smods.ru/archives/5449) and [Part 2](https://catalogue.smods.ru/archives/5447)
+If you're downloading from SkyMods be sure to download both Part 1 and Part 2
+
+---
+
+## Many Tabs Handcrafting Expansion:
+### From Steam Workshop:
+[Part 1](https://steamcommunity.com/workshop/filedetails/?id=2248892900) and [Part 2](https://steamcommunity.com/workshop/filedetails/?id=956247051)
+Be sure to subscribe to both mods (it's a 2-part mod)
+### DRM-free version:
+[From SkyMods Part 1](https://catalogue.smods.ru/archives/111834) and [Part 2](https://catalogue.smods.ru/archives/111835)
+Be sure to download both Part 1 and Part 2
+
+## Many Tabs Rail Crafting Table:
+### From Steam Workshop:
+[Here](https://steamcommunity.com/sharedfiles/filedetails/?id=2810272474) 
+### DRM-Free version:
+Not yet available, will notify when it will be available
+
+## Enhanced Rails
+It will allow you to use an additional rail network (slick rail) that will allows for faster trains
+### From Steam Workshop:
+[here](https://steamcommunity.com/sharedfiles/filedetails/?id=921924325)
+### DRM-Free version:
+[from Chucklefish forum](https://community.playstarbound.com/resources/enhanced-rails.4708/)
+---
+
+## Instant Crafting
+Disables the timer on client-side crafting tables so that everything you craft finish instantaneously.
+### From Steam Workshop:
+[Instant Crafting](https://steamcommunity.com/sharedfiles/filedetails/?id=729427744)
+[Instant Crafting Fixes (additional supports for other mods)](https://steamcommunity.com/workshop/filedetails/?id=1607460753)
+[Instant Crafting More Fixes (additional support for even more mods)](https://steamcommunity.com/sharedfiles/filedetails/?id=2809626987)
+### DRM-Free version:
+[Instant Crafting from ChuckleFish Forum]([https://steamcommunity.com/sharedfiles/filedetails/?id=729427744](https://community.playstarbound.com/resources/instant-crafting.3731/)) or [From Skymods](https://catalogue.smods.ru/archives/24774)
+
+[Instant Crafting Fixes (additional supports for other mods)](https://catalogue.smods.ru/archives/80366)
+[Instant Crafting More Fixes (additional support for even more mods)](https://catalogue.smods.ru/archives/115134)
+
+---
+
+## Skizot's Dozers
+Adds bulldozers to make tunnels, fun to use!
+### From Steam Workshop:
+[here](https://steamcommunity.com/sharedfiles/filedetails/?id=729428803)
+### DRM-Free version:
+[from Chucklefish Forum](https://community.playstarbound.com/resources/skizots-dozers.3094/)
+or
+[from SKymods](https://catalogue.smods.ru/archives/24653)
+
+---
+
 # Usage
 ..........................................................................
 
