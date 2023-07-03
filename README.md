@@ -184,7 +184,13 @@ or
 
 ![catenaries4](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/18e21977-fa29-4d84-ad94-c1e4ef0f96bb)
 
+![catenaries5](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/598ec510-1645-4fcd-b6e4-495e6114c4b6)
 
+![catenaries6](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/0db2c829-911b-4f28-b5d6-bbc77a54f343)
+
+![catenaries7](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/8bbddd29-f203-45cc-aaf8-833181d9c75a)
+
+![catenaries7a](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/16aa7cb9-76f5-4ba4-b84a-27bdcd3fbcea)
 
 ![catenaries7b](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/2d59480f-f237-45d8-8da4-820263e48a6d)
 
