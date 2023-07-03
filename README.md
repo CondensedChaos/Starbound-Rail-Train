@@ -144,7 +144,7 @@ Disables the timer on client-side crafting tables so that everything you craft f
 
 [Instant Crafting More Fixes (additional support for even more mods)](https://steamcommunity.com/sharedfiles/filedetails/?id=2809626987)
 ### DRM-Free version:
-[Instant Crafting from ChuckleFish Forum]([https://steamcommunity.com/sharedfiles/filedetails/?id=729427744](https://community.playstarbound.com/resources/instant-crafting.3731/)) or [From Skymods](https://catalogue.smods.ru/archives/24774)
+[Instant Crafting from ChuckleFish Forum](https://community.playstarbound.com/resources/instant-crafting.3731/) or [From Skymods](https://catalogue.smods.ru/archives/24774)
 
 [Instant Crafting Fixes (additional supports for other mods)](https://catalogue.smods.ru/archives/80366)
 
