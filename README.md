@@ -10,7 +10,7 @@ There are two operating modes, free and scheduled.
 
 A Many Tabs Patch is also available [Here](https://github.com/CondensedChaos/Starbound-Rail-Train-Many-Tabs-Patch/tree/main)
 
-<a href=https://youtu.be/p0koywGE3aU ><img src=https://markdown-videos.vercel.app/youtube/p0koywGE3aU ></a></img>
+<a href="https://youtu.be/p0koywGE3aU"><img src="https://markdown-videos.vercel.app/youtube/p0koywGE3aU"></a></img>
 
 ---
 # Installation
