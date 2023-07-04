@@ -15,39 +15,21 @@ A Many Tabs Patch is also available [Here](https://github.com/CondensedChaos/Sta
 
 ---
 # Installation
-Grab latest release from [here](https://github.com/CondensedChaos/Starbound-Rail-Train/releases)
-
+Grab latest release from [here](https://github.com/CondensedChaos/Starbound-Rail-Train/releases)  
 download either the zipped (.zip) version or the .pak version
 
-Zip version name: "Starbound-Rail-Train-<version>.zip"
-Pak version name: "Starbound-Rail-Train-<version>.pak"
+Zip version name: "Starbound-Rail-Train-<version>.zip"  
+Pak version name: "Starbound-Rail-Train-<version>.pak"  
 
--If you downloaded the zipped version it has to be extracted in < Starbound folder >\mods
-
+-If you downloaded the zipped version it has to be extracted in < Starbound folder >\mods  
 -If you downloaded the .pak version just put the .pak file as it is in < Starbound folder >\mods
 
-Starbound folder is typically for Steam version: "C:\Program Files (x86)\Steam\steamapps\common\Starbound\" for the windows version
+Starbound folder is typically for Steam version: "C:\Program Files (x86)\Steam\steamapps\common\Starbound\" for the windows version  
+GOG or other version are typically under either "C:\Program Files (x86)\Starbound" or "C:\Program Files\Starbound" for the windows version  
+You will need to download and overwrite again the mod evertytime it gets updated if you download it from GitHub  
+Steam Workshop version that gets autoupdated is also available but you need to have a Starbound copy bought from Steam, get it [here](steamcommunity.com/sharedfiles/filedetails/?id=)  
 
-GOG or other version are typically under either "C:\Program Files (x86)\Starbound" or "C:\Program Files\Starbound" for the windows version
-
-You will need to download and overwrite again the mod evertytime it gets updated if you download it from GitHub
-
-Steam Workshop version that gets autoupdated is also available but you need to have a Starbound copy bought from Steam, get it [here](steamcommunity.com/sharedfiles/filedetails/?id=)
-
-In the [releases tab](https://github.com/CondensedChaos/Starbound-Rail-Train/releases) there's also an instance world that includes a ready-made demo train network of two lines that can be used to understand better how the mod works.
-
-it's called "raildemo.zip", to install it you have to open the downloaded zip file and
-unzip the content of the folder named as "1 - ..." in < Starbound folder >\mods
-
-and the content of folder named as "2 - ..." in < Starbound folder >\universe\storage
-
-To access the demo just craft a "rail demo world teleporter" from the empty-hand (press C in-game) crafting.
-
-Place the teleporter and warp in the demo-world.
-
-When warped you will find yourself at the first station of the network, trains are stopped when entering the first time, just open any "Station Controller" (refer to components) and go in the "Lines" tab and click "Start trains" and select both "Line A" and "Line B", trains will be spawned according to a schedule that was made on my computer, so running times might be different because of system performance and lag.
-If you want you can make your own schedule using your own testrun data and the marey-chart webapp.
-
+In the [releases tab](https://github.com/CondensedChaos/Starbound-Rail-Train/releases) there's also an instance world that includes a ready-made demo train network of two lines that can be used to understand better how the mod works.  
 Refer to [rail-demo](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#rail-demo) for more informations
 
 ---
@@ -458,6 +440,18 @@ Craft a Trainset Configurator from Rail Crafting Table and refer to [Trainset-Co
 ---
 
 # Rail-demo
+It's an instance world that includes a ready-made demo train network of two lines that can be used to understand better how the mod works.
+
+it's called "raildemo.zip", to install it you have to open the downloaded zip file and
+unzip the content of the folder named as "1 - ..." in < Starbound folder >\mods
+
+and the content of folder named as "2 - ..." in < Starbound folder >\universe\storage
+
+To access the demo just craft a "rail demo world teleporter" from the empty-hand (press C in-game) crafting.  
+Place the teleporter and warp in the demo-world.
+
+When warped you will find yourself at the first station of the network, trains are stopped when entering the first time, just open any "Station Controller" (refer to components) and go in the "Lines" tab and click "Start trains" and select both "Line A" and "Line B", trains will be spawned according to a schedule that was made on my computer, so running times might be different because of system performance and lag.  
+If you want you can make your own schedule using your own testrun data and the marey-chart webapp.
 
 # To-do
 1) More colors for the trains
