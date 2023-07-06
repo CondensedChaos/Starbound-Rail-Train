@@ -190,9 +190,13 @@ or this:
 ![uneven catenaries2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/d1f1f739-bba0-443e-a8b2-6c76cc08e9e2)  
 To solve this problem use the catenary with girder for uneven network (called catenary girder, no wires):  
 ![uneven2a](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e0ae2121-b506-43bd-839d-fd2db32c6af7)  
+And extend the wires with "catenary wires":  
 ![uneven2b](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/21fe68c1-92e4-4d01-81de-27420e6c92d5)  
 ![uneven2c](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e1bc5a1e-01dd-4605-a77b-20b05bf73f97)  
+
+If you think that the girders are too close to each other you can also use plain rail chunk-loaders without girders:  
 ![uneven2c1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e5764911-942b-41ec-ae25-b2b4b338ae28)  
+And just extend the wires with "catenary wires":  
 ![uneven2c2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/05935410-a585-417f-a651-f120c6a8776f)  
 ![uneven2c3](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/3c906eaa-865d-4203-982a-f3856fce987b)  
 
