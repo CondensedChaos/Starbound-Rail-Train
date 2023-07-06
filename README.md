@@ -215,7 +215,7 @@ After deciding where the station will be you should use a [platform block](https
 to let passangers depart, be sure to be long enough as the trains that you intend to use on the network:  
 ![station marker3a](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e79e89e4-5515-41da-afc6-312aa54be9d2)  
 ![station 1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/21885e3e-ecd5-4405-8ab5-ada4e80b7983)  
-THen you can decorate the station:  
+Then you can decorate the station:  
 ![station 2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/0c3fe947-5b97-4edd-967a-92d73f14af82)
 
 ---
