@@ -171,8 +171,7 @@ The use of [Skizot's Dozers](https://github.com/CondensedChaos/Starbound-Rail-Tr
 
 ### Place Rail Chunk loaders or Catenaries
 If you're using catenaries or rail chunk loaders they will both highlight their area of incluence in red, make sure to place the other chunk-loaders between the green and the red area:  
-![catenaries1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e199536e-e385-4fbc-8ebd-463c44d864a6)
-While placing chunk-loaders/catenaries too close is not reccomended as it could impact performaces, it can be done when, for example, when building a circular line wrapping around the planet.  
+![catenaries1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e199536e-e385-4fbc-8ebd-463c44d864a6)  
 
 ![catenaries2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/4161c4a7-4be1-4ea8-879f-0b6eeccc390f)  
 
@@ -185,6 +184,7 @@ After placing all the catenaries in the area where your rail network will be (be
 ![catenaries8](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/40ed3124-ac8c-4bd2-a0f1-ebf3f310ca85)  
 ![catenaries9](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/c52c7899-d5b0-4774-a816-193d86ce6bea)  
 
+When building a circular line, after wmaking a complete circle around the planet it could happen that the 
 ![catenaries5](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/598ec510-1645-4fcd-b6e4-495e6114c4b6)
 
 ![catenaries6](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/0db2c829-911b-4f28-b5d6-bbc77a54f343)
