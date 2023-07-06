@@ -175,16 +175,19 @@ If you're using catenaries or rail chunk loaders they will both highlight their 
 
 ![catenaries2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/4161c4a7-4be1-4ea8-879f-0b6eeccc390f)  
 
-WHen placing the next chunk-loader a "phantom" image of the next chunk-loader or catenary will follow the mouse cursor to allow a perfect and fast placement:  
+When placing the next chunk-loader a "phantom" image of the next chunk-loader or catenary will follow the mouse cursor to allow a perfect and fast placement:  
+Catenaries:
 ![catenaries3](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/2aee9d66-de4e-4166-a183-90f30aa22051)  
-
 ![catenaries4](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/18e21977-fa29-4d84-ad94-c1e4ef0f96bb)  
+Plain chunk-loaders:  
+![chunk-loaders area1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/77313de7-2ea7-432c-b1ff-98ee47301116)  
+![chunk-loaders area2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/99ac73af-241d-4c3b-bf6a-427532fa833c)  
 
 After placing all the catenaries in the area where your rail network will be (be sure to cover the whole area where the trains will transit) you can begin to place the actual rails:
 ![catenaries8](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/40ed3124-ac8c-4bd2-a0f1-ebf3f310ca85)  
 ![catenaries9](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/c52c7899-d5b0-4774-a816-193d86ce6bea)  
 
-When building a circular line, after wmaking a complete circle around the planet it could happen that the network is uneven and the next catenary position won't match like this:  
+When building a circular line, after making a complete circle around the planet it could happen that the network is uneven and the next catenary position won't match like this:  
 ![Uneven catenaries1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/dbb0ee66-64a1-477a-93b8-afdac398b66c)  
 or this:  
 ![uneven catenaries2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/d1f1f739-bba0-443e-a8b2-6c76cc08e9e2)  
@@ -199,16 +202,6 @@ If you think that the girders are too close to each other you can also use plain
 And just extend the wires with "catenary wires":  
 ![uneven2c2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/05935410-a585-417f-a651-f120c6a8776f)  
 ![uneven2c3](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/3c906eaa-865d-4203-982a-f3856fce987b)  
-
-![catenaries7](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/8bbddd29-f203-45cc-aaf8-833181d9c75a)
-
-![catenaries7a](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/16aa7cb9-76f5-4ba4-b84a-27bdcd3fbcea)
-
-![catenaries7b](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/2d59480f-f237-45d8-8da4-820263e48a6d)
-
-![catenaries7c](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/2a270538-c2b1-4932-aae2-812cdaae1274)
-
-![catenaries7d](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/46987784-895f-4830-9c51-d63caee12fb7)
 
 ### Place Rail Stations Markers
 
