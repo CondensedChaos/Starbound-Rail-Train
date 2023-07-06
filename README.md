@@ -184,10 +184,17 @@ After placing all the catenaries in the area where your rail network will be (be
 ![catenaries8](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/40ed3124-ac8c-4bd2-a0f1-ebf3f310ca85)  
 ![catenaries9](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/c52c7899-d5b0-4774-a816-193d86ce6bea)  
 
-When building a circular line, after wmaking a complete circle around the planet it could happen that the 
-![catenaries5](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/598ec510-1645-4fcd-b6e4-495e6114c4b6)
-
-![catenaries6](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/0db2c829-911b-4f28-b5d6-bbc77a54f343)
+When building a circular line, after wmaking a complete circle around the planet it could happen that the network is uneven and the next catenary position won't match like this:  
+![Uneven catenaries1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/dbb0ee66-64a1-477a-93b8-afdac398b66c)  
+or this:  
+![uneven catenaries2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/d1f1f739-bba0-443e-a8b2-6c76cc08e9e2)  
+To solve this problem use the catenary with girder for uneven network (called catenary girder, no wires):  
+![uneven2a](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e0ae2121-b506-43bd-839d-fd2db32c6af7)  
+![uneven2b](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/21fe68c1-92e4-4d01-81de-27420e6c92d5)  
+![uneven2c](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e1bc5a1e-01dd-4605-a77b-20b05bf73f97)  
+![uneven2c1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e5764911-942b-41ec-ae25-b2b4b338ae28)  
+![uneven2c2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/05935410-a585-417f-a651-f120c6a8776f)  
+![uneven2c3](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/3c906eaa-865d-4203-982a-f3856fce987b)  
 
 ![catenaries7](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/8bbddd29-f203-45cc-aaf8-833181d9c75a)
 
