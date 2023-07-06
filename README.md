@@ -147,10 +147,13 @@ or
 # Usage
 To allow Starbound to run the trains you will need to use rail chunk-loaders.  
 Similar to Minecraft's [Chunk Loaders](https://www.sportskeeda.com/minecraft/chunk-loaders-minecraft-all-need-know) they are items that sits on the rails and have to be placed every 18 tiles.  
+
 Starbound divides the world in chunks, each chunk is roughly 20x20 tiles, if no player is present in a determined chunk the game will not render that chunk so for example it will have the effect that any vehicle running outside player's vicinity will be stopped.  
 Rail chunk loaders force the chunk where they are put to not be put to sleep.
 
-There are two kinds of Rail Chunk Loaders: simple chunk loaders and catenaries
+There are two kinds of Rail Chunk Loaders: simple chunk loaders and catenaries.  
+They provide exactly the same function and their difference is purely aesthetic.  
+Catenaries are build to provide a real-life [overhead lines](https://www.trackopedia.com/en/encyclopedia/infrastructure/power-systems-and-overhead-lines) look and feel.  
 
 ## Tram network preparation
 
@@ -159,13 +162,12 @@ Minimum height if you're buiding a tunnel and you're using catenaries is 12 bloc
 
 ![size1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/42efff3b-a6a2-482d-99aa-d56f8b037fdd)
 
-The trains comprehensive of Pantographs are 10 blocks high:
-
+The trains comprehensive of Pantographs are 10 blocks high:  
 ![size2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/f077ae2e-ef5e-45c3-920b-1bd02f8deb7b)
 
-If you're building a tunnels and you don't want to use catenaries and pantographs, the minimum height to allow trains to pass is 9 blocks:
-
-![size3](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/b8263d55-0b54-4b9e-a2b2-0c9ff8f110e6)
+If you're building a tunnel and you don't want to use catenaries and pantographs, the minimum height to allow trains to pass is 9 blocks:  
+![size3](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/b8263d55-0b54-4b9e-a2b2-0c9ff8f110e6)  
+The use of [Skizot's Dozers](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#skizots-dozers) can be very useful (and fun) to dig tunnels.
 
 ### Place Rail Chunk loaders or Catenaries
 
