@@ -158,8 +158,7 @@ Catenaries are build to provide a real-life [overhead lines](https://www.trackop
 ## Tram network preparation
 
 ### Height requirements
-Minimum height if you're buiding a tunnel and you're using catenaries is 12 blocks:
-
+Minimum height if you're buiding a tunnel and you're using catenaries is 12 blocks:  
 ![size1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/42efff3b-a6a2-482d-99aa-d56f8b037fdd)
 
 The trains comprehensive of Pantographs are 10 blocks high:  
@@ -172,7 +171,6 @@ The use of [Skizot's Dozers](https://github.com/CondensedChaos/Starbound-Rail-Tr
 ### Place Rail Chunk loaders or Catenaries
 If you're using catenaries or rail chunk loaders they will both highlight their area of incluence in red, make sure to place the other chunk-loaders between the green and the red area:  
 ![catenaries1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e199536e-e385-4fbc-8ebd-463c44d864a6)  
-
 ![catenaries2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/4161c4a7-4be1-4ea8-879f-0b6eeccc390f)  
 
 When placing the next chunk-loader a "phantom" image of the next chunk-loader or catenary will follow the mouse cursor to allow a perfect and fast placement:  
@@ -198,7 +196,7 @@ And extend the wires with "catenary wires":
 ![uneven2b](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/21fe68c1-92e4-4d01-81de-27420e6c92d5)  
 ![uneven2c](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e1bc5a1e-01dd-4605-a77b-20b05bf73f97)  
 
-If you think that the girders are too close to each other you can also use plain rail chunk-loaders without girders:  
+If you think that the girders are too close to each other, you can also use plain rail chunk-loaders without girders:  
 ![uneven2c1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e5764911-942b-41ec-ae25-b2b4b338ae28)  
 And just extend the wires with "catenary wires":  
 ![uneven2c2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/05935410-a585-417f-a651-f120c6a8776f)  
@@ -260,26 +258,25 @@ And just extend the wires with "catenary wires":
 ![wires-craft](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/cbc388c4-88cb-4ddb-aad8-d5f214d8ad72)
 
 #### 45°degrees Catenaries
-![catenary45](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/076150ba-3c37-4cf4-bbc7-5d2bc6d3268b)
+![catenary45](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/076150ba-3c37-4cf4-bbc7-5d2bc6d3268b)  
 
-![catenary45-1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/261c2f8c-4bde-4b3d-8023-a8b879d15e44)
-![catenary45-2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/97e56038-18d7-4016-836f-861c24b02aaf)
-![catenary45-3](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/f7f18c07-2c15-4b16-b2b2-6a94bf0b143b)
-![catenary45-4](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/965b89b7-133c-41f2-ba7a-1332950597ef)
-![catenary45-5](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/f3afb494-2fa4-4e43-ace1-9d0002178fea)
+![catenary45-1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/c9ee1cbb-8eaf-4da3-911b-b2de00ab6fd8)
+![catenary45-5](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/54e0d32e-9219-4704-9bfb-916e10d5f96b)  
+![catenary45-4](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/3b0dfcc9-8199-4521-9cc9-6958dc33f0e2)  
+![catenary45-3](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/aa53da59-ca2a-4789-b7e5-e7fa145424fe)  
+![catenary45-2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/8e971ecf-f187-49b6-85c1-5575ed8ee27f)  
 
-![catenary-wires45](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/0fcd12d2-9a20-47f5-80a4-f121f5acc430)
-
-![catenary-wires45-2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/0baa7437-5b66-4b50-aaf7-4afe27f0429d)
-
-![girderext](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/31591d13-bf29-4bc9-8ed5-85f0f18a33a6)
-
-![girderext-1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/43c6d2b9-b747-41a7-8e4a-be28e9716fe2)
+![catenary-wires45](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/0fcd12d2-9a20-47f5-80a4-f121f5acc430)  
+![catenary-wires45-2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/f37e8faf-d501-4cce-bc97-e20edf4a9ebe)  
+![girderext](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/31591d13-bf29-4bc9-8ed5-85f0f18a33a6)  
+![girderext-1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/43c6d2b9-b747-41a7-8e4a-be28e9716fe2)  
 
 ### Station Controller
-![station-controller1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/efb8104c-8039-48b3-a74a-e32453341d34)
-
-![station-controller1-2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/c4725aca-7390-4ea9-8716-530a39758651)
+![station-controller1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/efb8104c-8039-48b3-a74a-e32453341d34)  
+![station-controller1-2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/c4725aca-7390-4ea9-8716-530a39758651)  
+Wall mounted version:  
+![station controller wall](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/6ff6306a-c315-41bc-bd14-834821eed0b4)  
+![station controller wall 2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/d356bff9-83fd-4192-b0f6-42575444630a)  
 
 
 ### Train scheduling web-app
