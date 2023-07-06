@@ -170,11 +170,13 @@ If you're building a tunnel and you don't want to use catenaries and pantographs
 The use of [Skizot's Dozers](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#skizots-dozers) can be very useful (and fun) to dig tunnels.
 
 ### Place Rail Chunk loaders or Catenaries
-
+If you're using catenaries or rail chunk loaders they will both highlight their area of incluence in red, make sure to place the other chunk-loaders between the green and the red area.  
 ![catenaries1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e199536e-e385-4fbc-8ebd-463c44d864a6)
+While placing chunk-loaders/catenaries too close is not reccomended as it could impact performaces, it can be done when, for example, when building a circular line wrapping around the planet.
 
 ![catenaries2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/4161c4a7-4be1-4ea8-879f-0b6eeccc390f)
 
+WHen placing the next chunk-loader a "phantom" image of the next chunk-loader or catenary will follow the mouse cursor to allow a perfect and fast placement. 
 ![catenaries3](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/2aee9d66-de4e-4166-a183-90f30aa22051)
 
 ![catenaries4](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/18e21977-fa29-4d84-ad94-c1e4ef0f96bb)
