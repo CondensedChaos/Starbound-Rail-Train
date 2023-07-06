@@ -203,16 +203,20 @@ And just extend the wires with "catenary wires":
 ![uneven2c3](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/3c906eaa-865d-4203-982a-f3856fce987b)  
 
 ### Place Rail Stations Markers
+Rail station markers are used to mark stations where the trains will stop
+![stationmarker1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/42809523-4da6-46e4-a657-ab4208f94a25)  
+They are crafted at rail crafting table:
+![rail station marker craft](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/c2e83c5d-f7ba-43ba-98fc-55541278cdaf)
+![railstationmarker craft](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/aff5d72e-b504-406a-9feb-3db1dbd540e7)  
+![station marker2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e592b3ed-d081-4028-8cd9-0dc02735006f)  
 
-![stationmarker1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/42809523-4da6-46e4-a657-ab4208f94a25)
-
-![railstationmarker craft](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/aff5d72e-b504-406a-9feb-3db1dbd540e7)
-
-![station marker2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e592b3ed-d081-4028-8cd9-0dc02735006f)
-
-![station marker3](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/a585ba44-b478-4eb6-96ba-0d622cb1f572)
-
-![station marker3a](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e79e89e4-5515-41da-afc6-312aa54be9d2)
+![station marker3](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/a585ba44-b478-4eb6-96ba-0d622cb1f572)  
+After deciding where the station will be you should use a [platform block](https://starbounder.org/Blocks#Platforms) (do not use regular blocks or trains will collide and won't be able to pass through)
+to let passangers depart, be sure to be long enough as the trains that you intend to use on the network:  
+![station marker3a](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e79e89e4-5515-41da-afc6-312aa54be9d2)  
+![station 1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/21885e3e-ecd5-4405-8ab5-ada4e80b7983)  
+THen you can decorate the station:  
+![station 2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/0c3fe947-5b97-4edd-967a-92d73f14af82)
 
 ---
 ## Components
