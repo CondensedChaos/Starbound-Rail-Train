@@ -231,7 +231,7 @@ Name your station:
 ![line creation2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/4055304b-5f13-4027-96fd-ef9b22813bcc)  
 There is also a wall-mounted version of Station Controller:
 ![station controller wall](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/6ff6306a-c315-41bc-bd14-834821eed0b4)  
-![station controller wall 2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/d356bff9-83fd-4192-b0f6-42575444630a)  
+![station controller wall 2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/d356bff9-83fd-4192-b0f6-42575444630a)
 ![wall-station controller1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/a2a29d79-8249-42c2-8369-6ef872318c87)  
 
 ---
