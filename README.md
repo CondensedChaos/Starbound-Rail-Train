@@ -472,11 +472,24 @@ This is the diagram that shows the layout:
 10) The eventuality that trains are deleted after some time has to be taken into account and periodical checks that all trains exist
 
 # Modding
-..........................................................................
+You can design your own train car to be used with this mod, just download the "traincar-modding-template.zip" from latest [Release](https://github.com/CondensedChaos/Starbound-Rail-Train/releases)  
+Modify this template to your liking
 
-..........................................................................
+First of all choose a name for your vehicle, rename all the files and folder that has the name "vehiclename" with the name of your choice, do not use spaces.  
+1) list of folders to rename:
+   - vehicles/vehiclename (rename it to vehicles/< your_vehicle_name >)
+   - interface/linkedTrain/trainConfigurator/vehiclename (rename it to interface/linkedTrain/trainConfigurator/< your_vehicle_name >)
+2) list of files to rename:
+   - vehicles/vehiclename/vehiclename.vehicle (rename it to < your_vehicle_name.vehicle >
+   - vehicles/vehiclename/vehiclename.animation (rename it to < your_vehicle_name.animation >
 
-..........................................................................
+After that you'll have to change all the mentions of "vehiclename" to < your_vehicle_name > in all files:
+1) in interface/linkedTrain/trainConfigurator/settings.json.patch at line 5
+2) in objects/crafting/trainConfigurator/listOfCars.json.patch at line 4 and line 13
+3) in vehicles/vehiclename/vehiclename.vehicle at line 2, line 11 (change it to: "animation" : "/vehicles/< your_vehicle_name >/< your_vehicle_name >.animation"), line 16, 19, 22, 25, 28, 31, 34, 37, 40, 43, 46, 49, 52, 118
+
+
+![-=animationsExplaination=-](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/2df726d2-f17f-4563-9281-e845975f1728)  
 
 ---
 # License
