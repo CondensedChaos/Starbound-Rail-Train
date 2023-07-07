@@ -453,7 +453,12 @@ Start test runs for "Line A", the more test runs you make the more precise the r
 ![rail demo 12](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/f2d04564-7dcb-4fda-ba28-13dec6dc9136)  
 As of now there is no way to know if test runs are over, checking from time to time the test run dialog if you see the test run data on the upper left then it's over, there's an upcoming feature planned to show live the test run data, status oan position of the trains as they go in the GUI.
 
-Using your own testrun data and the marey-chart webapp plan the schedule for your trains, refer to the manual of the web app [here](https://github.com/CondensedChaos/condensedchaos.github.io/tree/main)
+Using your own testrun data and the marey-chart webapp plan the schedule for your trains, refer to the manual of the web app [here](https://github.com/CondensedChaos/condensedchaos.github.io/tree/main)  
+Particularly to the section [More lines in a graph](https://github.com/CondensedChaos/condensedchaos.github.io/tree/main#more-lines-in-a-graph)  
+and [How to use](https://github.com/CondensedChaos/condensedchaos.github.io/tree/main#how-to-use)  
+The layout of the lines in the rail demo world correspond to [Case 1a](https://github.com/CondensedChaos/condensedchaos.github.io/tree/main#case-1a)  
+This is the diagram that shows the layout: 
+![rail demo schema](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/07055079-d1f3-4eb8-9130-e00c720d8623)  
 
 # To-do
 1) More colors for the trains
