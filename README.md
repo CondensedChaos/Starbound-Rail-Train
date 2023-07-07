@@ -377,13 +377,15 @@ Select the "circular" checkbox if your line goes all around your planet:
 ![line creation17](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/f2fd65f0-b1b1-455a-a4b1-d70b97edc4e2)  
 ![line creation18](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/fa5ccb43-c30d-4604-8dc6-d5f68833730f)  
 ![line creation19](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/55f471e5-6f91-45cc-8ac9-f9028007320b)  
+The more test runs you make the more precise the readings will be but it will take more time, 10 test runs is best, more than that it's just overkill, 5 should be acceptable
 
 ### Make schedules with web-app
 Open the trains schedule web-app [here](condensedchaos.github.io)  
 Usage of the Web-App: [here](https://github.com/CondensedChaos/condensedchaos.github.io/tree/main)  
 
 ### Craft Trains
-Craft a Trainset Configurator from Rail Crafting Table and refer to [Trainset-Configurator](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#trainset-configurator)
+Craft a Trainset Configurator from Rail Crafting Table and refer to [Trainset-Configurator](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#trainset-configurator)  
+Craft as many trains are required from the schedule you made with the app.
 
 ### Create the schedule in-game
 ![00](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/b6ff8dee-ac1f-49d7-947d-ef3fd387def4)  
@@ -409,9 +411,6 @@ If only one line is present that line will be started without any further comfir
 ---
 
 # Scheduled mode with two or more lines
-
----
-# Trains schedule Web-App
 ..........................................................................
 
 ..........................................................................
