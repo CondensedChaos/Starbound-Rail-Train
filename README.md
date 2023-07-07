@@ -2,13 +2,12 @@ Starbound Rail Train system
 ===========================
 
 # Overview
-This mod add a train system to be used with Startbound's rail tram system.
-It provides a framework that includes train crafting, personalization of trains, creation of lines and scheduling of trains.
-Any user with some experience in modding can add additional train cars to be used with this mod (Refer to modding)
+This mod add a train system to be used with Startbound's rail tram system.  
+It provides a framework that includes train crafting, personalization of trains, creation of lines and scheduling of trains.  
+Any user with some experience in modding can add additional train cars to be used with this mod (Refer to modding)  
+There are two operating modes, free and scheduled.  
 
-There are two operating modes, free and scheduled.
-
-A Many Tabs Patch is also available [Here](https://github.com/CondensedChaos/Starbound-Rail-Train-Many-Tabs-Patch/tree/main)
+A Many Tabs Patch is also available [Here](https://github.com/CondensedChaos/Starbound-Rail-Train-Many-Tabs-Patch/tree/main)  
 
 <a href="https://youtu.be/p0koywGE3aU"><img src="https://markdown-videos.vercel.app/youtube/p0koywGE3aU"></a></img>  
 <a href="https://youtu.be/j72Pmk6Tagk"><img src="https://markdown-videos.vercel.app/youtube/j72Pmk6Tagk"></a></img>
@@ -16,7 +15,7 @@ A Many Tabs Patch is also available [Here](https://github.com/CondensedChaos/Sta
 ---
 # Installation
 Grab latest release from [here](https://github.com/CondensedChaos/Starbound-Rail-Train/releases)  
-download either the zipped (.zip) version or the .pak version
+download either the zipped (.zip) version or the .pak version  
 
 Zip version name: "Starbound-Rail-Train-<version>.zip"  
 Pak version name: "Starbound-Rail-Train-<version>.pak"  
@@ -34,39 +33,34 @@ Refer to [rail-demo](https://github.com/CondensedChaos/Starbound-Rail-Train/tree
 
 ---
 ## Free Mode
-In free mode the trains are crafted using the **"Trainset Configurator"** (crafted at Rail Crafting Table) and just placed on the rails.
-
-Once the train is placed it will continue to go over the rails and stops at stations, you can either make a circular rail line around the planet or use rail bumbers to revert its direction so it goes back and forth.
-
-To create stops you need to use the custom rail markers (called **"Rail station marker"**, craftable at the Rail Crafting Table) supplied with the mod (**_do not use conventional vanilla tram stops_**).
-
-Since the game loads the world in *"chunks"* that are approximately 20x20 blocks, you will need special items to place on the rail every 19 tiles that will keep that tract of world loaded (similar to Minecraft "Chunks Loaders")
-
-There are two variants of chunk loaders, they're only different in appearance but they serve the same functions: **"catenaries"** and **"rail chunk loaders"**
+In free mode the trains are crafted using the **"Trainset Configurator"** (crafted at Rail Crafting Table) and just placed on the rails.  
+Once the train is placed it will continue to go over the rails and stops at stations, you can either make a circular rail line around the planet or use rail bumbers to revert its direction so it goes back and forth.  
+To create stops you need to use the custom rail markers (called **"Rail station marker"**, craftable at the Rail Crafting Table) supplied with the mod (**_do not use conventional vanilla tram stops_**).  
+Since the game loads the world in *"chunks"* that are approximately 20x20 blocks, you will need special items to place on the rail every 19 tiles that will keep that tract of world loaded (similar to Minecraft "Chunks Loaders")  
+There are two variants of chunk loaders, they're only different in appearance but they serve the same functions: **"catenaries"** and **"rail chunk loaders"**  
 
 ## Scheduled mode
-In scheduled mode special items that controls the rail stops are used in conjuction with **Rail station markers**, those are the **"Station controllers"** craftable at the Rail crafting table.
-Those are used to define a train line and wired to a rail station marker. Each station has to have its Station Controlled.
+In scheduled mode special items that controls the rail stops are used in conjuction with **Rail station markers**, those are the **"Station controllers"** craftable at the Rail crafting table.  
+Those are used to define a train line and wired to a rail station marker. Each station has to have its Station Controlled.  
 
-Stations should be placed from west to east.
-After all the stations controllers are placed and wired to its rail station marker a train line has to be defined using the station controller user interface (just interact with the first station) a line has to be created and all the other stations of the line added.
+Stations should be placed from west to east.  
+After all the stations controllers are placed and wired to its rail station marker a train line has to be defined using the station controller user interface (just interact with the first station) a line has to be created and all the other stations of the line added.  
 
-A test run has to be made to measure the travel time for each section of the line.
-With the data from the test run you should then use the provided web app (more of this later) to plan the trains schedule.
+A test run has to be made to measure the travel time for each section of the line.  
+With the data from the test run you should then use the provided web app (more of this later) to plan the trains schedule.  
 
-Then go back to the station controller to create the schedule using the data from the web app, you can choose how many trains to have for each direction, choose their speed for each tract and stop times for each station, and when the trains should start.
+Then go back to the station controller to create the schedule using the data from the web app, you can choose how many trains to have for each direction, choose their speed for each tract and stop times for each station, and when the trains should start.  
 
-Then you'll have to craft a train at the **Trainset Configurator** for each tran you schedule, and import the items in the Train Configurator (more in depth usage for Scheduled mode here)
-
-Catenaries and/or Chunk Loaders has to be used too in scheduled mode.
+Then you'll have to craft a train at the **Trainset Configurator** for each tran you schedule, and import the items in the Train Configurator (more in depth usage for Scheduled mode here)  
+Catenaries and/or Chunk Loaders has to be used too in scheduled mode.  
 
 ---
 # Reccomended mods
 
 ## Many Tabs compatibility patch
-A patch to support Many tabs, highly reccomended, needs Many Tabs and Many Tabs Handcrafting Expansion
-
+A patch to support Many tabs, highly reccomended, needs Many Tabs and Many Tabs Handcrafting Expansion  
 It will create an own tab in the Rail Crafting Table for all the craftable components of this mod  
+
 ### From Steam Workshop:
 [here](http://)
 ### DRM-free version:
@@ -75,40 +69,40 @@ It will create an own tab in the Rail Crafting Table for all the craftable compo
 ---
 
 ## Many Tabs:
-This mod allows nearly all Crafting Tables to have more tabs to avoid cluttering if you use many mods
+This mod allows nearly all Crafting Tables to have more tabs to avoid cluttering if you use many mods  
 ### From Steam Workshop:
-[Part 1](https://steamcommunity.com/workshop/filedetails/?id=1119086325) and [Part 2](https://steamcommunity.com/workshop/filedetails/?id=956247051)
-Be sure to subscribe to both mods (it's a 2-part mod)
+[Part 1](https://steamcommunity.com/workshop/filedetails/?id=1119086325) and [Part 2](https://steamcommunity.com/workshop/filedetails/?id=956247051)  
+Be sure to subscribe to both mods (it's a 2-part mod)  
 ### DRM-free version:
-[From Chucklefish Forum](https://community.playstarbound.com/resources/many-tabs.4813/)
-or 
-[From SkyMods Part 1](https://catalogue.smods.ru/archives/5449) and [Part 2](https://catalogue.smods.ru/archives/5447)
-If you're downloading from SkyMods be sure to download both Part 1 and Part 2
+[From Chucklefish Forum](https://community.playstarbound.com/resources/many-tabs.4813/)  
+or  
+[From SkyMods Part 1](https://catalogue.smods.ru/archives/5449) and [Part 2](https://catalogue.smods.ru/archives/5447)  
+If you're downloading from SkyMods be sure to download both Part 1 and Part 2  
 
 ---
 
 ## Many Tabs Handcrafting Expansion:
-It expands Many Tabs to support even more crafting tables
+It expands Many Tabs to support even more crafting tables  
 ### From Steam Workshop:
-[Part 1](https://steamcommunity.com/workshop/filedetails/?id=2248892900) and [Part 2](https://steamcommunity.com/workshop/filedetails/?id=956247051)
-Be sure to subscribe to both mods (it's a 2-part mod)
+[Part 1](https://steamcommunity.com/workshop/filedetails/?id=2248892900) and [Part 2](https://steamcommunity.com/workshop/filedetails/?id=956247051)  
+Be sure to subscribe to both mods (it's a 2-part mod)  
 ### DRM-free version:
-[From SkyMods Part 1](https://catalogue.smods.ru/archives/111834) and [Part 2](https://catalogue.smods.ru/archives/111835)
-Be sure to download both Part 1 and Part 2
+[From SkyMods Part 1](https://catalogue.smods.ru/archives/111834) and [Part 2](https://catalogue.smods.ru/archives/111835)  
+Be sure to download both Part 1 and Part 2  
 
 ---
 
 ## Many Tabs Rail Crafting Table:
-It expands Many Tabs to better support Rail Crafting Table
+It expands Many Tabs to better support Rail Crafting Table  
 ### From Steam Workshop:
 [Here](https://steamcommunity.com/sharedfiles/filedetails/?id=2810272474) 
 ### DRM-Free version:
-Not yet available, will notify when it will be available
+Not yet available, will notify when it will be available  
 
 ---
 
 ## Enhanced Rails
-It will allow you to use an additional rail network (slick rail) that will allows for faster trains
+It will allow you to use an additional rail network (slick rail) that will allows for faster trains  
 ### From Steam Workshop:
 [here](https://steamcommunity.com/sharedfiles/filedetails/?id=921924325)
 ### DRM-Free version:
@@ -117,30 +111,26 @@ It will allow you to use an additional rail network (slick rail) that will allow
 ---
 
 ## Instant Crafting
-Disables the timer on client-side crafting tables so that everything you craft finish instantaneously.
+Disables the timer on client-side crafting tables so that everything you craft finish instantaneously.  
 ### From Steam Workshop:
-[Instant Crafting](https://steamcommunity.com/sharedfiles/filedetails/?id=729427744)
-
-[Instant Crafting Fixes (additional supports for other mods)](https://steamcommunity.com/workshop/filedetails/?id=1607460753)
-
-[Instant Crafting More Fixes (additional support for even more mods)](https://steamcommunity.com/sharedfiles/filedetails/?id=2809626987)
+[Instant Crafting](https://steamcommunity.com/sharedfiles/filedetails/?id=729427744)  
+[Instant Crafting Fixes (additional supports for other mods)](https://steamcommunity.com/workshop/filedetails/?id=1607460753)  
+[Instant Crafting More Fixes (additional support for even more mods)](https://steamcommunity.com/sharedfiles/filedetails/?id=2809626987)  
 ### DRM-Free version:
-[Instant Crafting from ChuckleFish Forum](https://community.playstarbound.com/resources/instant-crafting.3731/) or [From Skymods](https://catalogue.smods.ru/archives/24774)
-
-[Instant Crafting Fixes (additional supports for other mods)](https://catalogue.smods.ru/archives/80366)
-
-[Instant Crafting More Fixes (additional support for even more mods)](https://catalogue.smods.ru/archives/115134)
+[Instant Crafting from ChuckleFish Forum](https://community.playstarbound.com/resources/instant-crafting.3731/) or [From Skymods](https://catalogue.smods.ru/archives/24774)  
+[Instant Crafting Fixes (additional supports for other mods)](https://catalogue.smods.ru/archives/80366)  
+[Instant Crafting More Fixes (additional support for even more mods)](https://catalogue.smods.ru/archives/115134)  
 
 ---
 
 ## Skizot's Dozers
-Adds bulldozers to make tunnels, fun to use!
+Adds bulldozers to make tunnels, fun to use!  
 ### From Steam Workshop:
-[here](https://steamcommunity.com/sharedfiles/filedetails/?id=729428803)
+[here](https://steamcommunity.com/sharedfiles/filedetails/?id=729428803)  
 ### DRM-Free version:
-[from Chucklefish Forum](https://community.playstarbound.com/resources/skizots-dozers.3094/)
-or
-[from SKymods](https://catalogue.smods.ru/archives/24653)
+[from Chucklefish Forum](https://community.playstarbound.com/resources/skizots-dozers.3094/)  
+or  
+[from SKymods](https://catalogue.smods.ru/archives/24653)  
 
 ---
 
@@ -286,15 +276,17 @@ Wall mounted version:
 
 
 ### Train scheduling web-app
-..........................................................................
-
-..........................................................................
+There's a web-app availabe to aid you in scheduling of trains in scheduled mode.
+Open the trains schedule web-app [here](condensedchaos.github.io)
+Usage of the Web-App: [here](https://github.com/CondensedChaos/condensedchaos.github.io/tree/main)
 
 ---
 ## Free Mode
-..........................................................................
-
-..........................................................................
+In free mode the trains are crafted using the **"Trainset Configurator"** (crafted at Rail Crafting Table) and just placed on the rails.  
+Once the train is placed it will continue to go over the rails and stops at stations, you can either make a circular rail line around the planet or use rail bumbers to revert its direction so it goes back and forth.  
+To create stops you need to use the custom rail markers (called **"Rail station marker"**, craftable at the Rail Crafting Table) supplied with the mod (**_do not use conventional vanilla tram stops_**).  
+Since the game loads the world in *"chunks"* that are approximately 20x20 blocks, you will need special items to place on the rail every 19 tiles that will keep that tract of world loaded (similar to Minecraft "Chunks Loaders")  
+There are two variants of chunk loaders, they're only different in appearance but they serve the same functions: **"catenaries"** and **"rail chunk loaders"**  
 
 ### Prepare your network
 
@@ -316,130 +308,103 @@ a preview of where the train will be placed will appear, when is green means it 
 Be sure to place the train just above the rail track or it could be failed to spawn:  
 ![place trains 2a](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/0edaf219-1d92-40ee-bb3f-9ad3f17dd089)  
 ![place trains3](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/9ea0ad71-8789-474c-9b27-ea345790cbf4)  
+Repeat the above steps for every train that you want to place.
 
 ---
 ## Scheduled mode
-..........................................................................
+In scheduled mode special items that controls the rail stops are used in conjuction with **Rail station markers**, those are the **"Station controllers"** craftable at the Rail crafting table.  
+Those are used to define a train line and wired to a rail station marker. Each station has to have its Station Controlled.  
 
-..........................................................................
+Stations should be placed from west to east.  
+After all the stations controllers are placed and wired to its rail station marker a train line has to be defined using the station controller user interface (just interact with the first station) a line has to be created and all the other stations of the line added.  
+
+A test run has to be made to measure the travel time for each section of the line.  
+With the data from the test run you should then use the provided web app (more of this later) to plan the trains schedule.  
+
+Then go back to the station controller to create the schedule using the data from the web app, you can choose how many trains to have for each direction, choose their speed for each tract and stop times for each station, and when the trains should start.  
+
+Then you'll have to craft a train at the **Trainset Configurator** for each tran you schedule, and import the items in the Train Configurator (more in depth usage for Scheduled mode here)  
+Catenaries and/or Chunk Loaders has to be used too in scheduled mode.  
 
 ### Prepare your network
 
 ### Place Rail Station Markers
-![stationmarker1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/42809523-4da6-46e4-a657-ab4208f94a25)
-
-![railstationmarker craft](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/aff5d72e-b504-406a-9feb-3db1dbd540e7)
-
-![station marker2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e592b3ed-d081-4028-8cd9-0dc02735006f)
-
-![station marker3](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/a585ba44-b478-4eb6-96ba-0d622cb1f572)
-
-![station marker3a](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e79e89e4-5515-41da-afc6-312aa54be9d2)
-
+![stationmarker1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/42809523-4da6-46e4-a657-ab4208f94a25)  
+![railstationmarker craft](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/aff5d72e-b504-406a-9feb-3db1dbd540e7)  
+![station marker2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e592b3ed-d081-4028-8cd9-0dc02735006f)  
+![station marker3](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/a585ba44-b478-4eb6-96ba-0d622cb1f572)  
+![station marker3a](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e79e89e4-5515-41da-afc6-312aa54be9d2)  
 
 ### Place Station Controllers 
 And wire them to Rail Station Markers
-
-![station controller craft](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/12554c65-a599-499a-9208-2e80d1d5b538)
-
-![station marker 4](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/ca685ffa-c7a1-4195-8fd3-5e6cba19c9d8)
-
-![station marker 5](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/c0e239b7-8445-4449-aee7-ec69d18e1300)
-
-![station marker 6](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e452b780-a7c4-42c5-a5fc-6a3d591bdd9e)
-
-![station marker 7](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/f9a0abbf-e1fa-45a8-b6a2-8e21bae34d37)
-
-![station marker 8](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/9d9db061-bab5-4694-8724-0cf7c205bde6)
-
-![station marker 9](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/b813102e-8ba4-47eb-9ebb-a8086280d532)
+![station controller craft](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/12554c65-a599-499a-9208-2e80d1d5b538)  
+![station marker 4](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/ca685ffa-c7a1-4195-8fd3-5e6cba19c9d8)  
+![station marker 5](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/c0e239b7-8445-4449-aee7-ec69d18e1300)  
+![station marker 6](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e452b780-a7c4-42c5-a5fc-6a3d591bdd9e)  
+![station marker 7](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/f9a0abbf-e1fa-45a8-b6a2-8e21bae34d37)  
+![station marker 8](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/9d9db061-bab5-4694-8724-0cf7c205bde6)  
+![station marker 9](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/b813102e-8ba4-47eb-9ebb-a8086280d532)  
 
 #### Name your stations
-![line creation1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/5d397e57-3b07-447a-90ef-8f042124fe0d)
+![line creation1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/5d397e57-3b07-447a-90ef-8f042124fe0d)  
+![line creation2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/4055304b-5f13-4027-96fd-ef9b22813bcc)  
 
-![line creation2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/4055304b-5f13-4027-96fd-ef9b22813bcc)
-
-
-### Place Chunk Loaders/Catenaries
-Refer to [Place Rail Chunk loaders or Catenaries](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#place-rail-chunk-loaders-or-catenaries)
-
-### Place the rails
+### 4)Place Chunk Loaders/Catenaries - 5)Place the rails
+Refer to [Place Rail Chunk loaders or Catenaries](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#place-rail-chunk-loaders-or-catenaries)  
 
 ### Create a Line
-
-![line creation3](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/30fa0857-0674-45a4-9432-3c63516d3402)
-
-![line creation4](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/891cf0b0-95cd-4642-9979-6d5f14ff4dc0)
-
-![line creation5](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/0ced7315-3f90-4f2f-a992-b3a5745be4ad)
-
-![line creation6](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/057f2be1-91d0-448d-b489-e4f93cf3b8e4)
-
-![line creation7](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/4807e3d4-1740-4270-a39b-80430bab4804)
-
-![line creation8](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/c9e0f280-9a6e-4e4d-ae67-b2c5082602d3)
-
-Circular/non circular
+![line creation3](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/30fa0857-0674-45a4-9432-3c63516d3402)  
+![line creation4](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/891cf0b0-95cd-4642-9979-6d5f14ff4dc0)  
+![line creation5](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/0ced7315-3f90-4f2f-a992-b3a5745be4ad)  
+![line creation6](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/057f2be1-91d0-448d-b489-e4f93cf3b8e4)  
+![line creation7](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/4807e3d4-1740-4270-a39b-80430bab4804)  
+Select the "circular" checkbox if your line goes all around your planet:
+![line creation8](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/c9e0f280-9a6e-4e4d-ae67-b2c5082602d3)  
 
 #### Add Stations
+![line creation9](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/91d0b7fc-602e-4663-ae27-7d441c70b9a1)  
+![linecreation10](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/5794114c-0576-49a6-a0da-6264bbdcd21e)  
+![line creation11](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e36ec300-5825-4a6e-8d16-8d6453d1ac31)  
+![line creation12](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/bfcb931d-9092-4c70-a581-708f192e8c59)  
 
-![line creation9](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/91d0b7fc-602e-4663-ae27-7d441c70b9a1)
-
-![linecreation10](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/5794114c-0576-49a6-a0da-6264bbdcd21e)
-
-![line creation11](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e36ec300-5825-4a6e-8d16-8d6453d1ac31)
-
-![line creation12](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/bfcb931d-9092-4c70-a581-708f192e8c59)
 ---
-![line creation13](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/4b545a5e-3dd4-43fb-8274-0d45400f73ca)
-
-![line creation14](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/aa2ecef2-436a-4552-87c5-ca48201b246a)
-
-![line creation15](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/865da791-9aa4-4e35-a932-59fc598d69e4)
-
+![line creation13](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/4b545a5e-3dd4-43fb-8274-0d45400f73ca)  
+![line creation14](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/aa2ecef2-436a-4552-87c5-ca48201b246a)  
+![line creation15](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/865da791-9aa4-4e35-a932-59fc598d69e4)  
 
 ### Do test runs
-![line creation 16](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/60190db1-ae44-4da2-968d-8260575eec01)
-
-![line creation17](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/f2fd65f0-b1b1-455a-a4b1-d70b97edc4e2)
-
-![line creation18](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/fa5ccb43-c30d-4604-8dc6-d5f68833730f)
-
-![line creation19](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/55f471e5-6f91-45cc-8ac9-f9028007320b)
+![line creation 16](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/60190db1-ae44-4da2-968d-8260575eec01)  
+![line creation17](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/f2fd65f0-b1b1-455a-a4b1-d70b97edc4e2)  
+![line creation18](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/fa5ccb43-c30d-4604-8dc6-d5f68833730f)  
+![line creation19](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/55f471e5-6f91-45cc-8ac9-f9028007320b)  
 
 ### Make schedules with web-app
-Open the trains schedule web-app [here](condensedchaos.github.io )
-
-Usage of the Web-App: [here](https://github.com/CondensedChaos/condensedchaos.github.io/tree/main)
+Open the trains schedule web-app [here](condensedchaos.github.io)  
+Usage of the Web-App: [here](https://github.com/CondensedChaos/condensedchaos.github.io/tree/main)  
 
 ### Craft Trains
 Craft a Trainset Configurator from Rail Crafting Table and refer to [Trainset-Configurator](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#trainset-configurator)
 
 ### Create the schedule in-game
-![00](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/b6ff8dee-ac1f-49d7-947d-ef3fd387def4)
-
-![01](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/1e881b54-4a19-4c94-8571-da60fbea1286)
-
-![02](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/cd116b64-5573-463a-98a4-f99fd3619f49)
-
-![03](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/120935ab-ba21-42b3-a245-887db316a37e)
-
-![04](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/f2fd00ab-000e-43b4-abb0-a62e517656c1)
-
-![05](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/8c3881ad-8303-4d07-bfc6-c4cfdebfffb9)
-
+![00](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/b6ff8dee-ac1f-49d7-947d-ef3fd387def4)  
+![01](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/1e881b54-4a19-4c94-8571-da60fbea1286)  
+![02](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/cd116b64-5573-463a-98a4-f99fd3619f49)  
+![03](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/120935ab-ba21-42b3-a245-887db316a37e)  
+![04](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/f2fd00ab-000e-43b4-abb0-a62e517656c1)  
+![05](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/8c3881ad-8303-4d07-bfc6-c4cfdebfffb9)  
 
 #### Add train items in Station Controller
-
-![06](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/cdd84aa3-6b44-42f4-b5ce-63dab4ae339c)
-
-![07](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/bc50e1b7-1ffa-485c-af39-ca853e61ec91)
-
+![06](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/cdd84aa3-6b44-42f4-b5ce-63dab4ae339c)  
+![07](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/bc50e1b7-1ffa-485c-af39-ca853e61ec91)  
 
 ### Start trains
-..........................................................................
-
-..........................................................................
+Interact with any station controller to open its GUI, select "Lines":  
+![start trains1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/2e30681f-a2c5-4ba7-9ef1-e5bfacaeec07)  
+Select "Start trains":  
+![start trains2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/818ef96b-803e-4824-b62d-deb39611f537)  
+If more lines are present in the planet a dialogue will be opened to ask which line should be started:  
+![start trains 3](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/957ebcd6-89dd-4b85-af43-662c5edb0a88)  
+If only one line is present that line will be started without any further comfirmation.
 
 ---
 
@@ -457,15 +422,38 @@ Craft a Trainset Configurator from Rail Crafting Table and refer to [Trainset-Co
 It's an instance world that includes a ready-made demo train network of two lines that can be used to understand better how the mod works.
 
 it's called "raildemo.zip", to install it you have to open the downloaded zip file and
-unzip the content of the folder named as "1 - ..." in < Starbound folder >\mods
+unzip the content of the folder named as "1 - EXTRACT CONTENT OF THIS FOLDER INSIDE starbound -> mods" in < Starbound folder >\mods
 
-and the content of folder named as "2 - ..." in < Starbound folder >\universe\storage
+and the content of folder named as "2 - EXTRACT CONTENT OF THIS FOLDER INSIDE starbound->storage->universe" in < Starbound folder >\universe\storage
 
-To access the demo just craft a "rail demo world teleporter" from the empty-hand (press C in-game) crafting.  
-Place the teleporter and warp in the demo-world.
+To access the demo just craft a "rail demo world teleporter" from the empty-hand (press C in-game) crafting:  
+![rail demo1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/cf1f7bec-657f-4ada-98d4-ef613308ad12)  
+Place the teleporter and warp in the demo-world:  
+![rail demo2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/57720c33-05fb-4297-ad2d-06ca3f472d45)  
+![rail demo 3](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/846cc428-fefd-45b2-8748-96e1606f0be2)  
 
-When warped you will find yourself at the first station of the network, trains are stopped when entering the first time, just open any "Station Controller" (refer to components) and go in the "Lines" tab and click "Start trains" and select both "Line A" and "Line B", trains will be spawned according to a schedule that was made on my computer, so running times might be different because of system performance and lag.  
-If you want you can make your own schedule using your own testrun data and the marey-chart webapp.
+When warped you will find yourself at the first station of the network:
+![rail demo 4](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/7f64d495-5c83-4167-a7dd-22697183ea80)  
+
+Trains are stopped when entering the first time, just open any "Station Controller" (refer to components):  
+![rail demo 5](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/6c054e6a-a05e-4060-b496-8349e84d0d8a)  
+Then go in the "Lines" tab and click "Start trains" and select both "Line A" and "Line B":
+![rail demo 6](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/965a1fa3-82c9-47cc-a1d8-b5ecca80b0ab)  
+![rail demo 7](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/fca2bee9-7e36-4243-aae9-1b0fb753b235)  
+![rail demo 8](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/867b50a2-5308-46fe-bc05-8cda34d93f5b)  
+
+Trains will be spawned according to a schedule that was made on my computer, so running times might be different because of system performance and lag.  
+If you want you can make your own schedule based on the running time of your machine. To do so clear the testrun data first:  
+Open the station controller for Line A (left one), select "Lines: and select "Test run"  
+![rail demo 9](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e608678f-90d8-4f5b-a927-5da49087ec22)  
+Select "Clear Testrun Data":  
+![rail demo 10](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/71c9a7b6-012e-4c73-b6a9-16d0983f9d8f)  
+Start test runs for "Line A", the more test runs you make the more precise the readings will be but it will take more time, 10 test runs is best, more than that it's just overkill, 5 should be acceptable:
+![rail demo 11](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/3fa10c3d-009a-4d3f-8231-01ae898131cb)
+![rail demo 12](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/f2d04564-7dcb-4fda-ba28-13dec6dc9136)  
+As of now there is no way to know if test runs are over, checking from time to time the test run dialog if you see the test run data on the upper left then it's over, there's an upcoming feature planned to show live the test run data, status oan position of the trains as they go in the GUI.
+
+Using your own testrun data and the marey-chart webapp plan the schedule for your trains, refer to the manual of the web app [here](https://github.com/CondensedChaos/condensedchaos.github.io/tree/main)
 
 # To-do
 1) More colors for the trains
