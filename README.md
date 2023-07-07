@@ -218,7 +218,7 @@ to let passangers get off and on trains, be sure to be long enough as the trains
 Then you can decorate the station:  
 ![station 2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/0c3fe947-5b97-4edd-967a-92d73f14af82)  
 
-**For Scheduled mode only:**
+***For Scheduled mode only:***  
 Also place a Station controller and wire it to station marker:  
 ![station marker 4](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/ca685ffa-c7a1-4195-8fd3-5e6cba19c9d8)  
 ![station marker 5](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/c0e239b7-8445-4449-aee7-ec69d18e1300)  
@@ -226,11 +226,14 @@ Also place a Station controller and wire it to station marker:
 ![station marker 7](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/f9a0abbf-e1fa-45a8-b6a2-8e21bae34d37)  
 ![station marker 8](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/9d9db061-bab5-4694-8724-0cf7c205bde6)  
 ![station marker 9](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/b813102e-8ba4-47eb-9ebb-a8086280d532)  
+Name your station:  
+![line creation1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/5d397e57-3b07-447a-90ef-8f042124fe0d)  
+![line creation2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/4055304b-5f13-4027-96fd-ef9b22813bcc)  
+There is also a wall-mounted version of Station Controller:
+![station controller wall](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/6ff6306a-c315-41bc-bd14-834821eed0b4)  
+![station controller wall 2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/d356bff9-83fd-4192-b0f6-42575444630a)  
+![wall-station controller1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/a2a29d79-8249-42c2-8369-6ef872318c87)  
 
-#### Name your stations
-![line creation1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/5d397e57-3b07-447a-90ef-8f042124fe0d)
-
-![line creation2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/4055304b-5f13-4027-96fd-ef9b22813bcc)
 ---
 ## Components
 ..........................................................................
