@@ -488,8 +488,26 @@ After that you'll have to change all the mentions of "vehiclename" to < your_veh
 2) in objects/crafting/trainConfigurator/listOfCars.json.patch at line 4 and line 13
 3) in vehicles/vehiclename/vehiclename.vehicle at line 2, line 11 (change it to: "animation" : "/vehicles/< your_vehicle_name >/< your_vehicle_name >.animation"), line 16, 19, 22, 25, 28, 31, 34, 37, 40, 43, 46, 49, 52, 118
 
+The folder interface/linkedTrain/trainConfigurator/vehiclename/ contains the preview for train configurator.  
+Body is the bottom part of the vehicle, cockpit is the top part.  
+[Pantograph](https://en.wikipedia.org/wiki/Pantograph_(transport)) is the apparatus that is mounted on the train's roof that is in contact with the overhead wires to get electricity. If you do not wish to create a new pantograph for your train you can use the provided asset, just be sure to change the width of the sprite to your train's sprite size.  
+
+The folder vehicles/vehiclename/ contains the sprites that will be used in game and the definition of the vehicle's parameters, explaination of files:
+Any vehicle for this mod can have up to 10 different decals, named from decal "A" to decal "J", the decal that follows will be placed above the decal that precedes, like layers.
+- cockpitred.png : top part of the train, sprite relative to red color.  
+- red.png : bottom part of the train (the part named "body") relative to the red color.
+- decalB0.png : sprite nr 1 of the wheels
+- decalB1.png : sprite nr 2 of the wheels
+- decalA1.png : graffiti sprites (as an example)
+- headlight.png : sprite of the headlights, it has 2 frames, frames at the left is the headlight when turned on, the other frame is the headlight turned off
+- reverseheadlight.png : sprite of the headlight at the tail of the train, it has 2 frames, frames at the left is the headlight when turned on, the other frame is the headlight turned off
+- taillight.png : sprite of the tail-light, it has 2 frames, frames at the left is the headlight when turned on, the other frame is the headlight turned off
 
 ![-=animationsExplaination=-](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/2df726d2-f17f-4563-9281-e845975f1728)  
+
+![-=pantograph=-](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/25b4c97f-3db9-4491-9616-d04f90ebd4e9)  
+
+
 
 ---
 # License
