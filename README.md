@@ -175,17 +175,19 @@ If you're using catenaries or rail chunk loaders they will both highlight their 
 
 When placing the next chunk-loader a "phantom" image of the next chunk-loader or catenary will follow the mouse cursor to allow a perfect and fast placement:  
 
-Catenaries:
+#### Catenaries:
 ![catenaries3](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/2aee9d66-de4e-4166-a183-90f30aa22051)  
 ![catenaries4](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/18e21977-fa29-4d84-ad94-c1e4ef0f96bb)  
-Plain chunk-loaders:  
+#### Plain chunk-loaders:  
 ![chunk-loaders area1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/77313de7-2ea7-432c-b1ff-98ee47301116)  
 ![chunk-loaders area2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/99ac73af-241d-4c3b-bf6a-427532fa833c)  
 
+#### Place the rails:
 After placing all the catenaries in the area where your rail network will be (be sure to cover the whole area where the trains will transit) you can begin to place the actual rails:
 ![catenaries8](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/40ed3124-ac8c-4bd2-a0f1-ebf3f310ca85)  
 ![catenaries9](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/c52c7899-d5b0-4774-a816-193d86ce6bea)  
 
+#### note for circular lines:
 When building a circular line, after making a complete circle around the planet it could happen that the network is uneven and the next catenary position won't match like this:  
 ![Uneven catenaries1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/dbb0ee66-64a1-477a-93b8-afdac398b66c)  
 or this:  
@@ -236,46 +238,30 @@ There is also a wall-mounted version of Station Controller:
 
 ---
 ## Components
-..........................................................................
-
-..........................................................................
 
 ### Trainset Configurator
-![trainconfigurator](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/22002a29-4499-46e7-9930-516bd98dbef5)
-
-![train configurator1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/be8ed6f4-af5f-4307-9a90-d912de0555a4)
-
-![trainconfigurator2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/a7f00cb9-3d45-42a4-bcd7-312ed1f9d580)
-
-![train configurator2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/2a5b0c99-69f2-4959-b604-62a647cd8bcd)
-
-![train configurator3](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/9503fecd-7707-437c-b710-ab3d443df47f)
-
-![train configurator4](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/00a4205f-d62b-443b-b1d1-e6327436a7b8)
-
-![train configurator5](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/c3a4c92c-8921-4261-bb66-750dc985fc7e)
-
-![train configurator6](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/9f57baa4-b9df-4cc5-9cf4-3d0de4bfccef)
-
-![trainset configurator craft](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/6aaca641-38a7-4d1e-a7e2-45eb1631c96f)
-
+![trainconfigurator](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/22002a29-4499-46e7-9930-516bd98dbef5)  
+![train configurator1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/be8ed6f4-af5f-4307-9a90-d912de0555a4)  
+![trainconfigurator2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/a7f00cb9-3d45-42a4-bcd7-312ed1f9d580)  
+![train configurator2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/2a5b0c99-69f2-4959-b604-62a647cd8bcd)  
+![train configurator3](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/9503fecd-7707-437c-b710-ab3d443df47f)  
+![train configurator4](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/00a4205f-d62b-443b-b1d1-e6327436a7b8)  
+![train configurator5](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/c3a4c92c-8921-4261-bb66-750dc985fc7e)  
+![train configurator6](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/9f57baa4-b9df-4cc5-9cf4-3d0de4bfccef)  
+![trainset configurator craft](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/6aaca641-38a7-4d1e-a7e2-45eb1631c96f)  
 
 ### Catenaries/Chunk loaders
-![catenary](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/0565a745-601c-4993-8b67-e6cfde30afaa)
+![catenary](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/0565a745-601c-4993-8b67-e6cfde30afaa)  
 
 ![catenary1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e86de415-b396-49e5-89ca-e243a0949da9)
 ![catenary2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/164c06c5-0704-465e-95a8-51f76031c954)
 ![catenary3](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/a990e637-37ed-4550-b055-367d6235a13f)
 
-![catenary-wires](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/ddb76dcc-50f9-4e9e-993f-f0c14202fce1)
-
-![catenary-wires2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/c863709b-a063-452f-a2f7-586fcaffc36e)
-
-![catenary craft](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/0e84c00e-c1dc-41ef-a914-692eb8512c72)
-
-![rail chunk loader craft](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/1d17a7b0-28f0-4c62-b1d5-0038e8b478a6)
-
-![wires-craft](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/cbc388c4-88cb-4ddb-aad8-d5f214d8ad72)
+![catenary-wires](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/ddb76dcc-50f9-4e9e-993f-f0c14202fce1)  
+![catenary-wires2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/c863709b-a063-452f-a2f7-586fcaffc36e)  
+![catenary craft](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/0e84c00e-c1dc-41ef-a914-692eb8512c72)  
+![rail chunk loader craft](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/1d17a7b0-28f0-4c62-b1d5-0038e8b478a6)  
+![wires-craft](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/cbc388c4-88cb-4ddb-aad8-d5f214d8ad72)  
 
 #### 45°degrees Catenaries
 ![catenary45](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/076150ba-3c37-4cf4-bbc7-5d2bc6d3268b)  
@@ -312,22 +298,24 @@ Wall mounted version:
 
 ### Prepare your network
 
-### Place Rail Station Markers
+### 1)Place Rail Station Markers
 Refer to [Place Rail Stations Markers](https://github.com/CondensedChaos/Starbound-Rail-Train/blob/main/README.md#place-rail-stations-markers)
 
-### Place Chunk Loaders/Catenaries
-Refer to [Tram Network Preparation](https://github.com/CondensedChaos/Starbound-Rail-Train/blob/main/README.md#tram-network-preparation)
-
-### Place the rails
-
+### 2)Place Chunk Loaders/Catenaries - 3)Place the rails
+Refer to [Place Rail Chunk Loaders or Catenaries](https://github.com/CondensedChaos/Starbound-Rail-Train/blob/main/README.md#place-rail-chunk-loaders-or-catenaries)
 
 ### Craft trains
-Craft a Trainset Configurator from Rail Crafting Table and refer to [Trainset-Configurator](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#trainset-configurator)
+Craft a Trainset Configurator from Rail Crafting Table and refer to [Trainset-Configurator](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#trainset-configurator)  
+And craft as many trains as you want to use on the network
 
 ### Place trains
-..........................................................................
-
-..........................................................................
+Select the item of the trains you have just crafted:  
+![place trains1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/c4587d7b-5c3e-4812-bc90-b20af79f412f)  
+a preview of where the train will be placed will appear, when is green means it is in a suitable position to be placed:  
+![place trains2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/3b8a623f-0545-44c8-b468-70c5e2c89d30)  
+Be sure to place the train just above the rail track or it could be failed to spawn:  
+![place trains 2a](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/0edaf219-1d92-40ee-bb3f-9ad3f17dd089)  
+![place trains3](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/9ea0ad71-8789-474c-9b27-ea345790cbf4)  
 
 ---
 ## Scheduled mode
