@@ -502,12 +502,34 @@ Any vehicle for this mod can have up to 10 different decals, named from decal "A
 - headlight.png : sprite of the headlights, it has 2 frames, frames at the left is the headlight when turned on, the other frame is the headlight turned off
 - reverseheadlight.png : sprite of the headlight at the tail of the train, it has 2 frames, frames at the left is the headlight when turned on, the other frame is the headlight turned off
 - taillight.png : sprite of the tail-light, it has 2 frames, frames at the left is the headlight when turned on, the other frame is the headlight turned off
+- decalPlaceholder.png : and empty, transparent image that is placed by the mod when a decal is hidden, it has to be the same frame size as the other sprites (body, cockpit and decals)
+- default.frames: defines frame size for cockpit, body and decals sprites
+- *frames files : defines frame size for all other sprites
+- vehiclename.vehicle : JSON files that defines all the parameters for your vehicle, you should edit this file and follow the instruction in the comments (lines that start with //)
+- vehiclename.animation : JSON files that defines the animation parameters for the sprites, you should edit this file and follow the instructions in the comments
 
+Explaination of sprites (valid for cockpit, body, decals):
 ![-=animationsExplaination=-](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/2df726d2-f17f-4563-9281-e845975f1728)  
 
-![-=pantograph=-](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/25b4c97f-3db9-4491-9616-d04f90ebd4e9)  
+Explaination of pantograph sprite (frame width is equal to vehicle lenght, height is 34 pixels):
+![-=pantograph=-](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/b5dfffed-bf65-402c-a34f-ba3157f1f1a2)
 
+Other files to edit:
+- objects/crafting/trainConfigurator/listOfCars.json.patch : JSON files that stores paramenters regarding the train car like pixel size, numer of decals, colors and such.
 
+The example provided in this template will generate a vehicle with just 1 color for body, 1 color for cockpit and 1 decal with 2 wheels kind.
+If you want to add more colors just modify the listOfCars.json to your likings and add the required files to interface/linkedTrain/trainConfigurator/vehiclename and vehicles/vehiclename/
+
+Naming format for colors:
+- cockpit:
+  - in interface/linkedTrain/trainConfigurator/vehiclename/cockpit = < color name >.png
+  - in vehicles/vehiclename/ = cockpit< color name >.png
+- body:
+  - in interface/linkedTrain/trainConfigurator/vehiclename/body = < color name >.png
+  - in vehicles/vehiclename/ = < color name >.png
+- decals:
+  - in interface/linkedTrain/trainConfigurator/vehiclename/ = make a folder named decal< LETTER > and the create the preview files named 1.png 2.png and so on
+  - in vehicles/vehiclename/ = decal< letter >< number >.png
 
 ---
 # License
