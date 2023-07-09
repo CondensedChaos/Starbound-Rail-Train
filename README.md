@@ -600,7 +600,7 @@ Naming format for colors:
   - in interface/linkedTrain/trainConfigurator/vehiclename/body = < color name >.png
   - in vehicles/vehiclename/ = < color name >.png
 - decals:
-  - in interface/linkedTrain/trainConfigurator/vehiclename/ = make a folder named decal< LETTER > and the create the preview files named 1.png 2.png and so on
+  - in interface/linkedTrain/trainConfigurator/vehiclename/ = make a folder named decal< LETTER > and then create the preview files named 1.png 2.png and so on
   - in vehicles/vehiclename/ = decal< letter >< number >.png
 
 You can have 10 different decals for each train, named with letters from A to J.
