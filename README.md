@@ -538,7 +538,7 @@ This is the diagram that shows the layout:
 7) Delete line button
 8) Adding a dialog to change stop lenght and speed for all (or some) scheduled trains all at one
 9) Train spawn error handling
-10) The eventuality that trains are deleted after some time has to be taken into account and periodical checks that all trains exist
+10) The eventuality that trains are deleted after some time has to be taken into account and periodical checks to insure that all trains still exist in the world
 
 # Modding
 You can design your own train car to be used with this mod, just download the "traincar-modding-template.zip" from latest [Release](https://github.com/CondensedChaos/Starbound-Rail-Train/releases)  
