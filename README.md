@@ -480,8 +480,8 @@ First of all choose a name for your vehicle, rename all the files and folder tha
    - vehicles/vehiclename (rename it to vehicles/< your_vehicle_name >)
    - interface/linkedTrain/trainConfigurator/vehiclename (rename it to interface/linkedTrain/trainConfigurator/< your_vehicle_name >)
 2) list of files to rename:
-   - vehicles/vehiclename/vehiclename.vehicle (rename it to < your_vehicle_name.vehicle >
-   - vehicles/vehiclename/vehiclename.animation (rename it to < your_vehicle_name.animation >
+   - vehicles/vehiclename/vehiclename.vehicle (rename it to < your_vehicle_name >.vehicle  
+   - vehicles/vehiclename/vehiclename.animation (rename it to < your_vehicle_name >.animation  
 
 After that you'll have to change all the mentions of "vehiclename" to < your_vehicle_name > in all files:
 1) in interface/linkedTrain/trainConfigurator/settings.json.patch at line 5
