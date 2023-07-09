@@ -515,6 +515,10 @@ Select "Clear Testrun Data":
 Start test runs for "Line A", the more test runs you make the more precise the readings will be but it will take more time, 10 test runs is best, more than that it's just overkill, 5 should be acceptable:
 ![rail demo 11](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/3fa10c3d-009a-4d3f-8231-01ae898131cb)
 ![rail demo 12](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/f2d04564-7dcb-4fda-ba28-13dec6dc9136)  
+
+Repeat the steps above for "Line B" (open the station controller on the right)
+You should run the testruns for both lines in parallel while the other line is running the tests.
+
 As of now there is no way to know if test runs are over, checking from time to time the test run dialog if you see the test run data on the upper left then it's over, there's an upcoming feature planned to show live the test run data, status oan position of the trains as they go in the GUI.
 
 Using your own testrun data and the marey-chart webapp plan the schedule for your trains, refer to the manual of the web app [here](https://github.com/CondensedChaos/condensedchaos.github.io/tree/main)  
