@@ -326,6 +326,37 @@ Then go back to the station controller to create the schedule using the data fro
 Then you'll have to craft a train at the **Trainset Configurator** for each tran you schedule, and import the items in the Train Configurator (more in depth usage for Scheduled mode here)  
 Catenaries and/or Chunk Loaders has to be used too in scheduled mode.  
 
+### Lines
+
+#### Non-circular lines
+
+They are rail lines that start in a point and end somewhere else, for trains going to east: trains will start from station 1 (or any other subsequent station except station 4) and end their ride at station 4, at the end of theri ride the trains will invert their direction, going from east to west and go back to station 1 on the same track.
+
+Conversely trains going from west to east will start at station 4 (or any other previous station except station 1) and end their ride at station 1, inverting their direction and going back east towards station 4.
+
+In both cases the loop will continue indefinitely.
+
+The same line can have both trains going to east and west simultaneosly like a railway with two parallel rails.
+
+<div align="center">
+<img src="https://github.com/CondensedChaos/condensedchaos.github.io/assets/121590835/3275c4ac-84d4-4c2c-ad5d-1ac309e6dce5" alt="non-circular" />
+</div>
+
+#### Circular lines
+
+They are rail lines that form a circular path, trains can start at any station and at the end of the ride the trains are back where they started without inverting their direction and will continue riding the rails keeping their original direction.
+In Starbuond it's a train line that circle an entire planet.
+
+For example a train going towards east starting from station 1 will pass through station 2, 3 and 4 and then it will encounter station 1 again and will continue to go east without inverting their direction.
+
+Conversely a train going towards west starting from station 1 will pass through station 4, 3 and 2 and then it will encounter station 1 again and will continue to go west without inverting their direction.
+
+The same line can have both trains going to east and west simultaneosly like a railway with two parallel rails.
+
+<div align="center">
+<img src="https://github.com/CondensedChaos/condensedchaos.github.io/assets/121590835/9867bbe2-1da0-44ab-9756-be7a55b8d319" alt="circular" />
+</div>
+
 ### Prepare your network
 
 ### Place Rail Station Markers
@@ -412,8 +443,42 @@ If only one line is present that line will be started without any further comfir
 
 # Scheduled mode with two or more lines
 ..........................................................................
-
+Usage for scheduled mode with two or more lines to be written
 ..........................................................................
+
+Below are all the use-cases:
+
+## Case 1a
+
+A circular line sharing a part of its path with one or more non-circular line, the non-circular line's stations are all shared with the circular line.
+
+<div align="center">
+<img src="https://github.com/CondensedChaos/condensedchaos.github.io/assets/121590835/260acd28-b71b-4472-8a7a-b64f26e8143b" alt="Case 1 - 1 Circular line sharing stations with a non-circular line" />
+</div>
+
+## Case 1b
+
+Two or more non-circular lines sharing parts of their paths, the smaller lines' stations are all shared with the bigger one's
+
+<div align="center">
+<img src="https://github.com/CondensedChaos/condensedchaos.github.io/assets/121590835/55642e8a-9ca3-4982-b727-d40674a48904" alt="Case 1b" />
+</div>
+
+## Case 2a
+
+A circular line sharing some of its station with a non-circular line. The non-circular line's tracks it's the same as the circular line's although some of the stations are not shared.
+
+<div align="center">
+<img src="https://github.com/CondensedChaos/condensedchaos.github.io/assets/121590835/d92950a1-395a-4065-ab50-f6ce869f9d52" alt="Case 2a" />
+</div>
+
+## Case 2b
+
+Two non-circular line sharing some stations, one line starts where the other line ends.
+
+<div align="center">
+<img src="https://github.com/CondensedChaos/condensedchaos.github.io/assets/121590835/6d21895c-e57a-493e-90ce-c684ec6487c6" alt="Case 2b" />
+</div>
 
 ---
 
@@ -490,7 +555,8 @@ After that you'll have to change all the mentions of "vehiclename" to < your_veh
 
 The folder interface/linkedTrain/trainConfigurator/vehiclename/ contains the preview for train configurator.  
 Body is the bottom part of the vehicle, cockpit is the top part.  
-[Pantograph](https://en.wikipedia.org/wiki/Pantograph_(transport)) is the apparatus that is mounted on the train's roof that is in contact with the overhead wires to get electricity. If you do not wish to create a new pantograph for your train you can use the provided asset, just be sure to change the width of the sprite to your train's sprite size.  
+[Pantograph](https://en.wikipedia.org/wiki/Pantograph_(transport)) is the apparatus that is mounted on the train's roof that is in contact with the overhead wires to get electricity.  
+If you do not wish to create a new pantograph for your train you can use the provided asset, just be sure to change the width of the sprite to your train's sprite size.  
 
 The folder vehicles/vehiclename/ contains the sprites that will be used in game and the definition of the vehicle's parameters-
 
@@ -506,9 +572,9 @@ Any vehicle for this mod can have up to 10 different decals, named from decal "A
 - taillight.png : sprite of the tail-light, it has 2 frames, frames at the left is the headlight when turned on, the other frame is the headlight turned off
 - decalPlaceholder.png : and empty, transparent image that is placed by the mod when a decal is hidden, it has to be the same frame size as the other sprites (body, cockpit and decals)
 - default.frames: defines frame size for cockpit, body and decals sprites
-- *frames files : defines frame size for all other sprites
-- vehiclename.vehicle : JSON files that defines all the parameters for your vehicle, you should edit this file and follow the instruction in the comments (lines that start with //)
-- vehiclename.animation : JSON files that defines the animation parameters for the sprites, you should edit this file and follow the instructions in the comments
+- *.frames files : defines frame size for all other sprites
+- vehiclename.vehicle : JSON file that defines all the parameters for your vehicle, you should edit this file and follow the instruction in the comments (lines that start with //)
+- vehiclename.animation : JSON file that defines the animation parameters for the sprites, you should edit this file and follow the instructions in the comments
 
 Explaination of sprites (valid for cockpit, body, decals):
 ![-=animationsExplaination=-](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/2df726d2-f17f-4563-9281-e845975f1728)  
@@ -517,10 +583,10 @@ Explaination of pantograph sprite (frame width is equal to vehicle lenght, heigh
 ![-=pantograph=-](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/b5dfffed-bf65-402c-a34f-ba3157f1f1a2)
 
 Other files to edit:
-- objects/crafting/trainConfigurator/listOfCars.json.patch : JSON files that stores paramenters regarding the train car like pixel size, numer of decals, colors and such.
+- objects/crafting/trainConfigurator/listOfCars.json.patch : JSON file that stores paramenters regarding the train car like pixel size, numer of decals, colors and such.
 
 The example provided in this template will generate a vehicle with just 1 color for body, 1 color for cockpit and 1 decal with 2 wheels kind.
-If you want to add more colors just modify the listOfCars.json to your likings and add the required files to interface/linkedTrain/trainConfigurator/vehiclename and vehicles/vehiclename/
+If you want to add more colors and/or decals just modify the listOfCars.json.patch to your likings and add the required files to interface/linkedTrain/trainConfigurator/vehiclename and vehicles/vehiclename/
 
 Naming format for colors:
 - cockpit:
@@ -532,6 +598,10 @@ Naming format for colors:
 - decals:
   - in interface/linkedTrain/trainConfigurator/vehiclename/ = make a folder named decal< LETTER > and the create the preview files named 1.png 2.png and so on
   - in vehicles/vehiclename/ = decal< letter >< number >.png
+
+You can have 10 different decals for each train, named with letters from A to J.
+
+Names are [case sensitive](https://en.wikipedia.org/wiki/Case_sensitivity)
 
 ---
 # License
