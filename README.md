@@ -492,7 +492,9 @@ The folder interface/linkedTrain/trainConfigurator/vehiclename/ contains the pre
 Body is the bottom part of the vehicle, cockpit is the top part.  
 [Pantograph](https://en.wikipedia.org/wiki/Pantograph_(transport)) is the apparatus that is mounted on the train's roof that is in contact with the overhead wires to get electricity. If you do not wish to create a new pantograph for your train you can use the provided asset, just be sure to change the width of the sprite to your train's sprite size.  
 
-The folder vehicles/vehiclename/ contains the sprites that will be used in game and the definition of the vehicle's parameters, explaination of files:
+The folder vehicles/vehiclename/ contains the sprites that will be used in game and the definition of the vehicle's parameters-
+
+Explaination of files:
 Any vehicle for this mod can have up to 10 different decals, named from decal "A" to decal "J", the decal that follows will be placed above the decal that precedes, like layers.
 - cockpitred.png : top part of the train, sprite relative to red color.  
 - red.png : bottom part of the train (the part named "body") relative to the red color.
