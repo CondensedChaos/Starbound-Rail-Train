@@ -39,6 +39,8 @@ To create stops you need to use the custom rail markers (called **"Rail station 
 Since the game loads the world in *"chunks"* that are approximately 20x20 blocks, you will need special items to place on the rail every 19 tiles that will keep that tract of world loaded (similar to Minecraft "Chunks Loaders")  
 There are two variants of chunk loaders, they're only different in appearance but they serve the same functions: **"catenaries"** and **"rail chunk loaders"**  
 
+Free mode [usage](https://github.com/CondensedChaos/Starbound-Rail-Train#free-mode-1)
+
 ## Scheduled mode
 In scheduled mode special items that controls the rail stops are used in conjuction with **Rail station markers**, those are the **"Station controllers"** craftable at the Rail crafting table.  
 Those are used to define a train line and wired to a rail station marker. Each station has to have its Station Controlled.  
@@ -53,6 +55,8 @@ Then go back to the station controller to create the schedule using the data fro
 
 Then you'll have to craft a train at the **Trainset Configurator** for each tran you schedule, and import the items in the Train Configurator (more in depth usage for Scheduled mode here)  
 Catenaries and/or Chunk Loaders has to be used too in scheduled mode.  
+
+Scheduled mode [usage](https://github.com/CondensedChaos/Starbound-Rail-Train#scheduled-mode-1)
 
 ---
 # Reccomended mods
