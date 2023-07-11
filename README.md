@@ -216,9 +216,12 @@ Also place a Station controller and wire it to station marker:
 ![station marker 5](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/c0e239b7-8445-4449-aee7-ec69d18e1300)  
 ![station marker 6](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e452b780-a7c4-42c5-a5fc-6a3d591bdd9e)  
 ![station marker 7](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/f9a0abbf-e1fa-45a8-b6a2-8e21bae34d37)  
-Two stations controllers can be wired to a single rail station marker if that station is shared between two lines, for more information refer to ["Scheduled mode with two or more lines"](https://github.com/CondensedChaos/Starbound-Rail-Train#scheduled-mode-with-two-or-more-lines)  
+
 ![station marker 8](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/9d9db061-bab5-4694-8724-0cf7c205bde6)  
+
+Two stations controllers can be wired to a single rail station marker if that station is shared between two lines:  
 ![station marker 9](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/b813102e-8ba4-47eb-9ebb-a8086280d532)  
+for more information refer to ["Scheduled mode with two or more lines"](https://github.com/CondensedChaos/Starbound-Rail-Train#scheduled-mode-with-two-or-more-lines)  
 Name your station:  
 ![line creation1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/5d397e57-3b07-447a-90ef-8f042124fe0d)  
 ![line creation2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/4055304b-5f13-4027-96fd-ef9b22813bcc)  
