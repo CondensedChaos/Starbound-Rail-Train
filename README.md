@@ -1,4 +1,4 @@
-Starbound Rail Train system
+Starbound Train system
 ===========================
 
 # Overview
