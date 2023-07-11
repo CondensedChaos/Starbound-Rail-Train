@@ -536,7 +536,7 @@ This is the diagram that shows the layout:
 5) Deleting a station from a line is not implemented yet
 6) Renaming of lines button not implemented yet (it's present but does nothing)
 7) Delete line button
-8) Adding a dialog to change stop lenght and speed for all (or some) scheduled trains all at one
+8) Adding a dialog to change stop lenght and speed for all (or some) scheduled trains all at once
 9) Train spawn error handling
 10) The eventuality that trains are deleted after some time has to be taken into account and periodical checks to insure that all trains still exist in the world
 
