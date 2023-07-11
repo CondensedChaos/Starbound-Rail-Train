@@ -17,11 +17,11 @@ A Many Tabs Patch is also available [Here](https://github.com/CondensedChaos/Sta
 Grab latest release from [here](https://github.com/CondensedChaos/Starbound-Rail-Train/releases)  
 download either the zipped (.zip) version or the .pak version  
 
-Zip version name: "Starbound-Rail-Train-<version>.zip"  
-Pak version name: "Starbound-Rail-Train-<version>.pak"  
+Zip version name: "Starbound-Rail-Train-\<version\>.zip"  
+Pak version name: "Starbound-Rail-Train-\<version\>.pak"  
 
--If you downloaded the zipped version it has to be extracted in < Starbound folder >\mods  
--If you downloaded the .pak version just put the .pak file as it is in < Starbound folder >\mods
+-If you downloaded the zipped version it has to be extracted in \<Starbound folder\>\mods  
+-If you downloaded the .pak version just put the .pak file as it is in \<Starbound folder\>\mods
 
 Starbound folder is typically for Steam version: "C:\Program Files (x86)\Steam\steamapps\common\Starbound\" for the windows version  
 GOG or other version are typically under either "C:\Program Files (x86)\Starbound" or "C:\Program Files\Starbound" for the windows version  
@@ -486,9 +486,9 @@ Two non-circular line sharing some stations, one line starts where the other lin
 It's an instance world that includes a ready-made demo train network of two lines that can be used to understand better how the mod works.
 
 it's called "raildemo.zip", to install it you have to open the downloaded zip file and
-unzip the content of the folder named as "1 - EXTRACT CONTENT OF THIS FOLDER INSIDE starbound -> mods" in < Starbound folder >\mods
+unzip the content of the folder named as "1 - EXTRACT CONTENT OF THIS FOLDER INSIDE starbound -> mods" in \<Starbound folder\>\mods
 
-and the content of folder named as "2 - EXTRACT CONTENT OF THIS FOLDER INSIDE starbound->storage->universe" in < Starbound folder >\universe\storage
+and the content of folder named as "2 - EXTRACT CONTENT OF THIS FOLDER INSIDE starbound->storage->universe" in \<Starbound folder\>\universe\storage
 
 To access the demo just craft a "rail demo world teleporter" from the empty-hand (press C in-game) crafting:  
 ![rail demo1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/cf1f7bec-657f-4ada-98d4-ef613308ad12)  
@@ -546,16 +546,16 @@ Modify this template to your liking
 
 First of all choose a name for your vehicle, rename all the files and folder that has the name "vehiclename" with the name of your choice, do not use spaces.  
 1) list of folders to rename:
-   - vehicles/vehiclename (rename it to vehicles/< your_vehicle_name >)
-   - interface/linkedTrain/trainConfigurator/vehiclename (rename it to interface/linkedTrain/trainConfigurator/< your_vehicle_name >)
+   - vehicles/vehiclename (rename it to vehicles/\<your_vehicle_name\>)
+   - interface/linkedTrain/trainConfigurator/vehiclename (rename it to interface/linkedTrain/trainConfigurator/\<your_vehicle_name\>)
 2) list of files to rename:
-   - vehicles/vehiclename/vehiclename.vehicle (rename it to <your_vehicle_name >.vehicle  
+   - vehicles/vehiclename/vehiclename.vehicle (rename it to \<your_vehicle_name\>.vehicle  
    - vehicles/vehiclename/vehiclename.animation (rename it to \<your_vehicle_name\>.animation  
 
 After that you'll have to change all the mentions of "vehiclename" to < your_vehicle_name > in all files:
 1) in interface/linkedTrain/trainConfigurator/settings.json.patch at line 5
 2) in objects/crafting/trainConfigurator/listOfCars.json.patch at line 4 and line 13
-3) in vehicles/vehiclename/vehiclename.vehicle at line 2, line 11 (change it to: "animation" : "/vehicles/< your_vehicle_name >/< your_vehicle_name >.animation"), line 16, 19, 22, 25, 28, 31, 34, 37, 40, 43, 46, 49, 52, 118
+3) in vehicles/vehiclename/vehiclename.vehicle at line 2, line 11 (change it to: "animation" : "/vehicles/\<your_vehicle_name>/\<your_vehicle_name\>.animation"), line 16, 19, 22, 25, 28, 31, 34, 37, 40, 43, 46, 49, 52, 118
 
 The folder interface/linkedTrain/trainConfigurator/vehiclename/ contains the preview for train configurator.  
 Body is the bottom part of the vehicle, cockpit is the top part.  
