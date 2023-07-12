@@ -575,7 +575,7 @@ Place the teleporter and warp in the demo-world:
 ![rail demo2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/57720c33-05fb-4297-ad2d-06ca3f472d45)  
 ![rail demo 3](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/846cc428-fefd-45b2-8748-96e1606f0be2)  
 
-When warped you will find yourself at the first station of the network:
+When warped you will find yourself at the first station of the network:  
 ![rail demo 4](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/7f64d495-5c83-4167-a7dd-22697183ea80)  
 
 Trains are stopped when entering the first time, just open any "Station Controller" (refer to components):  
