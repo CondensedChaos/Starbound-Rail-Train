@@ -450,19 +450,41 @@ If only one line is present that line will be started without any further comfir
 ---
 
 # Scheduled mode with two or more lines
-..........................................................................
-Usage for scheduled mode with two or more lines to be written
-..........................................................................
+..........................................................................  
+Usage for scheduled mode with two or more lines to be written  
+..........................................................................  
 
-Below are all the use-cases:
+Below are all the use-cases:  
 
 ## Case 1a
 
-A circular line sharing a part of its path with one or more non-circular line, the non-circular line's stations are all shared with the circular line.
+A circular line sharing a part of its path with one or more non-circular line, the non-circular line's stations are all shared with the circular line.  
 
 <div align="center">
 <img src="https://github.com/CondensedChaos/condensedchaos.github.io/assets/121590835/260acd28-b71b-4472-8a7a-b64f26e8143b" alt="Case 1 - 1 Circular line sharing stations with a non-circular line" />
 </div>
+
+In example above you should create line A as a circular line:  
+  - [Place Rail Station Markers](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#place-rail-station-markers)
+  - [Place station controllers](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#place-station-controllers) and name your stations
+  - [Place Rail Chunk loaders or Catenaries](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#place-rail-chunk-loaders-or-catenaries)
+  - [Place the rails](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#place-the-rails)
+  - [Create the Line-A](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#create-a-line) and [add the other stations](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#add-stations)
+
+Don't proceed to do test-runs or the other passages after adding the stations.  
+Now you'll have to craft the station controllers for Line B, one for each stations and place them like that:  
+![station marker 9](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/b813102e-8ba4-47eb-9ebb-a8086280d532)  
+Place station 1-B next to station 2-A, [name the station](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#name-your-stations) station 2-B next to station 3-A and name the station and so forth.  
+[Create the Line-B](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#create-a-line) and [add the other Line-B stations](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#add-stations)  
+Open the station controller for Line A (left one), select "Lines: and select "Test run"  
+![rail demo 9](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e608678f-90d8-4f5b-a927-5da49087ec22)  
+Start test runs for "Line A", the more test runs you make the more precise the readings will be but it will take more time, 10 test runs is best, more than that it's just overkill, 5 should be acceptable:  
+![rail demo 11](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/3fa10c3d-009a-4d3f-8231-01ae898131cb)
+![rail demo 12](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/f2d04564-7dcb-4fda-ba28-13dec6dc9136)  
+
+Repeat the steps above for "Line B" (open the station controller on the right)
+You should run the testruns for both lines in parallel while the other line is running the tests.
+
 
 ## Case 1b
 
