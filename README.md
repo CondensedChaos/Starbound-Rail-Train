@@ -602,14 +602,14 @@ If you want to add more colors and/or decals just modify the listOfCars.json.pat
 
 Naming format for colors:
 - cockpit:
-  - in interface/linkedTrain/trainConfigurator/vehiclename/cockpit = < color name >.png
-  - in vehicles/vehiclename/ = cockpit< color name >.png
+  - in interface/linkedTrain/trainConfigurator/vehiclename/cockpit = \<color name\>.png
+  - in vehicles/vehiclename/ = cockpit\<color name\>.png
 - body:
-  - in interface/linkedTrain/trainConfigurator/vehiclename/body = < color name >.png
-  - in vehicles/vehiclename/ = < color name >.png
+  - in interface/linkedTrain/trainConfigurator/vehiclename/body = \<color name\>.png
+  - in vehicles/vehiclename/ = \<color name\>.png
 - decals:
-  - in interface/linkedTrain/trainConfigurator/vehiclename/ = make a folder named decal< LETTER > and then create the preview files named 1.png 2.png and so on
-  - in vehicles/vehiclename/ = decal< letter >< number >.png
+  - in interface/linkedTrain/trainConfigurator/vehiclename/ = make a folder named decal\<LETTER\> and then create the preview files named 1.png 2.png and so on
+  - in vehicles/vehiclename/ = decal\<letter\>\<number\>.png
 
 You can have 10 different decals for each train, named with letters from A to J.
 
