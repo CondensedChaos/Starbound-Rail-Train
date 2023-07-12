@@ -416,7 +416,9 @@ Select the "circular" checkbox if your line goes all around your planet:
 ![line creation17](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/f2fd65f0-b1b1-455a-a4b1-d70b97edc4e2)  
 ![line creation18](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/fa5ccb43-c30d-4604-8dc6-d5f68833730f)  
 ![line creation19](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/55f471e5-6f91-45cc-8ac9-f9028007320b)  
-The more test runs you make the more precise the readings will be but it will take more time, 10 test runs is best, more than that it's just overkill, 5 should be acceptable
+The more test runs you make the more precise the readings will be but it will take more time, 10 test runs is best, more than that it's just overkill, 5 should be acceptable.  
+
+Note: As of now there is no way to know if test runs are over, checking from time to time the test run dialog if you see the test run data on the upper left then it's over, there's an upcoming feature planned to show live the test run datax status and position of the trains as they go in the GUI.
 
 ### Make schedules with web-app
 Open the trains schedule web-app [here](condensedchaos.github.io)  
@@ -469,14 +471,15 @@ In example above you should create line A as a circular line:
   - [Place station controllers](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#place-station-controllers) and name your stations
   - [Place Rail Chunk loaders or Catenaries](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#place-rail-chunk-loaders-or-catenaries)
   - [Place the rails](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#place-the-rails)
-  - [Create the Line-A](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#create-a-line) and [add the other stations](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#add-stations)
+  - [Create the Line-A](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#create-a-line) as CIRCULAR-LINE and [add the other stations](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#add-stations)
 
 Don't proceed to do test-runs or the other passages after adding the stations.  
-Now you'll have to craft the station controllers for Line B, one for each stations and place them like that:  
+Now you'll have to craft the station controllers for Line B, one for each stations and place them like that, wiring Line B's station controllers to the same station controller of the correspondent Line A's station:  
 ![station marker 9](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/b813102e-8ba4-47eb-9ebb-a8086280d532)  
-Place station 1-B next to station 2-A, [name the station](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#name-your-stations) station 2-B next to station 3-A and name the station and so forth.  
-[Create the Line-B](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#create-a-line) and [add the other Line-B stations](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#add-stations)  
-Open the station controller for Line A (left one), select "Lines: and select "Test run"  
+Place station 1-B next to station 2-A, [name the station](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#name-your-stations)
+Then placestation 2-B next to station 3-A and name the station and so forth.  
+[Create the Line-B](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#create-a-line) as NON-CIRCULAR-LINE(do not tick "circular" checkbox) and [add the other Line-B stations](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#add-stations)  
+Open the station controller for Line A (left one), select "Lines: and select "Test run" (refer to ["Do test runs"](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#do-test-runs))
 ![rail demo 9](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e608678f-90d8-4f5b-a927-5da49087ec22)  
 Start test runs for "Line A", the more test runs you make the more precise the readings will be but it will take more time, 10 test runs is best, more than that it's just overkill, 5 should be acceptable:  
 ![rail demo 11](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/3fa10c3d-009a-4d3f-8231-01ae898131cb)
@@ -485,6 +488,19 @@ Start test runs for "Line A", the more test runs you make the more precise the r
 Repeat the steps above for "Line B" (open the station controller on the right)
 You should run the testruns for both lines in parallel while the other line is running the tests.
 
+Using the testrun data from both lines open the marey-chart webapp plan the schedule for your trains, refer to the manual of the web app [here](https://github.com/CondensedChaos/condensedchaos.github.io/tree/main)  
+Particularly to the sections:
+[More lines in a graph](https://github.com/CondensedChaos/condensedchaos.github.io/tree/main#more-lines-in-a-graph)  
+[How to use](https://github.com/CondensedChaos/condensedchaos.github.io/tree/main#how-to-use)  
+[Case 1a](https://github.com/CondensedChaos/condensedchaos.github.io/tree/main#case-1a)  
+
+Web-app URL : https://condensedchaos.github.io  
+
+After you have made your schedule you'll have to recreate in-game the schedule you've made in the web-app  
+refer to:  
+[Create the schedule in-game](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#create-the-schedule-in-game)  
+[Add train items in Station Controller](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#add-train-items-in-station-controller)  
+Do it for both Line-A and Line-B, after you made your schedule and added train items for both Lines you can start your trains, refer to: [Start trains](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#start-trains)  
 
 ## Case 1b
 
@@ -494,6 +510,22 @@ Two or more non-circular lines sharing parts of their paths, the smaller lines' 
 <img src="https://github.com/CondensedChaos/condensedchaos.github.io/assets/121590835/55642e8a-9ca3-4982-b727-d40674a48904" alt="Case 1b" />
 </div>
 
+Procedure is same as [Case 1a](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#case-1a) execpt that both Line-A and Line-B are NON-CIRCULAR
+
+After you have completed the test runs for both lines open the marey-chart webapp plan the schedule for your trains, refer to the manual of the web app [here](https://github.com/CondensedChaos/condensedchaos.github.io/tree/main)  
+Particularly to the sections:
+[More lines in a graph](https://github.com/CondensedChaos/condensedchaos.github.io/tree/main#more-lines-in-a-graph)  
+[How to use](https://github.com/CondensedChaos/condensedchaos.github.io/tree/main#how-to-use)  
+[Case 1b](https://github.com/CondensedChaos/condensedchaos.github.io/tree/main#case-1b)  
+
+Web-app URL : https://condensedchaos.github.io  
+
+After you have made your schedule you'll have to recreate in-game the schedule you've made in the web-app  
+refer to:  
+[Create the schedule in-game](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#create-the-schedule-in-game)  
+[Add train items in Station Controller](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#add-train-items-in-station-controller)  
+Do it for both Line-A and Line-B, after you made your schedule and added train items for both Lines you can start your trains, refer to: [Start trains](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#start-trains)  
+
 ## Case 2a
 
 A circular line sharing some of its station with a non-circular line. The non-circular line's tracks it's the same as the circular line's although some of the stations are not shared.
@@ -501,6 +533,23 @@ A circular line sharing some of its station with a non-circular line. The non-ci
 <div align="center">
 <img src="https://github.com/CondensedChaos/condensedchaos.github.io/assets/121590835/d92950a1-395a-4065-ab50-f6ce869f9d52" alt="Case 2a" />
 </div>
+
+Procedure is same as [Case 1a](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#case-1a)  
+Except that Station 3-B sits in the middle between station 3-A and Station 4-A
+
+After you have completed the test runs for both lines open the marey-chart webapp plan the schedule for your trains, refer to the manual of the web app [here](https://github.com/CondensedChaos/condensedchaos.github.io/tree/main)  
+Particularly to the sections:
+[More lines in a graph](https://github.com/CondensedChaos/condensedchaos.github.io/tree/main#more-lines-in-a-graph)  
+[How to use](https://github.com/CondensedChaos/condensedchaos.github.io/tree/main#how-to-use)  
+[Case 2a](https://github.com/CondensedChaos/condensedchaos.github.io/tree/main#case-2a)  
+
+Web-app URL : https://condensedchaos.github.io  
+
+After you have made your schedule you'll have to recreate in-game the schedule you've made in the web-app  
+refer to:  
+[Create the schedule in-game](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#create-the-schedule-in-game)  
+[Add train items in Station Controller](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#add-train-items-in-station-controller)  
+Do it for both Line-A and Line-B, after you made your schedule and added train items for both Lines you can start your trains, refer to: [Start trains](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#start-trains)  
 
 ## Case 2b
 
@@ -549,7 +598,7 @@ Start test runs for "Line A", the more test runs you make the more precise the r
 Repeat the steps above for "Line B" (open the station controller on the right)
 You should run the testruns for both lines in parallel while the other line is running the tests.
 
-As of now there is no way to know if test runs are over, checking from time to time the test run dialog if you see the test run data on the upper left then it's over, there's an upcoming feature planned to show live the test run data, status oan position of the trains as they go in the GUI.
+As of now there is no way to know if test runs are over, checking from time to time the test run dialog if you see the test run data on the upper left then it's over, there's an upcoming feature planned to show live the test run data, status and position of the trains as they go in the GUI.
 
 Using your own testrun data and the marey-chart webapp plan the schedule for your trains, refer to the manual of the web app [here](https://github.com/CondensedChaos/condensedchaos.github.io/tree/main)  
 Particularly to the section [More lines in a graph](https://github.com/CondensedChaos/condensedchaos.github.io/tree/main#more-lines-in-a-graph)  
