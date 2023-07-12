@@ -479,7 +479,7 @@ Now you'll have to craft the station controllers for Line B, one for each statio
 Place station 1-B next to station 2-A, [name the station](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#name-your-stations)
 Then placestation 2-B next to station 3-A and name the station and so forth.  
 [Create the Line-B](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#create-a-line) as NON-CIRCULAR-LINE(do not tick "circular" checkbox) and [add the other Line-B stations](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#add-stations)  
-Open the station controller for Line A (left one), select "Lines: and select "Test run" (refer to ["Do test runs"](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#do-test-runs))
+Open the station controller for Line A (left one), select "Lines: and select "Test run" (refer to ["Do test runs"](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#do-test-runs))  
 ![rail demo 9](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e608678f-90d8-4f5b-a927-5da49087ec22)  
 Start test runs for "Line A", the more test runs you make the more precise the readings will be but it will take more time, 10 test runs is best, more than that it's just overkill, 5 should be acceptable:  
 ![rail demo 11](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/3fa10c3d-009a-4d3f-8231-01ae898131cb)
