@@ -375,7 +375,8 @@ The same line can have both trains going to east and west simultaneosly like a r
 ![station marker3a](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e79e89e4-5515-41da-afc6-312aa54be9d2)  
 
 ### Place Station Controllers 
-And wire them to Rail Station Markers
+And wire them to Rail Station Markers  
+IMPORTANT: Stations are to be plaeced in order from east to west  
 ![station controller craft](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/12554c65-a599-499a-9208-2e80d1d5b538)  
 ![station marker 4](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/ca685ffa-c7a1-4195-8fd3-5e6cba19c9d8)  
 ![station marker 5](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/c0e239b7-8445-4449-aee7-ec69d18e1300)  
@@ -400,13 +401,15 @@ Refer to [Place Rail Chunk loaders or Catenaries](https://github.com/CondensedCh
 Select the "circular" checkbox if your line goes all around your planet:
 ![line creation8](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/c9e0f280-9a6e-4e4d-ae67-b2c5082602d3)  
 
-#### Add Stations
+#### Add Stations  
+IMPORTANT: Stations should be ordered from east to west  
 ![line creation9](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/91d0b7fc-602e-4663-ae27-7d441c70b9a1)  
 ![linecreation10](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/5794114c-0576-49a6-a0da-6264bbdcd21e)  
 ![line creation11](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e36ec300-5825-4a6e-8d16-8d6453d1ac31)  
 ![line creation12](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/bfcb931d-9092-4c70-a581-708f192e8c59)  
 
----
+---  
+If you order the stations in the wrong order you can reorder them using the "Reorder stations" button
 ![line creation13](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/4b545a5e-3dd4-43fb-8274-0d45400f73ca)  
 ![line creation14](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/aa2ecef2-436a-4552-87c5-ca48201b246a)  
 ![line creation15](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/865da791-9aa4-4e35-a932-59fc598d69e4)  
@@ -431,12 +434,16 @@ Craft as many trains are required from the schedule you made with the app.
 ### Create the schedule in-game
 ![00](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/b6ff8dee-ac1f-49d7-947d-ef3fd387def4)  
 ![01](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/1e881b54-4a19-4c94-8571-da60fbea1286)  
+When entering the schedule dialo for the first time one eastbound train and one westbound train will be created starting at time 0 from station 1 (for non-circular line eastbound trains start at station 1 and westbound trains start at last station) if you don't want either of these you can delete them or change their starting station and/or starting time.  
 ![02](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/cd116b64-5573-463a-98a4-f99fd3619f49)  
+Clicking on a train will allow you to modify its speed for each section of the railway, its stopping time for each station, its starting time, starting station and to add the actual train spawner you got from train configurator.  
 ![03](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/120935ab-ba21-42b3-a245-887db316a37e)  
+Clicking the add train dialog will create a new train for your timetable:  
 ![04](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/f2fd00ab-000e-43b4-abb0-a62e517656c1)  
 ![05](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/8c3881ad-8303-4d07-bfc6-c4cfdebfffb9)  
 
-#### Add train items in Station Controller
+#### Add train items in Station Controller  
+After you made your schedule you can add train spawner items to each train:  
 ![06](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/cdd84aa3-6b44-42f4-b5ce-63dab4ae339c)  
 ![07](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/bc50e1b7-1ffa-485c-af39-ca853e61ec91)  
 
@@ -558,6 +565,22 @@ Two non-circular line sharing some stations, one line starts where the other lin
 <div align="center">
 <img src="https://github.com/CondensedChaos/condensedchaos.github.io/assets/121590835/6d21895c-e57a-493e-90ce-c684ec6487c6" alt="Case 2b" />
 </div>
+
+Similar to [Case 1b](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#case-1b) the only difference is that when one line ends the other line begins, the only shared station is the last station of Line-A that is the first station of Line-B.
+
+After you have completed the test runs for both lines open the marey-chart webapp plan the schedule for your trains, refer to the manual of the web app [here](https://github.com/CondensedChaos/condensedchaos.github.io/tree/main)  
+Particularly to the sections:
+[More lines in a graph](https://github.com/CondensedChaos/condensedchaos.github.io/tree/main#more-lines-in-a-graph)  
+[How to use](https://github.com/CondensedChaos/condensedchaos.github.io/tree/main#how-to-use)  
+[Case 2b](https://github.com/CondensedChaos/condensedchaos.github.io/tree/main#case-2b)  
+
+Web-app URL : https://condensedchaos.github.io  
+
+After you have made your schedule you'll have to recreate in-game the schedule you've made in the web-app  
+refer to:  
+[Create the schedule in-game](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#create-the-schedule-in-game)  
+[Add train items in Station Controller](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#add-train-items-in-station-controller)  
+Do it for both Line-A and Line-B, after you made your schedule and added train items for both Lines you can start your trains, refer to: [Start trains](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#start-trains)  
 
 ---
 
