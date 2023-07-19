@@ -31,6 +31,10 @@ Steam Workshop version that gets autoupdated is also available but you need to h
 In the [releases tab](https://github.com/CondensedChaos/Starbound-Rail-Train/releases) there's also an instance world that includes a ready-made demo train network of two lines that can be used to understand better how the mod works.  
 Refer to [rail-demo](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#rail-demo) for more informations
 
+If you need to report a bug, be sure to install as well the ["Enable logging patch"](https://github.com/CondensedChaos/Starbound-Rail-Train/releases/download/1.0/Starbound-Rail-Train-Enable-Logging-Patch.pak) in your \<Starbound folder\>\mods, be warned that by enabling logging the mod will produce a big deal of logging in your starbound.log
+
+You can have a live view of your starbound.log, if you're using windows, with the following command in a powershell prompt: "Get-Content \<Starbound folder\>\storage\starbound.log -Wait"
+
 ---
 ## Free Mode
 In free mode the trains are crafted using the **"Trainset Configurator"** (crafted at Rail Crafting Table) and just placed on the rails.  
