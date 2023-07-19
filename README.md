@@ -60,7 +60,7 @@ Free mode [usage](https://github.com/CondensedChaos/Starbound-Rail-Train#free-mo
 In scheduled mode special items that controls the rail stops are used in conjuction with **Rail station markers**, those are the **"Station controllers"** craftable at the Rail crafting table.  
 Those are used to define a train line and wired to a rail station marker. Each station has to have its Station Controlled.  
 
-Stations should be placed from west to east.  
+Stations should be placed east to west.  
 After all the stations controllers are placed and wired to its rail station marker a train line has to be defined using the station controller user interface (just interact with the first station) a line has to be created and all the other stations of the line added.  
 
 A test run has to be made to measure the travel time for each section of the line.  
@@ -394,7 +394,7 @@ Repeat the above steps for every train that you want to place.
 In scheduled mode special items that controls the rail stops are used in conjuction with **Rail station markers**, those are the **"Station controllers"** craftable at the Rail crafting table.  
 Those are used to define a train line and wired to a rail station marker. Each station has to have its Station Controlled.  
 
-Stations should be placed from west to east.  
+Stations should be placed from east to west.  
 After all the stations controllers are placed and wired to its rail station marker a train line has to be defined using the station controller user interface (just interact with the first station) a line has to be created and all the other stations of the line added.  
 
 A test run has to be made to measure the travel time for each section of the line.  
