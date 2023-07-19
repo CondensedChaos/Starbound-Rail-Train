@@ -467,7 +467,7 @@ The more test runs you make the more precise the readings will be but it will ta
 Note: As of now there is no way to know if test runs are over, checking from time to time the test run dialog if you see the test run data on the upper left then it's over, there's an upcoming feature planned to show live the test run datax status and position of the trains as they go in the GUI.
 
 ### Make schedules with web-app
-Open the trains schedule web-app [here](condensedchaos.github.io)  
+Open the trains schedule web-app [here](https://condensedchaos.github.io/)  
 Usage of the Web-App: [here](https://github.com/CondensedChaos/condensedchaos.github.io/tree/main)  
 
 ### Craft Trains
