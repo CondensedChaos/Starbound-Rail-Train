@@ -34,7 +34,7 @@ Refer to [rail-demo](https://github.com/CondensedChaos/Starbound-Rail-Train/tree
 ---
 
 ## To report a bug
-If you need to report a bug, be sure to install as well the ["Enable logging patch"](https://github.com/CondensedChaos/Starbound-Rail-Train/releases/download/1.0/Starbound-Rail-Train-Enable-Logging-Patch.pak) in your \<Starbound folder\>\mods folder, be warned that by enabling logging the mod will produce a big deal of logging in your starbound.log and try to reprocude the issue.
+If you need to report a bug, be sure to install as well the ["Enable logging patch"](https://github.com/CondensedChaos/Starbound-Rail-Train/releases/download/1.0/Starbound-Rail-Train-Enable-Logging-Patch.pak) in your \<Starbound folder\>\mods folder, be warned that by enabling logging the mod will produce a big deal of logging in your starbound.log and try to reproduce the issue.
 
 You can have a live view of your starbound.log, if you're using windows, with the following command in a powershell prompt: "Get-Content \<Starbound folder\>\storage\starbound.log -Wait"
 
