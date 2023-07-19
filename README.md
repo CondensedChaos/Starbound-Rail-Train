@@ -222,13 +222,28 @@ To solve this problem use the catenary with girder for uneven network (called ca
 And extend the wires with "catenary wires":  
 ![uneven2b](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/21fe68c1-92e4-4d01-81de-27420e6c92d5)  
 ![uneven2c](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e1bc5a1e-01dd-4605-a77b-20b05bf73f97)  
-
-#### note for non-circular lines
 If you think that the girders are too close to each other, you can also use plain rail chunk-loaders without girders:  
 ![uneven2c1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e5764911-942b-41ec-ae25-b2b4b338ae28)  
 And just extend the wires with "catenary wires":  
 ![uneven2c2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/05935410-a585-417f-a651-f120c6a8776f)  
 ![uneven2c3](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/3c906eaa-865d-4203-982a-f3856fce987b)  
+
+#### note for non-circular lines
+If you're building a [non-circular line](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#non-circular-lines):  
+- If you're using [free mode](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#free-mode-1)  
+  You have to put a [rail bumper](https://starbounder.org/Rail_Bumper) at both sides of the lines:  
+  - just before the first Station Marker, as in this picture:  
+    ![non-circular without bumper-2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/f1cf1c55-4349-47e2-b21c-7615fddd5f4a)  
+  - just after the last Station Marker, as in this picture:  
+    ![non-circular without bumper](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/5b56a6e5-28bf-43c7-82b7-c125b3d12bf1)  
+  This will ensure that trains will invert their direction when reaching both ends of the line:  
+  https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/f41e4d73-424a-40e9-bb66-ea3ccf499b6f  
+
+- If you're using [scheduled mode](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#scheduled-mode-1)
+  You don't need rail bumpers as trains will sense they reached the end of the line and they have to invert direction, just extend the rails for some tiles (4 is enough) at both ends of the line as in the picture:
+  ![non-circular wihout bumper-2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/9a547991-6792-4095-9f75-3c4234c23ced)
+  ![non-circular wihout bumper](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/02975412-12e8-4435-baaa-69321c2e76ef)  
+  https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/1d32527d-4158-4453-8ac5-ac7fd04de3ab  
 
 ### Place Rail Stations Markers
 Rail station markers are used to mark stations where the trains will stop
@@ -316,6 +331,10 @@ Wall mounted version:
 ![station controller wall](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/6ff6306a-c315-41bc-bd14-834821eed0b4)  
 ![station controller wall 2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/d356bff9-83fd-4192-b0f6-42575444630a)  
 
+### Custom Rail station marker
+![marker1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/82b54190-3bcb-4c66-9322-b08f2c7b136d)  
+![marker2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/2d740b1a-f1e7-485c-87ba-eb8ada5a8f6d)  
+
 
 ### Train scheduling web-app
 There's a web-app availabe to aid you in scheduling of trains in scheduled mode.
@@ -369,7 +388,7 @@ Then you'll have to craft a train at the **Trainset Configurator** for each tran
 Catenaries and/or Chunk Loaders has to be used too in scheduled mode.  
 
 ### Kind of lines
-
+Refer to [Kind of networks](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#kind-of-networks)
 
 ### Prepare your network
 
