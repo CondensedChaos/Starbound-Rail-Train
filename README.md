@@ -149,6 +149,37 @@ There are two kinds of Rail Chunk Loaders: simple chunk loaders and catenaries.
 They provide exactly the same function and their difference is purely aesthetic.  
 Catenaries are build to provide a real-life [overhead lines](https://www.trackopedia.com/en/encyclopedia/infrastructure/power-systems-and-overhead-lines) look and feel.  
 
+## Kind of networks
+
+### Non-circular lines
+
+They are rail lines that start in a point and end somewhere else,  for trains going to east: trains will start from station 1 (or any other subsequent station except station 4) and end their ride at last station (station 4 in this example), at the end of theri ride the trains will invert their direction, going from east to west and go back to station 1 on the same track.
+
+Conversely trains going from west to east will start at last station (or any other previous station except station 1) and end their ride at station 1, inverting their direction and going back east towards station 4.
+
+In both cases the loop will continue indefinitely.
+
+The same line can have both trains going to east and west simultaneosly like a railway with two parallel rails.
+
+<div align="center">
+<img src="https://github.com/CondensedChaos/condensedchaos.github.io/assets/121590835/3275c4ac-84d4-4c2c-ad5d-1ac309e6dce5" alt="non-circular" />
+</div>
+
+### Circular lines
+
+They are rail lines that form a circular path, trains can start at any station and at the end of the ride the trains are back where they started without inverting their direction and will continue riding the rails keeping their original direction.
+In Starbuond it's a train line that circle an entire planet.
+
+For example a train going towards east starting from station 1 will pass through station 2, 3 and 4 and then it will encounter station 1 again and will continue to go east without inverting their direction.
+
+Conversely a train going towards west starting from station 1 will pass through station 4, 3 and 2 and then it will encounter station 1 again and will continue to go west without inverting their direction.
+
+The same line can have both trains going to east and west simultaneosly like a railway with two parallel rails.
+
+<div align="center">
+<img src="https://github.com/CondensedChaos/condensedchaos.github.io/assets/121590835/9867bbe2-1da0-44ab-9756-be7a55b8d319" alt="circular" />
+</div>
+
 ## Tram network preparation
 
 ### Height requirements
@@ -192,6 +223,7 @@ And extend the wires with "catenary wires":
 ![uneven2b](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/21fe68c1-92e4-4d01-81de-27420e6c92d5)  
 ![uneven2c](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e1bc5a1e-01dd-4605-a77b-20b05bf73f97)  
 
+#### note for non-circular lines
 If you think that the girders are too close to each other, you can also use plain rail chunk-loaders without girders:  
 ![uneven2c1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/e5764911-942b-41ec-ae25-b2b4b338ae28)  
 And just extend the wires with "catenary wires":  
@@ -229,6 +261,8 @@ for more information refer to ["Scheduled mode with two or more lines"](https://
 Name your station:  
 ![line creation1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/5d397e57-3b07-447a-90ef-8f042124fe0d)  
 ![line creation2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/4055304b-5f13-4027-96fd-ef9b22813bcc)  
+
+### Wall-mounted Station Controller
 There is also a wall-mounted version of Station Controller:
 ![station controller wall](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/6ff6306a-c315-41bc-bd14-834821eed0b4)  
 ![station controller wall 2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/d356bff9-83fd-4192-b0f6-42575444630a)
@@ -334,36 +368,8 @@ Then go back to the station controller to create the schedule using the data fro
 Then you'll have to craft a train at the **Trainset Configurator** for each tran you schedule, and import the items in the Train Configurator (more in depth usage for Scheduled mode here)  
 Catenaries and/or Chunk Loaders has to be used too in scheduled mode.  
 
-### Lines
+### Kind of lines
 
-#### Non-circular lines
-
-They are rail lines that start in a point and end somewhere else, for trains going to east: trains will start from station 1 (or any other subsequent station except station 4) and end their ride at station 4, at the end of theri ride the trains will invert their direction, going from east to west and go back to station 1 on the same track.
-
-Conversely trains going from west to east will start at station 4 (or any other previous station except station 1) and end their ride at station 1, inverting their direction and going back east towards station 4.
-
-In both cases the loop will continue indefinitely.
-
-The same line can have both trains going to east and west simultaneosly like a railway with two parallel rails.
-
-<div align="center">
-<img src="https://github.com/CondensedChaos/condensedchaos.github.io/assets/121590835/3275c4ac-84d4-4c2c-ad5d-1ac309e6dce5" alt="non-circular" />
-</div>
-
-#### Circular lines
-
-They are rail lines that form a circular path, trains can start at any station and at the end of the ride the trains are back where they started without inverting their direction and will continue riding the rails keeping their original direction.
-In Starbuond it's a train line that circle an entire planet.
-
-For example a train going towards east starting from station 1 will pass through station 2, 3 and 4 and then it will encounter station 1 again and will continue to go east without inverting their direction.
-
-Conversely a train going towards west starting from station 1 will pass through station 4, 3 and 2 and then it will encounter station 1 again and will continue to go west without inverting their direction.
-
-The same line can have both trains going to east and west simultaneosly like a railway with two parallel rails.
-
-<div align="center">
-<img src="https://github.com/CondensedChaos/condensedchaos.github.io/assets/121590835/9867bbe2-1da0-44ab-9756-be7a55b8d319" alt="circular" />
-</div>
 
 ### Prepare your network
 
