@@ -614,6 +614,16 @@ refer to:
 [Add train items in Station Controller](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#add-train-items-in-station-controller)  
 Do it for both Line-A and Line-B, after you made your schedule and added train items for both Lines you can start your trains, refer to: [Start trains](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#start-trains)  
 
+## Case 3a
+
+To be implemented:  
+![case3a](https://github.com/CondensedChaos/condensedchaos.github.io/assets/121590835/b2bf9fc0-2fc5-46a6-b334-202ffa2c120b)
+
+## Case 3b
+
+To be implemented:
+![case3b](https://github.com/CondensedChaos/condensedchaos.github.io/assets/121590835/4c86e6ae-3e19-4cb3-9809-3f614f80886d)
+
 ---
 
 # Rail-demo
