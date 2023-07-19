@@ -33,16 +33,16 @@ Refer to [rail-demo](https://github.com/CondensedChaos/Starbound-Rail-Train/tree
 
 ---
 
-## To report a bug
+## To report a bug or to ask a question to the developer
 If you need to report a bug, be sure to install as well the ["Enable logging patch"](https://github.com/CondensedChaos/Starbound-Rail-Train/releases/download/1.0/Starbound-Rail-Train-Enable-Logging-Patch.pak) in your \<Starbound folder\>\mods folder, be warned that by enabling logging the mod will produce a big deal of logging in your starbound.log and try to reproduce the issue.
 
 You can also have a live view of your starbound.log while you're playing, if you wish to: if you're using windows, with the following command in a powershell prompt: "Get-Content \<Starbound folder\>\storage\starbound.log -Wait"
 
 Send as much informations as possible on how to reproduce the bug, how it happened and so forth, be sure to include your starbound.log file (found in \<Starbound folder\>\storage)
 
-To report a bug you can either:
+To report a bug/contact the developer you can either:
   - Use the [Issues](https://github.com/CondensedChaos/Starbound-Rail-Train/issues) tab on github (you'll need a GitHub account)
-  - Make a comment on the discussion page under "Bug Reporting" on the mod's Steam page
+  - Make a comment on the discussion page under "Bug Reporting" on the mod's Steam page (you an use the comments if you're just asking for help with the mod)
   - if you do not have a GitHub account or a Steam account you can use [This Form](https://docs.google.com/forms/d/e/1FAIpQLScRjkyEhFuLu1DFb9Ea0Roxx3Dc11vulyZgTt9HoLfyP2EClw/viewform) to report a bug.
 
 Uninstall the logging patch by deleting the Starbound-Rail-Train-Enable-Logging-Patch.pak in your \<Starbound folder\>\mods folder after you're done.
