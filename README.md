@@ -42,8 +42,8 @@ Send as much informations as possible on how to reproduce the bug, how it happen
 
 To report a bug/contact the developer you can either:
   - Use the [Issues](https://github.com/CondensedChaos/Starbound-Rail-Train/issues) tab on github (you'll need a GitHub account)
-  - Make a comment on the discussion page under "Bug Reporting" on the mod's Steam page (you an use the comments if you're just asking for help with the mod)
-  - if you do not have a GitHub account or a Steam account you can use [This Form](https://docs.google.com/forms/d/e/1FAIpQLScRjkyEhFuLu1DFb9Ea0Roxx3Dc11vulyZgTt9HoLfyP2EClw/viewform) to report a bug.
+  - Make a comment on the discussion page under "Bug Reporting" on the mod's Steam page (you can use the comments if you're just asking for help with the mod)
+  - if you do not have a GitHub account or a Steam account you can use [This Form](https://docs.google.com/forms/d/e/1FAIpQLScRjkyEhFuLu1DFb9Ea0Roxx3Dc11vulyZgTt9HoLfyP2EClw/viewform) to contact the developer.
 
 Uninstall the logging patch by deleting the Starbound-Rail-Train-Enable-Logging-Patch.pak in your \<Starbound folder\>\mods folder after you're done.
 
