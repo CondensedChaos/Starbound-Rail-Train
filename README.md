@@ -685,15 +685,16 @@ This is the diagram that shows the layout:
 
 # To-do
 1) More colors for the trains
-2) Live view of trains running in each line in Station Controller's GUI
-3) Live view of testruns in Station Controller's GUI
-4) Error handlings for line naming/renaming and stations naming/renaming
-5) Deleting a station from a line is not implemented yet
-6) Renaming of lines button not implemented yet (it's present but does nothing)
-7) Delete line button
-8) Adding a dialog to change stop lenght and speed for all (or some) scheduled trains all at once
-9) Train spawn error handling
-10) The eventuality that trains are deleted after some time has to be taken into account and periodical checks to insure that all trains still exist in the world
+2) Password protection of Station Controllers for multiplayer servers.
+3) Live view of trains running in each line in Station Controller's GUI
+4) Live view of testruns in Station Controller's GUI
+5) Error handlings for line naming/renaming and stations naming/renaming
+6) Deleting a station from a line is not implemented yet
+7) Renaming of lines button not implemented yet (it's present but does nothing)
+8) Delete line button
+9) Adding a dialog to change stop lenght and speed for all (or some) scheduled trains all at once
+10) Train spawn error handling
+11) The eventuality that trains are deleted after some time has to be taken into account and periodical checks to insure that all trains still exist in the world
 
 # Modding
 You can design your own train car to be used with this mod, just download the "traincar-modding-template.zip" from latest [Release](https://github.com/CondensedChaos/Starbound-Rail-Train/releases)  
