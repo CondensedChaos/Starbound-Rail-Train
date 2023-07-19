@@ -134,7 +134,7 @@ Adds bulldozers to make tunnels, fun to use!
 ### DRM-Free version:
 [from Chucklefish Forum](https://community.playstarbound.com/resources/skizots-dozers.3094/)  
 or  
-[from SKymods](https://catalogue.smods.ru/archives/24653)  
+[from Skymods](https://catalogue.smods.ru/archives/24653)  
 
 ---
 
