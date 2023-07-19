@@ -752,6 +752,18 @@ You can have 10 different decals for each train, named with letters from A to J.
 Names are [case sensitive](https://en.wikipedia.org/wiki/Case_sensitivity)
 
 ---
+
+# Credits
+
+A huge thanks to Jay, the creator of Enhanced Railsì, mod that inspired me on creating a dedicated mod for train networks.
+
+## Links:
+[Enhanced Rails](https://steamcommunity.com/sharedfiles/filedetails/?id=921924325) on Steam Workshop
+[Enhanced Rails](https://community.playstarbound.com/resources/enhanced-rails.4708/) on Chucklefish Forum
+[Steam workshop profile](https://steamcommunity.com/profiles/76561197994271611/myworkshopfiles/)
+[Chucklefish Forum profile](https://steamcommunity.com/profiles/76561197994271611)
+
+---
 # License
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Starbound Train System</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main" property="cc:attributionName" rel="cc:attributionURL">[Condensed Chaos](https://github.com/CondensedChaos) ([Meteora](https://steamcommunity.com/profiles/76561198397117901/myworkshopfiles/?appid=211820) on [Steam Workshop](https://steamcommunity.com/app/211820/workshop/))</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
