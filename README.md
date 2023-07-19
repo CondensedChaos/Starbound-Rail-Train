@@ -238,16 +238,13 @@ If you're building a [non-circular line](https://github.com/CondensedChaos/Starb
     ![non-circular without bumper](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/5b56a6e5-28bf-43c7-82b7-c125b3d12bf1)  
   This will ensure that trains will invert their direction when reaching both ends of the line:  
   
-
 https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/c22d0611-ae15-4c1b-bd8d-354c32332aca
-
-
 
 - If you're using [scheduled mode](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#scheduled-mode-1)
   You don't need rail bumpers as trains will sense they reached the end of the line and they have to invert direction, just extend the rails for some tiles (4 is enough) at both ends of the line as in the picture:  
   ![non-circular wihout bumper-2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/9a547991-6792-4095-9f75-3c4234c23ced)
-  ![non-circular wihout bumper](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/02975412-12e8-4435-baaa-69321c2e76ef)  
-  
+  ![non-circular wihout bumper](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/02975412-12e8-4435-baaa-69321c2e76ef)
+  https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/c5202005-0ef9-4dbc-86e8-a9c232306dab
 
 ### Place Rail Stations Markers
 Rail station markers are used to mark stations where the trains will stop
