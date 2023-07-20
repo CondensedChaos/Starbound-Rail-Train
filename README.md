@@ -194,7 +194,7 @@ Conversely a train going towards west starting from station 1 will pass through 
 The same line can have both trains going to east and west simultaneosly like a railway with two parallel rails.
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/CondensedChaos/Starbound-Rail-Train/main/docs/media/9867bbe2-1da0-44ab-9756-be7a55b8d319.png" alt="circular" />
+<img src="https://raw.githubusercontent.com/CondensedChaos/Starbound-Rail-Train/main/docs/media/1da0-44ab-9756-be7a55b8d319.png" alt="circular" />
 </div>
 
 ## Tram network preparation
@@ -504,9 +504,6 @@ If only one line is present that line will be started without any further comfir
 ---
 
 # Scheduled mode with two or more lines
-..........................................................................  
-Usage for scheduled mode with two or more lines to be written  
-..........................................................................  
 
 Below are all the use-cases:  
 
@@ -515,7 +512,7 @@ Below are all the use-cases:
 A circular line sharing a part of its path with one or more non-circular line, the non-circular line's stations are all shared with the circular line.  
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/CondensedChaos/Starbound-Rail-Train/main/docs/media/260acd28-b71b-4472-8a7a-b64f26e8143b.png" alt="Case 1 - 1 Circular line sharing stations with a non-circular line" />
+<img src="https://raw.githubusercontent.com/CondensedChaos/Starbound-Rail-Train/main/docs/media/248907757-260acd28-b71b-4472-8a7a-b64f26e8143b.png" alt="Case 1 - 1 Circular line sharing stations with a non-circular line" />
 </div>
 
 In example above you should create line A as a circular line:  
@@ -583,7 +580,7 @@ Do it for both Line-A and Line-B, after you made your schedule and added train i
 A circular line sharing some of its station with a non-circular line. The non-circular line's tracks it's the same as the circular line's although some of the stations are not shared.
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/CondensedChaos/Starbound-Rail-Train/main/docs/media/d92950a1-395a-4065-ab50-f6ce869f9d52.png" alt="Case 2a" />
+<img src="https://raw.githubusercontent.com/CondensedChaos/Starbound-Rail-Train/main/docs/media/395a-4065-ab50-f6ce869f9d52.png" alt="Case 2a" />
 </div>
 
 Procedure is same as [Case 1a](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#case-1a)  
@@ -630,7 +627,7 @@ Do it for both Line-A and Line-B, after you made your schedule and added train i
 ## Case 3a
 
 To be implemented:  
-![case3a](https://raw.githubusercontent.com/CondensedChaos/Starbound-Rail-Train/main/docs/media/b2bf9fc0-2fc5-46a6-b334-202ffa2c120b.png)
+![case3a](https://raw.githubusercontent.com/CondensedChaos/Starbound-Rail-Train/main/docs/media/2fc5-46a6-b334-202ffa2c120b.png)
 
 ## Case 3b
 
@@ -683,7 +680,7 @@ Particularly to the section [More lines in a graph](https://github.com/Condensed
 and [How to use](https://github.com/CondensedChaos/condensedchaos.github.io/tree/main#how-to-use)  
 The layout of the lines in the rail demo world correspond to [Case 1a](https://github.com/CondensedChaos/condensedchaos.github.io/tree/main#case-1a)  
 This is the diagram that shows the layout: 
-![rail demo schema](https://raw.githubusercontent.com/CondensedChaos/Starbound-Rail-Train/main/docs/media/07055079-d1f3-4eb8-9130-e00c720d8623.png)  
+![rail demo schema](https://raw.githubusercontent.com/CondensedChaos/Starbound-Rail-Train/main/docs/media/raildemoschema.png)  
 
 # Known Issues
 Since the mod relies extensively on the function [world.time()](https://starbounder.org/Modding:Lua/Tables/World), the [/timewarp](https://starbounder.org/Commands#Admin_Commands) must not be used in planets where there are trains running.
