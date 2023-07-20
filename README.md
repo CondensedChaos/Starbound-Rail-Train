@@ -83,7 +83,7 @@ A patch to support Many tabs, highly reccomended, needs Many Tabs and Many Tabs 
 It will create an own tab in the Rail Crafting Table for all the craftable components of this mod  
 
 ### From Steam Workshop:
-[here](http://)
+[here](https://steamcommunity.com/sharedfiles/filedetails/?id=3006988151)
 ### DRM-free version:
 [From Github](https://github.com/CondensedChaos/Starbound-Rail-Train-Many-Tabs-Patch/tree/main)
 
@@ -179,7 +179,7 @@ In both cases the loop will continue indefinitely.
 The same line can have both trains going to east and west simultaneosly like a railway with two parallel rails.
 
 <div align="center">
-<img src="https://github.com/CondensedChaos/condensedchaos.github.io/assets/121590835/3275c4ac-84d4-4c2c-ad5d-1ac309e6dce5" alt="non-circular" />
+<img src="https://raw.githubusercontent.com/CondensedChaos/Starbound-Rail-Train/main/docs/media/3275c4ac-84d4-4c2c-ad5d-1ac309e6dce5.png" alt="non-circular" />
 </div>
 
 ### Circular lines
@@ -194,7 +194,7 @@ Conversely a train going towards west starting from station 1 will pass through 
 The same line can have both trains going to east and west simultaneosly like a railway with two parallel rails.
 
 <div align="center">
-<img src="https://github.com/CondensedChaos/condensedchaos.github.io/assets/121590835/9867bbe2-1da0-44ab-9756-be7a55b8d319" alt="circular" />
+<img src="https://raw.githubusercontent.com/CondensedChaos/Starbound-Rail-Train/main/docs/media/9867bbe2-1da0-44ab-9756-be7a55b8d319.png" alt="circular" />
 </div>
 
 ## Tram network preparation
@@ -515,7 +515,7 @@ Below are all the use-cases:
 A circular line sharing a part of its path with one or more non-circular line, the non-circular line's stations are all shared with the circular line.  
 
 <div align="center">
-<img src="https://github.com/CondensedChaos/condensedchaos.github.io/assets/121590835/260acd28-b71b-4472-8a7a-b64f26e8143b" alt="Case 1 - 1 Circular line sharing stations with a non-circular line" />
+<img src="https://raw.githubusercontent.com/CondensedChaos/Starbound-Rail-Train/main/docs/media/260acd28-b71b-4472-8a7a-b64f26e8143b.png" alt="Case 1 - 1 Circular line sharing stations with a non-circular line" />
 </div>
 
 In example above you should create line A as a circular line:  
@@ -559,7 +559,7 @@ Do it for both Line-A and Line-B, after you made your schedule and added train i
 Two or more non-circular lines sharing parts of their paths, the smaller lines' stations are all shared with the bigger one's
 
 <div align="center">
-<img src="https://github.com/CondensedChaos/condensedchaos.github.io/assets/121590835/55642e8a-9ca3-4982-b727-d40674a48904" alt="Case 1b" />
+<img src="https://raw.githubusercontent.com/CondensedChaos/Starbound-Rail-Train/main/docs/media/55642e8a-9ca3-4982-b727-d40674a48904.png" alt="Case 1b" />
 </div>
 
 Procedure is same as [Case 1a](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#case-1a) execpt that both Line-A and Line-B are NON-CIRCULAR
@@ -583,7 +583,7 @@ Do it for both Line-A and Line-B, after you made your schedule and added train i
 A circular line sharing some of its station with a non-circular line. The non-circular line's tracks it's the same as the circular line's although some of the stations are not shared.
 
 <div align="center">
-<img src="https://github.com/CondensedChaos/condensedchaos.github.io/assets/121590835/d92950a1-395a-4065-ab50-f6ce869f9d52" alt="Case 2a" />
+<img src="https://raw.githubusercontent.com/CondensedChaos/Starbound-Rail-Train/main/docs/media/d92950a1-395a-4065-ab50-f6ce869f9d52.png" alt="Case 2a" />
 </div>
 
 Procedure is same as [Case 1a](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#case-1a)  
@@ -608,7 +608,7 @@ Do it for both Line-A and Line-B, after you made your schedule and added train i
 Two non-circular line sharing some stations, one line starts where the other line ends.
 
 <div align="center">
-<img src="https://github.com/CondensedChaos/condensedchaos.github.io/assets/121590835/6d21895c-e57a-493e-90ce-c684ec6487c6" alt="Case 2b" />
+<img src="https://raw.githubusercontent.com/CondensedChaos/Starbound-Rail-Train/main/docs/media/6d21895c-e57a-493e-90ce-c684ec6487c6.png" alt="Case 2b" />
 </div>
 
 Similar to [Case 1b](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#case-1b) the only difference is that when one line ends the other line begins, the only shared station is the last station of Line-A that is the first station of Line-B.
@@ -630,12 +630,12 @@ Do it for both Line-A and Line-B, after you made your schedule and added train i
 ## Case 3a
 
 To be implemented:  
-![case3a](https://github.com/CondensedChaos/condensedchaos.github.io/assets/121590835/b2bf9fc0-2fc5-46a6-b334-202ffa2c120b)
+![case3a](https://raw.githubusercontent.com/CondensedChaos/Starbound-Rail-Train/main/docs/media/b2bf9fc0-2fc5-46a6-b334-202ffa2c120b.png)
 
 ## Case 3b
 
 To be implemented:
-![case3b](https://github.com/CondensedChaos/condensedchaos.github.io/assets/121590835/4c86e6ae-3e19-4cb3-9809-3f614f80886d)
+![case3b](https://raw.githubusercontent.com/CondensedChaos/Starbound-Rail-Train/main/docs/media/4c86e6ae-3e19-4cb3-9809-3f614f80886d.png)
 
 ---
 
