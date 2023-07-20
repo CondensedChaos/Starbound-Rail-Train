@@ -771,7 +771,7 @@ Names are [case sensitive](https://en.wikipedia.org/wiki/Case_sensitivity)
 
 # Credits
 
-A huge thanks to Jay, the creator of Enhanced Railsì, mod that inspired me on creating a dedicated mod for train networks.  
+A huge thanks to Jay, the creator of Enhanced Rails, mod that inspired me on creating a dedicated mod for train networks.  
 
 [Enhanced Rails](https://steamcommunity.com/sharedfiles/filedetails/?id=921924325) on Steam Workshop  
 [Enhanced Rails](https://community.playstarbound.com/resources/enhanced-rails.4708/) on Chucklefish Forum  
