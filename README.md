@@ -26,7 +26,7 @@ Pak version name: "Starbound-Rail-Train-\<version\>.pak"
 Starbound folder is typically for Steam version: "C:\Program Files (x86)\Steam\steamapps\common\Starbound\" for the windows version  
 GOG or other version are typically under either "C:\Program Files (x86)\Starbound" or "C:\Program Files\Starbound" for the windows version  
 You will need to download and overwrite again the mod evertytime it gets updated if you download it from GitHub  
-Steam Workshop version that gets autoupdated is also available but you need to have a Starbound copy bought from Steam, get it [here](steamcommunity.com/sharedfiles/filedetails/?id=)  
+Steam Workshop version that gets autoupdated is also available but you need to have a Starbound copy bought from Steam, get it [here](https://steamcommunity.com/sharedfiles/filedetails/?id=3006987088)  
 
 In the [releases tab](https://github.com/CondensedChaos/Starbound-Rail-Train/releases) there's also an instance world that includes a ready-made demo train network of two lines that can be used to understand better how the mod works.  
 Refer to [rail-demo](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#rail-demo) for more informations
