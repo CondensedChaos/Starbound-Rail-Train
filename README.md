@@ -199,7 +199,7 @@ The same line can have both trains going to east and west simultaneosly like a r
 
 ### Height requirements
 Minimum height if you're buiding a tunnel and you're using catenaries is 12 blocks:  
-![size1](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/42efff3b-a6a2-482d-99aa-d56f8b037fdd)
+![size1](https://raw.githubusercontent.com/CondensedChaos/Starbound-Rail-Train/main/docs/media/42efff3b-a6a2-482d-99aa-d56f8b037fdd.png)
 
 The trains comprehensive of Pantographs are 10 blocks high:  
 ![size2](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/f077ae2e-ef5e-45c3-920b-1bd02f8deb7b)
