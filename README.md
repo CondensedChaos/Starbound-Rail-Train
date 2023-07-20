@@ -293,7 +293,7 @@ If you're building a [non-circular line](https://github.com/CondensedChaos/Starb
     ![non-circular without bumper](https://raw.githubusercontent.com/CondensedChaos/Starbound-Rail-Train/main/docs/media/5b56a6e5-28bf-43c7-82b7-c125b3d12bf1.png)  
   This will ensure that trains will invert their direction when reaching both ends of the line:  
   
-https://github.com/CondensedChaos/Starbound-Rail-Train/raw/main/docs/media/free%20mode%20with%20bumper-crop-300px-noaudio.mp4
+![https://github.com/CondensedChaos/Starbound-Rail-Train/raw/main/docs/media/free%20mode%20with%20bumper-crop-300px-noaudio.mp4]
 
 - If you're using [scheduled mode](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#scheduled-mode-1)
   You don't need rail bumpers as trains will sense they reached the end of the line and they have to invert direction, just extend the rails for some tiles (4 is enough) at both ends of the line as in the picture:  
