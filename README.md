@@ -683,6 +683,10 @@ The layout of the lines in the rail demo world correspond to [Case 1a](https://g
 This is the diagram that shows the layout: 
 ![rail demo schema](https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/07055079-d1f3-4eb8-9130-e00c720d8623)  
 
+# Known Issues
+Since the mod relies extensively on the function [world.time()](https://starbounder.org/Modding:Lua/Tables/World), the [/timewarp](https://starbounder.org/Commands#Admin_Commands) must not be used in planets where there are trains running.
+A workaround could be to implement another command that should be used instead that will warp the time and notify all running trains on the planets that time has shifted but I haven't started to tackle this problem and I am not sure if it's a feasible solution yet.
+
 # To-do
 1) More colors for the trains
 2) Password protection of Station Controllers for multiplayer servers.
