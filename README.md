@@ -305,6 +305,11 @@ https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/031df3cb
 ---
 ## Components
 
+### Train scheduling web-app
+There's a web-app availabe to aid you in scheduling of trains in scheduled mode.
+Open the trains schedule web-app [here](condensedchaos.github.io)
+Usage of the Web-App: [here](https://github.com/CondensedChaos/condensedchaos.github.io/tree/main)
+
 ### Trainset Configurator
 ![trainconfigurator](https://raw.githubusercontent.com/CondensedChaos/Starbound-Rail-Train/main/docs/media/22002a29-4499-46e7-9930-516bd98dbef5.png)  
 ![train configurator1](https://raw.githubusercontent.com/CondensedChaos/Starbound-Rail-Train/main/docs/media/be8ed6f4-af5f-4307-9a90-d912de0555a4.png)  
@@ -353,12 +358,6 @@ Wall mounted version:
 ### Custom Rail station marker
 ![marker1](https://raw.githubusercontent.com/CondensedChaos/Starbound-Rail-Train/main/docs/media/82b54190-3bcb-4c66-9322-b08f2c7b136d.png)  
 ![marker2](https://raw.githubusercontent.com/CondensedChaos/Starbound-Rail-Train/main/docs/media/2d740b1a-f1e7-485c-87ba-eb8ada5a8f6d.png)  
-
-
-### Train scheduling web-app
-There's a web-app availabe to aid you in scheduling of trains in scheduled mode.
-Open the trains schedule web-app [here](condensedchaos.github.io)
-Usage of the Web-App: [here](https://github.com/CondensedChaos/condensedchaos.github.io/tree/main)
 
 ---
 ## Free Mode
