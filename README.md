@@ -308,7 +308,7 @@ https://github.com/CondensedChaos/Starbound-Rail-Train/assets/121590835/031df3cb
 ### Train scheduling web-app
 There's a web-app availabe to aid you in scheduling of trains in scheduled mode.
 Open the trains schedule web-app [here](condensedchaos.github.io)
-Usage of the Web-App: [here](https://github.com/CondensedChaos/condensedchaos.github.io/tree/main)
+Usage of the Web-App: [here](https://github.com/CondensedChaos/condensedchaos.github.io)
 
 ### Trainset Configurator
 ![trainconfigurator](https://raw.githubusercontent.com/CondensedChaos/Starbound-Rail-Train/main/docs/media/22002a29-4499-46e7-9930-516bd98dbef5.png)  
@@ -468,7 +468,7 @@ Note: As of now there is no way to know if test runs are over, checking from tim
 
 ### Make schedules with web-app
 Open the trains schedule web-app [here](https://condensedchaos.github.io/)  
-Usage of the Web-App: [here](https://github.com/CondensedChaos/condensedchaos.github.io/tree/main)  
+Usage of the Web-App: [here](https://github.com/CondensedChaos/condensedchaos.github.io)  
 
 ### Craft Trains
 Craft a Trainset Configurator from Rail Crafting Table and refer to [Trainset-Configurator](https://github.com/CondensedChaos/Starbound-Rail-Train/tree/main#trainset-configurator)  
