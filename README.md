@@ -4,7 +4,7 @@ Starbound Train system
 # Overview
 This mod add a train system to be used with Startbound's rail tram system.  
 It provides a framework that includes train crafting, personalization of trains, creation of lines and scheduling of trains.  
-Any user with some experience in modding can add additional train cars to be used with this mod (Refer to modding)  
+Any user with some experience in modding can add additional train cars to be used with this mod (Refer to [modding](https://github.com/CondensedChaos/Starbound-Rail-Train#modding))  
 There are two operating modes, free and scheduled.  
 
 A Many Tabs Patch is also available [Here](https://github.com/CondensedChaos/Starbound-Rail-Train-Many-Tabs-Patch/tree/main)  
