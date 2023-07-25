@@ -944,12 +944,12 @@ function testRunModeRoutine(currentStopPos)
 	    sb.logInfo("=============TARGET RAIL STOP (" .. tostring(self.nextStation) .. ") pos:"  .. tostring(posTarget[1]) .. "," .. tostring(posTarget[2]))
 	    --sb.logInfo("POS[1][1] == POS[2][1]: " .. tostring((currentStopPos[1] == posTarget[1])))
 	    --sb.logInfo("POS[1][2] == POS[2][2]: " .. tostring((currentStopPos[2] == posTarget[2])))
-	    sb.logInfo("POS[1][1] == POS[2][1] +-0.85: " .. tostring( (currentStopPos[1] <= (posTarget[1] + 0.85)) and (currentStopPos[1] >= (posTarget[1] - 0.85)) ) )
-	    sb.logInfo("POS[1][2] == POS[2][2] +-0.85: " .. tostring( (currentStopPos[2] <= (posTarget[2] + 0.85)) and (currentStopPos[2] >= (posTarget[2] - 0.85)) ) )
+	    sb.logInfo("POS[1][1] == POS[2][1] +-1: " .. tostring( (currentStopPos[1] <= (posTarget[1] + 1)) and (currentStopPos[1] >= (posTarget[1] - 1)) ) )
+	    sb.logInfo("POS[1][2] == POS[2][2] +-1: " .. tostring( (currentStopPos[2] <= (posTarget[2] + 1)) and (currentStopPos[2] >= (posTarget[2] - 1)) ) )
 	  end
       
 	  --if (currentStopPos[1] == posTarget[1]) and (currentStopPos[2] == posTarget[2]) then
-	  if ( ( (currentStopPos[1] <= (posTarget[1] + 0.85)) and (currentStopPos[1] >= (posTarget[1] - 0.85)) ) and ( (currentStopPos[2] <= (posTarget[2] + 0.85)) and (currentStopPos[2] >= (posTarget[2] - 0.85)) ) ) then
+	  if ( ( (currentStopPos[1] <= (posTarget[1] + 1)) and (currentStopPos[1] >= (posTarget[1] - 1)) ) and ( (currentStopPos[2] <= (posTarget[2] + 1)) and (currentStopPos[2] >= (posTarget[2] - 1)) ) ) then
 	    local arrivedAtStation = self.nextStation
 	    local stationEntityId = self.stationsData.id[self.nextStation]
 	    world.sendEntityMessage(stationEntityId, "testRunCarArrivedAt", arrivedAtStation, world.time())

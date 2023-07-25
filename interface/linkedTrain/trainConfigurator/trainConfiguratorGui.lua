@@ -870,7 +870,7 @@ end
 
 function displayCarData(TrainSetData, indexedTrainset, carNumber)
 
-  if self.logging thensb.logInfo("\ndisplaycardata() car N " .. tostring(carNumber) .. "called") end
+  if self.logging then sb.logInfo("\ndisplaycardata() car N " .. tostring(carNumber) .. "called") end
 
   local vehicleName = indexedTrainset[carNumber].vehicleName
   local hasPantograph = self.listOfCars[vehicleName].hasPantograph
