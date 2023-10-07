@@ -689,21 +689,35 @@ A workaround could be to implement another command that should be used instead t
 
 # Admin commands to spawn items
 /spawnitem trainConfigurator  
+
 /spawnitem stationController  
+
 /spawnitem stationController2  
+
 /spawnitem customrailstop  
+
 /spawnitem railchunkloader  
 
+
 -=Catenaries=-  
+
 /spawnitem catenaries1  
+
 /spawnitem catenaries2  
+
 /spawnitem catenary-wires  
 
+
 -=45° Catenaries=-  
+
 /spawnitem catenaries45deg1  
+
 /spawnitem catenaries45deg2  
+
 /spawnitem catenaries45deg3  
+
 /spawnitem catenaries45deg4  
+
 /spawnitem catenary-wires45  
 
 # To-do
