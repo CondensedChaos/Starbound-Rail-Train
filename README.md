@@ -1,4 +1,7 @@
 Starbound Train system
+
+7/Oct/2023: Temporary fix for items not showing up in rail crafting table when not in admin mode: download [blueprints.zip](https://github.com/CondensedChaos/Starbound-Rail-Train/releases/download/1.2/blueprints.zip) and unzip in starbound/mods folder
+The fix will be merged in the main mod as soon as possible
 ===========================
 
 # Overview
