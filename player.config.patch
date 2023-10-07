@@ -1,0 +1,15 @@
+[
+    {"op":"add","path":"/defaultBlueprints/tier1/-","value":{"item":"trainConfigurator"}},
+    {"op":"add","path":"/defaultBlueprints/tier1/-","value":{"item":"stationController"}}, 
+    {"op":"add","path":"/defaultBlueprints/tier1/-","value":{"item":"stationController2"}},
+    {"op":"add","path":"/defaultBlueprints/tier1/-","value":{"item":"customrailstop"}},
+    {"op":"add","path":"/defaultBlueprints/tier1/-","value":{"item":"railchunkloader"}},
+    {"op":"add","path":"/defaultBlueprints/tier1/-","value":{"item":"catenaries1"}},
+    {"op":"add","path":"/defaultBlueprints/tier1/-","value":{"item":"catenaries2"}},
+    {"op":"add","path":"/defaultBlueprints/tier1/-","value":{"item":"catenary-wires"}},
+    {"op":"add","path":"/defaultBlueprints/tier1/-","value":{"item":"catenaries45deg1"}},
+    {"op":"add","path":"/defaultBlueprints/tier1/-","value":{"item":"catenaries45deg2"}},
+    {"op":"add","path":"/defaultBlueprints/tier1/-","value":{"item":"catenaries45deg3"}},
+    {"op":"add","path":"/defaultBlueprints/tier1/-","value":{"item":"catenaries45deg4"}},
+    {"op":"add","path":"/defaultBlueprints/tier1/-","value":{"item":"catenary-wires45"}}
+]
