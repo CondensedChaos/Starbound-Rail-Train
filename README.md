@@ -687,6 +687,25 @@ This is the diagram that shows the layout:
 Since the mod relies extensively on the function [world.time()](https://starbounder.org/Modding:Lua/Tables/World), the [/timewarp](https://starbounder.org/Commands#Admin_Commands) must not be used in planets where there are trains running.
 A workaround could be to implement another command that should be used instead that will warp the time and notify all running trains on the planets that time has shifted but I haven't started to tackle this problem and I am not sure if it's a feasible solution yet.
 
+# Admin commands to spawn items
+/spawnitem trainConfigurator
+/spawnitem stationController
+/spawnitem stationController2
+/spawnitem customrailstop
+/spawnitem railchunkloader
+
+-=Catenaries=-
+/spawnitem catenaries1
+/spawnitem catenaries2
+/spawnitem catenary-wires
+
+-=45° Catenaries=-
+/spawnitem catenaries45deg1
+/spawnitem catenaries45deg2
+/spawnitem catenaries45deg3
+/spawnitem catenaries45deg4
+/spawnitem catenary-wires45
+
 # To-do
 1) More colors for the trains
 2) Password protection of Station Controllers for multiplayer servers.
