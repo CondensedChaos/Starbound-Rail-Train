@@ -748,12 +748,13 @@ After that you'll have to change all the mentions of "vehiclename" to < your_veh
 3) in vehicles/<your_vehicle_name>/<your_vehicle_name>.vehicle at line 2, line 11 (line 11 change: "animation" : "/vehicles/<your_vehicle_name>/<your_vehicle_name>.animation"), line 16, 19, 22, 25, 28, 31, 34, 37, 40, 43, 46, 49, 52, 118
 
 Then edit these files, following the instructions in the comments:
-   - interface/linkedTrain/trainConfigurator/settings.json.patch
-   - vehicles/<your_vehicle_name>/<your_vehicle_name>.vehicle
-   - vehicles/<your_vehicle_name>/<your_vehicle_name>.animation
-   - vehicles/<your_vehicle_name>/default.frames
-   - vehicles/<your_vehicle_name>/pantograph.frames
+   - edit interface/linkedTrain/trainConfigurator/settings.json.patch
+   - edit vehicles/<your_vehicle_name>/<your_vehicle_name>.vehicle
+   - edit vehicles/<your_vehicle_name>/<your_vehicle_name>.animation
+   - edit vehicles/<your_vehicle_name>/default.frames
+   - edit vehicles/<your_vehicle_name>/pantograph.frames
    - edit vehicles/<your_vehicle_name>/headlight.frames and vehicles/<your_vehicle_name>/taillight.frames only if you use custom headlights/tailights that differ in size (you can also maintain the ones provided)
+   - if you created custom sprites for headlights and tailights edit vehicles/<your_vehicle_name>/headlight.frames , vehicles/<your_vehicle_name>/taillight.frames and vehicles/<your_vehicle_name>/reverseheadlight.frames to match the sprite size
 
 The folder interface/linkedTrain/trainConfigurator/vehiclename/ contains the preview for train configurator.  
 Body is the bottom part of the vehicle, cockpit is the top part.  
