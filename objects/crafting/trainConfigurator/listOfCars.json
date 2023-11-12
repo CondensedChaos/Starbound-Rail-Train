@@ -7,8 +7,8 @@
     "LongDescription" : "Small light rail car for passengers transportation, suitable for rail tracks with several slopes\npassengers capacity: 5",
     "price" : 500,
     "imgPath" : "/vehicles/subwayTrain.linked/",
-    "colors": ["blue", "red", "cyan", "white", "yellow"],
-    "cockpitColors" : ["red", "blue", "white", "yellow"],
+    "colors": ["blue", "red", "cyan", "white", "yellow", "green"],
+    "cockpitColors" : ["red", "blue", "white", "yellow", "green"],
     "carLenghtPixels" : 83,
     "carHeightPixels" : 79, //including pantograph minus 1 pixel
     "hasPantograph" : true, //if it has a pantograph sprite
@@ -16,8 +16,8 @@
     "specular" : true, //if mirroring the sprites produces the same image
     "decalNames" : ["A", "B", "C", "D"],//optional, decals
     "decals" : { // [[<decal1NameString> , <decal0> , ..<decalN], [<decal2NameString> , <decal0> , ..<decalN>]]
-      "A" : [0, 1, 2, 3, 4], //<decal1String><decal0> is the sprite of decal1 with no decal
-      "B" : [0, 1, 2, 3, 4],
+      "A" : [0, 1, 2, 3, 4, 5], //<decal1String><decal0> is the sprite of decal1 with no decal
+      "B" : [0, 1, 2, 3, 4, 5],
       "C" : [0, 1],
       "D" : [0, 1]
     },
@@ -32,12 +32,12 @@
       }
     },
     "decalsFlippable" : { //similar to "specular": true if the decal sprite can be mirrored
-      "A" : [false, true, true, true, true],
-      "B" : [false, true, true, true, true],
+      "A" : [false, true, true, true, true, true],
+      "B" : [false, true, true, true, true, true],
       "C" : [false, false],
       "D" : [false, false]
     },
-    "decal0rendered" : {
+    "decal0rendered" : { //If decal nr 0 is used as transparent (no decal selected) or actually displayed, ie always show a decal
       "A" : false,
       "B" : false,
       "C" : false,
@@ -49,8 +49,8 @@
     "LongDescription" : "Light rail car for passengers transportation like the ones found in subways, suitable for straight line rail tracks\npassengers capacity: 12",
     "price" : 750,
     "imgPath" : "/vehicles/XXLsubwayTrain.linked/",
-    "colors": ["blue", "red", "cyan", "white", "yellow"],
-    "cockpitColors" : ["red", "blue", "white", "yellow"],
+    "colors": ["blue", "red", "cyan", "white", "yellow", "green"],
+    "cockpitColors" : ["red", "blue", "white", "yellow", "green"],
     "carLenghtPixels" : 145, 
     "carHeightPixels" : 79, //including pantograph minus 1 pixel
     "hasPantograph" : true, //if it has a pantograph sprite
@@ -58,8 +58,8 @@
     "specular" : true, //if mirroring the sprites produces the same image
     "decalNames" : ["A", "B", "C", "D"],
     "decals" : {
-      "A" : [0, 1, 2, 3, 4], 
-      "B" : [0, 1, 2, 3, 4],
+      "A" : [0, 1, 2, 3, 4, 5], 
+      "B" : [0, 1, 2, 3, 4, 5],
       "C" : [0, 1],
       "D" : [0, 1]
     },
@@ -74,8 +74,8 @@
       }
     },
     "decalsFlippable" : {
-      "A" : [false, true, true, true, true],
-      "B" : [false, true, true, true, true],
+      "A" : [false, true, true, true, true, true],
+      "B" : [false, true, true, true, true, true],
       "C" : [false, false],
       "D" : [false, false]
     },
@@ -89,15 +89,4 @@
 
 }
 
-//in interface/trainConfigurator/linkedTrain/<vehiclename> put images previews for train builder
-//130x80 px with all the color combinations+decals
-//format filename as <vehiclename><color><decalString><decalN>preview
-//and
-// <vehiclename><color><decalString><decalN>Ppreview for sprites with pantogtaph
-//where<decalString><0> is the sprite with no decal
-//
-//in /items/active/unsorted/SubwayTrain.linked/placementPreview
-//put the same files but with their actual size
-//no spaces, all is case sensitive
-//
 //please patch this file do not overwrite it
