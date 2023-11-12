@@ -731,7 +731,7 @@ A workaround could be to implement another command that should be used instead t
 11) The eventuality that trains are deleted after some time has to be taken into account and periodical checks to insure that all trains still exist in the world
 
 # Modding
-You can design your own train car to be used with this mod, just download the "traincar-modding-template.zip" from latest [Release](https://github.com/CondensedChaos/Starbound-Rail-Train/releases)  
+You can design your own train car to be used with this mod, just download the "traincar-modding-template" from latest [Release](https://github.com/CondensedChaos/Starbound-Rail-Train/releases)  
 Modify this template to your liking
 
 First of all choose a name for your vehicle, rename all the files and folder that has the name "vehiclename" with the name of your choice, do not use spaces.  
