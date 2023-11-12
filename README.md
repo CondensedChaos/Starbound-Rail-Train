@@ -745,7 +745,15 @@ First of all choose a name for your vehicle, rename all the files and folder tha
 After that you'll have to change all the mentions of "vehiclename" to < your_vehicle_name > in all files:
 1) in interface/linkedTrain/trainConfigurator/settings.json.patch at line 5
 2) in objects/crafting/trainConfigurator/listOfCars.json.patch at line 4 and line 13
-3) in vehicles/vehiclename/vehiclename.vehicle at line 2, line 11 (change it to: "animation" : "/vehicles/\<your_vehicle_name>/\<your_vehicle_name\>.animation"), line 16, 19, 22, 25, 28, 31, 34, 37, 40, 43, 46, 49, 52, 118
+3) in vehicles/<your_vehicle_name>/<your_vehicle_name>.vehicle at line 2, line 11 (line 11 change: "animation" : "/vehicles/<your_vehicle_name>/<your_vehicle_name>.animation"), line 16, 19, 22, 25, 28, 31, 34, 37, 40, 43, 46, 49, 52, 118
+
+Then edit these files, following the instructions in the comments:
+   - interface/linkedTrain/trainConfigurator/settings.json.patch
+   - vehicles/<your_vehicle_name>/<your_vehicle_name>.vehicle
+   - vehicles/<your_vehicle_name>/<your_vehicle_name>.animation
+   - vehicles/<your_vehicle_name>/default.frames
+   - vehicles/<your_vehicle_name>/pantograph.frames
+   - edit vehicles/<your_vehicle_name>/headlight.frames and vehicles/<your_vehicle_name>/taillight.frames only if you use custom headlights/tailights that differ in size (you can also maintain the ones provided)
 
 The folder interface/linkedTrain/trainConfigurator/vehiclename/ contains the preview for train configurator.  
 Body is the bottom part of the vehicle, cockpit is the top part.  
