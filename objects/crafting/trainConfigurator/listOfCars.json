@@ -434,10 +434,15 @@
       "B" : false,
       "C" : false,
       "D" : true
-    }
+    },
+    "hideDecalsInConfigurator" : null,
+    "headlight" : true,
+    "reverseheadlight" : true,
+    "taillight" : true,
+    "reversetaillight" : true
   },   
   "XXLSubwayTram-linked" : {
-    "legacyVehicle" : true, //if true it's a vehicle built for Starbound Train System Version 1, compatible with version 2
+    "legacyVehicle" : false, //if true it's a vehicle built for Starbound Train System Version 1, compatible with version 2
     "description" : "Long subway train car", 
     "LongDescription" : "Light rail car for passengers transportation like the ones found in subways, suitable for straight line rail tracks\nfirst train vehicle built in human space colonies\npassengers capacity: 12",
     "price" : 750,
@@ -477,7 +482,12 @@
       "B" : false,
       "C" : false,
       "D" : true
-    }
+    },
+    "hideDecalsInConfigurator" : null,
+    "headlight" : true,
+    "reverseheadlight" : true,
+    "taillight" : true,
+    "reversetaillight" : true
   }
 
 }

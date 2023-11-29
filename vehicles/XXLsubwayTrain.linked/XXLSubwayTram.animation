@@ -2,12 +2,23 @@
   "animatedParts" : {
     "stateTypes" : {
       "rail" : {
-        "default" : "onRail",
+        "default" : "inMotion",
         "states" : {
-          "onRail" : {
+          "inMotion" : {
             "frames" : 2,
             "cycle" : 0.25,
             "mode" : "loop"
+          },
+          "stopped" : {
+            "frames" : 1
+          }
+        }
+      },
+      "doors" : {
+        "default" : "closed",
+        "states" : {
+          "closed" : {
+            "frames" : 1
           },
 		  "opening" : {
             "frames" : 3,
@@ -22,10 +33,10 @@
             "frames" : 3,
             "cycle" : 0.25,
             "mode" : "transition",
-            "transition" : "onRail"
+            "transition" : "closed"
           }
-       }
-     },
+        }
+      },
 	  "pantograph" : {
         "default" : "hidden",
         "states" : {
@@ -97,24 +108,14 @@
 
         "partStates" : {
           "rail" : {
-            "onRail" : {
+            "inMotion" : {
               "properties" : {
-                "image" : "<partImage>:onRail.<frame>"
+                "image" : "<partImage>:default"
               }
             },
-			"opening" : {
+            "stopped" : {
               "properties" : {
-                "image" : "<partImage>:opening.<frame>"
-              }
-            },
-			"opened" : {
-              "properties" : {
-                "image" : "<partImage>:open"
-              }
-            },
-			"closing" : {
-              "properties" : {
-                "image" : "<partImage>:closing.<frame>"
+                "image" : "<partImage>:default"
               }
             }
           }
@@ -131,9 +132,34 @@
 
         "partStates" : {
           "rail" : {
-            "onRail" : {
+            "inMotion" : {
               "properties" : {
-                "image" : "<partImage>:onRail.<frame>"
+                "image" : "<partImage>:default"
+              }
+            },
+            "stopped" : {
+              "properties" : {
+                "image" : "<partImage>:default"
+              }
+            }
+          }
+        }
+      },
+      
+      "doorsCockpit" : {
+        "properties" : {
+          "centered" : true,
+          "offset" : [0.0, 3.75],
+          "zLevel" : 2,
+		  "rotationGroup" : "cockpit",
+		  "transformationGroups" : ["flip", "rotation"]
+        },
+
+        "partStates" : {
+          "doors" : {
+            "closed" : {
+              "properties" : {
+                "image" : "<partImage>:close"
               }
             },
 			"opening" : {
@@ -154,20 +180,20 @@
           }
         }
       },
-	  "decalA" : {
+      "doorsBody" : {
         "properties" : {
           "centered" : true,
           "offset" : [0.0, 3.75],
-          "zLevel" : 2,
+          "zLevel" : 3,
 		  "rotationGroup" : "cockpit",
-		  "transformationGroups" : ["decalA", "rotation"]
+		  "transformationGroups" : ["flip", "rotation"]
         },
 
         "partStates" : {
-          "rail" : {
-            "onRail" : {
+          "doors" : {
+            "closed" : {
               "properties" : {
-                "image" : "<partImage>:onRail.<frame>"
+                "image" : "<partImage>:close"
               }
             },
 			"opening" : {
@@ -183,6 +209,31 @@
 			"closing" : {
               "properties" : {
                 "image" : "<partImage>:closing.<frame>"
+              }
+            }
+          }
+        }
+      },
+      
+	  "decalA" : {
+        "properties" : {
+          "centered" : true,
+          "offset" : [0.0, 3.75],
+          "zLevel" : 2,
+		  "rotationGroup" : "cockpit",
+		  "transformationGroups" : ["decalA", "rotation"]
+        },
+
+        "partStates" : {
+          "rail" : {
+            "inMotion" : {
+              "properties" : {
+                "image" : "<partImage>:default"
+              }
+            },
+            "stopped" : {
+              "properties" : {
+                "image" : "<partImage>:default"
               }
             }
           }
@@ -198,13 +249,8 @@
         },
 
         "partStates" : {
-          "rail" : {
-            "onRail" : {
-              "properties" : {
-                "image" : "<partImage>:onRail.<frame>"
-              }
-            },
-			"opening" : {
+          "doors" : {
+            "opening" : {
               "properties" : {
                 "image" : "<partImage>:opening.<frame>"
               }
@@ -217,6 +263,11 @@
 			"closing" : {
               "properties" : {
                 "image" : "<partImage>:closing.<frame>"
+              }
+            },
+            "closed" : {
+              "properties" : {
+                "image" : "<partImage>:close"
               }
             }
           }
@@ -232,13 +283,8 @@
         },
 
         "partStates" : {
-          "rail" : {
-            "onRail" : {
-              "properties" : {
-                "image" : "<partImage>:onRail.<frame>"
-              }
-            },
-			"opening" : {
+          "doors" : {
+            "opening" : {
               "properties" : {
                 "image" : "<partImage>:opening.<frame>"
               }
@@ -251,6 +297,11 @@
 			"closing" : {
               "properties" : {
                 "image" : "<partImage>:closing.<frame>"
+              }
+            },
+            "closed" : {
+              "properties" : {
+                "image" : "<partImage>:close"
               }
             }
           }
@@ -267,233 +318,20 @@
 
         "partStates" : {
           "rail" : {
-            "onRail" : {
+            "inMotion" : {
               "properties" : {
-                "image" : "<partImage>:onRail.<frame>"
+                "image" : "<partImage>:inMotion.<frame>"
               }
             },
-			"opening" : {
+            "stopped" : {
               "properties" : {
-                "image" : "<partImage>:opening.<frame>"
-              }
-            },
-			"opened" : {
-              "properties" : {
-                "image" : "<partImage>:open"
-              }
-            },
-			"closing" : {
-              "properties" : {
-                "image" : "<partImage>:closing.<frame>"
+                "image" : "<partImage>:inMotion.1"
               }
             }
           }
         }
       },
-	  "decalE" : {
-        "properties" : {
-          "centered" : true,
-          "offset" : [0.0, 3.75],
-          "zLevel" : 6,
-		  "rotationGroup" : "cockpit",
-		  "transformationGroups" : ["decalE", "rotation"]
-        },
-
-        "partStates" : {
-          "rail" : {
-            "onRail" : {
-              "properties" : {
-                "image" : "<partImage>:onRail.<frame>"
-              }
-            },
-			"opening" : {
-              "properties" : {
-                "image" : "<partImage>:opening.<frame>"
-              }
-            },
-			"opened" : {
-              "properties" : {
-                "image" : "<partImage>:open"
-              }
-            },
-			"closing" : {
-              "properties" : {
-                "image" : "<partImage>:closing.<frame>"
-              }
-            }
-          }
-        }
-      },
-	  "decalF" : {
-        "properties" : {
-          "centered" : true,
-          "offset" : [0.0, 3.75],
-          "zLevel" : 7,
-		  "rotationGroup" : "cockpit",
-		  "transformationGroups" : ["decalF", "rotation"]
-        },
-
-        "partStates" : {
-          "rail" : {
-            "onRail" : {
-              "properties" : {
-                "image" : "<partImage>:onRail.<frame>"
-              }
-            },
-			"opening" : {
-              "properties" : {
-                "image" : "<partImage>:opening.<frame>"
-              }
-            },
-			"opened" : {
-              "properties" : {
-                "image" : "<partImage>:open"
-              }
-            },
-			"closing" : {
-              "properties" : {
-                "image" : "<partImage>:closing.<frame>"
-              }
-            }
-          }
-        }
-      },
-	  "decalG" : {
-        "properties" : {
-          "centered" : true,
-          "offset" : [0.0, 3.75],
-          "zLevel" : 8,
-		  "rotationGroup" : "cockpit",
-		  "transformationGroups" : ["decalG", "rotation"]
-        },
-
-        "partStates" : {
-          "rail" : {
-            "onRail" : {
-              "properties" : {
-                "image" : "<partImage>:onRail.<frame>"
-              }
-            },
-			"opening" : {
-              "properties" : {
-                "image" : "<partImage>:opening.<frame>"
-              }
-            },
-			"opened" : {
-              "properties" : {
-                "image" : "<partImage>:open"
-              }
-            },
-			"closing" : {
-              "properties" : {
-                "image" : "<partImage>:closing.<frame>"
-              }
-            }
-          }
-        }
-      },
-	  "decalH" : {
-        "properties" : {
-          "centered" : true,
-          "offset" : [0.0, 3.75],
-          "zLevel" : 9,
-		  "rotationGroup" : "cockpit",
-		  "transformationGroups" : ["decalH", "rotation"]
-        },
-
-        "partStates" : {
-          "rail" : {
-            "onRail" : {
-              "properties" : {
-                "image" : "<partImage>:onRail.<frame>"
-              }
-            },
-			"opening" : {
-              "properties" : {
-                "image" : "<partImage>:opening.<frame>"
-              }
-            },
-			"opened" : {
-              "properties" : {
-                "image" : "<partImage>:open"
-              }
-            },
-			"closing" : {
-              "properties" : {
-                "image" : "<partImage>:closing.<frame>"
-              }
-            }
-          }
-        }
-      },
-	  "decalI" : {
-        "properties" : {
-          "centered" : true,
-          "offset" : [0.0, 3.75],
-          "zLevel" : 10,
-		  "rotationGroup" : "cockpit",
-		  "transformationGroups" : ["decalI", "rotation"]
-        },
-
-        "partStates" : {
-          "rail" : {
-            "onRail" : {
-              "properties" : {
-                "image" : "<partImage>:onRail.<frame>"
-              }
-            },
-			"opening" : {
-              "properties" : {
-                "image" : "<partImage>:opening.<frame>"
-              }
-            },
-			"opened" : {
-              "properties" : {
-                "image" : "<partImage>:open"
-              }
-            },
-			"closing" : {
-              "properties" : {
-                "image" : "<partImage>:closing.<frame>"
-              }
-            }
-          }
-        }
-      },
-	  "decalJ" : {
-        "properties" : {
-          "centered" : true,
-          "offset" : [0.0, 3.75],
-          "zLevel" : 11,
-		  "rotationGroup" : "cockpit",
-		  "transformationGroups" : ["decalJ", "rotation"]
-        },
-
-        "partStates" : {
-          "rail" : {
-            "onRail" : {
-              "properties" : {
-                "image" : "<partImage>:onRail.<frame>"
-              }
-            },
-			"opening" : {
-              "properties" : {
-                "image" : "<partImage>:opening.<frame>"
-              }
-            },
-			"opened" : {
-              "properties" : {
-                "image" : "<partImage>:open"
-              }
-            },
-			"closing" : {
-              "properties" : {
-                "image" : "<partImage>:closing.<frame>"
-              }
-            }
-          }
-        }
-      },
+	  
 	  "pantograph" : {
         "properties" : {
           "centered" : true,
@@ -524,7 +362,6 @@
           "centered" : true,
           "offset" : [9, 2.5],
           "zLevel" : 12,
-          //"fullbright" : true,
           "rotationGroup" : "cockpit",
           "transformationGroups" : ["flip", "rotation"]
         },
@@ -533,12 +370,14 @@
           "headlight" : {
             "on" : {
               "properties" : {
-                "image" : "headlight.png:on"
+                "image" : "headlight.png:on",
+                "fullbright" : true
               }
             },
 			"off" : {
               "properties" : {
-                "image" : "headlight.png:off"
+                "image" : "headlight.png:off",
+                "fullbright" : false
               }
             }
           }
@@ -549,7 +388,6 @@
           "centered" : true,
           "offset" : [-9, 2.5],
           "zLevel" : 12,
-          //"fullbright" : true,
           "rotationGroup" : "cockpit",
           "transformationGroups" : ["flip", "rotation"]
         },
@@ -558,12 +396,14 @@
           "reverseheadlight" : {
             "on" : {
               "properties" : {
-                "image" : "reverseheadlight.png:on"
+                "image" : "reverseheadlight.png:on",
+                "fullbright" : true
               }
             },
 			"off" : {
               "properties" : {
-                "image" : "reverseheadlight.png:off"
+                "image" : "reverseheadlight.png:off",
+                "fullbright" : false
               }
             }
           }

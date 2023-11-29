@@ -7,7 +7,7 @@
 
   "persistent" : true,
 
-  "script" : "/scripts/starbound-train-system-legacy-vehicle-script.lua",
+  "script" : "/scripts/starbound-train-system-vehicle-script.lua",
   "animation" : "/vehicles/XXLsubwayTrain.linked/XXLSubwayTram.animation",
 
   "animationPartTags" : {
@@ -16,6 +16,12 @@
     },
     "bodyColor" : {
       "partImage" : "/vehicles/XXLsubwayTrain.linked/blue.png"
+    },
+    "doorsBody" : {
+      "partImage" : "/vehicles/XXLsubwayTrain.linked/doors/doorbodyblue.png"
+    },
+    "doorsCockpit" : {
+      "partImage" : "/vehicles/XXLsubwayTrain.linked/doors/doorcockpitred.png"
     },
     "decalA" : {
       "partImage" : "/vehicles/XXLsubwayTrain.linked/decalPlaceholder.png"
@@ -161,9 +167,9 @@
 	"useGravity" : true,
     "gravityMultiplier" : 0.8
   },
-
+  
   "imgPath" : "/vehicles/XXLsubwayTrain.linked/",
-  "spawnedCarOffsetY" : 0.50,
   "firstCar" : true,
-  "lastCar" : false
+  "lastCar" : false,
+  "spawnedCarOffsetY" : 0.50
 }
