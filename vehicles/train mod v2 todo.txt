@@ -1,0 +1,57 @@
+Rail Train v 2.0
+
+Todo:
+
+-implement lack of headlight/taillight/reversed taillight/rev.hedlight
+-mirroring vs 2 vehicles per direction
+-convert legacy vehicles to new version and test they still work
+-if all works fix script to remove legacy vehicle check and remove legacyvehicle from list of cars
+-implement a way to add decals to an existing train type without giving errors
+
+-FIX ITEM DROP AFTER REVERSAL
+
+-DO WINDOW LIGHTS ON NEW VEHICLES
+-DO PASSENGER SEATS ON BULLET CAR
+-Fix passenger seats on bullet loco
+-FIX DECAL E WINDOWS ON ALL NEW CARS 
+
+-FIX distances of new cars
+-implement accordion
+-FIX headlight + taillight small bullet car
+-FIX headlight zlevel on big bullet car
+
+-maybe implement custom distance or ensure distances are kept when decelerating
+
+-test distances between new cars
+-do collisions boundbox and passengerseats
+
+-fix doorbody driver door pixel bottom left i(which vehicle?)
+-fix interior door and front door window livery up btm and btm2 animations in big car bullet
+-add other colors to decal E
+-maybe add purple colors for all
+
+-fix train configurator decal0 not found (add code to put generic placeholder in place)
+-fix train configurator getting list of cars from listofcars.json instead of settings.json
+
+-fix taillight/headlight position in bullet short loco
+-fix light positions on bullet short loco
+-fix short bullet loco with new design
+
+-implement custom speeds
+
+-do long bullet loco
+-do bullet car
+-do long bullet car
+
+-do monorail loco
+-do monorail car
+-do monorail long car
+
+-do maglev bullet loco
+-do maglev long bullet loco
+-do maglev bullet car
+-do maglev long bullet car
+
+-maglev train new grind sound
+
+
