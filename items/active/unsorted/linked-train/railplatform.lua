@@ -67,7 +67,8 @@ function init()
 	
 	local vehicleNameHasDecals = self.listOfCars[vehicleName].hasDecals
     if vehicleNameHasDecals then
-	  local decalnames = self.trainsetData[i].decalNames
+	  --local decalnames = self.trainsetData[i].decalNames
+	  local decalnames = self.listOfCars[vehicleName].decalNames
 	  local numberOfDecals = #decalnames
 	  local decalsTable = self.trainsetData[i].decals
 	  local decalsFlippableTable = self.listOfCars[vehicleName].decalsFlippable
@@ -77,6 +78,11 @@ function init()
 		currentDecal = decalnames[j]
 		currentDecalSprite = decalsTable[currentDecal]
         local renderdecal0 = self.listOfCars[vehicleName].decal0rendered[currentDecal]
+        
+        if (currentDecalSprite == nil) or (currentDecalSprite == "nil") then
+          currentDecalSprite = "0"
+        end
+        
 		if currentDecalSprite == "0" then
           if renderdecal0 then
             self.previewImgsArray[i][3+j] = tostring(self.imgPath) .. tostring(vehicleName) .. "/decal" .. tostring(currentDecal) .. "/0.png"

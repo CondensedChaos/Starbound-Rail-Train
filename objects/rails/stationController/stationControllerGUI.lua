@@ -846,7 +846,7 @@ function stationSelectSelected(widgetName, widgetData)
     itemData = widget.getData(string.format("%s.%s", listName, listItem))
 	widget.setText("timetableOverlay.addTrainOverlay.startStationLabel","Start Station : ^green;" .. tostring(itemData).."^reset;")
 	self.trainToAdd[2] = tonumber(itemData)
-	tprint(self.trainToAdd)
+	if self.logging then tprint(self.trainToAdd) end
   end
 end
 
@@ -1249,12 +1249,12 @@ function rebuildDataArrays(direction)
     if rebuildspeed then
       newspeedsarray = {}
       newspeedsarray[t] = self.saveFile.global[self.groupEditing].data[dataname].speeds[tostring(t)]
-      tprint(newspeedsarray[t])
+      if self.logging then tprint(newspeedsarray[t]) end
     end
     if rebuiltops then
       newstopsarray = {}
       newstopsarray[t] = self.saveFile.global[self.groupEditing].data[dataname].stopsLen[tostring(t)]
-      tprint(newstopsarray[t])
+      if self.logging then tprint(newstopsarray[t]) end
     end
   end
   

@@ -1,0 +1,169 @@
+{
+  "name" : "bullet-train-car-big",
+  "boundBox" : [-9.125, -4, 9.125, 5.0],
+  "slaveControlTimeout" : 2.0,
+  "slaveControlHeartbeat" : 1.0,
+  "canBeHit" : false,
+
+  "persistent" : true,
+
+  "script" : "/scripts/starbound-train-system-vehicle-script.lua",
+  "animation" : "/vehicles/bullet-train-car-big/bullet-train-car-big.animation",
+
+  "animationPartTags" : {
+    "cockpit" : {
+      "partImage" : "/vehicles/bullet-train-car-big/cockpitblack.png"
+    },
+    "bodyColor" : {
+      "partImage" : "/vehicles/bullet-train-car-big/white.png"
+    },
+    "doorsBody" : {
+      "partImage" : "/vehicles/bullet-train-car-big/doors/doorbodywhite.png"
+    },
+    "doorsCockpit" : {
+      "partImage" : "/vehicles/bullet-train-car-big/doors/doorcockpitwhite.png"
+    },
+    "decalA" : {
+      "partImage" : "/vehicles/bullet-train-car-big/decals/decalplaceholder.png"
+    },
+    "decalB" : {
+      "partImage" : "/vehicles/bullet-train-car-big/decals/decalplaceholder.png"
+    },
+    "decalC" : {
+      "partImage" : "/vehicles/bullet-train-car-big/decals/decalplaceholder.png"
+    },
+    "decalD" : {
+      "partImage" : "/vehicles/bullet-train-car-big/decals/decalplaceholder.png"
+    },
+    "decalE" : {
+      "partImage" : "/vehicles/bullet-train-car-big/decals/decalplaceholder.png"
+    },
+    "decalF" : {
+      "partImage" : "/vehicles/bullet-train-car-big/decals/decalplaceholder.png"
+    },
+    "decalG" : {
+      "partImage" : "/vehicles/bullet-train-car-big/decals/decalplaceholder.png"
+    },
+    "decalH" : {
+      "partImage" : "/vehicles/bullet-train-car-big/decals/decalplaceholder.png"
+    },
+    "decalI" : {
+      "partImage" : "/vehicles/bullet-train-car-big/decals/decalplaceholder.png"
+    },
+    "decalJ" : {
+      "partImage" : "/vehicles/bullet-train-car-big/decals/decalplaceholder.png"
+    },
+    "pantograph" : {
+      "partImage" : "/vehicles/bullet-train-car-big/pantograph.png"
+    }
+  },
+
+  "movementSettings" : {
+    "collisionPoly" : [ [-9.125, 0.375], [9.125, 0.375], [9.125, 7.5], [-9.125, 7.5] ],
+    "mass" : 2.0,
+    "ignorePlatformCollision" : true,
+    "physicsEffectCategories" : []
+  },
+
+  "loungePositions" : {
+    "drivingSeat" : {
+      "part" : "cockpit",
+      "partAnchor" : "driverSeatPosition",
+      "orientation" : "stand",
+      "statusEffects" : ["highprotection", "breathprotectionvehicle"]
+    },
+    "passengerSeat1" : {
+      "part" : "cockpit",
+      "partAnchor" : "passengerSeatPosition1",
+      "orientation" : "stand",
+      "statusEffects" : ["highprotection", "breathprotectionvehicle"]
+    },
+    "passengerSeat2" : {
+      "part" : "cockpit",
+      "partAnchor" : "passengerSeatPosition2",
+      "orientation" : "stand",
+      "statusEffects" : ["highprotection", "breathprotectionvehicle"]
+    },
+    "passengerSeat3" : {
+      "part" : "cockpit",
+      "partAnchor" : "passengerSeatPosition3",
+      "orientation" : "stand",
+      "statusEffects" : ["highprotection", "breathprotectionvehicle"]
+    },
+    "passengerSeat4" : {
+      "part" : "cockpit",
+      "partAnchor" : "passengerSeatPosition4",
+      "orientation" : "stand",
+      "statusEffects" : ["highprotection", "breathprotectionvehicle"]
+    },
+    "passengerSeat5" : {
+      "part" : "cockpit",
+      "partAnchor" : "passengerSeatPosition5",
+      "orientation" : "stand",
+      "statusEffects" : ["highprotection", "breathprotectionvehicle"]
+    },
+    "passengerSeat6" : {
+      "part" : "cockpit",
+      "partAnchor" : "passengerSeatPosition6",
+      "orientation" : "stand",
+      "statusEffects" : ["highprotection", "breathprotectionvehicle"]
+    },
+    "passengerSeat7" : {
+      "part" : "cockpit",
+      "partAnchor" : "passengerSeatPosition7",
+      "orientation" : "sit",
+      "statusEffects" : ["highprotection", "breathprotectionvehicle"]
+    },
+    "passengerSeat8" : {
+      "part" : "cockpit",
+      "partAnchor" : "passengerSeatPosition8",
+      "orientation" : "sit",
+      "statusEffects" : ["highprotection", "breathprotectionvehicle"]
+    },
+    "passengerSeat9" : {
+      "part" : "cockpit",
+      "partAnchor" : "passengerSeatPosition9",
+      "orientation" : "sit",
+      "statusEffects" : ["highprotection", "breathprotectionvehicle"]
+    },
+    "passengerSeat10" : {
+      "part" : "cockpit",
+      "partAnchor" : "passengerSeatPosition10",
+      "orientation" : "sit",
+      "statusEffects" : ["highprotection", "breathprotectionvehicle"]
+    }
+  },
+  
+  //Health and damage
+  "protection" : 50,
+  "maxHealth" : 1000,
+
+  "physicsCollisions" : {
+    "doorsRight": {
+      "collision" : [ [4.875, -2.375], [8.375, -2.4375] ],
+	  "collisionKind" : "platform",
+      "attachToPart" : "cockpit"
+    },
+    "doorsLeft": {
+      "collision" : [ [-4.875, -2.375], [-8.375, -2.4375] ],
+	  "collisionKind" : "platform",
+      "attachToPart" : "cockpit"
+    },
+    "roof" : {
+      "collision" : [ [-9.125, 3.75], [9.125, 3.6875] ],
+	  "collisionKind" : "platform",
+      "attachToPart" : "cockpit"
+    }
+  },
+
+  "railConfig" : {
+    "speed" : 10,
+	"useGravity" : true,
+    "gravityMultiplier" : 0.8
+  },
+  
+  "imgPath" : "/vehicles/bullet-train-car-big/",
+  "firstCar" : true,
+  "lastCar" : false,
+  "spawnedCarOffsetY" : 0.50
+}

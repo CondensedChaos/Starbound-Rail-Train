@@ -1,6 +1,6 @@
 {
 "paneImgPath" : "/interface/linkedTrain/trainConfigurator/",
-"vehiclesList" : ["SubwayTram-linked", "XXLSubwayTram-linked"],
+"vehiclesList" : ["bullet-train-locomotive-big", "bullet-train-car", "bullet-train-car-big", "SubwayTram-linked", "XXLSubwayTram-linked", "bullet-train-locomotive"],
 "itemName" : "linked-train",
 "logging" : false,
 "defaultTrainset" : [

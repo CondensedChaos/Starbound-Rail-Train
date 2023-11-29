@@ -1,16 +1,408 @@
-{
+{ "bullet-train-car" : {
+    "legacyVehicle" : false, //false = vehicle built for Starbound Train System Version >= 2, uses the new rendering scripts for doors/decals rendering and file-naming system
+    "maglev" : false,
+    "anchor" : "bottom",
+    "customSpeeds" : false,
+    "customSpeedsValues": null,
+    "description" : "Bullet Train Rail Car", 
+    "LongDescription" : "High speed heavy rail car for passengers transportation, suitable for rail tracks with several slopes\npassengers capacity: 7",
+    "price" : 550,
+    "imgPath" : "/vehicles/bullet-train-locomotive-big/",
+    "colors": ["white", "blue", "red", "yellow", "green"],
+    "cockpitColors" : ["black", "white", "blue", "red", "yellow", "green"],
+    "carLenghtPixels" : 119, 
+    "carHeightPixels" : 79, //including pantograph minus 1 pixel
+    "hasPantograph" : true, //if it has a pantograph sprite
+    "hasDecals" : true, //if it has decals sprites
+    "specular" : true, //if mirroring the vehicle produces the same image
+    "decalNames" : ["A", "B", "C", "D", "E", "F", "G"],
+    "decals" : {
+      "A" : [0, 1, 2, 3, 4], 
+      "B" : [0, 1, 2, 3, 4, 5],
+      "C" : [0, 1, 2, 3, 4, 5, 6],
+      "D" : [0, 1, 2, 3, 4, 5, 6],
+      "E" : [0, 1, 2],
+      "F" : [0, 1, 2, 3, 4, 5],
+      "G" : [0, 1]
+    },
+    "DisplayNames" : { //human-readable names for its parts, those will show up in train configurator, 7 characters max.
+      "color" : "Bottom",
+      "cockpit" : "Middle",
+      "decals" : {
+        "A" : "Roof",
+        "B" : "Livery1",
+        "C" : "UPRMid",
+        "D" : "LWRMid",
+        "E" : "Livery2",
+        "F" : "Livery3",
+        "G" : "Graffiti"
+      }
+    },
+    "decalsFlippable" : {
+      "A" : [true, true, true, true, true],
+      "B" : [false, true, true, true, true, true],
+      "C" : [false, true, true, true, true, true, true],
+      "D" : [false, true, true, true, true, true, true],
+      "E" : [false, true, true],
+      "F" : [false, true, true, true, true, true],
+      "G" : [false, false]
+    },
+    "decal0rendered" : {
+      "A" : true,
+      "B" : false,
+      "C" : false,
+      "D" : false,
+      "E" : false,
+      "F" : false,
+      "G" : false
+    },
+    "decalsMotionAnimation" : {
+      "A" : false,
+      "B" : false,
+      "C" : false,
+      "D" : false,
+      "E" : false,
+      "F" : false,
+      "G" : false
+    },
+    "decalsLoopAnimation" : {
+      "A" : false,
+      "B" : false,
+      "C" : false,
+      "D" : false,
+      "E" : false,
+      "F" : false,
+      "G" : false
+    },
+    "decalsDoorAnimation" : {
+      "A" : true,
+      "B" : true,
+      "C" : true,
+      "D" : true,
+      "E" : true,
+      "F" : true,
+      "G" : true
+    },
+    "partsWithDoorAnimation" : {
+      "cockpit" : true,
+      "body" : true
+    },
+    "hideDecalsInConfigurator" : null,
+    "numberOfDoors" : 1,
+    "headlight" : true,
+    "reverseheadlight" : true,
+    "taillight" : true,
+    "reversetaillight" : true
+  },
+  "bullet-train-car-big" : {
+    "legacyVehicle" : false, //false = vehicle built for Starbound Train System Version >= 2, uses the new rendering scripts for doors/decals rendering and file-naming system
+    "maglev" : false,
+    "anchor" : "bottom",
+    "customSpeeds" : false,
+    "customSpeedsValues": null,
+    "description" : "Long Bullet Train Rail Car", 
+    "LongDescription" : "High speed heavy rail car for passengers transportation, suitable for rail tracks fewer number of slopes\npassengers capacity: 11",
+    "price" : 800,
+    "imgPath" : "/vehicles/bullet-train-locomotive-big/",
+    "colors": ["white", "blue", "red", "yellow", "green"],
+    "cockpitColors" : ["black", "white", "blue", "red", "yellow", "green"],
+    "carLenghtPixels" : 151, 
+    "carHeightPixels" : 79, //including pantograph minus 1 pixel
+    "hasPantograph" : true, //if it has a pantograph sprite
+    "hasDecals" : true, //if it has decals sprites
+    "specular" : true, //if mirroring the vehicle produces the same image
+    "decalNames" : ["A", "B", "C", "D", "E", "F", "G"],
+    "decals" : {
+      "A" : [0, 1, 2, 3, 4], 
+      "B" : [0, 1, 2, 3, 4, 5],
+      "C" : [0, 1, 2, 3, 4, 5, 6],
+      "D" : [0, 1, 2, 3, 4, 5, 6],
+      "E" : [0, 1, 2],
+      "F" : [0, 1, 2, 3, 4, 5],
+      "G" : [0, 1]
+    },
+    "DisplayNames" : { //human-readable names for its parts, those will show up in train configurator, 7 characters max.
+      "color" : "Bottom",
+      "cockpit" : "Middle",
+      "decals" : {
+        "A" : "Roof",
+        "B" : "Livery1",
+        "C" : "UPRMid",
+        "D" : "LWRMid",
+        "E" : "Livery2",
+        "F" : "Livery3",
+        "G" : "Graffiti"
+      }
+    },
+    "decalsFlippable" : {
+      "A" : [true, true, true, true, true],
+      "B" : [false, true, true, true, true, true],
+      "C" : [false, true, true, true, true, true, true],
+      "D" : [false, true, true, true, true, true, true],
+      "E" : [false, true, true],
+      "F" : [false, true, true, true, true, true],
+      "G" : [false, false]
+    },
+    "decal0rendered" : {
+      "A" : true,
+      "B" : false,
+      "C" : false,
+      "D" : false,
+      "E" : false,
+      "F" : false,
+      "G" : false
+    },
+    "decalsMotionAnimation" : {
+      "A" : false,
+      "B" : false,
+      "C" : false,
+      "D" : false,
+      "E" : false,
+      "F" : false,
+      "G" : false
+    },
+    "decalsLoopAnimation" : {
+      "A" : false,
+      "B" : false,
+      "C" : false,
+      "D" : false,
+      "E" : false,
+      "F" : false,
+      "G" : false
+    },
+    "decalsDoorAnimation" : {
+      "A" : true,
+      "B" : true,
+      "C" : true,
+      "D" : true,
+      "E" : true,
+      "F" : true,
+      "G" : true
+    },
+    "partsWithDoorAnimation" : {
+      "cockpit" : true,
+      "body" : true
+    },
+    "hideDecalsInConfigurator" : null,
+    "numberOfDoors" : 1,
+    "headlight" : true,
+    "reverseheadlight" : true,
+    "taillight" : true,
+    "reversetaillight" : true
+  },
+  "bullet-train-locomotive-big" : {
+    "legacyVehicle" : false, //false = vehicle built for Starbound Train System Version >= 2, uses the new rendering scripts for doors/decals rendering and file-naming system
+    "maglev" : false,
+    "anchor" : "bottom",
+    "customSpeeds" : false,
+    "customSpeedsValues": null,
+    "description" : "Long Bullet Train Locomotive", 
+    "LongDescription" : "High speed heavy rail locomotive for passengers transportation, suitable for rail tracks fewer number of slopes\npassengers capacity: 12",
+    "price" : 800,
+    "imgPath" : "/vehicles/bullet-train-locomotive-big/",
+    "colors": ["white", "blue", "red", "yellow", "green"],
+    "cockpitColors" : ["black", "white", "blue", "red", "yellow", "green"],
+    "carLenghtPixels" : 155, 
+    "carHeightPixels" : 79, //including pantograph minus 1 pixel
+    "hasPantograph" : true, //if it has a pantograph sprite
+    "hasDecals" : true, //if it has decals sprites
+    "specular" : false, //if mirroring the vehicle produces the same image
+    "decalNames" : ["A", "B", "C", "D", "E", "F", "G"],
+    "decals" : {
+      "A" : [0, 1, 2, 3, 4], 
+      "B" : [0, 1, 2, 3, 4, 5],
+      "C" : [0, 1, 2, 3, 4, 5, 6],
+      "D" : [0, 1, 2, 3, 4, 5, 6],
+      "E" : [0, 1, 2],
+      "F" : [0, 1, 2, 3, 4, 5],
+      "G" : [0, 1]
+    },
+    "DisplayNames" : { //human-readable names for its parts, those will show up in train configurator, 7 characters max.
+      "color" : "Bottom",
+      "cockpit" : "Middle",
+      "decals" : {
+        "A" : "Roof",
+        "B" : "Livery1",
+        "C" : "UPRMid",
+        "D" : "LWRMid",
+        "E" : "Livery2",
+        "F" : "Livery3",
+        "G" : "Graffiti"
+      }
+    },
+    "decalsFlippable" : {
+      "A" : [false, false, false, false, false],
+      "B" : [false, false, false, false, false, false],
+      "C" : [false, false, false, false, false, false, false],
+      "D" : [false, false, false, false, false, false, false],
+      "E" : [false, false, false],
+      "F" : [false, false, false, false, false, false],
+      "G" : [false, false]
+    },
+    "decal0rendered" : {
+      "A" : true,
+      "B" : false,
+      "C" : false,
+      "D" : false,
+      "E" : false,
+      "F" : false,
+      "G" : false
+    },
+    "decalsMotionAnimation" : {
+      "A" : false,
+      "B" : false,
+      "C" : false,
+      "D" : false,
+      "E" : false,
+      "F" : false,
+      "G" : false
+    },
+    "decalsLoopAnimation" : {
+      "A" : false,
+      "B" : false,
+      "C" : false,
+      "D" : false,
+      "E" : false,
+      "F" : false,
+      "G" : false
+    },
+    "decalsDoorAnimation" : {
+      "A" : true,
+      "B" : true,
+      "C" : true,
+      "D" : true,
+      "E" : true,
+      "F" : true,
+      "G" : true
+    },
+    "partsWithDoorAnimation" : {
+      "cockpit" : true,
+      "body" : true
+    },
+    "hideDecalsInConfigurator" : null,
+    "numberOfDoors" : 1,
+    "headlight" : true,
+    "reverseheadlight" : false,
+    "taillight" : false,
+    "reversetaillight" : true
+  },
+  "bullet-train-locomotive" : {
+    "legacyVehicle" : false, //false = vehicle built for Starbound Train System Version >= 2, uses the new rendering scripts for doors/decals rendering and file-naming system
+    "maglev" : false,
+    "anchor" : "bottom",
+    "customSpeeds" : false,
+    "customSpeedsValues": null,
+    "description" : "Short Bullet Train Locomotive", 
+    "LongDescription" : "High speed heavy rail locomotive for passengers transportation, suitable for rail tracks with moderate number of slopes\npassengers capacity: 12",
+    "price" : 800,
+    "imgPath" : "/vehicles/bullet-train-locomotive/",
+    "colors": ["white", "blue", "red", "yellow", "green"],
+    "cockpitColors" : ["black", "white"],
+    "carLenghtPixels" : 132, 
+    "carHeightPixels" : 79, //including pantograph minus 1 pixel
+    "hasPantograph" : true, //if it has a pantograph sprite
+    "hasDecals" : true, //if it has decals sprites
+    "specular" : false, //if mirroring the vehicle produces the same image
+    "decalNames" : ["A", "B", "C", "D", "E", "F", "G", "H"],
+    "decals" : {
+      "A" : [0, 1, 2, 3, 4], 
+      "B" : [0, 1, 2, 3, 4, 5],
+      "C" : [0, 1, 2, 3, 4, 5, 6],
+      "D" : [0, 1, 2, 3, 4, 5, 6],
+      "E" : [0, 1, 2],
+      "F" : [0, 1, 2, 3, 4, 5],
+      "G" : [0],
+      "H" : [0, 1]
+    },
+    "DisplayNames" : { //human-readable names for its parts, those will show up in train configurator, 7 characters max.
+      "color" : "Bottom",
+      "cockpit" : "Middle",
+      "decals" : {
+        "A" : "Roof",
+        "B" : "Livery1",
+        "C" : "UPRMid",
+        "D" : "LWRMid",
+        "E" : "Livery2",
+        "F" : "Livery3",
+        "G" : "Wheels",
+        "H" : "Graffiti"
+      }
+    },
+    "decalsFlippable" : {
+      "A" : [false, false, false, false, false],
+      "B" : [false, false, false, false, false, false],
+      "C" : [false, false, false, false, false, false, false],
+      "D" : [false, false, false, false, false, false, false],
+      "E" : [false, false, false],
+      "F" : [false, false, false, false, false, false],
+      "G" : [false],
+      "H" : [false, false]
+    },
+    "decal0rendered" : {
+      "A" : true,
+      "B" : false,
+      "C" : false,
+      "D" : false,
+      "E" : false,
+      "F" : false,
+      "G" : true,
+      "H" : false
+    },
+    "decalsMotionAnimation" : {
+      "A" : false,
+      "B" : false,
+      "C" : false,
+      "D" : false,
+      "E" : false,
+      "F" : false,
+      "G" : true,
+      "H" : false
+    },
+    "decalsLoopAnimation" : {
+      "A" : false,
+      "B" : false,
+      "C" : false,
+      "D" : false,
+      "E" : false,
+      "F" : false,
+      "G" : false,
+      "H" : false
+    },
+    "decalsDoorAnimation" : {
+      "A" : true,
+      "B" : true,
+      "C" : true,
+      "D" : true,
+      "E" : true,
+      "F" : true,
+      "G" : false,
+      "H" : true
+    },
+    "partsWithDoorAnimation" : {
+      "cockpit" : true,
+      "body" : true
+    },
+    "hideDecalsInConfigurator" : ["G"],
+    "numberOfDoors" : 1,
+    "headlight" : true,
+    "reverseheadlight" : false,
+    "taillight" : true,
+    "reversetaillight" : false
+  },
   "SubwayTram-linked" : {//vehicle name
+    "legacyVehicle" : false, //if true it's a vehicle built for Starbound Train System Version 1, compatible with version 2
     //keep the description field short will appear in the train builder when choosing the car type
     "description" : "subway train car", 
     //longDescription will appear under the preview
     
-    "LongDescription" : "Small light rail car for passengers transportation, suitable for rail tracks with several slopes\npassengers capacity: 5",
+    "LongDescription" : "Small light rail car for passengers transportation, suitable for rail tracks with several slopes\nfirst train vehicle built in human space colonies\npassengers capacity: 5",
     "price" : 500,
     "imgPath" : "/vehicles/subwayTrain.linked/",
     "colors": ["blue", "red", "cyan", "white", "yellow", "green"],
     "cockpitColors" : ["red", "blue", "white", "yellow", "green"],
     "carLenghtPixels" : 83,
-    "carHeightPixels" : 79, //including pantograph minus 1 pixel
+    "carHeightPixels" : 79, //If your car has pantgraph has to be 79 (including pantograph minus 1 pixel = 10 blocks)
+                            // If your vehicle won't have a pantograph then 79 pixel max (=10 blocks max) but may be less (although not advised to make it smaller than 6 blocks= 48 pixel), most playable races are 5 blocks tall.
     "hasPantograph" : true, //if it has a pantograph sprite
     "hasDecals" : true, //if it has decals sprites
     "specular" : true, //if mirroring the sprites produces the same image
@@ -21,7 +413,7 @@
       "C" : [0, 1],
       "D" : [0, 1]
     },
-    "DisplayNames" : { //human-readable names for its parts, those will show up in train configurator
+    "DisplayNames" : { //human-readable names for its parts, those will show up in train configurator, 7 characters max.
       "color" : "Bottom",
       "cockpit" : "Top",
       "decals" : {
@@ -45,8 +437,9 @@
     }
   },   
   "XXLSubwayTram-linked" : {
+    "legacyVehicle" : true, //if true it's a vehicle built for Starbound Train System Version 1, compatible with version 2
     "description" : "Long subway train car", 
-    "LongDescription" : "Light rail car for passengers transportation like the ones found in subways, suitable for straight line rail tracks\npassengers capacity: 12",
+    "LongDescription" : "Light rail car for passengers transportation like the ones found in subways, suitable for straight line rail tracks\nfirst train vehicle built in human space colonies\npassengers capacity: 12",
     "price" : 750,
     "imgPath" : "/vehicles/XXLsubwayTrain.linked/",
     "colors": ["blue", "red", "cyan", "white", "yellow", "green"],
@@ -63,7 +456,7 @@
       "C" : [0, 1],
       "D" : [0, 1]
     },
-    "DisplayNames" : { //human-readable names for its parts, those will show up in train configurator
+    "DisplayNames" : { //human-readable names for its parts, those will show up in train configurator, 7 characters max.
       "color" : "Bottom",
       "cockpit" : "Top",
       "decals" : {
@@ -85,7 +478,7 @@
       "C" : false,
       "D" : true
     }
-  } 
+  }
 
 }
 

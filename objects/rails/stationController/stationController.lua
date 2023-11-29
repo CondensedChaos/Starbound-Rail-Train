@@ -1257,8 +1257,14 @@ function update(dt)
        --storage.saveFile[storage.uuid].nodepos = {}
        world.setProperty("stationController_file", storage.saveFile)
        storage.saveFile = world.getProperty("stationController_file")
-       if self.logging then sb.logInfo("SAVE FILE AS FOLLOWS: ") end
-       if storage.saveFile then tprint(storage.saveFile) end
+       if self.logging then 
+         if storage.saveFile then
+           sb.logInfo("SAVE FILE AS FOLLOWS: ")
+           tprint(storage.saveFile)
+         else
+           sb.logInfo("SAVE FILE IS ---=NIL=---")
+         end
+       end
      else
        if self.logging then sb.logInfo("SAVE FILE FOUND: ") end
        if storage.saveFile[storage.uuid] == nil then
@@ -1295,7 +1301,11 @@ function update(dt)
          if storage.saveFile[storage.uuid].grouped then
          end
        end
-       if storage.saveFile then tprint(storage.saveFile) end
+       if self.logging then
+         if storage.saveFile then
+           tprint(storage.saveFile)
+         end
+       end
      end
      
      initNodePos()

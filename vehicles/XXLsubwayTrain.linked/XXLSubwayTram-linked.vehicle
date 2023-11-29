@@ -7,7 +7,7 @@
 
   "persistent" : true,
 
-  "script" : "/scripts/linkedTrain.lua",
+  "script" : "/scripts/starbound-train-system-legacy-vehicle-script.lua",
   "animation" : "/vehicles/XXLsubwayTrain.linked/XXLSubwayTram.animation",
 
   "animationPartTags" : {

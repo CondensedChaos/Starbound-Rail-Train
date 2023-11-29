@@ -348,7 +348,7 @@ function setDecal(n, method)
   local decalnName = self.listOfCars[self.IndexesTemp[self.editingCar].vehicleName].decalNames[n]
   local currentDecalIndex = self.IndexesTemp[self.editingCar].currentDecalIndex[decalnName]
   local numOfDecalSpritesIndexes = self.IndexesTemp[self.editingCar].numOfDecalSpritesIndexes[decalnName]
-  
+    
   if method >= 1 then
     if currentDecalIndex < numOfDecalSpritesIndexes then
       self.trainsetTemp[self.editingCar].decals[decalnName] = self.listOfCars[self.IndexesTemp[self.editingCar].vehicleName].decals[decalnName][currentDecalIndex+1]
@@ -716,9 +716,124 @@ function doorslockedCheckBox(widgetName, widgetData)
   self.editingACar = true
 end
 
+function verifyItem(item)
+  if self.logging then 
+    sb.logInfo("===========VERIFY ITEM CALLED======")
+    sb.logInfo("ITEM AS FOLLOWS:")
+  end
+  if item then
+    if self.logging then  tprint(item) end
+    local itemtraindata = deepcopy(item.parameters.trainsetData)
+    local itemnumcars = item.parameters.numberOfCars
+    
+    if self.logging then 
+      sb.logInfo("verifyItem(item): trainsed data extracted as follows:")
+      tprint(itemtraindata)
+    end
+    
+    local fatalerror = false
+    local warning = false
+    --local carnumbersmismatch = false
+    
+    --self.listOfCars[vehicleName].decalNames
+    
+    local realcarnumbers = {}
+    
+    if not itemnumcars == #itemtraindata then
+      if #itemtraindata > itemnumcars then
+        item.parameters.numberOfCars = #itemtraindata
+        sb.logInfo("verifyItem(item) WARNING: number of cars mismatch with trainset data array from item, number of cars value=" .. tostring(itemnumcars) .. " array lenght=" .. tostring(#itemtraindata) .. ", fixed")
+        warning = true
+      else
+        sb.logInfo("verifyItem(item) FATAL ERROR: number of cars in array is less than declared in JSON trainset data, number of cars mismatch with trainset data array from item, number of cars value=" .. tostring(itemnumcars) .. " array lenght=" .. tostring(#itemtraindata))
+        fatalerror = true
+      end
+      
+    else
+      
+      for i=1,itemnumcars do
+        local vehicleName
+        if not itemtraindata[i].name then
+          sb.logInfo("verifyItem(item) FATAL ERROR: car number " .. tostring(i) .. " vehicle name not present")
+          fatalerror = true
+          break
+        else
+          vehicleName = itemtraindata[i].name
+        end
+        if not tonumber(itemtraindata[i].carNumber) == i then
+          --sb.logInfo("verifyItem(item) ERROR: car number " .. tostring(i) .. " number mismatch in array, number in array=" .. tostring(itemtraindata.carNumber))
+          fatalerror = true
+          sb.logInfo("verifyItem(item) FATAL ERROR: car number " .. tostring(i) .. " number mismatch in array, number in array=" .. tostring(itemtraindata.carNumber))
+          --carnumbersmismatch = true
+          --realcarnumbers[i] = itemtraindata[i].carNumber
+        --else
+          --realcarnumbers[i] = itemtraindata[i].carNumber
+        end
+        if itemtraindata[i].doorLocked == nil then
+          sb.logInfo("verifyItem(item) WARNING: car number " .. tostring(i) .. " doorlocked field not present, setting to false, fixed")
+          itemtraindata[i].doorLocked = false
+          warning = true
+        end
+        if itemtraindata[i].pantographVisibile == nil then
+          sb.logInfo("verifyItem(item) WARNING: car number " .. tostring(i) .. " pantographVisibile field not present, setting to false, fixed")
+          itemtraindata[i].pantographVisibile = false
+          warning = true
+        end
+        if self.logging then 
+          sb.logInfo("verifyItem(item): car number " .. tostring(i) .. " vehicle name=" .. tostring(vehicleName) .. " hasdecals=" .. tostring(self.listOfCars[vehicleName].hasDecals))
+        end
+        if self.listOfCars[vehicleName].hasDecals then
+          if not itemtraindata[i].decalNames then
+            sb.logInfo("verifyItem(item) FATAL ERROR: car number " .. tostring(i) .. " decalNames array not present")
+            fatalerror = true
+            break
+          else
+            if not (#itemtraindata[i].decalNames == #self.listOfCars[vehicleName].decalNames) then
+              sb.logInfo("verifyItem(item) WARNING: car number " .. tostring(i) .. " decalNames array lenght mismatch, array lenght=" .. tostring(#itemtraindata[i].decalNames) .. " should be=" .. tostring(#self.listOfCars[vehicleName].decalNames) .. ", fixed")
+              sb.logInfo("verifyItem(item) WARNING: decalNames Len=" .. tostring(#itemtraindata[i].decalNames) .. " decalNames Len from JSON car list=" .. tostring(#self.listOfCars[vehicleName].decalNames) .. " Len mismatch=" ..tostring(not (#itemtraindata[i].decalNames == #self.listOfCars[vehicleName].decalNames)))
+              sb.logInfo("verifyItem(item) WARNING: car number " .. tostring(i) .. " vehicle name=" .. tostring(vehicleName) .. " decalNames=")
+              tprint(itemtraindata[i].decalNames)
+              warning = true
+              for d=#itemtraindata[i].decalNames+1,#self.listOfCars[vehicleName].decalNames do
+                itemtraindata[i].decalNames[d] = self.listOfCars[vehicleName].decalNames[d]
+                itemtraindata[i].decals[itemtraindata[i].decalNames[d]] = 0
+              end
+            end
+          end
+        end 
+      end
+      
+      if not fatalerror then
+        if warning then
+          --if carnumbersmismatch then
+            --
+          --end
+          
+          sb.logInfo("verifyItem(item): verification ended with warnings, item data before fixes applied:")
+          tprint(item)
+          
+          item.parameters.trainsetData = deepcopy(itemtraindata)
+          
+          world.containerTakeAt(pane.containerEntityId(), 0)
+          world.containerItemApply(pane.containerEntityId(), item, 0)
+          sb.logInfo("verifyItem(item): verification ended with warnings, all warnings (should be) fixed, item data after fixes applied as follows:")
+          tprint(item)
+        else
+          if self.logging then sb.logInfo("verifyItem(item): verification ended, no errors or warnings:") end
+        end
+      end
+
+    end
+    
+  end
+end
+
 function loadTrainsetButtonPressed(widgetName, widgetData)
   local item = world.containerItemAt(pane.containerEntityId(), 0)
   local itemConfig = root.itemConfig(item)
+  
+  verifyItem(deepcopy(item))
+  
   self.numberOfCars = item.parameters.numberOfCars
   self.trainSet = deepcopy(item.parameters.trainsetData)
   if not self.numberOfCars then self.numberOfCars = #self.trainSet end
@@ -939,11 +1054,21 @@ function displayCarData(TrainSetData, indexedTrainset, carNumber)
   if hasDecals then
     local numberOfDecals = #self.listOfCars[vehicleName].decalNames
 	local decalsNames = self.listOfCars[vehicleName].decalNames
+    local hideDecals = self.listOfCars[vehicleName].hideDecalsInConfigurator
 	for i=1,tonumber(numberOfDecals) do
 	  widget.setVisible("decal" .. tostring(i) .. "Label", true)
       widget.setVisible("decal" .. tostring(i) .. "Spinner", true)
       widget.setVisible("decal" .. tostring(i) .."Value", true)
 	  local currentDecal = decalsNames[i]
+      if hideDecals then
+        for hd=1,#hideDecals do
+          if hideDecals[hd] == currentDecal then
+            widget.setVisible("decal" .. tostring(i) .. "Label", false)
+            widget.setVisible("decal" .. tostring(i) .. "Spinner", false)
+            widget.setVisible("decal" .. tostring(i) .."Value", false)
+          end
+        end
+      end
 	  local decalIndex = indexedTrainset[carNumber].currentDecalIndex[currentDecal]
 	  widget.setText("decal" .. tostring(i) .."Value", tostring(decalIndex))
 	  if self.listOfCars[vehicleName].DisplayNames.decals then
