@@ -231,12 +231,12 @@
       }
     },
     "decalsFlippable" : {
-      "A" : [false, false, false, false, false],
-      "B" : [false, false, false, false, false, false],
-      "C" : [false, false, false, false, false, false, false],
-      "D" : [false, false, false, false, false, false, false],
-      "E" : [false, false, false],
-      "F" : [false, false, false, false, false, false],
+      "A" : [true, true, true, true, true],
+      "B" : [false, true, true, true, true, true],
+      "C" : [false, true, true, true, true, true, true],
+      "D" : [false, true, true, true, true, true, true],
+      "E" : [false, true, true],
+      "F" : [false, true, true, true, true, true],
       "G" : [false, false]
     },
     "decal0rendered" : {

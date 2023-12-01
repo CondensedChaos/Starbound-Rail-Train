@@ -97,7 +97,7 @@
             },
             "stopped" : {
               "properties" : {
-                "image" : "wheels.png:inMotion.1"
+                "image" : "wheels.png:stopped"
               }
             }
           }
@@ -664,12 +664,14 @@
           "reversetaillight" : {
             "on" : {
               "properties" : {
-                "image" : "taillight.png:on"
+                "image" : "taillight.png:on",
+                "fullbright" : true
               }
             },
 			"off" : {
               "properties" : {
-                "image" : "taillight.png:off"
+                "image" : "taillight.png:off",
+                "fullbright" :false
               }
             }
           }

@@ -38,11 +38,14 @@ function init()
   self.previewImgsArray = {}
   offsets = {}
   flipTable = {}
+  reversedTable = {}
   
   for i=1,self.numberOfCars do
     
     flipTable[i] = {true,true,true}	
-	
+    
+    reversedTable[i] = self.trainsetData[i].reversed
+    	
     self.previewImgsArray[i] = {}
     local vehicleName = self.trainsetData[i].name
 	--sb.logInfo(tostring(vehicleName))
@@ -80,10 +83,10 @@ function init()
         local renderdecal0 = self.listOfCars[vehicleName].decal0rendered[currentDecal]
         
         if (currentDecalSprite == nil) or (currentDecalSprite == "nil") then
-          currentDecalSprite = "0"
+          currentDecalSprite = 0
         end
         
-		if currentDecalSprite == "0" then
+		if currentDecalSprite == 0 then
           if renderdecal0 then
             self.previewImgsArray[i][3+j] = tostring(self.imgPath) .. tostring(vehicleName) .. "/decal" .. tostring(currentDecal) .. "/0.png"
           else
@@ -126,6 +129,7 @@ function init()
   activeItem.setScriptedAnimationParameter("previewImages", self.previewImgsArray)
   activeItem.setScriptedAnimationParameter("offsets", offsets)
   activeItem.setScriptedAnimationParameter("flipTable", flipTable)
+  activeItem.setScriptedAnimationParameter("reversedTable",reversedTable)
   
   activeItem.setScriptedAnimationParameter("numberOfCars", self.numberOfCars)
   

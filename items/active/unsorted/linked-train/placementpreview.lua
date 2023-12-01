@@ -5,6 +5,7 @@ function update()
   local previewImgsArray = animationConfig.animationParameter("previewImages")
   local offsets = animationConfig.animationParameter("offsets")
   local flipTable = animationConfig.animationParameter("flipTable")
+  local reversedTable = animationConfig.animationParameter("reversedTable")
   
   --self.trainsetData = animationConfig.animationParameter("trainsetData")
   
@@ -18,8 +19,8 @@ function update()
 	
 	  for i=1,#previewImgsArray[car] do
         local previewImage = previewImgsArray[car]
-	    local flipped = facing < 0
-		
+	    local flipped
+        
 	    if previewValid then
 	      previewImage[i] = previewImage[i] .. "?fade=55FF5500;0.25?border=2;66FF6677;00000000"
 	    else
@@ -27,7 +28,11 @@ function update()
 	    end
 		
 		if flipTable[car][i] then
-		  flipped = facing < 0
+		  if reversedTable[car] then
+	        flipped = facing > 0
+	      else
+	        flipped = facing < 0
+	      end
 		else
 		  flipped = false
 		end

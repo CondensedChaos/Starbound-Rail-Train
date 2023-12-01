@@ -399,6 +399,17 @@ function init()
   
   self.paneImgPath = self.settingsConfig.paneImgPath
   self.vehiclesIndexes = self.settingsConfig.vehiclesList
+  
+  --sb.logInfo("================================self.settingsConfig.vehiclesList:")
+  --tprint(self.vehiclesIndexes)
+  --sb.logInfo("===================Taken from list of cars:")
+  
+  --local vehiclesarray = {}
+  --for k,_ in pairs(self.listOfCars) do
+    --table.insert(vehiclesarray,k)
+  --end
+  --tprint(vehiclesarray)
+  
   self.numberOfVehicleTypes = #self.vehiclesIndexes
   
   --self.numberOfVehicleTypes = 0

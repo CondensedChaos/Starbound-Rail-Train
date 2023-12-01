@@ -203,7 +203,6 @@ function init()
   end
 
   local vehicleNameHasDecals = self.listOfCars[self.vehicleName].hasDecals
-  self.legacyVehicle = self.listOfCars[self.vehicleName].legacyVehicle
   self.hasHeadlight = self.listOfCars[self.vehicleName].headlight
   self.hasRevHeadlight = self.listOfCars[self.vehicleName].reverseheadlight
   self.hasTaillight = self.listOfCars[self.vehicleName].taillight
@@ -212,68 +211,66 @@ function init()
   animator.setPartTag("bodyColor", "partImage", tostring(self.imgPath) .. tostring(storage.color) .. ".png")
   animator.setPartTag("cockpit", "partImage", tostring(self.imgPath) .. "cockpit" .. tostring(storage.cockpitColor) .. ".png")
   
-  if not self.legacyVehicle then
-    if self.logging then 
-      sb.logInfo("bodyColor " .. tostring(storage.color) .. " cockpit " .. tostring(storage.cockpitColor))
-      sb.logInfo("partimage doorsBody " .. tostring(self.imgPath) .. "doors/doorbody" .. tostring(storage.color) .. ".png")
-      sb.logInfo("partimage doorsCockpit " .. tostring(self.imgPath) .. "doors/doorcockpit" .. tostring(storage.cockpitColor) .. ".png")
-    end
-    animator.setPartTag("doorsBody", "partImage", tostring(self.imgPath) .. "doors/doorbody" .. tostring(storage.color) .. ".png")
-    animator.setPartTag("doorsCockpit", "partImage", tostring(self.imgPath) .. "doors/doorcockpit" .. tostring(storage.cockpitColor) .. ".png")
-    animator.setAnimationState("doors", "closed")
-  end
+  animator.setPartTag("doorsBody", "partImage", tostring(self.imgPath) .. "doors/doorbody" .. tostring(storage.color) .. ".png")
+  animator.setPartTag("doorsCockpit", "partImage", tostring(self.imgPath) .. "doors/doorcockpit" .. tostring(storage.cockpitColor) .. ".png")
+  animator.setAnimationState("doors", "closed")
   
-  self.flipTable = {true,true,true}
+  self.flipTable = {false,false,false,false,false,false,false,false,false,false}
   
   if vehicleNameHasDecals then
     local decalsFlippableTable = self.listOfCars[self.vehicleName].decalsFlippable
 	local decalsIndexes = self.listOfCars[self.vehicleName].decals
-	
     local numberOfDecals = #self.decalNames
     for i=1,numberOfDecals do
 	  currentDecal = tostring(self.decalNames[i])
 	  currentDecalSprite = tostring(self.decalsTable[currentDecal])
+      
+      if storage.lastCar then 
+        sb.logInfo("======i=" .. tostring(i) .. " decalsFlippableTable[" .. tostring(currentDecal) ..  "]")
+        tprint(decalsFlippableTable[currentDecal])
+        sb.logInfo("======i=" .. tostring(i) .. " currentDecal " .. tostring(currentDecal) .. " currentDecalSprite " .. tostring(currentDecalSprite))
+      end
+      
       if (currentDecalSprite == nil) or (currentDecalSprite == "nil") then
         currentDecalSprite = "0"
-        
       end
+      
 	  local currentDecalBaseString = "decal" .. currentDecal
 	  
-	  self.flipTable[3+i] = decalsFlippableTable[currentDecal][indexOf(decalsIndexes[currentDecal], currentDecalSprite)]
+      if storage.lastCar then
+	    self.flipTable[i] = decalsFlippableTable[currentDecal][indexOf(decalsIndexes[currentDecal], tonumber(currentDecalSprite), true)]
+      else
+        self.flipTable[i] = decalsFlippableTable[currentDecal][indexOf(decalsIndexes[currentDecal], tonumber(currentDecalSprite), false)]
+      end
 	  
       local renderdecal0 = self.listOfCars[self.vehicleName].decal0rendered[currentDecal]
       
 	  --if (currentDecalSprite == 0) or (currentDecalSprite == "0") then
       if currentDecalSprite == "0" then
         if renderdecal0 then
-          if self.legacyVehicle then
-            animator.setPartTag(currentDecalBaseString, "partImage", self.imgPath .. currentDecalBaseString .. "0.png")
-          else
-            animator.setPartTag(currentDecalBaseString, "partImage", self.imgPath .. "decals/" .. currentDecal .. "/" ..  currentDecalBaseString .. "0.png")
-          end
+          animator.setPartTag(currentDecalBaseString, "partImage", self.imgPath .. "decals/" .. currentDecal .. "/" ..  currentDecalBaseString .. "0.png")
         else
           animator.setPartTag(currentDecalBaseString, "partImage", self.imgPath .. "decalPlaceholder.png")
         end
 	  else
-        if self.legacyVehicle then
-          animator.setPartTag(currentDecalBaseString, "partImage", self.imgPath .. currentDecalBaseString .. currentDecalSprite .. ".png")
-        else
-          animator.setPartTag(currentDecalBaseString, "partImage", self.imgPath .. "decals/" .. currentDecal .. "/" .. currentDecalBaseString .. currentDecalSprite .. ".png")
-        end
+        animator.setPartTag(currentDecalBaseString, "partImage", self.imgPath .. "decals/" .. currentDecal .. "/" .. currentDecalBaseString .. currentDecalSprite .. ".png")
 	  end
 	end
     
-    if not self.legacyVehicle then
-      animator.setAnimationState("rail", "inMotion")
+    if storage.lastCar then
+      sb.logInfo("=============================================FLIPTABLE=")
+      tprint(self.flipTable)
     end
     
-	for i=numberOfDecals+1,10 do
-	  self.flipTable[3+i] = false
-	end
-  else
-    for i=1,10 do
-	  self.flipTable[3+i] = false
-	end
+    animator.setAnimationState("rail", "inMotion")
+  
+	--for i=numberOfDecals+1,10 do
+	  --self.flipTable[1+i] = false
+	--end
+  --else
+    --for i=1,10 do
+	  --self.flipTable[1+i] = false
+	--end
   end
 
   self.oldfacing = self.railRider.facing
@@ -286,90 +283,90 @@ function init()
   
   if storage.firstCar then   
     if self.railRider.facing > 0 then
-      if self.hasHeadlight or self.legacyVehicle then
+      if self.hasHeadlight then
         animator.setLightActive("headlightBeam", true)
         animator.setAnimationState("headlight", "on")
       end
-      if self.hasRevHeadlight or self.legacyVehicle then 
+      if self.hasRevHeadlight then 
         animator.setLightActive("reverseheadlightBeam", false)
         animator.setAnimationState("reverseheadlight", "off")
       end
-      if self.hasTaillight or self.legacyVehicle then 
+      if self.hasTaillight then 
         animator.setLightActive("taillight", false)
         animator.setAnimationState("taillight", "off")
       end
-      if self.hasRevTaillight or self.legacyVehicle then
+      if self.hasRevTaillight then
         animator.setLightActive("reversetaillight", false)
         animator.setAnimationState("reversetaillight", "off")
       end
     else
-      if self.hasHeadlight or self.legacyVehicle then
+      if self.hasHeadlight then
         animator.setLightActive("headlightBeam", false)
         animator.setAnimationState("headlight", "off")
       end
-      if self.hasRevHeadlight or self.legacyVehicle then
+      if self.hasRevHeadlight then
         animator.setLightActive("reverseheadlightBeam", true)
         animator.setAnimationState("reverseheadlight", "on")
       end
-      if self.hasTaillight or self.legacyVehicle then
+      if self.hasTaillight then
         animator.setLightActive("taillight", false)
         animator.setAnimationState("taillight", "off")
       end
-      if self.hasRevTaillight or self.legacyVehicle then
+      if self.hasRevTaillight then
         animator.setLightActive("reversetaillight", false)
         animator.setAnimationState("reversetaillight", "off")
       end
     end
   elseif storage.lastCar then
     if self.railRider.facing > 0 then
-      if self.hasHeadlight or self.legacyVehicle then 
+      if self.hasHeadlight then 
         animator.setLightActive("headlightBeam", false)
         animator.setAnimationState("headlight", "off")
       end
-      if self.hasRevHeadlight or self.legacyVehicle then
+      if self.hasRevHeadlight then
         animator.setLightActive("reverseheadlightBeam", false)
         animator.setAnimationState("reverseheadlight", "off")
       end
-      if self.hasTaillight or self.legacyVehicle then
+      if self.hasTaillight then
         animator.setLightActive("taillight", true)
         animator.setAnimationState("taillight", "on")
       end
-      if self.hasRevTaillight or self.legacyVehicle then
+      if self.hasRevTaillight then
         animator.setLightActive("reversetaillight", false)
         animator.setAnimationState("reversetaillight", "off")
       end
     else
-      if self.hasHeadlight or self.legacyVehicle then
+      if self.hasHeadlight then
         animator.setLightActive("headlightBeam", false)
         animator.setAnimationState("headlight", "off")
       end
-      if self.hasRevHeadlight or self.legacyVehicle then
+      if self.hasRevHeadlight then
         animator.setLightActive("reverseheadlightBeam", false)
         animator.setAnimationState("reverseheadlight", "off")
       end
-      if self.hasTaillight or self.legacyVehicle then
+      if self.hasTaillight then
         animator.setLightActive("taillight", false)
         animator.setAnimationState("taillight", "off")
       end
-      if self.hasRevTaillight or self.legacyVehicle then
+      if self.hasRevTaillight then
         animator.setLightActive("reversetaillight", true)
         animator.setAnimationState("reversetaillight", "on")
       end
     end
   else
-    if self.hasHeadlight or self.legacyVehicle then
+    if self.hasHeadlight then
       animator.setLightActive("headlightBeam", false)
       animator.setAnimationState("headlight", "off")
     end
-    if self.hasRevHeadlight or self.legacyVehicle then
+    if self.hasRevHeadlight then
       animator.setLightActive("reverseheadlightBeam", false)
       animator.setAnimationState("reverseheadlight", "off")
     end
-    if self.hasTaillight or self.legacyVehicle then
+    if self.hasTaillight then
       animator.setLightActive("taillight", false)
       animator.setAnimationState("taillight", "off")
     end
-    if self.hasRevTaillight or self.legacyVehicle then
+    if self.hasRevTaillight then
       animator.setLightActive("reversetaillight", false)
       animator.setAnimationState("reversetaillight", "off")
     end
@@ -383,9 +380,16 @@ function init()
     --animator.setLightPointAngle("reverseheadlightBeam",0)
   --end
   
-  if not storage.specular and storage.reversed then
-	animator.scaleTransformationGroup("flip", {-1, 1})
-	flip(self.flipTable)
+  if storage.reversed and (not storage.specular) then
+	--animator.scaleTransformationGroup("flip", {-1, 1})
+	--flip(self.flipTable)
+    animator.scaleTransformationGroup("flip", {-1, 1})
+    for f=1,10 do
+      if self.flipTable[f] then
+        animator.scaleTransformationGroup("decal" .. string.char(f+64), {-1, 1}) --string.char(f+64): 65 = A in ASCII, 66 = B in ASCII
+        sb.logInfo("=======FLIP " .. "decal" .. string.char(f+64), {-1, 1})
+      end
+    end
   end
   
   if storage.oldTrainSet then
@@ -1209,42 +1213,6 @@ function getTrainsetLenght(trainset)
   return totalLenght
 end
 
-function flip(flipTable)
-  if flipTable[1] then
-    animator.scaleTransformationGroup("flip", {-1, 1})
-  end
-  if flipTable[4] then
-    animator.scaleTransformationGroup("decalA", {-1, 1})
-  end
-  if flipTable[5] then
-    animator.scaleTransformationGroup("decalB", {-1, 1})
-  end
-  if flipTable[6] then
-    animator.scaleTransformationGroup("decalC", {-1, 1})
-  end
-  if flipTable[7] then
-    animator.scaleTransformationGroup("decalD", {-1, 1})
-  end
-  if flipTable[8] then
-    animator.scaleTransformationGroup("decalE", {-1, 1})
-  end
-  if flipTable[9] then
-    animator.scaleTransformationGroup("decalF", {-1, 1})
-  end
-  if flipTable[10] then
-    animator.scaleTransformationGroup("decalG", {-1, 1})
-  end
-  if flipTable[11] then
-    animator.scaleTransformationGroup("decalH", {-1, 1})
-  end
-  if flipTable[12] then
-    animator.scaleTransformationGroup("decalI", {-1, 1})
-  end
-  if flipTable[13] then
-    animator.scaleTransformationGroup("decalJ", {-1, 1})
-  end
-end
-
 function operateDoors(atRailStop)
 
   if self.doorOperating then
@@ -1271,12 +1239,8 @@ end
 function OpenDoors()
   if (not self.doorOperating) then
     if not storage.doorLocked then
-      if self.legacyVehicle then
-        animator.setAnimationState("rail", "opening")
-      else
-        animator.setAnimationState("doors", "opening")
-        animator.setAnimationState("rail", "stopped")
-      end
+      animator.setAnimationState("doors", "opening")
+      animator.setAnimationState("rail", "stopped")
     end
 	self.doorOperating = true
 	if self.childCarID and (not storage.oneCarSet) then
@@ -1292,12 +1256,8 @@ end
 function CloseDoors()
   if self.doorOperating then
     if not storage.doorLocked then
-      if self.legacyVehicle then
-        animator.setAnimationState("rail", "closing")
-      else
-        animator.setAnimationState("doors", "closing")
-        animator.setAnimationState("rail", "inMotion")
-      end
+      animator.setAnimationState("doors", "closing")
+      animator.setAnimationState("rail", "inMotion")
     end
 	self.doorOperating = false
 	if self.childCarID and (not storage.oneCarSet) then
@@ -1506,28 +1466,38 @@ end
 
 -- Returns first index of "value" from "array", useful for associative arrays
 -- from https://stackoverflow.com/questions/38282234/returning-the-index-of-a-value-in-a-lua-table
-function indexOf(array, value)
-    for i, v in ipairs(array) do
-        if v == value then
-            return i
-        end
+function indexOf(array, value, debug)
+  if debug then
+    sb.logInfo("finding indexOf " .. tostring(value) .. " in array:")
+    tprint(array)
+  end
+  for i, v in ipairs(array) do
+    if (v == value) then
+      if debug then sb.logInfo("found " .. tostring(value) .. "index=" .. tostring(i)) end
+      return i
     end
-    return nil
+  end
+  if debug then sb.logInfo(tostring(value) .. " NOT FOUND") end
+  return nil
 end
 
 -- Print contents of "tbl", with indentation.
 -- "indent" sets the initial level of indentation.
 -- from https://gist.github.com/ripter/4270799
 function tprint(tbl, indent)
-  if not indent then indent = 0 end
-  for k, v in pairs(tbl) do
-    formatting = string.rep("  ", indent) .. k .. ": "
-    if type(v) == "table" then
-      sb.logInfo(tostring(formatting))
-      tprint(v, indent+1)
-    else
-      sb.logInfo(tostring(formatting) .. tostring(v))
+  if type(tbl) == "table" then
+    if not indent then indent = 0 end
+      for k, v in pairs(tbl) do
+        formatting = string.rep("  ", indent) .. k .. ": "
+        if type(v) == "table" then
+          sb.logInfo(tostring(formatting))
+          tprint(v, indent+1)
+        else
+          sb.logInfo(tostring(formatting) .. tostring(v))
+        end
     end
+  else
+    sb.logInfo("not a table: " .. tostring(tbl))
   end
 end
 
@@ -1687,36 +1657,36 @@ function invert()
 	storage.inverted = not storage.inverted
         
     if self.railRider.facing > 0 then
-      if self.hasHeadlight or self.legacyVehicle then
+      if self.hasHeadlight then
         animator.setLightActive("headlightBeam", false)
         animator.setAnimationState("headlight", "off")
       end
-      if self.hasRevHeadlight or self.legacyVehicle then
+      if self.hasRevHeadlight then
         animator.setLightActive("reverseheadlightBeam", false)
         animator.setAnimationState("reverseheadlight", "off")
       end
-      if self.hasTaillight or self.legacyVehicle then
+      if self.hasTaillight then
         animator.setLightActive("taillight", true)
         animator.setAnimationState("taillight", "on")
       end
-      if self.hasRevTaillight or self.legacyVehicle then
+      if self.hasRevTaillight then
         animator.setLightActive("reversetaillight", false)
         animator.setAnimationState("reversetaillight", "off")
       end
     else
-      if self.hasHeadlight or self.legacyVehicle then
+      if self.hasHeadlight then
         animator.setLightActive("headlightBeam", false)
         animator.setAnimationState("headlight", "off")
       end
-      if self.hasRevHeadlight or self.legacyVehicle then
+      if self.hasRevHeadlight then
         animator.setLightActive("reverseheadlightBeam", false)
         animator.setAnimationState("reverseheadlight", "off")
       end
-      if self.hasTaillight or self.legacyVehicle then
+      if self.hasTaillight then
         animator.setLightActive("taillight", false)
         animator.setAnimationState("taillight", "off")
       end
-      if self.hasRevTaillight or self.legacyVehicle then
+      if self.hasRevTaillight then
         animator.setLightActive("reversetaillight", true)
         animator.setAnimationState("reversetaillight", "on")
       end
@@ -1794,37 +1764,37 @@ function handleInvert(_, _, carNumber, stationControlled, currentStation, nextSt
 	regulateSpeedOfChildcar(self.childCarID)
     
     if self.railRider.facing > 0 then
-      if self.hasHeadlight or self.legacyVehicle then
+      if self.hasHeadlight then
         animator.setLightActive("headlightBeam", false)
         animator.setAnimationState("headlight", "off")
       end
 
-      if self.hasRevHeadlight or self.legacyVehicle then
+      if self.hasRevHeadlight then
         animator.setLightActive("reverseheadlightBeam", true)
         animator.setAnimationState("reverseheadlight", "on")
       end
-      if self.hasTaillight or self.legacyVehicle then
+      if self.hasTaillight then
         animator.setLightActive("taillight", false)
         animator.setAnimationState("taillight", "off")
       end
-      if self.hasRevTaillight or self.legacyVehicle then
+      if self.hasRevTaillight then
         animator.setLightActive("reversetaillight", false)
         animator.setAnimationState("reversetaillight", "off")
       end
     else
-      if self.hasHeadlight or self.legacyVehicle then
+      if self.hasHeadlight then
         animator.setLightActive("headlightBeam", true)
         animator.setAnimationState("headlight", "on")
       end
-      if self.hasRevHeadlight or self.legacyVehicle then
+      if self.hasRevHeadlight then
         animator.setLightActive("reverseheadlightBeam", false)
         animator.setAnimationState("reverseheadlight", "off")
       end
-      if self.hasTaillight or self.legacyVehicle then
+      if self.hasTaillight then
         animator.setLightActive("taillight", false)
         animator.setAnimationState("taillight", "off")
       end
-      if self.hasRevTaillight or self.legacyVehicle then
+      if self.hasRevTaillight then
         animator.setLightActive("reversetaillight", false)
         animator.setAnimationState("reversetaillight", "off")
       end
