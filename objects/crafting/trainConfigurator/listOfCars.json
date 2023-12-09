@@ -106,7 +106,7 @@
     "imgPath" : "/vehicles/bullet-train-locomotive-big/",
     "colors": ["white", "blue", "red", "yellow", "green"],
     "cockpitColors" : ["black", "white", "blue", "red", "yellow", "green"],
-    "carLenghtPixels" : 151, 
+    "carLenghtPixels" : 159, 
     "carHeightPixels" : 79, //including pantograph minus 1 pixel
     "hasPantograph" : true, //if it has a pantograph sprite
     "hasDecals" : true, //if it has decals sprites

@@ -1,6 +1,6 @@
 {
   "name" : "bullet-train-car-big",
-  "boundBox" : [-9.125, -4, 9.125, 5.0],
+  "boundBox" : [-9.9375, -4, 9.9375, 5.0],
   "slaveControlTimeout" : 2.0,
   "slaveControlHeartbeat" : 1.0,
   "canBeHit" : false,
@@ -59,7 +59,7 @@
   },
 
   "movementSettings" : {
-    "collisionPoly" : [ [-9.125, 0.375], [9.125, 0.375], [9.125, 7.5], [-9.125, 7.5] ],
+    "collisionPoly" : [ [-9.9375, 0.375], [9.9375, 0.375], [9.9375, 7.5], [-9.9375, 7.5] ],
     "mass" : 2.0,
     "ignorePlatformCollision" : true,
     "physicsEffectCategories" : []
@@ -150,7 +150,7 @@
       "attachToPart" : "cockpit"
     },
     "roof" : {
-      "collision" : [ [-9.125, 3.75], [9.125, 3.6875] ],
+      "collision" : [ [-9.9375, 3.75], [9.9375, 3.6875] ],
 	  "collisionKind" : "platform",
       "attachToPart" : "cockpit"
     }

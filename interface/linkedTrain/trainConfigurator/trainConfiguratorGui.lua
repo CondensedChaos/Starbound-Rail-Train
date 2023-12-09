@@ -1312,16 +1312,22 @@ function getImages(carNumber, TrainSetData)
   local vehicleName = TrainSetData[carNumber].name
   local color = TrainSetData[carNumber].color
   local cockpitColor = TrainSetData[carNumber].cockpitColor
-  
+  local reversed
+  if TrainSetData[carNumber].reversed then
+    reversed = "?flipx"
+  else
+    reversed = ""
+  end
+    
   local previewImgsArray = {}
-  previewImgsArray.cockpitColor = self.paneImgPath .. vehicleName .. "/cockpit/" .. cockpitColor .. ".png"
-  previewImgsArray.color = self.paneImgPath .. vehicleName .. "/body/" .. color .. ".png"
+  previewImgsArray.cockpitColor = self.paneImgPath .. vehicleName .. "/cockpit/" .. cockpitColor .. ".png" .. reversed
+  previewImgsArray.color = self.paneImgPath .. vehicleName .. "/body/" .. color .. ".png" .. reversed
   
   local pantographCapable = self.listOfCars[vehicleName].hasPantograph
   if pantographCapable then
     local hasPantograph = TrainSetData[carNumber].pantographVisibile
 	if hasPantograph then
-	  previewImgsArray.pantograph = self.paneImgPath .. vehicleName .. "/pantograph/pantograph.png"
+	  previewImgsArray.pantograph = self.paneImgPath .. vehicleName .. "/pantograph/pantograph.png" .. reversed
 	else
 	  previewImgsArray.pantograph = self.paneImgPath .. "empty.png"
     end
@@ -1341,12 +1347,12 @@ function getImages(carNumber, TrainSetData)
       local renderdecal0 = self.listOfCars[vehicleName].decal0rendered[currentDecal]
 	  if currentDecalSprite == 0 then
         if renderdecal0 then
-          previewImgsArray["decal" .. tostring(k)] = self.paneImgPath .. vehicleName .. "/decal" .. currentDecal .. "/0.png"
+          previewImgsArray["decal" .. tostring(k)] = self.paneImgPath .. vehicleName .. "/decal" .. currentDecal .. "/0.png" .. reversed
         else
           previewImgsArray["decal" .. tostring(k)] = self.paneImgPath .. "empty.png" 
         end
       else
-	    previewImgsArray["decal" .. tostring(k)] = self.paneImgPath .. vehicleName .. "/decal" .. currentDecal .. "/" .. tostring(currentDecalSprite) .. ".png"
+	    previewImgsArray["decal" .. tostring(k)] = self.paneImgPath .. vehicleName .. "/decal" .. currentDecal .. "/" .. tostring(currentDecalSprite) .. ".png" .. reversed
       end	  
 	end
 	for i=(decalsNumber+1),10 do
