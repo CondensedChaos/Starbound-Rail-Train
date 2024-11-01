@@ -819,7 +819,7 @@
       //"flickerMaxIntensity" : 0.6, //Maximum flicker intensity 
       //"flickerIntensityVariance" : 0.0, //flickerIntensityVariance 
       "pointLight" : true,
-      "pointAngle" :  180,
+      "pointAngle" :  0,
       "beamAmbience" : 0.3,
       "pointBeam" : 0.6
     },
