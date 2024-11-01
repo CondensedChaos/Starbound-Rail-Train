@@ -388,7 +388,7 @@
       "C" : false,
       "D" : true
     },
-    "hideDecalsInConfigurator" : null,
+    "hideDecalsInConfigurator" : ["D"],
     "headlight" : true,
     "reverseheadlight" : true,
     "taillight" : true,
