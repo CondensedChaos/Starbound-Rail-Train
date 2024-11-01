@@ -85,6 +85,30 @@
     },
 
     "parts" : {
+      "wheels" : {
+        "properties" : {
+          "centered" : true,
+          "offset" : [0.0, 3.75],
+          "zLevel" : 0,
+		  "rotationGroup" : "cockpit",
+		  "transformationGroups" : ["flip", "rotation"]
+        },
+
+        "partStates" : {
+          "rail" : {
+            "inMotion" : {
+              "properties" : {
+                "image" : "wheels.png:inMotion.<frame>"
+              }
+            },
+            "stopped" : {
+              "properties" : {
+                "image" : "wheels.png:stopped"
+              }
+            }
+          }
+        }
+      },
       "cockpit" : {
         "properties" : {
           "centered" : true,
@@ -309,15 +333,25 @@
         },
 
         "partStates" : {
-          "rail" : {
-            "inMotion" : {
+          "doors" : {
+            "opening" : {
               "properties" : {
-                "image" : "<partImage>:inMotion.<frame>"
+                "image" : "<partImage>:opening.<frame>"
               }
             },
-            "stopped" : {
+			"opened" : {
               "properties" : {
-                "image" : "<partImage>:inMotion.1"
+                "image" : "<partImage>:open"
+              }
+            },
+			"closing" : {
+              "properties" : {
+                "image" : "<partImage>:closing.<frame>"
+              }
+            },
+            "closed" : {
+              "properties" : {
+                "image" : "<partImage>:close"
               }
             }
           }

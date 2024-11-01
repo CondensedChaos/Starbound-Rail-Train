@@ -1,0 +1,10 @@
+{
+  "frameGrid" : {
+    "size" : [85, 64],
+    "dimensions" : [3, 1],
+
+    "names" : [
+      [ "stopped", "inMotion.1", "inMotion.2" ]
+    ]
+  }
+}
