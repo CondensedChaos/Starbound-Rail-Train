@@ -2,6 +2,9 @@ Rail Train v 2.0
 
 Todo:
 
+-IMPORTANT: ZLEVEL ISSUE ON LONG TRAIN CAR: CHAR APPERS IN FRONT OF COCKPIT LAYER (NOT FIXED)
+-IMPORTANT: WHEN PLACING TRAIN IN REVERSED POSITION IS THERE'S A REVERSED CAR IT WILL APPEAR WRONGLY MIRRORED (NOT FIXED)
+
 -implement lack of headlight/taillight/reversed taillight/rev.hedlight
 -mirroring vs 2 vehicles per direction
 -convert legacy vehicles to new version and test they still work

@@ -542,7 +542,7 @@ function dismissed()
   --for _, sound in pairs(self.sounds) do pane.stopAllSounds(sound) end
   --local item = widget.itemSlotItem("modifyTrainsetOverlay.inputItemSlot")
   --if item then
-  --player.giveItem(item)--pop the item if there is any inside to avoit it being lost
+  --player.giveItem(item)--pop the item if there is any inside to avoid it being lost
 end
 
 function update(dt)

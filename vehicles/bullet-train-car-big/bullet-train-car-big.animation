@@ -107,22 +107,28 @@
         "properties" : {
           "centered" : true,
           "offset" : [0.0, 3.75],
-          "zLevel" : -1,
-		  "driverSeatPosition" : [0.0, 0.25],
-		  
-          "passengerSeatPosition1" : [-7.5, 0.25],
-          "passengerSeatPosition2" : [-6.625, 0.25],
-          "passengerSeatPosition3" : [-5.75, 0.25],
+          "zLevel" : 1,
+          //passengers standing behind left doors
+          "driverSeatPosition" : [-7.5, 0.25],
+          "passengerSeatPosition1" : [-6.625, 0.25],
+          "passengerSeatPosition2" : [-5.75, 0.25],
           
-          "passengerSeatPosition4" : [7.5, 0.25],
-          "passengerSeatPosition5" : [6.625, 0.25],
-          "passengerSeatPosition6" : [5.75, 0.25],
+          //passengers standing behind right doors
+          "passengerSeatPosition3" : [7.5, 0.25],
+          "passengerSeatPosition4" : [6.625, 0.25],
+          "passengerSeatPosition5" : [5.75, 0.25],
           
-          "passengerSeatPosition7" : [-3.625, 0.25],
-          "passengerSeatPosition8" : [-1.5, 0.25],
+          //passengers sitting behind left window
+          "passengerSeatPosition6" : [-3.875, 0.25],
+          "passengerSeatPosition7" : [-3.5, 0.25],
+          "passengerSeatPosition8" : [-1.75, 0.25],
+          "passengerSeatPosition9" : [-1.375, 0.25],
           
-          "passengerSeatPosition9" : [1.125, 0.25],
-          "passengerSeatPosition10" : [4.5, 0.25],
+          //passengers sitting behind right window
+          "passengerSeatPosition10" : [0.875, 0.25],
+          "passengerSeatPosition11" : [1.25, 0.25],
+          "passengerSeatPosition12" : [3.0, 0.25],
+          "passengerSeatPosition13" : [3.375, 0.25],
           
 		  "rotationGroup" : "cockpit",
 		  "transformationGroups" : ["flip", "rotation"]
@@ -147,7 +153,7 @@
         "properties" : {
           "centered" : true,
           "offset" : [0.0, 3.75],
-          "zLevel" : 0,
+          "zLevel" : 2,
 		  "rotationGroup" : "cockpit",
 		  "transformationGroups" : ["flip", "rotation"]
         },
@@ -172,7 +178,7 @@
         "properties" : {
           "centered" : true,
           "offset" : [0.0, 3.75],
-          "zLevel" : 2,
+          "zLevel" : 3,
 		  "rotationGroup" : "cockpit",
 		  "transformationGroups" : ["flip", "rotation"]
         },
@@ -206,7 +212,7 @@
         "properties" : {
           "centered" : true,
           "offset" : [0.0, 3.75],
-          "zLevel" : 3,
+          "zLevel" : 4,
 		  "rotationGroup" : "cockpit",
 		  "transformationGroups" : ["flip", "rotation"]
         },
@@ -241,7 +247,7 @@
         "properties" : {
           "centered" : true,
           "offset" : [0.0, 3.75],
-          "zLevel" : 4,
+          "zLevel" : 5,
 		  "rotationGroup" : "cockpit",
 		  "transformationGroups" : ["decalA", "rotation"]
         },
@@ -275,7 +281,7 @@
         "properties" : {
           "centered" : true,
           "offset" : [0.0, 3.75],
-          "zLevel" : 5,
+          "zLevel" : 6,
 		  "rotationGroup" : "cockpit",
 		  "transformationGroups" : ["decalB", "rotation"]
         },
@@ -309,7 +315,7 @@
         "properties" : {
           "centered" : true,
           "offset" : [0.0, 3.75],
-          "zLevel" : 6,
+          "zLevel" : 7,
 		  "rotationGroup" : "cockpit",
 		  "transformationGroups" : ["decalC", "rotation"]
         },
@@ -343,7 +349,7 @@
         "properties" : {
           "centered" : true,
           "offset" : [0.0, 3.75],
-          "zLevel" : 7,
+          "zLevel" : 8,
 		  "rotationGroup" : "cockpit",
 		  "transformationGroups" : ["decalD", "rotation"]
         },
@@ -377,7 +383,7 @@
         "properties" : {
           "centered" : true,
           "offset" : [0.0, 3.75],
-          "zLevel" : 8,
+          "zLevel" : 9,
 		  "rotationGroup" : "cockpit",
 		  "transformationGroups" : ["decalE", "rotation"]
         },
@@ -411,7 +417,7 @@
         "properties" : {
           "centered" : true,
           "offset" : [0.0, 3.75],
-          "zLevel" : 9,
+          "zLevel" : 10,
 		  "rotationGroup" : "cockpit",
 		  "transformationGroups" : ["decalF", "rotation"]
         },
@@ -445,7 +451,7 @@
         "properties" : {
           "centered" : true,
           "offset" : [0.0, 3.75],
-          "zLevel" : 10,
+          "zLevel" : 11,
 		  "rotationGroup" : "cockpit",
 		  "transformationGroups" : ["decalH", "rotation"]
         },
@@ -628,8 +634,8 @@
       "headlight" : {
         "properties" : {
           "centered" : true,
-          "offset" : [10.1875, 2.6875],
-          "zLevel" : 1,
+          "offset" : [9.875, 2.6875],
+          "zLevel" : 12,
           "rotationGroup" : "cockpit",
           "transformationGroups" : ["flip", "rotation"]
         },
@@ -654,8 +660,8 @@
       "reverseheadlight" : {
         "properties" : {
           "centered" : true,
-          "offset" : [-10.1875, 2.6875],
-          "zLevel" : 1,
+          "offset" : [-9.875, 2.6875],
+          "zLevel" : 12,
           "rotationGroup" : "cockpit",
           "transformationGroups" : ["flip", "rotation"]
         },
@@ -680,8 +686,8 @@
       "taillight" : {
         "properties" : {
           "centered" : true,
-          "offset" : [-10.3125, 1.25],
-          "zLevel" : -2,
+          "offset" : [-10.0, 1.25],
+          "zLevel" : -1,
 		  "rotationGroup" : "cockpit",
 		  "transformationGroups" : ["rotation"]
         },
@@ -706,8 +712,8 @@
       "reversetaillight" : {
         "properties" : {
           "centered" : true,
-          "offset" : [10.3125, 1.25],
-          "zLevel" : -2,
+          "offset" : [10.0, 1.25],
+          "zLevel" : -1,
 		  "rotationGroup" : "cockpit",
 		  "transformationGroups" : ["rotation"]
         },
@@ -716,13 +722,13 @@
           "reversetaillight" : {
             "on" : {
               "properties" : {
-                "image" : "taillight.png:on",
+                "image" : "reversetaillight.png:on",
                 "fullbright" : true
               }
             },
 			"off" : {
               "properties" : {
-                "image" : "taillight.png:off",
+                "image" : "reversetaillight.png:off",
                 "fullbright" : false
               }
             }
@@ -764,7 +770,7 @@
       "zLevel" : 0,
       "transformationGroups" : ["flip", "rotation"],
       //"position" : [4.9375, 2.5], //X position is vehicle boundary from the center -0.1875 (1.5 pixels)
-      "position" : [9.8125, 2.6875],
+      "position" : [9.5, 2.6875],
       "color" : [250, 250, 200],
       //"flickerPeriod" : 5, //The base time required for flickering to go through an entire cycle. 
       //"flickerPeriodVariance " : 0.5 //The amount by which the flicker period can deviate from the base value in either direction. 
@@ -781,7 +787,7 @@
       "zLevel" : 0,
       "transformationGroups" : ["flip", "rotation"],
       //"position" : [-4.9375, 2.5], //X position is vehicle boundary from the center -0.1875 (1.5 pixels)
-      "position" : [-9.8125, 2.6875],
+      "position" : [-9.5, 2.6875],
       "color" : [250, 250, 200],
       //"flickerPeriod" : 5, //The base time required for flickering to go through an entire cycle. 
       //"flickerPeriodVariance " : 0.5 // 	The amount by which the flicker period can deviate from the base value in either direction. 
@@ -796,7 +802,7 @@
       "active" : false,
       "rotationGroup" : "cockpit",
       "transformationGroups" : ["flip","rotation"],
-      "position" : [-10.3125, 1.25], //X position is vehicle boundary from the center -0.1875 (1.5 pixels)
+      "position" : [-10.0, 1.25], //X position is vehicle boundary from the center -0.1875 (1.5 pixels)
       "color" : [220, 0, 0],
       //"flickerPeriod" : 5, //The base time required for flickering to go through an entire cycle. 
       //"flickerPeriodVariance " : 0.5 //The amount by which the flicker period can deviate from the base value in either direction. 
@@ -812,7 +818,7 @@
       "active" : false,
       "rotationGroup" : "cockpit",
       "transformationGroups" : ["flip","rotation"],
-      "position" : [10.3125, 1.25], //X position is vehicle boundary from the center -0.1875 (1.5 pixels)
+      "position" : [10.0, 1.25], //X position is vehicle boundary from the center -0.1875 (1.5 pixels)
       "color" : [220, 0, 0],
       //"flickerPeriod" : 5, //The base time required for flickering to go through an entire cycle. 
       //"flickerPeriodVariance " : 0.5 //The amount by which the flicker period can deviate from the base value in either direction. 

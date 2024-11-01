@@ -1,55 +1,64 @@
 {
 "paneImgPath" : "/interface/linkedTrain/trainConfigurator/",
-"vehiclesList" : ["bullet-train-locomotive-big", "bullet-train-car", "bullet-train-car-big", "SubwayTram-linked", "XXLSubwayTram-linked", "bullet-train-locomotive"],
+"vehiclesList" : ["bullet-train-locomotive-big", "bullet-train-car", "bullet-train-car-big", "SubwayTram-linked", "XXLSubwayTram-linked"],
 "itemName" : "linked-train",
 "logging" : false,
 "defaultTrainset" : [
    {
-      "name" : "SubwayTram-linked",
+      "name" : "bullet-train-locomotive-big",
       "carNumber" : 1,
-      "color" : "blue",
-      "cockpitColor" : "red",
+      "color" : "white",
+      "cockpitColor" : "black",
       "pantographVisibile" : true,
       "doorLocked" : false,
       "reversed" : false,
-      "decalNames" : ["A", "B", "C", "D"],
+      "decalNames" : ["A", "B", "C", "D", "E", "F", "G"],
       "decals": {
         "A" : 0,
-        "B" : 0,
+        "B" : 3,
         "C" : 0,
-        "D" : 0
+        "D" : 0,
+        "E" : 0,
+        "F" : 3,
+        "G" : 0
       }
    },
    {
-      "name" : "XXLSubwayTram-linked",
+      "name" : "bullet-train-car",
       "carNumber" : 2,
-      "color" : "blue",
-      "cockpitColor" : "red",
+      "color" : "white",
+      "cockpitColor" : "black",
       "pantographVisibile" : false,
       "doorLocked" : false,
       "reversed" : false,
-      "decalNames" : ["A", "B", "C", "D"],
+      "decalNames" : ["A", "B", "C", "D", "E", "F", "G"],
       "decals": {
         "A" : 0,
-        "B" : 0,
+        "B" : 3,
         "C" : 0,
-        "D" : 0
+        "D" : 0,
+        "E" : 0,
+        "F" : 3,
+        "G" : 0
       }
    },
    {
-      "name" : "SubwayTram-linked",
+      "name" : "bullet-train-locomotive-big",
       "carNumber" : 3,
-      "color" : "blue",
-      "cockpitColor" : "red",
+      "color" : "white",
+      "cockpitColor" : "black",
       "pantographVisibile" : true,
       "doorLocked" : false,
       "reversed" : true,
-      "decalNames" : ["A", "B", "C", "D"],
+      "decalNames" : ["A", "B", "C", "D", "E", "F", "G"],
       "decals": {
         "A" : 0,
-        "B" : 0,
+        "B" : 3,
         "C" : 0,
-        "D" : 0
+        "D" : 0,
+        "E" : 0,
+        "F" : 3,
+        "G" : 0
       }
    }
   ]

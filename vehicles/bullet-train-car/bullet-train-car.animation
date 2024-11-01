@@ -108,15 +108,22 @@
           "centered" : true,
           "offset" : [0.0, 3.75],
           "zLevel" : 0,
+          //passengers standing behind doors
 		  "driverSeatPosition" : [0.0, 0.25],
           "passengerSeatPosition1" : [-1.0, 0.25],
           "passengerSeatPosition2" : [1.0, 0.25],
           
-          "passengerSeatPosition3" : [-5.625, 0.25],
-          "passengerSeatPosition4" : [-3.5, 0.25],
+          //passengers sitting behind left window
+          "passengerSeatPosition3" : [-5.875, 0.25],
+          "passengerSeatPosition4" : [-5.5, 0.25],
+          "passengerSeatPosition5" : [-3.875, 0.25],
+          "passengerSeatPosition6" : [-3.5, 0.25],
           
-          "passengerSeatPosition5" : [3.125, 0.25],
-          "passengerSeatPosition6" : [5.25, 0.25],
+          //passengers sitting behind right window
+          "passengerSeatPosition7" : [2.875, 0.25],
+          "passengerSeatPosition8" : [3.25, 0.25],
+          "passengerSeatPosition9" : [4.875, 0.25],
+          "passengerSeatPosition10" : [5.25, 0.25],
           
 		  "rotationGroup" : "cockpit",
 		  "transformationGroups" : ["flip", "rotation"]

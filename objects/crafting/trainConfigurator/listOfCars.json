@@ -5,7 +5,7 @@
     "customSpeeds" : false,
     "customSpeedsValues": null,
     "description" : "Bullet Train Rail Car", 
-    "LongDescription" : "High speed heavy rail car for passengers transportation, suitable for rail tracks with several slopes\npassengers capacity: 7",
+    "LongDescription" : "High speed heavy rail car for passengers transportation, suitable for rail tracks with several slopes\npassengers capacity: 11",
     "price" : 550,
     "imgPath" : "/vehicles/bullet-train-locomotive-big/",
     "colors": ["white", "blue", "red", "yellow", "green"],
@@ -92,7 +92,9 @@
     "headlight" : true,
     "reverseheadlight" : true,
     "taillight" : true,
-    "reversetaillight" : true
+    "reversetaillight" : true,
+    "reverseheadlightIsHeadlight" : false,
+    "reversetaillightIsTaillight" : false
   },
   "bullet-train-car-big" : {
     "legacyVehicle" : false, //false = vehicle built for Starbound Train System Version >= 2, uses the new rendering scripts for doors/decals rendering and file-naming system
@@ -101,7 +103,7 @@
     "customSpeeds" : false,
     "customSpeedsValues": null,
     "description" : "Long Bullet Train Rail Car", 
-    "LongDescription" : "High speed heavy rail car for passengers transportation, suitable for rail tracks fewer number of slopes\npassengers capacity: 11",
+    "LongDescription" : "High speed heavy rail car for passengers transportation, suitable for rail tracks fewer number of slopes\npassengers capacity: 14",
     "price" : 800,
     "imgPath" : "/vehicles/bullet-train-locomotive-big/",
     "colors": ["white", "blue", "red", "yellow", "green"],
@@ -188,7 +190,9 @@
     "headlight" : true,
     "reverseheadlight" : true,
     "taillight" : true,
-    "reversetaillight" : true
+    "reversetaillight" : true,
+    "reverseheadlightIsHeadlight" : false,
+    "reversetaillightIsTaillight" : false
   },
   "bullet-train-locomotive-big" : {
     "legacyVehicle" : false, //false = vehicle built for Starbound Train System Version >= 2, uses the new rendering scripts for doors/decals rendering and file-naming system
@@ -283,111 +287,10 @@
     "numberOfDoors" : 1,
     "headlight" : true,
     "reverseheadlight" : false,
-    "taillight" : false,
-    "reversetaillight" : true
-  },
-  "bullet-train-locomotive" : {
-    "legacyVehicle" : false, //false = vehicle built for Starbound Train System Version >= 2, uses the new rendering scripts for doors/decals rendering and file-naming system
-    "maglev" : false,
-    "anchor" : "bottom",
-    "customSpeeds" : false,
-    "customSpeedsValues": null,
-    "description" : "Short Bullet Train Locomotive", 
-    "LongDescription" : "High speed heavy rail locomotive for passengers transportation, suitable for rail tracks with moderate number of slopes\npassengers capacity: 12",
-    "price" : 800,
-    "imgPath" : "/vehicles/bullet-train-locomotive/",
-    "colors": ["white", "blue", "red", "yellow", "green"],
-    "cockpitColors" : ["black", "white"],
-    "carLenghtPixels" : 132, 
-    "carHeightPixels" : 79, //including pantograph minus 1 pixel
-    "hasPantograph" : true, //if it has a pantograph sprite
-    "hasDecals" : true, //if it has decals sprites
-    "specular" : false, //if mirroring the vehicle produces the same image
-    "decalNames" : ["A", "B", "C", "D", "E", "F", "G", "H"],
-    "decals" : {
-      "A" : [0, 1, 2, 3, 4], 
-      "B" : [0, 1, 2, 3, 4, 5],
-      "C" : [0, 1, 2, 3, 4, 5, 6],
-      "D" : [0, 1, 2, 3, 4, 5, 6],
-      "E" : [0, 1, 2],
-      "F" : [0, 1, 2, 3, 4, 5],
-      "G" : [0],
-      "H" : [0, 1]
-    },
-    "DisplayNames" : { //human-readable names for its parts, those will show up in train configurator, 7 characters max.
-      "color" : "Bottom",
-      "cockpit" : "Middle",
-      "decals" : {
-        "A" : "Roof",
-        "B" : "Livery1",
-        "C" : "UPRMid",
-        "D" : "LWRMid",
-        "E" : "Livery2",
-        "F" : "Livery3",
-        "G" : "Wheels",
-        "H" : "Graffiti"
-      }
-    },
-    "decalsFlippable" : {
-      "A" : [false, false, false, false, false],
-      "B" : [false, false, false, false, false, false],
-      "C" : [false, false, false, false, false, false, false],
-      "D" : [false, false, false, false, false, false, false],
-      "E" : [false, false, false],
-      "F" : [false, false, false, false, false, false],
-      "G" : [false],
-      "H" : [false, false]
-    },
-    "decal0rendered" : {
-      "A" : true,
-      "B" : false,
-      "C" : false,
-      "D" : false,
-      "E" : false,
-      "F" : false,
-      "G" : true,
-      "H" : false
-    },
-    "decalsMotionAnimation" : {
-      "A" : false,
-      "B" : false,
-      "C" : false,
-      "D" : false,
-      "E" : false,
-      "F" : false,
-      "G" : true,
-      "H" : false
-    },
-    "decalsLoopAnimation" : {
-      "A" : false,
-      "B" : false,
-      "C" : false,
-      "D" : false,
-      "E" : false,
-      "F" : false,
-      "G" : false,
-      "H" : false
-    },
-    "decalsDoorAnimation" : {
-      "A" : true,
-      "B" : true,
-      "C" : true,
-      "D" : true,
-      "E" : true,
-      "F" : true,
-      "G" : false,
-      "H" : true
-    },
-    "partsWithDoorAnimation" : {
-      "cockpit" : true,
-      "body" : true
-    },
-    "hideDecalsInConfigurator" : ["G"],
-    "numberOfDoors" : 1,
-    "headlight" : true,
-    "reverseheadlight" : false,
     "taillight" : true,
-    "reversetaillight" : false
+    "reversetaillight" : false,
+    "reverseheadlightIsHeadlight" : true,
+    "reversetaillightIsTaillight" : true
   },
   "SubwayTram-linked" : {//vehicle name
     "legacyVehicle" : false, //if true it's a vehicle built for Starbound Train System Version 1, compatible with version 2
@@ -439,7 +342,9 @@
     "headlight" : true,
     "reverseheadlight" : true,
     "taillight" : true,
-    "reversetaillight" : true
+    "reversetaillight" : true,
+    "reverseheadlightIsHeadlight" : false,
+    "reversetaillightIsTaillight" : false
   },   
   "XXLSubwayTram-linked" : {
     "legacyVehicle" : false, //if true it's a vehicle built for Starbound Train System Version 1, compatible with version 2
@@ -487,7 +392,9 @@
     "headlight" : true,
     "reverseheadlight" : true,
     "taillight" : true,
-    "reversetaillight" : true
+    "reversetaillight" : true,
+    "reverseheadlightIsHeadlight" : false,
+    "reversetaillightIsTaillight" : false
   }
 
 }
