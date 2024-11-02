@@ -227,7 +227,7 @@ function init()
 	  currentDecal = tostring(self.decalNames[i])
 	  currentDecalSprite = tostring(self.decalsTable[currentDecal])
       
-      if storage.lastCar then 
+      if storage.lastCar and self.logging then 
         sb.logInfo("======i=" .. tostring(i) .. " decalsFlippableTable[" .. tostring(currentDecal) ..  "]")
         tprint(decalsFlippableTable[currentDecal])
         sb.logInfo("======i=" .. tostring(i) .. " currentDecal " .. tostring(currentDecal) .. " currentDecalSprite " .. tostring(currentDecalSprite))
@@ -240,7 +240,7 @@ function init()
 	  local currentDecalBaseString = "decal" .. currentDecal
 	  
       if storage.lastCar then
-	    self.flipTable[i] = decalsFlippableTable[currentDecal][indexOf(decalsIndexes[currentDecal], tonumber(currentDecalSprite), true)]
+	    self.flipTable[i] = decalsFlippableTable[currentDecal][indexOf(decalsIndexes[currentDecal], tonumber(currentDecalSprite), self.logging)]
       else
         self.flipTable[i] = decalsFlippableTable[currentDecal][indexOf(decalsIndexes[currentDecal], tonumber(currentDecalSprite), false)]
       end
@@ -259,7 +259,7 @@ function init()
 	  end
 	end
     
-    if storage.lastCar then
+    if storage.lastCar and self.logging then
       sb.logInfo("=============================================FLIPTABLE=")
       tprint(self.flipTable)
     end
