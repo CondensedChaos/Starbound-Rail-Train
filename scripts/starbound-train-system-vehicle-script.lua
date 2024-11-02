@@ -370,7 +370,9 @@ function flipSprites()
   for f=1,10 do
     if self.flipTable[f] then
       animator.scaleTransformationGroup("decal" .. string.char(f+64), {-1, 1}) --string.char(f+64): 65 = A in ASCII, 66 = B in ASCII
-      sb.logInfo("=======FLIP " .. "decal" .. string.char(f+64), {-1, 1})
+      if self.logging then
+        sb.logInfo("=======FLIP " .. "decal" .. string.char(f+64), {-1, 1})
+      end
     end
   end
 end
